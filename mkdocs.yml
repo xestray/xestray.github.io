@@ -1,8 +1,8 @@
-site_name: xestray's website # 项目名称
-site_url: https://xestray.cc/ # 我在nginx中使用的是8000端口，如果你使用的是80端口，可以直接写成https://localhost/。
-site_author: xestray # 作者
-site_description: >- # 项目描述
-  这是一个我搭建的一个个人网站，很多东西都还在学习中...
+site_name: xestray's website
+site_url: https://xestray.cc/
+site_author: xestray
+site_description: >- 
+  个人网站...
 repo_name: xestray # 仓库名称
 repo_url: https://github.com/xestray/xestray.github.io/ # 仓库地址
 copyright: Copyright &copy; 2024 <a href="https://github.com/xestray" target="_blank">xestray</a>
