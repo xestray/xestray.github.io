@@ -15,19 +15,19 @@ nav:
       - 数据结构基础: notes/ComputerScience/FDS.md
       - 计算机逻辑设计基础: notes/ComputerScience/CLDF.md
     - 数理: 
-      - 数学分析: notes/Mathematics/Analysis.md
-      - 线性代数: notes/Mathematics/LinearAlgebra.md
-      - 普通物理学Ⅰ: notes/Mathematics/Physics1.md
+      - 数学分析: notes/MathematicsAndPhysics/Analysis.md
+      - 线性代数: notes/MathematicsAndPhysics/LinearAlgebra.md
+      - 普通物理学Ⅰ: notes/MathematicsAndPhysics/Physics1.md
     - CTF: notes/CTF.md
   - 杂项: 
-    - 干点啥: notes/Other/WhatToDo.md
+    - 干点啥: others/WhatToDo.md
 
 # 配置
 theme:
-  # custom_dir: material/overrides # 自定义文件夹
-  name: material # 主题名称
-  logo: static/images/logo.png # logo 图片
-  language: zh # 默认语言
+  # custom_dir: material/overrides 
+  name: material
+  favicon: img/logo.png
+  logo: img/logo.png
   features:  
     - announce.dismiss  
     - content.action.edit 

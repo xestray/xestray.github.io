@@ -1,3 +1,6 @@
+---
+comment: true
+---
 
 ??? note
     This is a note.
@@ -39,4 +42,4 @@
     This is a page.
 
 ??? success
-    This is a success.      
+    This is a success.
