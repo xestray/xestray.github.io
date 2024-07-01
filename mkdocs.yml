@@ -1,0 +1,207 @@
+site_name: xestray's website # 项目名称
+site_url: https://xestray.cc/ # 我在nginx中使用的是8000端口，如果你使用的是80端口，可以直接写成https://localhost/。
+site_author: xestray # 作者
+site_description: >- # 项目描述
+  这是一个我搭建的一个个人网站，很多东西都还在学习中...
+repo_name: xestray # 仓库名称
+repo_url: https://github.com/xestray/xestray.github.io/ # 仓库地址
+copyright: Copyright &copy; 2024 <a href="https://github.com/xestray" target="_blank">xestray</a>
+
+nav: 
+  - xestray's notebook: index.md
+  - 笔记: 
+    - notes/index.md
+    - Computer Science:
+      - 数据结构基础: notes/ComputerScience/FDS.md
+      - 计算机逻辑设计基础: notes/ComputerScience/CLDF.md
+    - 数理: 
+      - 数学分析: notes/Mathematics/Analysis.md
+      - 线性代数: notes/Mathematics/LinearAlgebra.md
+      - 普通物理学Ⅰ: notes/Mathematics/Physics1.md
+    - CTF: notes/CTF.md
+  - 杂项: 
+    - 干点啥: notes/Other/WhatToDo.md
+
+# 配置
+theme:
+  # custom_dir: material/overrides # 自定义文件夹
+  name: material # 主题名称
+  logo: static/images/logo.png # logo 图片
+  language: zh # 默认语言
+  features:  
+    - announce.dismiss  
+    - content.action.edit 
+    - content.action.view 
+    - content.code.annotate 
+    - content.code.copy # 复制代码按钮
+    # - content.code.select # 选择代码按钮
+    # - content.tabs.link # 链接标签
+    - content.tooltips 
+    # - header.autohide # 自动隐藏header
+    - navigation.expand # 默认展开导航栏
+    - navigation.footer # 底部导航栏
+    - navigation.indexes 
+    # - navigation.instant # 瞬间加载
+    - navigation.instant.prefetch # 预加载
+    - navigation.instant.progress # 进度条
+    - navigation.path # 导航路径
+    # - navigation.prune # 只构建可见的页面
+    - navigation.sections # 导航栏的section
+    - navigation.tabs # 顶级索引被作为tab
+    - navigation.tabs.sticky # tab始终可见
+    - navigation.top # 开启顶部导航栏
+    - navigation.tracking # 导航栏跟踪
+    - search.highlight # 搜索高亮
+    - search.share # 搜索分享
+    - search.suggest # 搜索建议
+    - toc.follow # 目录跟踪-页面右侧的小目录
+    # - toc.integrate # 目录跟踪集成到左侧大目录中
+  palette:
+    - media: "(prefers-color-scheme: light)" # 浅色
+      scheme: default
+      primary: light-blue
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)" # 深色
+      scheme: slate
+      primary: 1bdbe9b0
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  favicon: assets/favicon.png # 网站图标
+  icon:
+    logo: material/library
+    previous: fontawesome/solid/angle-left
+    next: fontawesome/solid/angle-right
+    admonition:
+      info: fontawesome/solid/anchor
+      note: fontawesome/solid/pen-nib
+      abstract: fontawesome/solid/list
+      tip: fontawesome/solid/lightbulb
+      success: fontawesome/solid/check
+      question: fontawesome/solid/circle-question
+      warning: fontawesome/solid/triangle-exclamation
+      failure: material/alien
+      danger: fontawesome/solid/virus
+      bug: fontawesome/solid/robot
+      example: fontawesome/solid/flask
+      quote: fontawesome/solid/link
+
+# Plugins
+plugins:
+  - blog:
+      blog_dir: casual
+      archive: false
+      post_readtime_words_per_minute: 350
+      post_date_format: full
+      blog_toc: true
+      post_excerpt_separator: <!-- more -->
+  # - changelog
+  # - statistics:
+  #     words_per_minute: 350
+  - search
+  # - git-revision-date-localized:
+  #     enable_creation_date: true
+  #     locale: zh
+  #     type: date
+  #     timezone: Asia/Shanghai
+  #     exclude: 
+  #       - casual/*
+  #       - index.md
+  - tags:
+      tags_file: tags.md
+  # - print-site
+
+# 额外配置项
+extra:
+  generator: false
+  status:
+    new: Recently added
+    deprecated: Deprecated
+  analytics:
+    provider: google
+    property: !ENV GOOGLE_ANALYTICS_KEY
+    feedback: # feedback form
+      title: Was this page helpful?
+      ratings:
+        - icon: material/thumb-up-outline
+          name: This page was helpful
+          data: 1
+          note: >-
+            Thanks for your feedback!
+        - icon: material/thumb-down-outline
+          name: This page could be improved
+          data: 0
+          note: >- 
+            Thanks for your feedback! Help us improve this page by
+            using our <a href="..." target="_blank" rel="noopener">feedback form</a>.
+
+
+  tags: # 自定义标签
+    Default: default-tag
+    Hardware: hardware-tag
+    Software: software-tag
+  # consent: # 征求同意 Cookie
+  #   title: Cookie consent
+  #   description: >- 
+  #     We use cookies to recognize your repeated visits and preferences, as well
+  #     as to measure the effectiveness of our documentation and whether users
+  #     find what they're searching for. With your consent, you're helping us to
+  #     make our documentation better.
+
+# 扩展
+markdown_extensions: # markdown extensions
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      normalize_issue_symbols: true
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      auto_append:
+        - includes/mkdocs.md
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
