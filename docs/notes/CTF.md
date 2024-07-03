@@ -1,5 +1,6 @@
 ---
-comment: true
+    comments: true
+    statistics: true
 ---
 
 # 安全攻防实践

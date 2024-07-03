@@ -1,5 +1,6 @@
 ---
-comment: true
+    comments: true
+    statistics: true
 ---
 
 # 计算机逻辑设计基础

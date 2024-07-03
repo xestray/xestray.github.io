@@ -1,5 +1,6 @@
 ---
-comment: true
+    comments: true
+    statistics: true
 ---
 
 # 线性代数Ⅱ(H)

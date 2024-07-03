@@ -1,5 +1,6 @@
 ---
-comment: true
+    comments: true
+    statistics: true
 ---
 
 # 数学分析（甲）Ⅱ(H)

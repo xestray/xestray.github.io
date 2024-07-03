@@ -24,14 +24,13 @@ nav:
 
 # 配置
 theme:
-  # custom_dir: material/overrides 
+  custom_dir: overrides 
   name: material
-  favicon: img/logo.png
-  logo: img/logo.png
+  # logo: img/logo.png
   features:  
     - announce.dismiss  
-    - content.action.edit 
-    - content.action.view 
+    # - content.action.edit 
+    # - content.action.view 
     - content.code.annotate 
     - content.code.copy # 复制代码按钮
     # - content.code.select # 选择代码按钮
@@ -63,20 +62,20 @@ theme:
       accent: indigo
       toggle:
         icon: material/toggle-switch
-        name: Switch to dark mode
+        name: 太耀眼了
     - media: "(prefers-color-scheme: dark)" # 深色
       scheme: slate
       primary: 1bdbe9b0
       accent: indigo
       toggle:
         icon: material/toggle-switch-off
-        name: Switch to light mode
+        name: 要有光
   font:
     text: Roboto
     code: Roboto Mono
-  favicon: assets/favicon.png # 网站图标
+  favicon: material/notebook # 网站图标
   icon:
-    logo: material/library
+    logo: material/notebook
     previous: fontawesome/solid/angle-left
     next: fontawesome/solid/angle-right
     admonition:
@@ -102,21 +101,21 @@ plugins:
       post_date_format: full
       blog_toc: true
       post_excerpt_separator: <!-- more -->
-  # - changelog
-  # - statistics:
-  #     words_per_minute: 350
+  - changelog
+  - statistics:
+      words_per_minute: 350
   - search
-  # - git-revision-date-localized:
-  #     enable_creation_date: true
-  #     locale: zh
-  #     type: date
-  #     timezone: Asia/Shanghai
-  #     exclude: 
-  #       - casual/*
-  #       - index.md
+  - git-revision-date-localized:
+      enable_creation_date: true
+      locale: zh
+      type: date
+      timezone: Asia/Shanghai
+      exclude: 
+        - casual/*
+        - index.md
   - tags:
       tags_file: tags.md
-  # - print-site
+  - print-site
 
 # 额外配置项
 extra:
@@ -139,9 +138,8 @@ extra:
           name: This page could be improved
           data: 0
           note: >- 
-            Thanks for your feedback! Help us improve this page by
-            using our <a href="..." target="_blank" rel="noopener">feedback form</a>.
-
+            Thanks for your feedback! Help me improve this page by
+            using our <a href="https://github.com/xestray/xestray.github.io/issues" target="_blank" rel="noopener">feedback form</a>.
 
   tags: # 自定义标签
     Default: default-tag
@@ -156,52 +154,56 @@ extra:
   #     make our documentation better.
 
 # 扩展
-markdown_extensions: # markdown extensions
-  - abbr
-  - admonition
-  - attr_list
-  - def_list
-  - footnotes
-  - md_in_html
+markdown_extensions:
   - toc:
       permalink: true
-  - pymdownx.arithmatex:
-      generic: true
-  - pymdownx.betterem:
-      smart_enable: all
-  - pymdownx.caret
-  - pymdownx.details
-  - pymdownx.emoji:
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-  - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
-  - pymdownx.inlinehilite
+      toc_depth: 4
+  - meta
+  - def_list
+  - attr_list
+  - md_in_html
+  - sane_lists
+  - admonition
   - pymdownx.keys
-  - pymdownx.magiclink:
-      normalize_issue_symbols: true
-      repo_url_shorthand: true
-      user: squidfunk
-      repo: mkdocs-material
   - pymdownx.mark
-  - pymdownx.smartsymbols
-  - pymdownx.snippets:
-      auto_append:
-        - includes/mkdocs.md
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tilde
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.snippets
+  - pymdownx.magiclink
+  - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
-      combine_header_slug: true
-      slugify: !!python/object/apply:pymdownx.slugs.slugify
-        kwds:
-          case: lower
+  - pymdownx.inlinehilite
+  - pymdownx.smartsymbols  
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tabbed:
+      alternate_style: true 
   - pymdownx.tasklist:
       custom_checkbox: true
-  - pymdownx.tilde
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.arithmatex:
+      generic: true
+  # - neoteroi.cards
+  # - hbfm.inline_coloring
+  # - hbfm.inline_list
 
+extra_javascript:
+  - javascripts/katex.js
+  - https://unpkg.com/katex@0/dist/katex.min.js
+  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+
+extra_css:
+  - https://fonts.font.im/css2?family=Noto+Serif+SC
+  - https://fonts.font.im/css?family=Gloria+Hallelujah
+  - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css
+  - https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css
+  - https://cdn.tonycrane.cc/lxgw/lxgwscreen.css
+  - css/changelogs.css
+  - css/newcolor.css
+  # - css/newfonts.css
+  - css/newadmonitions.css
+  - css/cards.css

@@ -1,5 +1,6 @@
 ---
-comment: true
+    comments: true
+    statistics: true
 ---
 
 ??? note
@@ -43,3 +44,5 @@ comment: true
 
 ??? success
     This is a success.
+
+asa

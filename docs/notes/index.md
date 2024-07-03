@@ -1,1 +1,6 @@
-## 这是引索
+---
+    comments: true
+    statistics: true
+---
+
+# 笔记
