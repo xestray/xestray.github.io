@@ -18,9 +18,14 @@ nav:
       - 数学分析: notes/MathematicsAndPhysics/Analysis.md
       - 线性代数: notes/MathematicsAndPhysics/LinearAlgebra.md
       - 普通物理学Ⅰ: notes/MathematicsAndPhysics/Physics1.md
-    - CTF: notes/CTF.md
+    - CTF: 
+      - notes/CTF/index.md
+      - lec1-Intro: notes/CTF/lec1-Intro.md
+      - lec2-Web: notes/CTF/lec2-Web.md
+      - lec3-Misc: notes/CTF/lec3-Misc.md
   - 杂项: 
     - 干点啥: others/WhatToDo.md
+  - 标签: tags.md
 
 # 配置
 theme:
@@ -61,18 +66,18 @@ theme:
       primary: light-blue
       accent: indigo
       toggle:
-        icon: material/toggle-switch
+        icon: material/weather-sunny # material/toggle-switch
         name: 太耀眼了
     - media: "(prefers-color-scheme: dark)" # 深色
       scheme: slate
       primary: 1bdbe9b0
       accent: indigo
       toggle:
-        icon: material/toggle-switch-off
+        icon: material/weather-night # material/toggle-switch-off
         name: 要有光
   font:
-    text: Roboto
-    code: Roboto Mono
+    text: JetBrains
+    code: JetBrains Mono
   favicon: material/notebook # 网站图标
   icon:
     logo: material/notebook
@@ -97,13 +102,13 @@ plugins:
   - blog:
       blog_dir: casual
       archive: false
-      post_readtime_words_per_minute: 350
+      post_readtime_words_per_minute: 250
       post_date_format: full
       blog_toc: true
       post_excerpt_separator: <!-- more -->
   - changelog
   - statistics:
-      words_per_minute: 350
+      words_per_minute: 250
   - search
   - git-revision-date-localized:
       enable_creation_date: true
