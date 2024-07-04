@@ -14,12 +14,13 @@
 
 ### Misc题型
 
-+ 隐写、取证、OSINT（信息搜集）、PPC（编程类） ——传统misc题
++ <div style="display: flex; justify-content: space-between;"> <span>隐写、取证、OSINT（信息搜集）、PPC（编程类）</span> <span>——传统misc题</span></div>
 + 游戏类题目、工具运用类题目
-+ 编解码、古典密码 ——不那么crypto的crypto
-+ 网络解谜、网站代码审计 ——不那么web的web
-+ 代码审计、沙箱逃逸 ——不那么binary的binary
-+ Blockchain、IoT、AI ——新兴类别题目
++ <div style="display: flex; justify-content: space-between;"> <span>编解码、古典密码 </span> <span>——不那么crypto的crypto</span></div>
++ <div style="display: flex; justify-content: space-between;"> <span>网络解谜、网站代码审计</span> <span>——不那么web的web</span></div>
++ <div style="display: flex; justify-content: space-between;"> <span>代码审计、沙箱逃逸</span> <span>——不那么binary的binary</span></div>
++ <div style="display: flex; justify-content: space-between;"> <span>Blockchain、IoT、AI</span> <span>——新兴类别题目</span></div>
+
 
 ### 如何学习misc？
 
@@ -31,7 +32,7 @@
 
 ## 基础编解码知识
 
-三种常见的01串转换方式
+三种常见的01串转换方式![01串转换方式](assets/01串转换方式.png)
 
 常用编解码工具：[CyberChef](https://gchq.github.io/CyberChef/) /[（TonyCrane ver.）](https://lab.tonycrane.cc/CyberChef/)
 
@@ -56,8 +57,38 @@
 
 参考：[TonyCrane的笔记](https://note.tonycrane.cc/cs/unicode/)
 
-+ 
+以平面划分，有17个平面，每个平面65536个码位（2字节）
 
++ 通过码位可以表示为U+0000 ~ U+10FFFF
++ 可容纳111w+个字符，现有14w+字符（超过一半为CJK字符）
+
+UCS（Universal Character Set）：Unicode字符集的标准名称
+
++ UCS-2：2字节表示码位；UCS-4：4字节表示码位
+
+UTF（Unicode Transformation Format）：Unicode字符集的编码方式
+
++ UTF-8：变长编码，1~4字节表示一个字符，兼容ASCII
+    - 1字节：0xxxxxxx；
+    - 2字节：110xxxxx 10xxxxxx；
+    - 3字节：1110xxxx 10xxxxxx 10xxxxxx；
+    - 4字节：11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+    - ASCII字符：1字节；常用字符：2字节；其他字符：3字节或4字节
++ UTF-16：2字节或4字节表示一个字符，不兼容ASCII
+    - BMP（基本多文种平面）：2字节表示；SMP（补充多文种平面）：4字节表示
+
+### 出现乱码原因
+
+几个字符集不兼容的部分互相编解码
+
++ 用 GBK 解码 UTF-8 编码的文本
++ 用 UTF-8 解码 GBK 编码的文本
++ 用 latin-1 解码 UTF-8 编码的文本
++ 用 latin-1 解码 GBK 编码的文本
++ 先用 GBK 解码 UTF-8 编码的文本，再用 UTF-8 解码前面的结果
++ 先用 UTF-8 解码 GBK 编码的文本，再用 GBK 解码前面的结果
+
+![code](assets/code.png)
 
 ### 摩尔斯电码(Morse Code)
 
@@ -80,6 +111,8 @@
     - 标准字符表：A-Z a-z 0-9 + /
     - 另有多种常用字符表，如URL安全字符表：A-Z a-z 0-9 - _
     - 最终长度必须是4的倍数，不足的用=补齐（1~2个，明显特征）
+
+![base](assets/Base.png)
 
 Base-n系列编码的本质：字节流 $\rightarrow$ 整数 $\rightarrow$ n进制 $\rightarrow$ 系数查表
 
