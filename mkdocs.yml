@@ -8,22 +8,31 @@ repo_url: https://github.com/xestray/xestray.github.io/ # 仓库地址
 copyright: Copyright &copy; 2024 <a href="https://github.com/xestray" target="_blank">xestray</a>
 
 nav: 
-  - xestray's notebook: index.md
-  - 笔记: 
-    - notes/index.md
-    - Computer Science:
-      - 数据结构基础: notes/ComputerScience/FDS.md
-      - 计算机逻辑设计基础: notes/ComputerScience/CLDF.md
-    - 数理: 
-      - 数学分析: notes/MathematicsAndPhysics/Analysis.md
-      - 线性代数: notes/MathematicsAndPhysics/LinearAlgebra.md
-      - 普通物理学Ⅰ: notes/MathematicsAndPhysics/Physics1.md
-    - CTF: 
-      - notes/CTF/index.md
-      - lec1-Intro: notes/CTF/lec1-Intro.md
-      - lec2-Web: notes/CTF/lec2-Web.md
-      - lec3-Misc: notes/CTF/lec3-Misc.md
-  - 杂项: 
+  - Home: index.md
+  - Computer Science:
+    - 数据结构基础: notes/ComputerScience/FDS.md
+    - 计算机逻辑设计基础: notes/ComputerScience/CLDF.md
+  - 数理: 
+    - 数学分析: notes/MathematicsAndPhysics/Analysis.md
+    - 线性代数: notes/MathematicsAndPhysics/LinearAlgebra.md
+    - 普通物理学Ⅰ: notes/MathematicsAndPhysics/Physics1.md
+  - CTF: 
+    - notes/CTF/index.md
+    - 基础周:
+      - lec1-Intro: notes/CTF/fundament/lec1-Intro.md
+      - lec2-Web: notes/CTF/fundament/lec2-Web.md
+      - lec3-Misc: notes/CTF/fundament/lec3-Misc.md
+      - lec4-Reverse: notes/CTF/fundament/lec4-Rev.md
+      - lec5-Pwn: notes/CTF/fundament/lec5-Pwn.md
+      - lec6-Crypto: notes/CTF/fundament/lec6-Crypto.md
+    - 专题周:
+      - Web:
+        - Web-1: notes/CTF/Web/Web-1.md
+        - Web-2: notes/CTF/Web/Web-2.md
+      - Misc:
+        - Misc-1: notes/CTF/Misc/Misc-1.md
+        - Misc-2: notes/CTF/Misc/Misc-2.md
+  - Others: 
     - 干点啥: others/WhatToDo.md
   - 标签: tags.md
 
@@ -52,7 +61,7 @@ theme:
     # - navigation.prune # 只构建可见的页面
     - navigation.sections # 导航栏的section
     - navigation.tabs # 顶级索引被作为tab
-    - navigation.tabs.sticky # tab始终可见
+    # - navigation.tabs.sticky # tab始终可见
     - navigation.top # 开启顶部导航栏
     - navigation.tracking # 导航栏跟踪
     - search.highlight # 搜索高亮
@@ -76,7 +85,7 @@ theme:
         icon: material/weather-night # material/toggle-switch-off
         name: 要有光
   font:
-    text: JetBrains
+    text: LXGW WenKai Screen
     code: JetBrains Mono
   favicon: material/notebook # 网站图标
   icon:

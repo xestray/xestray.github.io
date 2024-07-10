@@ -9,10 +9,23 @@
 
 :fontawesome-regular-flag: [Course Website](https://courses.zjusec.com/)
 
-## Lectures:
+!!! note "分数组成"
+    + 考勤 5%
+    + 基础周 55%
+        - lab0 5%
+        - 5个方向的lab1 10% $\times$ 5
+    + 专题周 40%
+        - 5个方向 5选2 每个方向2个lab，每个占10%
+    + 少量bonus：考勤 / 基础周 / 专题周 三个部分相互独立，不互相溢出
 
-[Lec1-Intro](./lec1-Intro.md)
+## Lectures
 
-[Lec2-Web](./lec2-Web.md)
+### [Lec1-Intro](./fundament/lec1-Intro.md)
 
-[Lec3-Misc](./lec3-Misc.md)
+### [Lec2-Web](./fundament/lec2-Web.md)
+
+### [Lec3-Misc](./fundament/lec3-Misc.md)
+
+### [Lec4-Rev](./fundament/lec4-Rev.md)
+
+### [Lec5-Pwn](./fundament/lec5-Pwn.md)
