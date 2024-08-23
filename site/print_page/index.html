@@ -2711,26 +2711,310 @@
 </ul>
 </li>
 <li>风景信息 <span class="arithmatex">\(\rightarrow\)</span> Yandex 图片搜索</li>
-</ul></section><section class="print-page" id="notes-ctf-fundament-lec4-rev"><h1 id="notes-ctf-fundament-lec4-rev-lec4-rev">Lec4-Rev<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-lec4-rev" title="Permanent link">&para;</a></h1>
+</ul></section><section class="print-page" id="notes-ctf-fundament-lec4-rev"><h1 id="notes-ctf-fundament-lec4-rev-lec4-reverse">Lec4-Reverse<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-lec4-reverse" title="Permanent link">&para;</a></h1>
 <div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8V2m6.78 1a.69.69 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38-2.5-2.5Z"/></svg></span> 约 66 个字 </p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8V2m6.78 1a.69.69 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38-2.5-2.5Z"/></svg></span> 约 1281 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3l89.3 89.4-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg></span> 34 行代码 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3L12.5 13Z"/></svg></span> 预计阅读时间 6 分钟</p>
 </div>
 <blockquote>
-<p>授课：</p>
+<p>授课：马麟</p>
 </blockquote>
-<h2 id="notes-ctf-fundament-lec4-rev-_1">用户态可执行文件<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-_1" title="Permanent link">&para;</a></h2>
+<h2 id="notes-ctf-fundament-lec4-rev-_1">程序？可执行文件<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-_1" title="Permanent link">&para;</a></h2>
+<p>为什么计算机可以执行给定的程序呢</p>
+<blockquote>
+<p>因为任何程序都将最终转化为「指令」的形式由计算机执行</p>
+</blockquote>
+<p><img alt="程序执行" src="../notes/CTF/fundament/assets/%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C.png" /></p>
+<h3 id="notes-ctf-fundament-lec4-rev-compile-frontend-backend">前端与后端（Compile frontend &amp; backend）<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-compile-frontend-backend" title="Permanent link">&para;</a></h3>
+<p><img alt="编译的前端与后端" src="../notes/CTF/fundament/assets/%E7%BC%96%E8%AF%91%E7%9A%84%E5%89%8D%E7%AB%AF%E4%B8%8E%E5%90%8E%E7%AB%AF.png" /></p>
+<h3 id="notes-ctf-fundament-lec4-rev-compiled-vs-interpreted">Compiled V.S. Interpreted<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-compiled-vs-interpreted" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>编译执行</p>
+<p>上述通过编译器 (compiler) 将代码转化为机器指令格式的程序，进而执行</p>
+</li>
+<li>
+<p>解释执行</p>
+<p>通过解释器 (interpreter) 将代码转化为 VM 格式的程序（如字节码），进而在 VM 上执行</p>
+</li>
+</ul>
+<p><img alt="编译型语言" src="../notes/CTF/fundament/assets/%E7%BC%96%E8%AF%91%E5%9E%8B%E8%AF%AD%E8%A8%80.png" /></p>
+<p><img alt="解释型语言" src="../notes/CTF/fundament/assets/%E8%A7%A3%E9%87%8A%E5%9E%8B%E8%AF%AD%E8%A8%80.png" /></p>
+<h3 id="notes-ctf-fundament-lec4-rev-_2">用户态可执行文件<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-_2" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Windows：PE/PE32+（Port Executable）</li>
 <li>macOS：Mach-O（Mach Object）</li>
 <li>Linux：ELF（Executable and Linkable Format）</li>
 </ul>
 <p>可通过命令行工具静态检视 ELF 文件</p>
+<blockquote>
+<p>ELF (Executable and Linkable Format) is a common standard file format for "executables" in Linux (or Unix-like) systems</p>
+</blockquote>
 <ul>
 <li><code>file</code>：查看文件类型</li>
 <li><code>readelf</code>：查看 ELF 文件的结构</li>
 <li><code>objdump</code>：反汇编</li>
 </ul>
-<h2 id="notes-ctf-fundament-lec4-rev-elf">ELF 的编译、链接<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-elf" title="Permanent link">&para;</a></h2></section><section class="print-page" id="notes-ctf-fundament-lec5-pwn"><h1 id="notes-ctf-fundament-lec5-pwn-lec5-pwn">Lec5-Pwn<a class="headerlink" href="#notes-ctf-fundament-lec5-pwn-lec5-pwn" title="Permanent link">&para;</a></h1>
+<h2 id="notes-ctf-fundament-lec4-rev-elf">ELF 的编译、链接<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-elf" title="Permanent link">&para;</a></h2>
+<ul>
+<li>编译（汇编）：从源代码到<strong>目标文件</strong></li>
+<li>链接：从目标文件到<strong>可执行文件</strong></li>
+</ul>
+<h3 id="notes-ctf-fundament-lec4-rev-elf_1">ELF的编译、链接<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-elf_1" title="Permanent link">&para;</a></h3>
+<p>以简单的<code>hello.c</code>为例</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#notes-ctf-fundament-lec4-rev-__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#notes-ctf-fundament-lec4-rev-__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#notes-ctf-fundament-lec4-rev-__codelineno-0-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#notes-ctf-fundament-lec4-rev-__codelineno-0-4"></a><span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#notes-ctf-fundament-lec4-rev-__codelineno-0-5"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello World!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#notes-ctf-fundament-lec4-rev-__codelineno-0-6"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#notes-ctf-fundament-lec4-rev-__codelineno-0-7"></a><span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#notes-ctf-fundament-lec4-rev-__codelineno-1-1"></a>gcc/clang<span class="w"> </span>hello.c
+</code></pre></div>
+<h3 id="notes-ctf-fundament-lec4-rev-elf_2">ELF的编译 (预处理)<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-elf_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#notes-ctf-fundament-lec4-rev-__codelineno-2-1"></a>gcc/clang<span class="w"> </span>-E<span class="w"> </span>hello.c<span class="w"> </span>-o<span class="w"> </span>hello.c.i
+</code></pre></div>
+<ul>
+<li>头文件包含</li>
+<li>宏展开与替换</li>
+</ul>
+<h3 id="notes-ctf-fundament-lec4-rev-elf_3">ELF的编译 (编译)<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-elf_3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#notes-ctf-fundament-lec4-rev-__codelineno-3-1"></a>gcc/clang<span class="w"> </span>-S<span class="w"> </span>hello.c<span class="w"> </span>-o<span class="w"> </span>hello.s
+</code></pre></div>
+<ul>
+<li>-S: Compile only; do not assemble or link</li>
+<li>-Ox: 优化等级</li>
+<li>-g: 启用调试</li>
+<li>......</li>
+</ul>
+<h3 id="notes-ctf-fundament-lec4-rev-elf_4">ELF的编译 (编译前端)<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-elf_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>生成 clang AST</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#notes-ctf-fundament-lec4-rev-__codelineno-4-1"></a>clang<span class="w"> </span>-Xclang<span class="w"> </span>-ast-dump<span class="w"> </span>-S<span class="w"> </span>hello.c
+</code></pre></div>
+<ul>
+<li>生成 LLVM IR</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#notes-ctf-fundament-lec4-rev-__codelineno-5-1"></a>clang<span class="w"> </span>-Xclang<span class="w"> </span>-emit-llvm<span class="w"> </span>-S<span class="w"> </span>hello.c<span class="w"> </span>-o<span class="w"> </span>hello.ll
+</code></pre></div>
+<ul>
+<li>生成 gcc IR（以及其他细节）</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#notes-ctf-fundament-lec4-rev-__codelineno-6-1"></a>gcc<span class="w"> </span>-fdump-tree-all-graph<span class="w"> </span>-S<span class="w"> </span>hello.c
+</code></pre></div>
+<h3 id="notes-ctf-fundament-lec4-rev-elf_5">ELF的编译 (编译后端)<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-elf_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>从 LLVM IR 到汇编代码</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#notes-ctf-fundament-lec4-rev-__codelineno-7-1"></a>llc<span class="w"> </span>hello.ll<span class="w"> </span>-o<span class="w"> </span>hello.s
+</code></pre></div>
+<ul>
+<li>从汇编代码到目标文件 (object file)</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#notes-ctf-fundament-lec4-rev-__codelineno-8-1"></a>llvm-mc<span class="w"> </span>-filetype<span class="o">=</span>obj<span class="w"> </span>hello.s<span class="w"> </span>-o<span class="w"> </span>hello.o
+</code></pre></div>
+<ul>
+<li>一步到位</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#notes-ctf-fundament-lec4-rev-__codelineno-9-1"></a>llc<span class="w"> </span>-filetype<span class="o">=</span>obj<span class="w"> </span>hello.ll<span class="w"> </span>-o<span class="w"> </span>hello.o
+</code></pre></div>
+<ul>
+<li>从汇编代码到目标文件 (object file) GCC 版本</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#notes-ctf-fundament-lec4-rev-__codelineno-10-1"></a>gcc<span class="w"> </span>hello.s<span class="w"> </span>-o<span class="w"> </span>hello.o
+</code></pre></div>
+<p><img alt="ELF的编译" src="../notes/CTF/fundament/assets/ELF%E7%9A%84%E7%BC%96%E8%AF%91.png" /></p>
+<h3 id="notes-ctf-fundament-lec4-rev-elf_6">ELF的链接<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-elf_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>目标文件 <code>hello.o</code> 中有多个段</li>
+<li>目标文件 <code>hello.o</code> 还不足以包含程序运行的信息，需要进行链接</li>
+<li>符号解析与重定位<ul>
+<li>"essentially merging"</li>
+</ul>
+</li>
+</ul>
+<p><img alt="ELF链接" src="../notes/CTF/fundament/assets/ELF%E9%93%BE%E6%8E%A5.png" /></p>
+<h4 id="notes-ctf-fundament-lec4-rev-_3">静态链接与动态链接<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-_3" title="Permanent link">&para;</a></h4>
+<p><img alt="静态链接与动态链接" src="../notes/CTF/fundament/assets/%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E4%B8%8E%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5.png" /></p>
+<ul>
+<li>
+<p>静态链接</p>
+<p>将所有的目标文件都链接到一个可执行（ELF）文件中</p>
+<ul>
+<li>优点：可执行文件独立，不依赖于其他文件，在各种环境中都可执行</li>
+<li>缺点：通常会使可执行文件大小增加</li>
+</ul>
+</li>
+<li>
+<p>动态链接</p>
+<p>所有的目标文件都链接到一个储存在系统中的动态链接库（Dylib/So）中，无需单独储存</p>
+<ul>
+<li>优点：节省磁盘空间，减少内存占用</li>
+<li>
+<p>缺点：依赖于系统中的动态链接库，动态链接库的版本等不同可能会导致兼容性问题；</p>
+<p>动态链接的过程中会有额外开销，可能会影响程序的性能，但有一些优化策略</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="notes-ctf-fundament-lec4-rev-pltgot">动态链接的PLT与GOT<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-pltgot" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>PLT:  Procedure Linkage Table</p>
+<p>动态链接的“跳板”</p>
+</li>
+<li>
+<p>GOT:  Global Offset Table</p>
+</li>
+<li>lazy binding optimization（延迟绑定优化）以及 full-relro 保护</li>
+</ul>
+<h2 id="notes-ctf-fundament-lec4-rev-elf_7">ELF 程序的装载和运行<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-elf_7" title="Permanent link">&para;</a></h2>
+<h3 id="notes-ctf-fundament-lec4-rev-_4">程序到进程<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>可执行程序 (Program) 是静态，文件的概念</li>
+<li>进程 (Process) 是动态、系统运行时的概念<ul>
+<li>进程和线程 (Thread)</li>
+</ul>
+</li>
+</ul>
+<h3 id="notes-ctf-fundament-lec4-rev-elf_8">ELF程序的生命周期<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-elf_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li>C/C++程序对应进程的起点并不是main</li>
+<li>同样地，C/C++程序对应进程的终点也不是main</li>
+</ul>
+<details class="example">
+<summary>Example</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-4"></a><span class="n">__attribute__</span><span class="p">((</span><span class="n">constructor</span><span class="p">))</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">before_main</span><span class="p">()</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-5"></a><span class="p">{</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-6"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Before main</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-7"></a><span class="p">}</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-8"></a>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-9"></a><span class="n">__attribute__</span><span class="p">((</span><span class="n">destructor</span><span class="p">))</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">after_main</span><span class="p">()</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-10"></a><span class="p">{</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-11"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;After main</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-12"></a><span class="p">}</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-13"></a>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-14"></a><span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-15"></a><span class="p">{</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-16"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;During main</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#notes-ctf-fundament-lec4-rev-__codelineno-11-17"></a><span class="p">}</span>
+</code></pre></div>
+<p>运行结果如下：
+<img alt="before-after" src="../notes/CTF/fundament/assets/before-after.png" /></p>
+</details>
+<ul>
+<li>
+<p>静态链接程序：</p>
+<p>内核以可执行文件 e_entry 位置 (即_start) 作为起点</p>
+</li>
+<li>
+<p>动态链接程序：</p>
+<p>内核以 interpreter 文件的 e_entry 位置作为起点</p>
+</li>
+<li>
+<p>等了解交互/调试之后进行 revisit</p>
+</li>
+</ul>
+<h4 id="notes-ctf-fundament-lec4-rev-_start">_start<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-_start" title="Permanent link">&para;</a></h4>
+<ul>
+<li>glibc 代码 (汇编构筑)</li>
+<li>携带 <code>main</code> 符号跳转 <code>__libc_start_main</code> 函数</li>
+</ul>
+<h4 id="notes-ctf-fundament-lec4-rev-__libc_start_main">__libc_start_main<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-__libc_start_main" title="Permanent link">&para;</a></h4>
+<ul>
+<li>完成各类和目标 ELF 有关的初始化</li>
+<li>内联 <code>__libc_start_call_main</code></li>
+<li>最终跳往 <code>main</code> 符号</li>
+<li><code>main</code> 结束后调用 <code>exit</code></li>
+</ul>
+<h3 id="notes-ctf-fundament-lec4-rev-aslr">基地址与 ASLR<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-aslr" title="Permanent link">&para;</a></h3>
+<ul>
+<li>PIE 动态链接可执行程序基地址随机保护</li>
+<li>无论静态/动态 (是否 PIE)，栈地址随即化保护</li>
+<li>通过 /proc/sys/kernel/randomize_va_space 控制随机化</li>
+</ul>
+<h2 id="notes-ctf-fundament-lec4-rev-elf_9">ELF 程序的交互、调试<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-elf_9" title="Permanent link">&para;</a></h2>
+<h3 id="notes-ctf-fundament-lec4-rev-_5">通过命令行人工与程序交互<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>绝对路径 / 相对路径<ul>
+<li>-h / --help</li>
+<li>manual</li>
+<li>PATH 路径</li>
+</ul>
+</li>
+<li>通过虚拟机或者沙箱进行交互<ul>
+<li><a href="https://firejail.wordpress.com/">https://firejail.wordpress.com/</a> </li>
+<li><a href="https://github.com/google/nsjail">https://github.com/google/nsjail</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="notes-ctf-fundament-lec4-rev-_6">通过编程与程序交互<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>重定向构建特殊字符作为输入</li>
+<li>C 管道编程</li>
+<li>python subprocess 库</li>
+<li>python pwntools 库</li>
+</ul>
+<h3 id="notes-ctf-fundament-lec4-rev-gdb-gnu-debugger">GDB: GNU DeBugger<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-gdb-gnu-debugger" title="Permanent link">&para;</a></h3>
+<ul>
+<li>调试模式<ul>
+<li>调试器执行模式</li>
+<li>attach 模式</li>
+<li>remote 模式</li>
+</ul>
+</li>
+<li>常用调试功能<ul>
+<li>执行断点</li>
+<li>硬件断点</li>
+<li>查看寄存器 / 内存</li>
+<li>set 修改寄存器 / 内存</li>
+</ul>
+</li>
+<li>gdb 插件</li>
+</ul>
+<h2 id="notes-ctf-fundament-lec4-rev-elf_10">ELF程序的逆向<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-elf_10" title="Permanent link">&para;</a></h2>
+<p><img alt="正向与逆向" src="../notes/CTF/fundament/assets/%E6%AD%A3%E5%90%91%E4%B8%8E%E9%80%86%E5%90%91.png" /></p>
+<h3 id="notes-ctf-fundament-lec4-rev-elf_11">ELF的静态逆向<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-elf_11" title="Permanent link">&para;</a></h3>
+<ul>
+<li>反汇编：机器指令 <span class="arithmatex">\(\rightarrow\)</span> 汇编指令（查表、准确）<ul>
+<li>objdump</li>
+</ul>
+</li>
+<li>反编译：汇编指令 =&gt; 编程语言（分析/特征匹配/启发式 … 、往往不准确）<ul>
+<li>IDA Pro (<a href="https://hex-rays.com/ida-pro/">https://hex-rays.com/ida-pro/</a>)</li>
+<li>Binary Ninja (<a href="https://binary.ninja">https://binary.ninja</a>)<ul>
+<li>with free version</li>
+</ul>
+</li>
+<li>Ghidra (<a href="https://github.com/NationalSecurityAgency/ghidra">https://github.com/NationalSecurityAgency/ghidra</a>)</li>
+<li>Cutter / radare (<a href="https://github.com/rizinorg/cutter">https://github.com/rizinorg/cutter</a> )</li>
+<li>大语言模型 ;D (<a href="https://mlm.lingyiwanwu.com/">https://mlm.lingyiwanwu.com/</a>)</li>
+</ul>
+</li>
+</ul>
+<h4 id="notes-ctf-fundament-lec4-rev-_7">静态逆向技巧<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-_7" title="Permanent link">&para;</a></h4>
+<p>对于静态链接目标</p>
+<ul>
+<li>特征 + 猜测尽可能恢复库函数符号</li>
+</ul>
+<p>对于符号恢复的静态 or 动态链接目标</p>
+<ul>
+<li>关注特定<strong>常量</strong>和<strong>字符串</strong></li>
+<li>关注<strong>输入</strong>和<strong>输出函数</strong></li>
+<li>关注分支、比较指令</li>
+<li>关注可能涉及加密解密的特殊运算（位运算、异或、取余）</li>
+</ul>
+<h3 id="notes-ctf-fundament-lec4-rev-elf_12">ELF的动态逆向<a class="headerlink" href="#notes-ctf-fundament-lec4-rev-elf_12" title="Permanent link">&para;</a></h3>
+<p>「<strong>可运行</strong>」和「<strong>可调试</strong>」是高效解决逆向问题的必备</p>
+<ul>
+<li>许多逆向赛题都需要「纯静态」的方式解决，程序可能依赖特定的架构/设备</li>
+<li>“if it can run, it can be cracked”</li>
+<li>通过运行时的结果解决静态逆向时的疑惑</li>
+</ul></section><section class="print-page" id="notes-ctf-fundament-lec5-pwn"><h1 id="notes-ctf-fundament-lec5-pwn-lec5-pwn">Lec5-Pwn<a class="headerlink" href="#notes-ctf-fundament-lec5-pwn-lec5-pwn" title="Permanent link">&para;</a></h1>
 <div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8V2m6.78 1a.69.69 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38-2.5-2.5Z"/></svg></span> 约 1 个字 </p>
 </div>
@@ -3304,9 +3588,308 @@ $ K = \begin{bmatrix}
                         </h3>
                         <section class="print-page" id="notes-ctf-misc-misc-1"><div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8V2m6.78 1a.69.69 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38-2.5-2.5Z"/></svg></span> 约 0 个字 </p>
-</div></section><section class="print-page" id="notes-ctf-misc-misc-2"><div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8V2m6.78 1a.69.69 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38-2.5-2.5Z"/></svg></span> 约 0 个字 </p>
-</div></section><h1 class='nav-section-title-end'>Ended: Misc</h1><h1 class='nav-section-title-end'>Ended: 专题周</h1><h1 class='nav-section-title-end'>Ended: CTF</h1>
+</div></section><section class="print-page" id="notes-ctf-misc-misc-2"><h1 id="notes-ctf-misc-misc-2-misc">Misc专题二：流量取证/区块链基础<a class="headerlink" href="#notes-ctf-misc-misc-2-misc" title="Permanent link">&para;</a></h1>
+<div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8V2m6.78 1a.69.69 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38-2.5-2.5Z"/></svg></span> 约 2423 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3l89.3 89.4-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg></span> 7 行代码 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3L12.5 13Z"/></svg></span> 预计阅读时间 10 分钟</p>
+</div>
+<h2 id="notes-ctf-misc-misc-2-_1">流量取证<a class="headerlink" href="#notes-ctf-misc-misc-2-_1" title="Permanent link">&para;</a></h2>
+<h3 id="notes-ctf-misc-misc-2-_2">流量取证基础<a class="headerlink" href="#notes-ctf-misc-misc-2-_2" title="Permanent link">&para;</a></h3>
+<p>网络流量（<span class="arithmatex">\(\rightarrow\)</span> 回顾 web 基础）</p>
+<ul>
+<li>应用层（HTTP/FTP/...） <span class="arithmatex">\(\rightarrow\)</span> 表示层 <span class="arithmatex">\(\rightarrow\)</span> 会话层（SSL/TLS/...）</li>
+<li><span class="arithmatex">\(\rightarrow\)</span> 传输层（TCP/UDP） <span class="arithmatex">\(\rightarrow\)</span> 网络层（IP/ICMP/...）</li>
+<li><span class="arithmatex">\(\rightarrow\)</span> 数据链路层 <span class="arithmatex">\(\rightarrow\)</span> 物理层</li>
+</ul>
+<p>最终传输的仍然是二进制数据</p>
+<ul>
+<li>捕获这些数据， 就可以分析得到正在进行的通信内容</li>
+</ul>
+<p>流量取证一般就是拿到这些数据包（cap、 pcap、 pcapng 格式）进行分析</p>
+<ul>
+<li>如有损坏的话修复数据包（少见， pcapfix 可以修复）</li>
+<li>分析、 提取得到正在通信的内容（可能包含有效信息）</li>
+<li>分析一些特定的、 不太常见的协议（比如一些自定义协议）</li>
+<li>分析、 解密一些加密的协议（比如 VMess 等）</li>
+</ul>
+<h3 id="notes-ctf-misc-misc-2-_3">流量取证常用工具<a class="headerlink" href="#notes-ctf-misc-misc-2-_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>tcpdump 抓 TCP 包（Linux 命令行）</li>
+<li><a href="https://www.wireshark.org/">Wireshark</a>： 直接抓包， 得到物理层的全部数据并解析（开源）<ul>
+<li>自带命令行工具 tshark</li>
+</ul>
+</li>
+<li><a href="https://github.com/gcla/termshark">termshark</a>： 类似 Wireshark 的开源命令行工具</li>
+<li><a href="https://github.com/KimiNewt/pyshark/">pyshark</a>： tshark 的 Python 封装， 可以用 Python 脚本分析</li>
+<li><a href="https://scapy.net/">scapy</a>： Python 库，</li>
+</ul>
+<h4 id="notes-ctf-misc-misc-2-wireshark">Wireshark 基本用法<a class="headerlink" href="#notes-ctf-misc-misc-2-wireshark" title="Permanent link">&para;</a></h4>
+<p>浏览主界面的所有数据包， 大致了解都由什么协议组成</p>
+<p>追踪流（追踪 TCP 流 / 追踪 HTTP 流）</p>
+<ul>
+<li>得到某次通信的全部数据包， 并进行解析</li>
+<li>另存为， 保存流数据</li>
+<li>可以转换不同的显示形式（ASCII、 HEX、 Raw）</li>
+</ul>
+<p>文件 &gt; 导出， 提取某些数据包的流内容</p>
+<p>统计部分</p>
+<ul>
+<li>协议层次： 统计各层协议的数据包数量</li>
+<li>流量图： 统计各个端口的流量， 可视化显示</li>
+<li>HTTP： 分组计数、 请求统计</li>
+</ul>
+<h4 id="notes-ctf-misc-misc-2-wireshark_1">Wireshark 过滤器<a class="headerlink" href="#notes-ctf-misc-misc-2-wireshark_1" title="Permanent link">&para;</a></h4>
+<p>过滤协议： 直接输入 tcp/udp/http 等</p>
+<p>过滤 ip： ip.addr == xx.xx.xx.xx 或 ip.src ip.dst</p>
+<p>过滤端口： tcp.port == 80 或 tcp.srcport tcp.dstport</p>
+<p>包长度过滤： frame.len ip.len tcp.len ……</p>
+<p>http 过滤</p>
+<ul>
+<li>http.request.method == GET</li>
+<li>http.request.uri == "/index.php"</li>
+<li>http contains "flag"（相当于搜索功能）</li>
+</ul>
+<h3 id="notes-ctf-misc-misc-2-http">HTTP 协议流量分析<a class="headerlink" href="#notes-ctf-misc-misc-2-http" title="Permanent link">&para;</a></h3>
+<p>分析统计信息</p>
+<ul>
+<li>查看所有的 HTTP 请求 URI</li>
+<li>分析 HTTP 往返的情况， 流量整体信息</li>
+</ul>
+<p>具体分析某些请求： 利用过滤器</p>
+<p>分析某一数据包具体内容</p>
+<ul>
+<li>跟踪流， 跟踪 TCP 解析 TCP， 跟踪 HTTP 可以自动解压 gzip 等</li>
+<li>分析请求头、 响应头、 请求体、 响应体等</li>
+</ul>
+<p>具体题目示例</p>
+<ul>
+<li>本次 lab 中的题目： SQL 盲注流量分析</li>
+</ul>
+<h3 id="notes-ctf-misc-misc-2-udp">UDP 协议<a class="headerlink" href="#notes-ctf-misc-misc-2-udp" title="Permanent link">&para;</a></h3>
+<p>UDP 协议是无连接的， 不需要像 TCP 一样三次握手</p>
+<p>和 TCP/HTTP 一样直接追踪分析就可以</p>
+<p>常见的基于 UDP 的协议： DNS</p>
+<p>具体题目示例</p>
+<ul>
+<li>本次 lab 中的题目： dnscap</li>
+<li>
+<p>MRCTF 2022： Bleach!</p>
+<ul>
+<li>基于 UDP 的 RTP 协议， 需要手动选择进行解析</li>
+<li>RTP 是一种音视频传输协议， 可以得到音频流</li>
+<li>wav 音频流中 LSB 包含隐写图片</li>
+</ul>
+</li>
+</ul>
+<h3 id="notes-ctf-misc-misc-2-_4">其他协议<a class="headerlink" href="#notes-ctf-misc-misc-2-_4" title="Permanent link">&para;</a></h3>
+<p>ICMP 协议： ping</p>
+<ul>
+<li>某时也会带有一些信息， 可以进行进一步分析</li>
+</ul>
+<p>OICQ 协议： QQ 使用， 是加密的， 但是可以看到双方 QQ 号等</p>
+<p>WIFI 协议（IEEE 802.11）</p>
+<ul>
+<li>可以使用 Linux aircrack 套件爆破密码</li>
+<li>有了密码后可以在 Wireshark 中设置并解密流量</li>
+</ul>
+<p>USB 协议</p>
+<ul>
+<li>安装了 USBcap 之后可以在 Wireshark 中捕获 USB 流量</li>
+<li>有工具可以解析流量， 绘制鼠标轨迹， 得到按键信息等</li>
+</ul>
+<p>其他加密协议</p>
+<ul>
+<li>VMess， 需要读文档 / 源码， 实现解密</li>
+<li>例题： 强网杯 2022 Quals 谍影重重</li>
+</ul>
+<h2 id="notes-ctf-misc-misc-2-_5">以太坊区块链基础<a class="headerlink" href="#notes-ctf-misc-misc-2-_5" title="Permanent link">&para;</a></h2>
+<h3 id="notes-ctf-misc-misc-2--">以太坊模型全览 - 区块与世界状态<a class="headerlink" href="#notes-ctf-misc-misc-2--" title="Permanent link">&para;</a></h3>
+<p><img alt="区块与世界状态" src="../notes/CTF/Misc/assets/%E5%8C%BA%E5%9D%97%E4%B8%8E%E4%B8%96%E7%95%8C%E7%8A%B6%E6%80%81.png" /></p>
+<p>每个区块包含三颗 Merkle 树根节点</p>
+<ul>
+<li>stateRoot 即世界状态树根节点， 状态是一组用户状态的组合</li>
+</ul>
+<p>区块由“矿工”或“验证者”将交易打包形成， 后广播到网络中</p>
+<ul>
+<li>每条交易会引发世界状态的转变， 消耗一定 gas</li>
+</ul>
+<h3 id="notes-ctf-misc-misc-2--_1">以太坊模型全览 - 交易与世界状态转变<a class="headerlink" href="#notes-ctf-misc-misc-2--_1" title="Permanent link">&para;</a></h3>
+<p><img alt="交易与世界状态转变" src="../notes/CTF/Misc/assets/%E4%BA%A4%E6%98%93%E4%B8%8E%E4%B8%96%E7%95%8C%E7%8A%B6%E6%80%81%E8%BD%AC%E5%8F%98.png" /></p>
+<p>每一条交易都会引起状态的改变</p>
+<p>多个交易打包到一起， 最终状态就是新区块存储的状态</p>
+<p>交易信息中包含 hash/v/r/s 为交易签名， 用于验证交易的合法性</p>
+<p>合约在 EVM 上执行， 执行过程中也有各种漏洞</p>
+<h3 id="notes-ctf-misc-misc-2-_6">账户<a class="headerlink" href="#notes-ctf-misc-misc-2-_6" title="Permanent link">&para;</a></h3>
+<p>外部账户（Externally Owned Account）</p>
+<ul>
+<li>
+<p>有一对公私钥， 用于签署交易</p>
+<ul>
+<li>私钥是随机生成的 256 位数（32 字节）</li>
+<li>公钥由私钥经过 ECDSA 算法计算而来， 是一个 64 字节的数</li>
+<li>地址由公钥经过 Keccak-256 哈希后取前 20 字节得到</li>
+</ul>
+</li>
+</ul>
+<p><img alt="account" src="../notes/CTF/Misc/assets/account.png" /></p>
+<p>合约账户（Contract Account）</p>
+<ul>
+<li>由 EOA 通过交易创建的账户， 其中包含合约代码</li>
+<li>合约可以存储、 拥有以太币</li>
+<li>向合约账户发送交易 <span class="arithmatex">\(\rightarrow\)</span> 调用合约中的函数</li>
+<li>合约本身不能主动发起交易， 但可以在被调用时向外发送交易</li>
+</ul>
+<h3 id="notes-ctf-misc-misc-2-_7">交易<a class="headerlink" href="#notes-ctf-misc-misc-2-_7" title="Permanent link">&para;</a></h3>
+<p>一条交易包含以下内容：</p>
+<ul>
+<li>from： 交易发送者地址</li>
+<li>to： 交易接收者地址， 如果为空则表示是在创建智能合约</li>
+<li>value： 交易金额， 即发送方要给接收方转移的以太币数量（wei 为单位）</li>
+<li>data： 交易数据， 如果是创建智能合约则是智能合约代码， 如果是调用智能</li>
+<li>合约则是调用的函数名和参数</li>
+<li>gasPrice： 交易的 gas 价格， 即每单位 gas 的价格（wei 为单位）</li>
+<li>gasLimit： 交易的 gas 上限， 即交易允许执行的最大 gas 数量</li>
+<li>nonce： 交易的序号， 即发送者已经发送的交易数量</li>
+</ul>
+<p>除此之外发送的交易数据包还需要包含：</p>
+<ul>
+<li>hash： 交易的哈希值， 由前面的内容和 chainId 计算得到</li>
+<li>v、 r、 s： 交易签名的三个部分， 由发送者私钥对交易哈希值进行签名得到</li>
+</ul>
+<p>以太币单位： <a href="https://converter.murkin.me/">https://converter.murkin.me/</a></p>
+<h3 id="notes-ctf-misc-misc-2-faucet">关于链与 faucet<a class="headerlink" href="#notes-ctf-misc-misc-2-faucet" title="Permanent link">&para;</a></h3>
+<p>公开链： 真实的交易</p>
+<ul>
+<li>通过 <a href="https://etherscan.io/">https://etherscan.io/</a> 查看</li>
+<li>主网（mainnet） ： 真正的金钱交易， 很少使用</li>
+<li>
+<p>测试链： Sepolia / Holesky 链， 可以通过 faucet 获取免费代币</p>
+<ul>
+<li><a href="https://sepolia-faucet.pk910.de/">https://sepolia-faucet.pk910.de/</a></li>
+<li>Ethernaut 等大型公开合约 CTF 平台会使用</li>
+</ul>
+</li>
+</ul>
+<p>私链： 自己搭建的链， 模拟真实的链</p>
+<ul>
+<li>一般 CTF 题目都使用私链部署</li>
+<li>可以通过 geth 等工具部署私链</li>
+</ul>
+<h3 id="notes-ctf-misc-misc-2-more">more<a class="headerlink" href="#notes-ctf-misc-misc-2-more" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://note.tonycrane.cc/ctf/blockchain/eth/basic/">https://note.tonycrane.cc/ctf/blockchain/eth/basic/</a></li>
+<li><a href="https://slides.tonycrane.cc/data-sec-pre/">https://slides.tonycrane.cc/data-sec-pre/</a></li>
+<li><a href="https://ethereum.org/en/developers/docs/">https://ethereum.org/en/developers/docs/</a></li>
+</ul>
+<h2 id="notes-ctf-misc-misc-2-_8">智能合约安全基础<a class="headerlink" href="#notes-ctf-misc-misc-2-_8" title="Permanent link">&para;</a></h2>
+<h3 id="notes-ctf-misc-misc-2-_9">关于合约<a class="headerlink" href="#notes-ctf-misc-misc-2-_9" title="Permanent link">&para;</a></h3>
+<p>合约的创建和调用都通过交易来进行</p>
+<p>合约调用：</p>
+<ul>
+<li>data 字段为编码后的函数名（selector）和参数， 称为 calldata</li>
+<li>selector 是函数签名 keccak256 的前四个字节</li>
+<li>不存在对应 selector 则会调用 fallback 函数， 还不存在则 revert</li>
+</ul>
+<p>合约存储： 全公开存储， 都在链上， 可以 getStorageAt 查看</p>
+<p>revert： 回滚， 所有当前调用中的状态改变全都复原</p>
+<p>合约编译后得到字节码在 EVM 上运行：</p>
+<ul>
+<li><a href="https://ethervm.io/">https://ethervm.io/</a></li>
+</ul>
+<h3 id="notes-ctf-misc-misc-2-solidity">Solidity 语言<a class="headerlink" href="#notes-ctf-misc-misc-2-solidity" title="Permanent link">&para;</a></h3>
+<p><a href="https://note.tonycrane.cc/ctf/blockchain/eth/solidity/">https://note.tonycrane.cc/ctf/blockchain/eth/solidity/</a></p>
+<p>官方文档：<a href="https://docs.soliditylang.org/en/latest/index.html">https://docs.soliditylang.org/en/latest/index.html</a></p>
+<p>以太坊官方的编写智能合约的语言</p>
+<p>IDE：<a href="https://remix.ethereum.org/">https://remix.ethereum.org/</a></p>
+<p>通过 contract 关键字声明一个合约</p>
+<p>通过 function 定义一个可以调用的函数</p>
+<ul>
+<li>public、 internal、 external、 private</li>
+<li>属性（状态）会自动创建 getter 函数</li>
+<li>通过 view、 pure 关键字定义一个不改变状态的函数</li>
+</ul>
+<p>通过 payable 关键字定义一个可以接收以太币的函数</p>
+<p>特殊函数： constructor、 fallback、 receive</p>
+<h3 id="notes-ctf-misc-misc-2-_10">常见漏洞示例<a class="headerlink" href="#notes-ctf-misc-misc-2-_10" title="Permanent link">&para;</a></h3>
+<h4 id="notes-ctf-misc-misc-2-_11">整型溢出<a class="headerlink" href="#notes-ctf-misc-misc-2-_11" title="Permanent link">&para;</a></h4>
+<p><a href="https://ethernaut.openzeppelin.com/">Ethernaut</a> 题目 Token：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#notes-ctf-misc-misc-2-__codelineno-0-1"></a><span class="kt">mapping</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">uint256</span><span class="p">)</span><span class="w"> </span>balances<span class="p">;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#notes-ctf-misc-misc-2-__codelineno-0-2"></a><span class="kt">function</span><span class="w"> </span><span class="nv">transfer</span><span class="p">(</span><span class="kt">address</span><span class="w"> </span><span class="nv">_to</span><span class="p">,</span><span class="w"> </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">_value</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#notes-ctf-misc-misc-2-__codelineno-0-3"></a><span class="w">    </span><span class="kt">require</span><span class="p">(</span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span>_value<span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m m-Decimal">0</span><span class="p">);</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#notes-ctf-misc-misc-2-__codelineno-0-4"></a><span class="w">    </span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span>_value<span class="p">;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#notes-ctf-misc-misc-2-__codelineno-0-5"></a><span class="w">    </span>balances<span class="p">[</span>_to<span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>_value<span class="p">;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#notes-ctf-misc-misc-2-__codelineno-0-6"></a><span class="w">    </span><span class="kt">return</span><span class="w"> </span><span class="kt">true</span><span class="p">;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#notes-ctf-misc-misc-2-__codelineno-0-7"></a><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>balances 字典是 uint256， 无符号减法有溢出风险</li>
+<li>给任意地址转账， 原余额 20 Token， 转 21 个， 则 balances 会变的巨大</li>
+<li>通过事先检查或者使用 SafeMath 库可以避免</li>
+<li>新版本 solidity 自动开启了溢出检查</li>
+</ul>
+<h4 id="notes-ctf-misc-misc-2-_12">重入攻击<a class="headerlink" href="#notes-ctf-misc-misc-2-_12" title="Permanent link">&para;</a></h4>
+<p><a href="https://ethernaut.openzeppelin.com/">Ethernaut</a> 题目 Re-entrancy， 很经典的智能合约漏洞，例如如下合约：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#notes-ctf-misc-misc-2-__codelineno-1-1"></a>contract Bank {
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#notes-ctf-misc-misc-2-__codelineno-1-2"></a>    mapping(address =&gt; uint256) balances;
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#notes-ctf-misc-misc-2-__codelineno-1-3"></a>    ...
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#notes-ctf-misc-misc-2-__codelineno-1-4"></a>    function withdraw(uint256 amount) public {
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#notes-ctf-misc-misc-2-__codelineno-1-5"></a>        require(balances[msg.sender] &gt;= amount);
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#notes-ctf-misc-misc-2-__codelineno-1-6"></a>        msg.sender.call.value(amount)(&quot;&quot;);
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#notes-ctf-misc-misc-2-__codelineno-1-7"></a>        balances[msg.sender] -= amount;
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#notes-ctf-misc-misc-2-__codelineno-1-8"></a>    }
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#notes-ctf-misc-misc-2-__codelineno-1-9"></a>}
+</code></pre></div>
+<p>withdraw 时先转钱再更新 balances</p>
+<p>转钱的时候会进入到目标合约的 fallback 函数， 可以再次调用 withdraw</p>
+<p>再次调用时 require 检查的仍然是老的 balances</p>
+<p>这样可以把钱取空</p>
+<h4 id="notes-ctf-misc-misc-2-_13">伪随机数<a class="headerlink" href="#notes-ctf-misc-misc-2-_13" title="Permanent link">&para;</a></h4>
+<p>区块链需要所有以太坊节点验证交易计算出相同结果达成共识</p>
+<p>无法实现真随机数</p>
+<p>伪随机可以破解：</p>
+<ul>
+<li>利用区块变量作为随机数： 可以获取</li>
+<li>利用 blockhash 作为随机数： 只保留最近 256 个区块</li>
+<li>回滚攻击： 不断 revert 来猜随机数</li>
+</ul>
+<p><a href="https://ethernaut.openzeppelin.com/">Ethernaut</a> 题目 Coin Flip， 留作作业。</p>
+<p>其他常见漏洞：
+<a href="https://note.tonycrane.cc/ctf/blockchain/eth/vuln/">https://note.tonycrane.cc/ctf/blockchain/eth/vuln/</a></p>
+<h3 id="notes-ctf-misc-misc-2-ctf">CTF 比赛中的私链题目交互<a class="headerlink" href="#notes-ctf-misc-misc-2-ctf" title="Permanent link">&para;</a></h3>
+<p>一般会过滤掉大部分 geth rpc 接口</p>
+<ul>
+<li>防止其他队伍扒链蹭车 / 重放</li>
+<li>白名单示例可见 <a href="https://github.com/chainflag/solidctf/blob/main/fogeth/proxy/eth-jsonrpc-access.js">chainflag/solidctf</a> 中的白名单，一般就是这些</li>
+<li>geth 手动操作很复杂（只能发 raw）, remix/metamask 可能会无法连接</li>
+</ul>
+<p>可以 / 推荐通过 <a href="https://pypi.org/project/web3/">web3.py</a> 进行交互</p>
+<ul>
+<li>通过 eth.contract 和 abi 与 addr/bytecode 创建合约对象</li>
+<li>通过 contract.functions.f().build_transaction() 构建交易</li>
+<li>通过 eth.account.sign_transaction(txn, privateKey) 签名</li>
+<li>得到 rawTransaction 后 eth.send_raw_transaction(raw) 发送</li>
+<li>通过 eth.wait_for_transaction_receipt(hash) 等待交易完成</li>
+<li>无需交易的 view 函数可以直接 contract.functions.f().call()</li>
+</ul>
+<p><a href="https://note.tonycrane.cc/ctf/blockchain/eth/basic/#_15">https://note.tonycrane.cc/ctf/blockchain/eth/basic/#_15</a></p>
+<h3 id="notes-ctf-misc-misc-2-more_1">more<a class="headerlink" href="#notes-ctf-misc-misc-2-more_1" title="Permanent link">&para;</a></h3>
+<p>Read more: <a href="https://note.tonycrane.cc/ctf/blockchain/eth">https://note.tonycrane.cc/ctf/blockchain/eth</a></p>
+<p>以太坊基础知识： 账户、 交易、 合约、 区块等， 及其原理</p>
+<p>Solidity 语言： 最常用的智能合约语言， 以太坊官方语言</p>
+<ul>
+<li>了解其语法、 类型， 以及合约运行的整体逻辑</li>
+<li>了解一些 ERC 标准（目的是看懂题目的合约）</li>
+</ul>
+<p>以太坊虚拟机（EVM） ： 执行合约字节码的栈结构虚拟机</p>
+<ul>
+<li>了解其运行原理， 与账户、 合约、 交易的关系， 反汇编、 反编译的方法</li>
+</ul>
+<p>交互、 测试环境： geth、 Remix、 MetaMask、 web3.js、 web3.py 等</p>
+<p>常见合约漏洞： 整型溢出、 重入、 伪随机、 薅羊毛、 非预期的远程调用……</p>
+<p>入门做题平台：</p>
+<ul>
+<li><a href="https://ethernaut.openzeppelin.com/">ethernaut</a></li>
+<li>校巴上的几道 Blockchain 题建议有一定基础了解之后再做</li>
+</ul></section><h1 class='nav-section-title-end'>Ended: Misc</h1><h1 class='nav-section-title-end'>Ended: 专题周</h1><h1 class='nav-section-title-end'>Ended: CTF</h1>
                         <h1 class='nav-section-title' id='section-others'>
                             Others <a class='headerlink' href='#section-others' title='Permanent link'>↵</a>
                         </h1>
