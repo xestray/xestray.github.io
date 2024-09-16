@@ -1,4 +1,0 @@
----
-    comments: true
-    statistics: true
----

@@ -10,28 +10,39 @@ copyright: Copyright &copy; 2024 <a href="https://github.com/xestray" target="_b
 nav: 
   - Home: index.md
   - Computer Science:
-    - 数据结构基础: notes/ComputerScience/FDS.md
-    - 计算机逻辑设计基础: notes/ComputerScience/CLDF.md
+    - ComputerScience/index.md
+    # - 数据结构基础: notes/ComputerScience/FDS.md
+    # - 计算机逻辑设计基础: notes/ComputerScience/CLDF.md
+    - 高级数据结构与算法分析: 
+      - ComputerScience/ADS/index.md
+      - AVL树与Splay树与摊还分析: ComputerScience/ADS/chap-1.md
+    - 计算机组成与设计: 
+      - ComputerScience/COD/index.md
+      - 计算机概要与技术: ComputerScience/COD/chap-1.md
+      # - 数据表示: ComputerScience/COD/chap-2.md
   - 数理: 
-    - 数学分析: notes/MathematicsAndPhysics/Analysis.md
-    - 线性代数: notes/MathematicsAndPhysics/LinearAlgebra.md
-    - 普通物理学Ⅰ: notes/MathematicsAndPhysics/Physics1.md
+    - 数学分析: MathematicsAndPhysics/MA/MA.md
+    - 线性代数: MathematicsAndPhysics/LA/LA.md
+    - 普通物理学Ⅱ: MathematicsAndPhysics/Phy2.md
+    - 概率论: 
+      - MathematicsAndPhysics/Probability/index.md
+      - 事件及其概率: MathematicsAndPhysics/Probability/chap-1.md
+      - 随机变量与分布函数: MathematicsAndPhysics/Probability/chap-2.md
   - CTF: 
-    - notes/CTF/index.md
+    - CTF/index.md
     - 基础周:
-      - lec1-Intro: notes/CTF/fundament/lec1-Intro.md
-      - lec2-Web: notes/CTF/fundament/lec2-Web.md
-      - lec3-Misc: notes/CTF/fundament/lec3-Misc.md
-      - lec4-Reverse: notes/CTF/fundament/lec4-Rev.md
-      - lec5-Pwn: notes/CTF/fundament/lec5-Pwn.md
-      - lec6-Crypto: notes/CTF/fundament/lec6-Crypto.md
+      - lec1-Intro: CTF/fundament/lec1-Intro.md
+      - lec2-Web: CTF/fundament/lec2-Web.md
+      - lec3-Misc: CTF/fundament/lec3-Misc.md
+      - lec4-Reverse: CTF/fundament/lec4-Rev.md
+      - lec5-Pwn: CTF/fundament/lec5-Pwn.md
+      - lec6-Crypto: CTF/fundament/lec6-Crypto.md
     - 专题周:
       - Web:
-        - Web-1: notes/CTF/Web/Web-1.md
-        - Web-2: notes/CTF/Web/Web-2.md
+        - Web-1: CTF/Web/Web-1.md
       - Misc:
-        - Misc-1: notes/CTF/Misc/Misc-1.md
-        - Misc-2: notes/CTF/Misc/Misc-2.md
+        - Misc-1: CTF/Misc/Misc-1.md
+        - Misc-2: CTF/Misc/Misc-2.md
   - Others: 
     - 干点啥: others/WhatToDo.md
   - 标签: tags.md
@@ -130,6 +141,7 @@ plugins:
   - tags:
       tags_file: tags.md
   - print-site
+  - mermaid2
 
 # 额外配置项
 extra:
@@ -185,7 +197,12 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.snippets
   - pymdownx.magiclink
-  - pymdownx.superfences
+  - pymdownx.superfences:
+        # make exceptions to highlighting of code:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid_custom
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.inlinehilite
@@ -207,6 +224,7 @@ markdown_extensions:
 
 extra_javascript:
   - javascripts/katex.js
+  - javascripts/toc.js
   - https://unpkg.com/katex@0/dist/katex.min.js
   - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
 
@@ -221,3 +239,7 @@ extra_css:
   # - css/newfonts.css
   - css/newadmonitions.css
   - css/cards.css
+  - css/card.css
+  - css/custom.css
+  - css/changelog_extra.css
+  - css/timeline.css

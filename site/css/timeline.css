@@ -70,7 +70,7 @@
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
-    background-color: #47a1e6b0;/* var(--md-primary-fg-color); */
+    background-color: var(--md-primary-fg-color);
     background-clip: border-box;
     border-radius: .25rem;
     padding-top: 10px;
