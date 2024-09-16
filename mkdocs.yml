@@ -51,7 +51,7 @@ nav:
 theme:
   custom_dir: overrides 
   name: material
-  # logo: img/logo.png
+  logo: img/logo.png
   features:  
     - announce.dismiss  
     # - content.action.edit 

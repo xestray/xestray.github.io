@@ -104,7 +104,7 @@ $$
 
 MIPS: Millions of Instructions Per Second
 
-- 在其他参数都想同时才有比较意义
+- 在其他参数都相同时才有比较意义
 - 在不同的 ISA 之间不能仅凭 MIPS 比较；也不可用于比较指令的复杂程度
 
 ISA: 指令集合架构(Instruction Set Architecture)
