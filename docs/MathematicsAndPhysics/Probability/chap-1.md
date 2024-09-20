@@ -156,20 +156,20 @@ $$\mathscr{F} = \{ \emptyset, A, \overline{A}, \Omega \}$$
 **概率的运算公式**
 
 - $P(\emptyset) = 0$
-- 若 $A_i A_j = \emptyset, i,j=1, 2, \cdots, n, i \neq j$，则 
-    $$P(\sum_{i=1}^nA_i) = \sum_{i=1}^nP(A_i)$$
+- 若 $A_i A_j = \emptyset, i,j=1, 2, \cdots, n, i \neq j$，则
+
+$$P(\sum_{i=1}^nA_i) = \sum_{i=1}^nP(A_i)$$
+
 - $P(\overline{A}) = 1 - P(A)$
 - 若 $B \subset A$ 则 $P(A-B) = P(A) - P(B)$
 - $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
 - $P(A \backslash B) = P(A) - P(AB)$
 - (多还少补定理)
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 &~~~~P(A_1 \cup A_2 \cup \cdots \cup A_n)\\\\
 &= \sum_{i=1}^nP(A_i) - \sum_{1 \leq i < j \leq n}P(A_iA_j) + \cdots + (-1)^{n-1}P(A_1A_2\cdots A_n)
-\end{aligned}
-$$
+\end{aligned}$$
 
 - （次可列可加性）
 
@@ -183,7 +183,6 @@ $$A_1 \subset A_2 \subset \cdots$$
 
 !!! info "定理1.1"
     若 $A_1, A_2, \cdots$ 是一列单调增加的事件序列，则
-
     $$P(A) = \lim_{n \rightarrow \infty}P(A_n)$$
 
 ## 1.4 条件概率与事件的独立性
@@ -192,21 +191,127 @@ $$A_1 \subset A_2 \subset \cdots$$
 
 设 $A,B$ 是两个事件，且 $P(B) > 0$，则在事件 $B$ 发生的条件下，事件 $A$ 发生的概率称为事件 $A$ 关于事件 $B$ 的**条件概率**，记作 $P(A|B)$
 
+在某种情况下，条件的附加意味着对样本空间的压缩，相应的概率可在压缩的样本空间内直接计算。
 
-
-
-
-
-
-
-
-
-
+!!! note "定义"
+    对任意事件 $A$ 和 $B$，若 $P(B) \neq 0$，则“在事件 $B$ 发生的条件下 $A$ 发生的条件概率”，记作 $P(A|B)$，定义为
+    $$P(A|B) = \frac{P(AB)}{P(B)}$$
+    反过来也可用条件概率表示 $A, B$ 的乘积概率，即有**乘法公式**
+    $$ P(AB) = P(A|B)P(B) , P(B) \neq 0 $$
+    或
+    $$ P(AB) = P(B|A)P(A) , P(A) \neq 0 $$
 
 ### 全概率公式与贝叶斯公式
 
+!!! note "定义1.3"
+    若事件列 $ \{ A_1, A_2 \cdots, A_n \cdots \} $ 满足下列两个条件
 
+    1. $A_i, i=1, 2, \cdots $ 两两互不相容，且 $P(A_i) > 0$
+    2. $\sum_{i=1}^{\infty}A_i = \Omega$
+
+    则称 $ \{ A_1, A_2 \cdots, A_n \cdots \} $ 为 $\Omega$ 的一个**完备事件组**，也称为 $\Omega$ 的一个**分割**。
+
+- 最简单的完备事件组是 $\{ A, \overline{A}\}$
+
+!!! info "定理1.2（全概率公式）"
+    设 $ \{ A_1, A_2 \cdots, A_n \cdots \} $ 是 $\Omega$ 的一个完备事件组，$B$ 是任一事件，则
+    $$ P(B) = \sum_{i=1}^{\infty}P(A_i)P(B|A_i) $$
+
+- 概率公式的意义在于，它把事件 $B$ 的概率 $P(B)$ 分解为若干个条件概率的乘积之和。
+
+!!! info "贝叶斯公式"
+    设 $ \{ A_1, A_2 \cdots, A_n \cdots \} $ 是 $\Omega$ 的一个完备事件组，$B$ 是任一事件，且 $P(B) > 0$，则
+    $$ P(A_i|B) = \frac{P(A_i)P(B|A_i)}{\sum_{k=1}^{\infty}P(A_k)P(B|A_k)} $$
+
+- $P(A_i)$ 是没有进一步的信息（不知道 $B$ 是否发生）时，对 $A_i$ 概率的估计，称为**先验概率**
+- $P(A_i|B)$ 是在事件 $B$ 发生后对 $A_i$ 发生概率的估计，称为**后验概率**
+
+- 全概率公式：“由原因推结果”
+- 贝叶斯公式：“由结果推原因”
 
 ### 事件独立性
 
+#### 两个事件的独立性
 
+- 当 $P(A|B) = P(A)$ ,即 $P(AB) = P(A)P(B)$ 时，称事件 $A$ 与事件 $B$ **统计独立**，或 $A$ 与 $B$ 独立，记作 $A \perp B$。
+- 当 $A$ 与 $B$ 不独立时，也称 $A$ 与 $B$ **统计相依**。
+
+??? example "例题"
+    === "例一"
+    求证：若 $A$ 与 $B$ 互不相容，且 $P(A)P(B) \neq 0$，则 $A$ 与 $B$ 不独立。
+    证明：$A$ 与 $B$不相容，则 $P(AB) = 0 \neq P(A)P(B)$，故 $A$ 与 $B$ 不独立。
+
+    === "例二"
+    已知 $A$ 与 $B$ 独立，求证 $A$ 与 $\overline{B}$，$\overline{A}$ 与 $B$，$\overline{A}$ 与 $\overline{B}$ 也独立。
+    证明：由 $A$ 与 $B$ 独立，有 $P(AB) = P(A)P(B)$，从而
+    $$
+    \begin{aligned}
+    P(A\overline{B}) &= P(A) - P(AB) = P(A) - P(A)P(B) \\\\
+    &= P(A) - P(A)P(B) = P(A)(1-P(B)) \\\\
+    &= P(A)P(\overline{B}) \\\\
+    \end{aligned}
+    $$
+
+#### 多个时间的独立性
+
+!!! note "定义1.5"
+    若 
+    $$
+    \begin{cases}
+    P(AB) = P(A)P(B) \\\\
+    P(AC) = P(A)P(C) \\\\
+    P(BC) = P(B)P(C)
+    \end{cases}
+    $$
+    且 $P(ABC) = P(A)P(B)P(C)$ 则称事件 $A, B, C$ **相互独立**。
+
+!!! note "定义1.6"
+    若对一切可能的组合 $1 \leq i < j < k < \cdots \leq n$，有
+    $$ 
+    \begin{cases}
+    P(A_iA_j) = P(A_i)P(A_j)\\\\
+    P(A_iA_jA_k) = P(A_i)P(A_j)P(A_k)\\\\
+    \cdots \\\\
+    P(A_iA_jA_k\cdots A_n) = P(A_i)P(A_j)P(A_k) \cdots P(A_n)
+    \end{cases}
+    $$
+    就称 $A_1, A_2, \cdots, A_n$ **相互独立**。
+
+#### 试验的独立性
+
+与事件的独立性密切相关的是随机试验的独立性。
+
+- 一般来说，若有 $n$ 个试验 $E_1, E_2, \cdots, E_n$，每个试验的每个结果都是一个事件。如果 $E_1$ 的任一事件都与 $E_2$ 的任一事件与 $\cdots$ 与 $E_n$ 的任一事件相互独立，就说 $E_1, E_2, \cdots, E_n$ 相互独立
+- 记 $E_i$ 的样本空间为 $\Omega_i$ 为描述这 $n$ 次试验，要构造复合试验 $E = (E_1, E_2, \cdots, E_n)$ 对应的样本空间为 $\Omega = \Omega_1 \times \Omega_2 \times \cdots \times \Omega_n$ 是 $n$ 个样本空间的直积
+- $E$ 中的样本点 $\omega = (\omega^{(1)}, \cdots, \omega^{(n)})$，其中 $\omega^{(i)} \in \Omega_i$
+
+若 $A^{(i)}$ 为 $E_i$ 的任一事件，对一切 $A^{(1)}, A^{(2)}, \cdots, A^{(n)}$ 均有
+$$ P(A^{(1)}A^{(2)} \cdots A^{(n)}) = P(A^{(1)})P(A^{(2)}) \cdots P(A^{(n)})$$
+
+#### 伯努利概型 
+
+- 若一次随机试验$E$只有$A$与$\overline{A}$两种相反的结果（是与否，成功与失败等），就称其为**伯努利试验**。对于$n$次重复独立的伯努利试验，这种概率模型称为**伯努利概型**。
+
+二项分布：$n$ 次伯努利试验中事件 $A$ 恰好发生 $k$ 次的概率为（设 $A$ 的概率为 $p$，$\overline{A}$ 发生的概率为 $q$ ）
+$$ b(k, n, p) = \binom{n}{k} p^k q^{n-k} = \frac{n!}{k!(n-k)!} p^k q^{n-k}, k=0, 1, \cdots, n $$
+
+### 1.5 补充与注记
+
+从$n$个不同物件中取$k$个$(1 \leq r \leq n)$的不同排列总数为
+$$ P^r_n = n(n-1)(n-2) \cdots (n-r+1) $$
+
+- 特别的，若$r=n$，有 $P^r_r = r(r-1) \cdots 1 = r!$，将其称为全排列。
+- 人们常约定把 $0!$ 作为 $1$。
+
+从$n$个不同物件中取$k$个$(1 \leq r \leq n)$的不同排列总数为
+$$ \binom{n}{r} = \frac{P^r_n}{r!} = \frac{n!}{r!(n-r)!} $$
+
+组合数也常称为二项式系数
+$$ (a+b)^n = \sum^n_{i=0} \binom{n}{i} a^i b^{n-i} $$
+
+一些常用的公式：
+$$ \binom{n}{0} + \binom{n}{1} + \cdots + \binom{n}{n} = 2^n $$
+$$ \binom{n}{0} - \binom{n}{1} + \cdots + (-1)^n \binom{n}{n} = 0 $$
+$$ \binom{n}{k-1} + \binom{n}{k} = \binom{n+1}{k} $$
+$$ \binom{m+n}{k} = \sum_{i=0}^k \binom{m}{i}\binom{n}{k-i} $$
+$$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$

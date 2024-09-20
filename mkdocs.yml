@@ -23,7 +23,9 @@ nav:
   - 数理: 
     - 数学分析: MathematicsAndPhysics/MA/MA.md
     - 线性代数: MathematicsAndPhysics/LA/LA.md
-    - 普通物理学Ⅱ: MathematicsAndPhysics/Phy2.md
+    - 普通物理学Ⅱ:
+      - MathematicsAndPhysics/Phy2/index.md
+      - 电磁学: MathematicsAndPhysics/Phy2/electromagnetic.md
     - 概率论: 
       - MathematicsAndPhysics/Probability/index.md
       - 事件及其概率: MathematicsAndPhysics/Probability/chap-1.md
@@ -51,7 +53,7 @@ nav:
 theme:
   custom_dir: overrides 
   name: material
-  logo: img/logo.png
+  # logo: img/logo.png
   features:  
     - announce.dismiss  
     # - content.action.edit 
@@ -98,7 +100,7 @@ theme:
   font:
     text: LXGW WenKai Screen
     code: JetBrains Mono
-  favicon: material/notebook # 网站图标
+  # favicon: material/notebook # 网站图标
   icon:
     logo: material/notebook
     previous: fontawesome/solid/angle-left
@@ -140,8 +142,8 @@ plugins:
         - index.md
   - tags:
       tags_file: tags.md
-  - print-site
   - mermaid2
+  - print-site
 
 # 额外配置项
 extra:

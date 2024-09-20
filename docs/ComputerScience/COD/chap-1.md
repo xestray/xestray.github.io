@@ -7,12 +7,14 @@
 
 ```mermaid
 graph LR;
-A["Computer System"]
+A["Computer 
+    System"]
 B["Software"]
 C["Hardware"]
 D["CPU"]
 E["Memory"]
-F["I/O interface"]
+F["I/O
+    interface"]
 G["Control unit"]
 H["Datapath"]
 
@@ -92,7 +94,7 @@ $$
 \begin{aligned}
 Clock\ Cycles &= Instruction\ Count \times Cycles\ per\ Instruction(CPI)\\
 CPU\ Time &= Instruction\ Count \times CPI\times CPI\ Cycle\ Time\\
- &= \dfrac{Instruction\ Count \times CPI}{Clock\ Rate}
+ &= \frac{Instruction\ Count \times CPI}{Clock\ Rate}
 \end{aligned}
 $$
 
