@@ -270,3 +270,5 @@ Splay树就是在原先的二叉搜索树的基础上，通过一系列的旋转
 2. Remove X
 3. FindMax($T_L$)（左子树的最大结点没有右子树）
 4. Make $T_R$ the right child of the root of $T_L$ (后两步实际上就是一般的merge操作)
+
+## amortized anyl
