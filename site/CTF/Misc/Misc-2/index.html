@@ -115,7 +115,7 @@
     
       <link rel="stylesheet" href="https://fonts.font.im/css?family=Gloria+Hallelujah">
     
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
     
       <link rel="stylesheet" href="https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css">
     
@@ -622,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ComputerScience/ADS/chap-1/" class="md-nav__link">
+      <a href="../../../ComputerScience/ADS/lec-1/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2235,10 +2235,8 @@
 <h3 id="_3">流量取证常用工具<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <ul>
 <li>tcpdump 抓 TCP 包（Linux 命令行）</li>
-<li><a href="https://www.wireshark.org/">Wireshark</a>： 直接抓包， 得到物理层的全部数据并解析（开源）<ul>
-<li>自带命令行工具 tshark</li>
-</ul>
-</li>
+<li><a href="https://www.wireshark.org/">Wireshark</a>： 直接抓包， 得到物理层的全部数据并解析（开源）
+    + 自带命令行工具 tshark</li>
 <li><a href="https://github.com/gcla/termshark">termshark</a>： 类似 Wireshark 的开源命令行工具</li>
 <li><a href="https://github.com/KimiNewt/pyshark/">pyshark</a>： tshark 的 Python 封装， 可以用 Python 脚本分析</li>
 <li><a href="https://scapy.net/">scapy</a>： Python 库，</li>
@@ -2292,13 +2290,9 @@
 <p>具体题目示例</p>
 <ul>
 <li>本次 lab 中的题目： dnscap</li>
-<li>
-<p>MRCTF 2022： Bleach!</p>
-<ul>
-<li>基于 UDP 的 RTP 协议， 需要手动选择进行解析</li>
-<li>RTP 是一种音视频传输协议， 可以得到音频流</li>
-<li>wav 音频流中 LSB 包含隐写图片</li>
-</ul>
+<li>MRCTF 2022： Bleach!<p>- 基于 UDP 的 RTP 协议， 需要手动选择进行解析
+  - RTP 是一种音视频传输协议， 可以得到音频流
+  - wav 音频流中 LSB 包含隐写图片</p>
 </li>
 </ul>
 <h3 id="_4">其他协议<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
@@ -2342,13 +2336,9 @@
 <h3 id="_6">账户<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <p>外部账户（Externally Owned Account）</p>
 <ul>
-<li>
-<p>有一对公私钥， 用于签署交易</p>
-<ul>
-<li>私钥是随机生成的 256 位数（32 字节）</li>
-<li>公钥由私钥经过 ECDSA 算法计算而来， 是一个 64 字节的数</li>
-<li>地址由公钥经过 Keccak-256 哈希后取前 20 字节得到</li>
-</ul>
+<li>有一对公私钥， 用于签署交易<p>- 私钥是随机生成的 256 位数（32 字节）
+  - 公钥由私钥经过 ECDSA 算法计算而来， 是一个 64 字节的数
+  - 地址由公钥经过 Keccak-256 哈希后取前 20 字节得到</p>
 </li>
 </ul>
 <p><img alt="account" src="../assets/account.png" /></p>
@@ -2382,12 +2372,8 @@
 <ul>
 <li>通过 <a href="https://etherscan.io/">https://etherscan.io/</a> 查看</li>
 <li>主网（mainnet） ： 真正的金钱交易， 很少使用</li>
-<li>
-<p>测试链： Sepolia / Holesky 链， 可以通过 faucet 获取免费代币</p>
-<ul>
-<li><a href="https://sepolia-faucet.pk910.de/">https://sepolia-faucet.pk910.de/</a></li>
-<li>Ethernaut 等大型公开合约 CTF 平台会使用</li>
-</ul>
+<li>测试链： Sepolia / Holesky 链， 可以通过 faucet 获取免费代币<p>- <a href="https://sepolia-faucet.pk910.de/">https://sepolia-faucet.pk910.de/</a>
+  - Ethernaut 等大型公开合约 CTF 平台会使用</p>
 </li>
 </ul>
 <p>私链： 自己搭建的链， 模拟真实的链</p>
@@ -2733,12 +2719,6 @@
         <script src="../../../js/print-site.js"></script>
       
         <script src="../../../javascripts/katex.js"></script>
-      
-        <script src="../../../javascripts/toc.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
         <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
       

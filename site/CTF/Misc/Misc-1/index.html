@@ -115,7 +115,7 @@
     
       <link rel="stylesheet" href="https://fonts.font.im/css?family=Gloria+Hallelujah">
     
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
     
       <link rel="stylesheet" href="https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css">
     
@@ -622,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ComputerScience/ADS/chap-1/" class="md-nav__link">
+      <a href="../../../ComputerScience/ADS/lec-1/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2288,11 +2288,9 @@
 <ul>
 <li>exiftool 识别短数据，或者十六进制编辑器直接观察</li>
 <li>binwalk 识别叠加文件，foremost 提取</li>
-<li>图像末尾叠加一个压缩包，就是所谓的“图种”<ul>
-<li>修改后缀名可能可以解压（部分解压软件会忽略前面的图像）</li>
-<li>其实不如直接分离</li>
-</ul>
-</li>
+<li>图像末尾叠加一个压缩包，就是所谓的“图种”
+    - 修改后缀名可能可以解压（部分解压软件会忽略前面的图像）
+    - 其实不如直接分离</li>
 </ul>
 <p>直接利用元信息</p>
 <ul>
@@ -2345,15 +2343,11 @@
 </ul>
 <p>具体图像模式以及转换</p>
 <ul>
-<li>
-<p>'1'：黑白二值（0/255）；'L'：灰度（8 bit），'l'：32 bit 灰度</p>
-<ul>
-<li>L = 0.299 R + 0.587 G + 0.114 B</li>
+<li>'1'：黑白二值（0/255）；'L'：灰度（8 bit），'l'：32 bit 灰度<p>- L = 0.299 R + 0.587 G + 0.114 B</p>
+</li>
 </ul>
-</li>
-<li>
-<p>'P'：8bit 调色盘，获取的像素值是调色盘索引</p>
-</li>
+<ul>
+<li>'P'：8bit 调色盘，获取的像素值是调色盘索引</li>
 <li>'RGB'、'RGBA'</li>
 <li>'CMYK'：转换时有色差，CMY = 255 - RGB，K = 0</li>
 <li>'YCbCr'、'LAB'、'HSV' 等，转换时有复杂公式（可能出现新的隐写）</li>
@@ -2402,11 +2396,7 @@
 <p>JPEG 的压缩原理是 DCT（离散余弦变换）+ Huffman 编码</p>
 <ul>
 <li>由 RGB 转换到 YCbCr，然后减少 Cb、Cr 的采样率</li>
-<li>
-<p>将图像分块，每个块 8x8，进行 DCT 变换</p>
-<ul>
-<li>将图像转换为频域，便于压缩高频部分</li>
-</ul>
+<li>将图像分块，每个块 8x8，进行 DCT 变换<p>- 将图像转换为频域，便于压缩高频部分</p>
 </li>
 </ul>
 <p>量化，将 DCT 变换后的系数除以量化表中的系数</p>
@@ -2423,33 +2413,25 @@
 <ul>
 <li>每块的结构都是 4 字节长度 + 4 字节类型 + 数据 + 4 字节 CRC 校验</li>
 <li>四个标准数据块：IHDR、PLTE、IDAT、IEND</li>
-<li>其他辅助数据块：eXIf、tEXt、zTXt、tIME、gAMA……<ul>
-<li>eXIf 元信息，tIME 修改时间，tEXt 文本，zTXt 压缩文本</li>
-</ul>
-</li>
+<li>其他辅助数据块：eXIf、tEXt、zTXt、tIME、gAMA……
+    - eXIf 元信息，tIME 修改时间，tEXt 文本，zTXt 压缩文本</li>
 </ul>
 <p>四种标准数据块：</p>
 <ul>
-<li>
-<p>IHDR：包含图像基本信息，必须位于开头</p>
-</li>
-<li>
-<p>4 字节宽度 + 4 字节高度</p>
-</li>
+<li>IHDR：包含图像基本信息，必须位于开头</li>
+</ul>
+<ul>
+<li>4 字节宽度 + 4 字节高度</li>
 <li>1 字节位深度：1、2、4、8、16</li>
 <li>1 字节颜色类型：0 灰度，2 RGB，3 索引，4 灰度透明，6 RGB 透明</li>
 <li>1 字节压缩方式，1 字节滤波方式，均固定为 0</li>
-<li>
-<p>1 字节扫描方式：0 非隔行扫描，1 Adam7 隔行扫描</p>
-</li>
-<li>
-<p>PLTE：调色板，只对索引颜色类型有用</p>
-</li>
-<li>IDAT：图像数据，可以有多个，每个数据块最大 2 31 -1 字节</li>
-<li>IEND：文件结束标志，必须位于最后，内容固定<ul>
-<li>PNG 标准不允许 IEND 之后有数据块</li>
+<li>1 字节扫描方式：0 非隔行扫描，1 Adam7 隔行扫描</li>
 </ul>
-</li>
+<ul>
+<li>PLTE：调色板，只对索引颜色类型有用</li>
+<li>IDAT：图像数据，可以有多个，每个数据块最大 2 31 -1 字节</li>
+<li>IEND：文件结束标志，必须位于最后，内容固定
+    - PNG 标准不允许 IEND 之后有数据块</li>
 </ul>
 <hr />
 <h2 id="_12">隐写进阶技术<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
@@ -2458,10 +2440,8 @@
 <li>PNG 图像按行进行像素数据的压缩，以及存储 / 读取</li>
 <li>当解码时已经达到了 IHDR 中规定的大小就会结束</li>
 <li>因此题目可能会故意修改 IHDR 中的高度数据，使之显示不全</li>
-<li>恢复的话更改高度即可，同时注意 crc 校验码，否则可能报错<ul>
-<li>binascii.crc32(data)，data 为从 IHDR 开始的数据</li>
-</ul>
-</li>
+<li>恢复的话更改高度即可，同时注意 crc 校验码，否则可能报错
+    - binascii.crc32(data)，data 为从 IHDR 开始的数据</li>
 </ul>
 <hr />
 <h3 id="_14">需要原图的图像隐写<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
@@ -2473,22 +2453,14 @@
 </ul>
 <p>接下来利用原图和隐写图像的差异进行分析</p>
 <ul>
-<li>
-<p>图像像素异或观察差异</p>
+<li>图像像素异或观察差异
+    - PIL 手动处理 / ImageChops.difference
+    - stegsolve image combiner</li>
+</ul>
 <ul>
-<li>PIL 手动处理 / ImageChops.difference</li>
-<li>stegsolve image combiner</li>
-</ul>
-</li>
-<li>
-<p>盲水印系列</p>
-<ul>
-<li>给了打水印的代码的话直接尝试根据代码逆推即可</li>
-<li>没有给代码的可能就是常见的现有盲水印工具<ul>
-<li>guofei9987/blind_watermark</li>
-</ul>
-</li>
-</ul>
+<li>盲水印系列<p>- 给了打水印的代码的话直接尝试根据代码逆推即可
+  - 没有给代码的可能就是常见的现有盲水印工具
+      - guofei9987/blind_watermark</p>
 </li>
 </ul>
 <hr />
@@ -2742,12 +2714,6 @@
         <script src="../../../js/print-site.js"></script>
       
         <script src="../../../javascripts/katex.js"></script>
-      
-        <script src="../../../javascripts/toc.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
         <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
       

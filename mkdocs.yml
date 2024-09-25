@@ -15,7 +15,7 @@ nav:
     # - 计算机逻辑设计基础: notes/ComputerScience/CLDF.md
     - 高级数据结构与算法分析: 
       - ComputerScience/ADS/index.md
-      - AVL树与Splay树与摊还分析: ComputerScience/ADS/chap-1.md
+      - AVL树与Splay树与摊还分析: ComputerScience/ADS/lec-1.md
     - 计算机组成与设计: 
       - ComputerScience/COD/index.md
       - 计算机概要与技术: ComputerScience/COD/chap-1.md
@@ -187,6 +187,7 @@ markdown_extensions:
       permalink: true
       toc_depth: 4
   - meta
+  - tables
   - def_list
   - attr_list
   - md_in_html
@@ -221,14 +222,12 @@ markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
   - neoteroi.cards
+  - mdx_truly_sane_lists
   # - hbfm.inline_coloring
   # - hbfm.inline_list
 
 extra_javascript:
   - javascripts/katex.js
-  - javascripts/toc.js
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   - https://unpkg.com/katex@0/dist/katex.min.js
   - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
   # - javascripts/mathjax.js
@@ -238,7 +237,8 @@ extra_javascript:
 extra_css:
   - https://fonts.font.im/css2?family=Noto+Serif+SC
   - https://fonts.font.im/css?family=Gloria+Hallelujah
-  - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css
+  - https://unpkg.com/katex@0/dist/katex.min.css
+  # - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css
   - https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css
   - https://cdn.tonycrane.cc/lxgw/lxgwscreen.css
   - css/changelogs.css
@@ -247,3 +247,4 @@ extra_css:
   - css/card.css
   - css/custom.css
   - css/changelog_extra.css
+  - css/counter.css

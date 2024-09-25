@@ -115,7 +115,7 @@
     
       <link rel="stylesheet" href="https://fonts.font.im/css?family=Gloria+Hallelujah">
     
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
     
       <link rel="stylesheet" href="https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css">
     
@@ -622,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ComputerScience/ADS/chap-1/" class="md-nav__link">
+      <a href="../../../ComputerScience/ADS/lec-1/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2122,9 +2122,7 @@
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="n">COLUMNS</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="p">;</span><span class="w"> </span><span class="cm">/*输出列*/</span>
 </code></pre></div>
 <ul>
-<li>
-<p>SELECT语句的结构</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">field1</span><span class="p">,</span><span class="w"> </span><span class="n">field2</span><span class="p">,...</span><span class="n">fieldN</span><span class="w"> </span><span class="p">(</span><span class="k">FROM</span><span class="w"> </span><span class="n">table_name1</span><span class="p">,</span><span class="w"> </span><span class="n">table_name2</span><span class="p">...</span><span class="w"> </span><span class="p">[</span><span class="k">WHERE</span><span class="w"> </span><span class="n">condition1</span><span class="w"> </span><span class="p">[</span><span class="k">AND</span><span class="w"> </span><span class="p">[</span><span class="k">OR</span><span class="p">]]</span><span class="w"> </span><span class="n">condition2</span><span class="p">...])</span>
+<li>SELECT语句的结构<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">field1</span><span class="p">,</span><span class="w"> </span><span class="n">field2</span><span class="p">,...</span><span class="n">fieldN</span><span class="w"> </span><span class="p">(</span><span class="k">FROM</span><span class="w"> </span><span class="n">table_name1</span><span class="p">,</span><span class="w"> </span><span class="n">table_name2</span><span class="p">...</span><span class="w"> </span><span class="p">[</span><span class="k">WHERE</span><span class="w"> </span><span class="n">condition1</span><span class="w"> </span><span class="p">[</span><span class="k">AND</span><span class="w"> </span><span class="p">[</span><span class="k">OR</span><span class="p">]]</span><span class="w"> </span><span class="n">condition2</span><span class="p">...])</span>
 </code></pre></div>
 <p>Examples:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">SLEEP</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
@@ -2132,9 +2130,9 @@
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">(),</span><span class="w"> </span><span class="k">VERSION</span><span class="p">(),</span><span class="w"> </span><span class="k">USER</span><span class="p">(),</span><span class="w"> </span><span class="n">ASCII</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">CONCAT</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="p">);</span>
 </code></pre></div>
 </li>
-<li>
-<p>关于注释</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cm">/*</span>
+</ul>
+<ul>
+<li>关于注释<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cm">/*</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="cm">这是注释，支持多行</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="cm">*/</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
@@ -2145,9 +2143,9 @@
 <a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="cm">/*!version_number 当数据库版本大于version_number(或version_number为空)时注释内容会被执行，否则就是普通注释*/</span>
 </code></pre></div>
 </li>
-<li>
-<p>一些SELECT的其他例子</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="cm">/*从特定表中获取特定列*/</span>
+</ul>
+<ul>
+<li>一些SELECT的其他例子<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="cm">/*从特定表中获取特定列*/</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="cm">/*从特定表中获取全部列*/</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
@@ -2164,17 +2162,15 @@
 <a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">group_concat</span><span class="p">(</span><span class="n">col_name1</span><span class="p">,</span><span class="w"> </span><span class="n">col_name2</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="cm">/*整合行、列数据*/</span>
 </code></pre></div>
 </li>
-<li>
-<p>一些常用的URL编码：</p>
-<ul>
-<li>Space: %20</li>
-<li>#: %23</li>
-<li>': %27</li>
-<li>": %22</li>
-<li>+: %2B</li>
-<li># + $ - _ . ! * ( ) 浏览器地址栏默认不编码，但是不意味着不能编码</li>
 </ul>
-</li>
+<ul>
+<li>一些常用的URL编码：
+    - Space: %20
+    - #: %23
+    - ': %27
+    - ": %22
+    - +: %2B
+    - # + $ - _ . ! * ( ) 浏览器地址栏默认不编码，但是不意味着不能编码</li>
 </ul>
 <h2 id="sql_1">SQL注入<a class="headerlink" href="#sql_1" title="Permanent link">&para;</a></h2>
 <h3 id="sql_2">直接回显的SQL注入<a class="headerlink" href="#sql_2" title="Permanent link">&para;</a></h3>
@@ -2188,33 +2184,25 @@
 <p>存在注入-&gt;SQL语句可以以一种“意料之外”的方式被解析</p>
 <p>而最简单的“意料之外”就是把他搞坏</p>
 <ul>
-<li>
-<p>传入全部各种特殊字符 '"~!@#$%^&amp;*()`</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">&#39;&quot;</span><span class="o">~!@#</span><span class="err">$</span><span class="o">%^&amp;*</span><span class="p">()</span><span class="o">`</span><span class="p">;</span><span class="w">     </span><span class="cm">/*数字型*/</span>
+<li>传入全部各种特殊字符 '"~!@#$%^&amp;*()`<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">&#39;&quot;</span><span class="o">~!@#</span><span class="err">$</span><span class="o">%^&amp;*</span><span class="p">()</span><span class="o">`</span><span class="p">;</span><span class="w">     </span><span class="cm">/*数字型*/</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="err">&quot;</span><span class="o">~!@#</span><span class="err">$</span><span class="o">%^&amp;*</span><span class="p">()</span><span class="o">`</span><span class="err">&#39;</span><span class="p">;</span><span class="w">   </span><span class="cm">/*字符型*/</span>
 </code></pre></div>
 </li>
-<li>
-<p>不管内部结构怎么样，这样肯定能出错，<strong>检测效率高</strong></p>
-</li>
+</ul>
+<ul>
+<li>不管内部结构怎么样，这样肯定能出错，<strong>检测效率高</strong></li>
 </ul>
 <p>判断到底是数字型还是字符型</p>
 <ul>
-<li>
-<p>传入id=2-1</p>
-<ul>
-<li>如果是数字型，语句应该变为：</li>
-</ul>
+<li>传入id=2-1<p>- 如果是数字型，语句应该变为：</p>
 <p><div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span>
 </code></pre></div>
-等价于：
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+  等价于：
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
 </code></pre></div>
-那么就应该能正常返回id=1的页面</p>
-<ul>
-<li>而如果是字符型，语句应该变为：</li>
-</ul>
+  那么就应该能正常返回id=1的页面</p>
+<p>- 而如果是字符型，语句应该变为：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2-1&#39;</span>
 </code></pre></div>
 <p>会查询不到内容</p>
@@ -2258,19 +2246,17 @@
 <p>但是，由于我们不知道表名、列名，我们无法获取更多的数据</p>
 <p>幸运的是，MySQL 的默认库<code>information_schema</code>中存放了这些信息。当然，这个技巧只能在 MySQL 中使用</p>
 <ul>
-<li>
-<p>在MySQL中，所有的数据库名存放在<code>information_schema.schemata</code>的<code>schema_name</code>字段下</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">schema_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">schemata</span><span class="p">;</span>
+<li>在MySQL中，所有的数据库名存放在<code>information_schema.schemata</code>的<code>schema_name</code>字段下<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">schema_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">schemata</span><span class="p">;</span>
 </code></pre></div>
 </li>
-<li>
-<p>所有的表名存放在<code>information_schema.tables</code>的<code>table_name</code>字段下，可以以<code>table_schema</code>为条件筛选</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="s1">&#39;db_name&#39;</span><span class="p">;</span>
+</ul>
+<ul>
+<li>所有的表名存放在<code>information_schema.tables</code>的<code>table_name</code>字段下，可以以<code>table_schema</code>为条件筛选<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="s1">&#39;db_name&#39;</span><span class="p">;</span>
 </code></pre></div>
 </li>
-<li>
-<p>所有的列名存放在<code>information_schema.columns</code>的<code>column_name</code>字段下，可以以<code>table_schema</code>和<code>table_name</code>为条件筛选</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">column_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">table_name</span><span class="o">=</span><span class="s1">&#39;table_name&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="s1">&#39;db_name&#39;</span><span class="p">;</span>
+</ul>
+<ul>
+<li>所有的列名存放在<code>information_schema.columns</code>的<code>column_name</code>字段下，可以以<code>table_schema</code>和<code>table_name</code>为条件筛选<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">column_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">table_name</span><span class="o">=</span><span class="s1">&#39;table_name&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="s1">&#39;db_name&#39;</span><span class="p">;</span>
 </code></pre></div>
 </li>
 </ul>
@@ -2293,14 +2279,12 @@
 </code></pre></div>
 <p>验证猜想</p>
 <ul>
-<li>
-<p>传入<code>uname='</code></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="err">&#39;</span><span class="w"> </span><span class="cm">/*报错*/</span>
+<li>传入<code>uname='</code><div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="err">&#39;</span><span class="w"> </span><span class="cm">/*报错*/</span>
 </code></pre></div>
 </li>
-<li>
-<p>而uname="时</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&quot;&#39;</span><span class="w"> </span><span class="cm">/*不报错*/</span>
+</ul>
+<ul>
+<li>而uname="时<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&quot;&#39;</span><span class="w"> </span><span class="cm">/*不报错*/</span>
 </code></pre></div>
 </li>
 </ul>
@@ -2414,13 +2398,11 @@
 <p>而在GBK编码下，<code>df 5c</code>是汉字<code>運</code>的编码，最后这段字符会被数据库理解为<code>運</code>'，导致转义失效，单引号逃逸。这种技巧被称为宽字节注入。</p>
 <h3 id="_6">一些其他注入漏洞的例子<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>XXE: XML external entity attack</p>
-<p>比如这段XML发送给某个API后，服务器会解析XML的内容，并返回一个HTML页面。</p>
+<li>XXE: XML external entity attack<p>比如这段XML发送给某个API后，服务器会解析XML的内容，并返回一个HTML页面。</p>
 </li>
-<li>
-<p>SSRF: Server-side request forgery</p>
-<p>诱导服务端对非预期的地址作网络请求，从而获取部分内网信息</p>
+</ul>
+<ul>
+<li>SSRF: Server-side request forgery<p>诱导服务端对非预期的地址作网络请求，从而获取部分内网信息</p>
 </li>
 </ul>
 <h2 id="_7">总结<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
@@ -2654,12 +2636,6 @@
         <script src="../../../js/print-site.js"></script>
       
         <script src="../../../javascripts/katex.js"></script>
-      
-        <script src="../../../javascripts/toc.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
         <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
       

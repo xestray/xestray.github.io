@@ -1,6 +1,7 @@
 ---
     comments: true
     statistics: true
+    counter: true
 ---
 
 # Computer Abstractions and Technology

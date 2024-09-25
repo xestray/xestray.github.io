@@ -115,7 +115,7 @@
     
       <link rel="stylesheet" href="https://fonts.font.im/css?family=Gloria+Hallelujah">
     
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
     
       <link rel="stylesheet" href="https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css">
     
@@ -622,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ComputerScience/ADS/chap-1/" class="md-nav__link">
+      <a href="../../../ComputerScience/ADS/lec-1/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2114,10 +2114,8 @@
 <ul>
 <li>用于尝试学习新东西，许多题目需要快速入门/快速上手新工具</li>
 <li>思维活跃，大胆尝试</li>
-<li>一定的编程能力<ul>
-<li><strong>熟练掌握</strong>Python或其他一门语言</li>
-</ul>
-</li>
+<li>一定的编程能力
+    - <strong>熟练掌握</strong>Python或其他一门语言</li>
 <li>多做题</li>
 </ul>
 <h2 id="_1">基础编解码知识<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
@@ -2130,23 +2128,15 @@
 </ul>
 <p>常见的字符编码：</p>
 <ul>
-<li>ASCII：一共 128 个项，即每个字符可以用一个7位的01串表示（或一字节）<ul>
-<li>00-1F：制字符；20-7E：可见字符；7F：控制字符（DEL）</li>
-</ul>
-</li>
-<li>Latin-1（ISO-8859-1）：扩展了 ASCII，一共 256 个项<ul>
-<li>80-9F：控制字符；A0-FF：可见字符</li>
-<li>特点：任何字节流都可以用其解码</li>
-</ul>
-</li>
-<li>利用Unicode 字符集的一系列编码<ul>
-<li>UTF-8 / UTF-16 / UTF-32 / UCS</li>
-</ul>
-</li>
-<li>中国国标字符集系列编码8<ul>
-<li>GB 2312 / GBK / GB 18030-202</li>
-</ul>
-</li>
+<li>ASCII：一共 128 个项，即每个字符可以用一个7位的01串表示（或一字节）
+    - 00-1F：制字符；20-7E：可见字符；7F：控制字符（DEL）</li>
+<li>Latin-1（ISO-8859-1）：扩展了 ASCII，一共 256 个项
+    - 80-9F：控制字符；A0-FF：可见字符
+    - 特点：任何字节流都可以用其解码</li>
+<li>利用Unicode 字符集的一系列编码
+    - UTF-8 / UTF-16 / UTF-32 / UCS</li>
+<li>中国国标字符集系列编码8
+    - GB 2312 / GBK / GB 18030-202</li>
 </ul>
 <h3 id="unicodeutf">Unicode字符集与UTF编码<a class="headerlink" href="#unicodeutf" title="Permanent link">&para;</a></h3>
 <p>参考：<a href="https://note.tonycrane.cc/cs/unicode/">TonyCrane的笔记</a></p>
@@ -2161,18 +2151,14 @@
 </ul>
 <p>UTF（Unicode Transformation Format）：Unicode字符集的编码方式</p>
 <ul>
-<li>UTF-8：变长编码，1~4字节表示一个字符，兼容ASCII<ul>
-<li>1字节：0xxxxxxx；</li>
-<li>2字节：110xxxxx 10xxxxxx；</li>
-<li>3字节：1110xxxx 10xxxxxx 10xxxxxx；</li>
-<li>4字节：11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</li>
-<li>ASCII字符：1字节；常用字符：2字节；其他字符：3字节或4字节</li>
-</ul>
-</li>
-<li>UTF-16：2字节或4字节表示一个字符，不兼容ASCII<ul>
-<li>BMP（基本多文种平面）：2字节表示；SMP（补充多文种平面）：4字节表示</li>
-</ul>
-</li>
+<li>UTF-8：变长编码，1~4字节表示一个字符，兼容ASCII
+    - 1字节：0xxxxxxx；
+    - 2字节：110xxxxx 10xxxxxx；
+    - 3字节：1110xxxx 10xxxxxx 10xxxxxx；
+    - 4字节：11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+    - ASCII字符：1字节；常用字符：2字节；其他字符：3字节或4字节</li>
+<li>UTF-16：2字节或4字节表示一个字符，不兼容ASCII
+    - BMP（基本多文种平面）：2字节表示；SMP（补充多文种平面）：4字节表示</li>
 </ul>
 <h3 id="_3">出现乱码原因<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <p>几个字符集不兼容的部分互相编解码</p>
@@ -2188,11 +2174,9 @@
 <h3 id="morse-code">摩尔斯电码(Morse Code)<a class="headerlink" href="#morse-code" title="Permanent link">&para;</a></h3>
 <p>字符 $ \iff $ 字符</p>
 <ul>
-<li>摩尔斯电码：一种用点（·）和划（-）（时间长短）表示字符<ul>
-<li>点·：1单位；划-：3单位</li>
-<li>点划之间间隔：1单位；字符之间间隔：3单位；单词之间间隔：7单位</li>
-</ul>
-</li>
+<li>摩尔斯电码：一种用点（·）和划（-）（时间长短）表示字符
+    + 点·：1单位；划-：3单位
+    + 点划之间间隔：1单位；字符之间间隔：3单位；单词之间间隔：7单位</li>
 <li>字符集：A-Z、0-9、标点符号等（. : , ; ? = ' / ! - _ " ( ) $ &amp; @ +）</li>
 <li>表示中文：电码表（一个汉字对应四个数字），数字使用短码发送</li>
 </ul>
@@ -2200,33 +2184,25 @@
 <p>01串 $ \iff $ 字符，Base家族的结果都可以转为可见字符</p>
 <ul>
 <li>Base16：16进制编码表示字节流</li>
-<li>Base32：5bit一组（0-31），按照字符表（A-Z、2-7）映射<ul>
-<li>最终长度必须是5的倍数，不足的用=补齐（明显特征）</li>
-</ul>
-</li>
-<li>Base64：6bit一组（0-63），按照字符表映射<ul>
-<li>标准字符表：A-Z a-z 0-9 + /</li>
-<li>另有多种常用字符表，如URL安全字符表：A-Z a-z 0-9 - _</li>
-<li>最终长度必须是4的倍数，不足的用=补齐（1~2个，明显特征）</li>
-</ul>
-</li>
+<li>Base32：5bit一组（0-31），按照字符表（A-Z、2-7）映射
+    - 最终长度必须是5的倍数，不足的用=补齐（明显特征）</li>
+<li>Base64：6bit一组（0-63），按照字符表映射
+    - 标准字符表：A-Z a-z 0-9 + /
+    - 另有多种常用字符表，如URL安全字符表：A-Z a-z 0-9 - _
+    - 最终长度必须是4的倍数，不足的用=补齐（1~2个，明显特征）</li>
 </ul>
 <p><img alt="base" src="../assets/Base.png" /></p>
 <p>Base-n系列编码的本质：字节流 <span class="arithmatex">\(\rightarrow\)</span> 整数 <span class="arithmatex">\(\rightarrow\)</span> n进制 <span class="arithmatex">\(\rightarrow\)</span> 系数查表</p>
 <p>除了16/32/64进制外，还有一些其他的Base编码：</p>
 <ul>
-<li>Base85：4字节整数 <span class="arithmatex">\(\rightarrow\)</span> 85进制 <span class="arithmatex">\(\rightarrow\)</span> 5个系数<ul>
-<li>常用字符表：0-9 A-Z a-z ! # $ % &amp; ( ) * + - ; &lt; = &gt; ? @ ^ _ ` { | } ~</li>
-<li>标准字符表： !-u（ASCII 0x21-0x75）</li>
-</ul>
-</li>
-<li>作为大整数转换进制：<ul>
-<li>Base62：0-9 A-Z a-z（比Base64少了+ /）</li>
-<li>Base58：0-9 A-Z a-z（比Base62少了不易区分的0 O I l）</li>
-<li>Base56：比Base58少了1和o</li>
-<li>Base36：0-9 A-Z（比Base62少了a-z）</li>
-</ul>
-</li>
+<li>Base85：4字节整数 <span class="arithmatex">\(\rightarrow\)</span> 85进制 <span class="arithmatex">\(\rightarrow\)</span> 5个系数
+    - 常用字符表：0-9 A-Z a-z ! # $ % &amp; ( ) * + - ; &lt; = &gt; ? @ ^ _ ` { | } ~
+    - 标准字符表： !-u（ASCII 0x21-0x75）</li>
+<li>作为大整数转换进制：
+    - Base62：0-9 A-Z a-z（比Base64少了+ /）
+    - Base58：0-9 A-Z a-z（比Base62少了不易区分的0 O I l）
+    - Base56：比Base58少了1和o
+    - Base36：0-9 A-Z（比Base62少了a-z）</li>
 </ul>
 <h3 id="_4">一些其他编码<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <p>其他常用编码</p>
@@ -2252,10 +2228,8 @@
 <p>一般在misc题目中出现即反之信息搜集，有几种情况：</p>
 <ul>
 <li>构造了一个全新的虚拟身份，搜集得到出题人准备好的信息</li>
-<li>根据图片、文档等附件泄漏的信息进行推理（主要）<ul>
-<li>包括根据图片内容推理找到拍摄位置、当时环境等信息</li>
-</ul>
-</li>
+<li>根据图片、文档等附件泄漏的信息进行推理（主要）
+    - 包括根据图片内容推理找到拍摄位置、当时环境等信息</li>
 </ul>
 <h3 id="_5">信息搜集/查询基础<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <p>数字信息搜集工具：<a href="https://github.com/ffffffff0x/Digital-Privacy">https://github.com/ffffffff0x/Digital-Privacy</a></p>
@@ -2294,11 +2268,9 @@
 <li>百度识图搜索：中文互联网图片搜索结果</li>
 <li>Google 图片搜索：用来搜索外国范围的图片</li>
 <li>Bing 图片搜索：和Google差不多，都可以参考</li>
-<li>Yandex 图片搜索：<ul>
-<li>搜索相似图片</li>
-<li>搜索风景时更常用</li>
-</ul>
-</li>
+<li>Yandex 图片搜索：
+    - 搜索相似图片
+    - 搜索风景时更常用</li>
 <li>TinEye：搜索完全相同的图片（找来源）</li>
 </ul>
 <h4 id="_9">地点线索搜集<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
@@ -2313,20 +2285,16 @@
 <h4 id="_10">环境信息分析<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
 <ul>
 <li>几何学透视简单分析照片拍摄者高度</li>
-<li>太阳角度、阴影长度等太阳相关信息<ul>
-<li>时间 <span class="arithmatex">\(\iff\)</span> 位置相互估计</li>
-<li><a href="https://www.suncalc.org">suncalc.org</a></li>
-<li><a href="https://www.sunearthtools.com">sunearthtools.com</a></li>
-</ul>
-</li>
+<li>太阳角度、阴影长度等太阳相关信息
+    - 时间 <span class="arithmatex">\(\iff\)</span> 位置相互估计
+    - <a href="https://www.suncalc.org">suncalc.org</a>
+    - <a href="https://www.sunearthtools.com">sunearthtools.com</a></li>
 <li>天气信息、云层信息等</li>
-<li>飞机航班信息<ul>
-<li>估计方向、位置、时间等</li>
-<li><a href="https://www.flightradar24.com">flightradar24.com</a></li>
-<li><a href="https://www.flightaware.com/">flightaware.com</a></li>
-<li><a href="https://www.adsbexchange.com/">adsbexchange.com</a></li>
-</ul>
-</li>
+<li>飞机航班信息
+    - 估计方向、位置、时间等
+    - <a href="https://www.flightradar24.com">flightradar24.com</a>
+    - <a href="https://www.flightaware.com/">flightaware.com</a>
+    - <a href="https://www.adsbexchange.com/">adsbexchange.com</a></li>
 <li>风景信息 <span class="arithmatex">\(\rightarrow\)</span> Yandex 图片搜索</li>
 </ul>
 
@@ -2551,12 +2519,6 @@
         <script src="../../../js/print-site.js"></script>
       
         <script src="../../../javascripts/katex.js"></script>
-      
-        <script src="../../../javascripts/toc.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
         <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
       

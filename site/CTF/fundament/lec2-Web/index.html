@@ -115,7 +115,7 @@
     
       <link rel="stylesheet" href="https://fonts.font.im/css?family=Gloria+Hallelujah">
     
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
     
       <link rel="stylesheet" href="https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css">
     
@@ -622,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ComputerScience/ADS/chap-1/" class="md-nav__link">
+      <a href="../../../ComputerScience/ADS/lec-1/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2483,24 +2483,18 @@
 <h2 id="web">Web应用架构：客户端+服务端<a class="headerlink" href="#web" title="Permanent link">&para;</a></h2>
 <p>桌面应用和Web应用在架构上有显著的区别。桌面应用通常是在本地运行的独立程序，而Web应用则需要依赖客户端和服务端的协作。</p>
 <ul>
-<li>客户端：你的浏览器<ul>
-<li>可视化：图形、图片、布局…… HTML + CSS</li>
-<li>人机交互逻辑：按钮点击，登录，发送请求……JS</li>
-<li>缓存、Cookie</li>
-<li>安全：不能将私密的、不该获取的信息传出去（比如 Cookie），不能为所欲为（比如注销其他网站的账号）</li>
-</ul>
-</li>
-<li>服务端：某台或很多台服务器<ul>
-<li>认证与鉴权：如何证明你是你<ul>
-<li>Authentication（认证）：知道你是谁</li>
-<li>Authorization（鉴权）：确认你有何权限</li>
-</ul>
-</li>
-<li>处理请求：用户需要做什么？将结果返回客户端</li>
-<li>服务器也可以有不同分工：前端后端、数据库……</li>
-<li>安全：用户不能获得不该获取的信息（比如 flag），不能为所欲为（比如任意代码执行 RCE）</li>
-</ul>
-</li>
+<li>客户端：你的浏览器
+    - 可视化：图形、图片、布局…… HTML + CSS
+    - 人机交互逻辑：按钮点击，登录，发送请求……JS
+    - 缓存、Cookie
+    - 安全：不能将私密的、不该获取的信息传出去（比如 Cookie），不能为所欲为（比如注销其他网站的账号）</li>
+<li>服务端：某台或很多台服务器
+    - 认证与鉴权：如何证明你是你
+        - Authentication（认证）：知道你是谁
+        - Authorization（鉴权）：确认你有何权限
+    - 处理请求：用户需要做什么？将结果返回客户端
+    - 服务器也可以有不同分工：前端后端、数据库……
+    - 安全：用户不能获得不该获取的信息（比如 flag），不能为所欲为（比如任意代码执行 RCE）</li>
 </ul>
 <h2 id="_1">网络：数据交换<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <h3 id="_2">数据包的传输与路由<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
@@ -2520,18 +2514,14 @@
 <h3 id="tcpip">TCP/IP 协议详解<a class="headerlink" href="#tcpip" title="Permanent link">&para;</a></h3>
 <ul>
 <li>IP: 网络层 = 主机到主机，数据包寻址（快递公司）</li>
-<li>
-<p>TCP: 传输层 = 应用到应用，或者说端到端（菜鸟驿站）</p>
-<p>无边界的字节流，类比电报报文，电报的格式是应用层协议该做的，电报本身只发字母数字</p>
+<li>TCP: 传输层 = 应用到应用，或者说端到端（菜鸟驿站）<p>无边界的字节流，类比电报报文，电报的格式是应用层协议该做的，电报本身只发字母数字</p>
 </li>
 </ul>
 <h3 id="http-hyper-text-transfer-protocol">HTTP 协议详解（Hyper Text Transfer Protocol）<a class="headerlink" href="#http-hyper-text-transfer-protocol" title="Permanent link">&para;</a></h3>
 <ul>
 <li>应用层，基于TCP</li>
-<li>特点：无状态（需要应用层自行维护），纯文本<ul>
-<li>需要维持状态（比如：用户已登录）怎么办？Cookie</li>
-</ul>
-</li>
+<li>特点：无状态（需要应用层自行维护），纯文本
+    - 需要维持状态（比如：用户已登录）怎么办？Cookie</li>
 <li>格式</li>
 </ul>
 <p><img alt="HTTP" src="../assets/HTTP.png" /></p>
@@ -2572,15 +2562,11 @@
 <ul>
 <li>常见后端技术栈（如Node.js、PHP、Python、Ruby、Go、Rust 等）</li>
 <li>后端安全：永远不要相信用户的数据，一切前端的过滤都等于没有过滤！</li>
-<li>
-<p>CTF: 通过逻辑漏洞等欺骗后端</p>
-<p>逻辑漏洞：<code>if money!=0 then money-=price.</code> What if <code>money=-1</code> ?</p>
+<li>CTF: 通过逻辑漏洞等欺骗后端<p>逻辑漏洞：<code>if money!=0 then money-=price.</code> What if <code>money=-1</code> ?</p>
 <p>没接触安全领域前关于安全的错觉：</p>
-<ul>
-<li>这么蠢的洞也有人写？</li>
-<li>这么写怎么可能有洞？</li>
-<li>这么多人用怎么可能有洞？</li>
-</ul>
+<p>- 这么蠢的洞也有人写？
+  - 这么写怎么可能有洞？
+  - 这么多人用怎么可能有洞？</p>
 </li>
 </ul>
 <p>事实：连SSH今年都还能有高危漏洞 CVE-2024-6387</p>
@@ -2703,9 +2689,7 @@
 <ul>
 <li>发音 <span class="arithmatex">\(\texttt{S-Q-L}\)</span> 或 <span class="arithmatex">\(\texttt{Sequel}\)</span></li>
 <li>结构化查询语言 <span class="arithmatex">\(\texttt{Structured Query Language}\)</span></li>
-<li>
-<p>用来做什么？</p>
-<p>数据库维护应用的数据，而与数据库交互的接口往往是基于 SQL 语句的</p>
+<li>用来做什么？<p>数据库维护应用的数据，而与数据库交互的接口往往是基于 SQL 语句的</p>
 </li>
 </ul>
 <h4 id="_7">常用操作<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
@@ -2731,16 +2715,12 @@
 <h3 id="_8">安全相关话题<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <h4 id="cookie-session">Cookie 与 Session<a class="headerlink" href="#cookie-session" title="Permanent link">&para;</a></h4>
 <ul>
-<li><strong>Cookie</strong>：存储在客户端的小型文本文件，通常用于存储用户的偏好设置、身份验证信息等。<ul>
-<li><strong>示例</strong>：用户登录后，服务器发送一个包含用户ID的Cookie到客户端，客户端在后续请求中自动包含该Cookie，以便服务器识别用户。</li>
-<li><strong>Cookie劫持</strong>：攻击者通过XSS攻击或其他手段获取用户的Cookie，从而冒充用户身份。</li>
-</ul>
-</li>
-<li><strong>Session</strong>：存储在服务器端的临时数据存储区域，通常用于存储用户的会话状态信息。<ul>
-<li><strong>示例</strong>：用户登录后，服务器创建一个Session，并将Session ID通过Cookie发送给客户端。客户端在后续请求中包含该Session ID，服务器根据Session ID查找对应的Session数据。</li>
-<li>如果服务器被攻破，Session中就可能有一些敏感信息。</li>
-</ul>
-</li>
+<li><strong>Cookie</strong>：存储在客户端的小型文本文件，通常用于存储用户的偏好设置、身份验证信息等。
+    - <strong>示例</strong>：用户登录后，服务器发送一个包含用户ID的Cookie到客户端，客户端在后续请求中自动包含该Cookie，以便服务器识别用户。
+    - <strong>Cookie劫持</strong>：攻击者通过XSS攻击或其他手段获取用户的Cookie，从而冒充用户身份。</li>
+<li><strong>Session</strong>：存储在服务器端的临时数据存储区域，通常用于存储用户的会话状态信息。
+    - <strong>示例</strong>：用户登录后，服务器创建一个Session，并将Session ID通过Cookie发送给客户端。客户端在后续请求中包含该Session ID，服务器根据Session ID查找对应的Session数据。
+    - 如果服务器被攻破，Session中就可能有一些敏感信息。</li>
 </ul>
 <h4 id="_9">逻辑漏洞<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
 <p>验证不充分、想当然的写法、条件竞争、未发现的旁门左道...</p>
@@ -2818,12 +2798,10 @@
 <h4 id="css">CSS<a class="headerlink" href="#css" title="Permanent link">&para;</a></h4>
 <ul>
 <li>用途：元素宽度、外部间隔、内部边距、字体颜色……</li>
-<li>选择器语法：选择你要把这些属性应用给哪些元素<ul>
-<li>元素选择器<code>body</code></li>
-<li>类选择器<code>.my-class</code></li>
-<li>ID选择器<code>#myid</code></li>
-</ul>
-</li>
+<li>选择器语法：选择你要把这些属性应用给哪些元素
+    - 元素选择器<code>body</code>
+    - 类选择器<code>.my-class</code>
+    - ID选择器<code>#myid</code></li>
 </ul>
 <details class="css例子">
 <summary>Css例子</summary>
@@ -3084,56 +3062,53 @@
 <p><strong>JavaScript的基本语法和特点</strong></p>
 <p>JavaScript语法灵活，具有动态类型、函数式编程和原型继承等特点。</p>
 <ul>
-<li>
-<p><strong>变量声明</strong>：使用<code>var</code>、<code>let</code>和<code>const</code>声明变量。
+<li><strong>变量声明</strong>：使用<code>var</code>、<code>let</code>和<code>const</code>声明变量。
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kd">const</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">15</span><span class="p">;</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>函数定义</strong>：
+</code></pre></div></li>
+</ul>
+<ul>
+<li><strong>函数定义</strong>：
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">}</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>条件判断</strong>：
+</code></pre></div></li>
+</ul>
+<ul>
+<li><strong>条件判断</strong>：
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;x is greater than y&quot;</span><span class="p">);</span>
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;x is less than or equal to y&quot;</span><span class="p">);</span>
 <a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="p">}</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>循环</strong>：
+</code></pre></div></li>
+</ul>
+<ul>
+<li><strong>循环</strong>：
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
 <a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="p">}</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>事件处理</strong>：
+</code></pre></div></li>
+</ul>
+<ul>
+<li><strong>事件处理</strong>：
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myButton&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Button clicked!&quot;</span><span class="p">);</span>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="p">});</span>
-</code></pre></div></p>
-</li>
+</code></pre></div></li>
 </ul>
 <p>JavaScript灵活性很强，但这也带来了某些潜在问题，比如类型不安全、代码维护性差等。</p>
 <h4 id="typescript">TypeScript<a class="headerlink" href="#typescript" title="Permanent link">&para;</a></h4>
 <p><strong>TypeScript的特点和优点</strong></p>
 <p>TypeScript（简称TS）是由微软开发的一种开源编程语言，是JavaScript的超集，增加了静态类型和类等特性。</p>
 <ul>
-<li>
-<p><strong>静态类型</strong>：通过类型检查减少运行时错误，提高代码的可维护性。
+<li><strong>静态类型</strong>：通过类型检查减少运行时错误，提高代码的可维护性。
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>let message: string = &quot;Hello, TypeScript!&quot;;
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>类和接口</strong>：支持面向对象编程，增强代码结构性。
+</code></pre></div></li>
+</ul>
+<ul>
+<li><strong>类和接口</strong>：支持面向对象编程，增强代码结构性。
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>class Greeter {
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>  greeting: string;
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  constructor(message: string) {
@@ -3146,14 +3121,13 @@
 <a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>
 <a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>let greeter = new Greeter(&quot;world&quot;);
 <a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>console.log(greeter.greet());
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>模块化</strong>：支持模块化编程，提高代码复用性和组织性。
+</code></pre></div></li>
+</ul>
+<ul>
+<li><strong>模块化</strong>：支持模块化编程，提高代码复用性和组织性。
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>import { add } from &#39;./math&#39;;
 <a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>console.log(add(2, 3));
-</code></pre></div></p>
-</li>
+</code></pre></div></li>
 </ul>
 <p><strong>TypeScript在现代Web开发中的应用</strong></p>
 <p>TypeScript在大型项目中尤为受欢迎，例如Angular、Vue 3和React等前端框架都支持或推荐使用TypeScript。TypeScript通过类型检查和IDE支持（如VS Code），大大提高了开发效率和代码质量。</p>
@@ -3167,8 +3141,7 @@
 <p><strong>Node.js的基本使用方法与应用场景</strong></p>
 <p>Node.js通过事件驱动、非阻塞I/O模型，使其在处理大量并发请求时具有显著优势。</p>
 <ul>
-<li>
-<p><strong>基本使用</strong>：
+<li><strong>基本使用</strong>：
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">http</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="kd">const</span><span class="w"> </span><span class="nx">hostname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">;</span>
@@ -3183,11 +3156,10 @@
 <a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span><span class="w"> </span><span class="nx">hostname</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server running at &lt;http://$&gt;{hostname}:</span><span class="si">${</span><span class="nx">port</span><span class="si">}</span><span class="sb">/`</span><span class="p">);</span>
 <a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="p">});</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>应用场景</strong>：Node.js常用于构建实时应用（如聊天应用）、API服务、微服务架构等。</p>
-</li>
+</code></pre></div></li>
+</ul>
+<ul>
+<li><strong>应用场景</strong>：Node.js常用于构建实时应用（如聊天应用）、API服务、微服务架构等。</li>
 </ul>
 <h3 id="_14">相关安全话题<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3198,37 +3170,25 @@
 <h2 id="_15">尾声<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
 <p>经典老番：地址栏输入网址并访问后发生了什么</p>
 <ol>
-<li><strong>DNS解析（域名解析）</strong>：<ul>
-<li>浏览器会首先检查本地缓存中是否有该网址对应的IP地址。</li>
-<li>如果没有，它会向DNS服务器发送请求，查询该网址的IP地址。</li>
-<li>DNS服务器返回该网址对应的IP地址给浏览器。</li>
-</ul>
-</li>
-<li><strong>建立TCP连接</strong>：<ul>
-<li>浏览器使用前面得到的IP地址，通过TCP/IP协议与目标服务器建立连接。</li>
-<li>这包括三次握手过程：客户端发送SYN包，服务器返回SYN-ACK包，客户端再发送ACK包确认连接。</li>
-</ul>
-</li>
-<li><strong>发送HTTP请求</strong>：<ul>
-<li>建立连接后，浏览器会发送一个HTTP请求到服务器。这个请求包含了请求方法（如GET或POST）、请求的资源路径以及一些头信息（如浏览器类型、可接受的文件类型等）。</li>
-</ul>
-</li>
-<li><strong>服务器处理请求并返回响应</strong>：<ul>
-<li>服务器接收到请求后，会处理该请求，查找请求的资源（如HTML文件、图片、视频等）。</li>
-<li>服务器会将找到的资源以及一些头信息（如内容类型、内容长度等）打包成HTTP响应，返回给浏览器。</li>
-</ul>
-</li>
-<li><strong>浏览器接收响应并渲染页面</strong>：<ul>
-<li>浏览器接收到服务器返回的HTTP响应后，会解析响应的头信息和内容。</li>
-<li>如果内容是HTML文件，浏览器会解析HTML并根据其中的指令（如加载CSS文件、执行JavaScript脚本等）进行渲染。</li>
-<li>浏览器会逐步构建DOM树和CSSOM树，并根据它们生成渲染树，最后将内容绘制到屏幕上。</li>
-</ul>
-</li>
-<li><strong>加载资源</strong>：<ul>
-<li>如果HTML文件中包含了其他资源（如图片、CSS、JavaScript等），浏览器会根据需要发送额外的HTTP请求来加载这些资源。</li>
-<li>这些资源加载完成后，浏览器会继续渲染页面，更新显示内容。</li>
-</ul>
-</li>
+<li><strong>DNS解析（域名解析）</strong>：
+    - 浏览器会首先检查本地缓存中是否有该网址对应的IP地址。
+    - 如果没有，它会向DNS服务器发送请求，查询该网址的IP地址。
+    - DNS服务器返回该网址对应的IP地址给浏览器。</li>
+<li><strong>建立TCP连接</strong>：
+    - 浏览器使用前面得到的IP地址，通过TCP/IP协议与目标服务器建立连接。
+    - 这包括三次握手过程：客户端发送SYN包，服务器返回SYN-ACK包，客户端再发送ACK包确认连接。</li>
+<li><strong>发送HTTP请求</strong>：
+    - 建立连接后，浏览器会发送一个HTTP请求到服务器。这个请求包含了请求方法（如GET或POST）、请求的资源路径以及一些头信息（如浏览器类型、可接受的文件类型等）。</li>
+<li><strong>服务器处理请求并返回响应</strong>：
+    - 服务器接收到请求后，会处理该请求，查找请求的资源（如HTML文件、图片、视频等）。
+    - 服务器会将找到的资源以及一些头信息（如内容类型、内容长度等）打包成HTTP响应，返回给浏览器。</li>
+<li><strong>浏览器接收响应并渲染页面</strong>：
+    - 浏览器接收到服务器返回的HTTP响应后，会解析响应的头信息和内容。
+    - 如果内容是HTML文件，浏览器会解析HTML并根据其中的指令（如加载CSS文件、执行JavaScript脚本等）进行渲染。
+    - 浏览器会逐步构建DOM树和CSSOM树，并根据它们生成渲染树，最后将内容绘制到屏幕上。</li>
+<li><strong>加载资源</strong>：
+    - 如果HTML文件中包含了其他资源（如图片、CSS、JavaScript等），浏览器会根据需要发送额外的HTTP请求来加载这些资源。
+    - 这些资源加载完成后，浏览器会继续渲染页面，更新显示内容。</li>
 </ol>
 <p>整个过程通常在短时间内完成，以确保用户能够快速看到网页内容。</p>
 
@@ -3453,12 +3413,6 @@
         <script src="../../../js/print-site.js"></script>
       
         <script src="../../../javascripts/katex.js"></script>
-      
-        <script src="../../../javascripts/toc.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
         <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
       

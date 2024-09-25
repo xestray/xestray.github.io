@@ -115,7 +115,7 @@
     
       <link rel="stylesheet" href="https://fonts.font.im/css?family=Gloria+Hallelujah">
     
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
     
       <link rel="stylesheet" href="https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css">
     
@@ -622,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ComputerScience/ADS/chap-1/" class="md-nav__link">
+      <a href="../../../ComputerScience/ADS/lec-1/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2316,13 +2316,11 @@
 <p><img alt="编译的前端与后端" src="../assets/%E7%BC%96%E8%AF%91%E7%9A%84%E5%89%8D%E7%AB%AF%E4%B8%8E%E5%90%8E%E7%AB%AF.png" /></p>
 <h3 id="compiled-vs-interpreted">Compiled V.S. Interpreted<a class="headerlink" href="#compiled-vs-interpreted" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>编译执行</p>
-<p>上述通过编译器 (compiler) 将代码转化为机器指令格式的程序，进而执行</p>
+<li>编译执行<p>上述通过编译器 (compiler) 将代码转化为机器指令格式的程序，进而执行</p>
 </li>
-<li>
-<p>解释执行</p>
-<p>通过解释器 (interpreter) 将代码转化为 VM 格式的程序（如字节码），进而在 VM 上执行</p>
+</ul>
+<ul>
+<li>解释执行<p>通过解释器 (interpreter) 将代码转化为 VM 格式的程序（如字节码），进而在 VM 上执行</p>
 </li>
 </ul>
 <p><img alt="编译型语言" src="../assets/%E7%BC%96%E8%AF%91%E5%9E%8B%E8%AF%AD%E8%A8%80.png" /></p>
@@ -2417,54 +2415,41 @@
 <ul>
 <li>目标文件 <code>hello.o</code> 中有多个段</li>
 <li>目标文件 <code>hello.o</code> 还不足以包含程序运行的信息，需要进行链接</li>
-<li>符号解析与重定位<ul>
-<li>"essentially merging"</li>
-</ul>
-</li>
+<li>符号解析与重定位
+    - "essentially merging"</li>
 </ul>
 <p><img alt="ELF链接" src="../assets/ELF%E9%93%BE%E6%8E%A5.png" /></p>
 <h4 id="_3">静态链接与动态链接<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
 <p><img alt="静态链接与动态链接" src="../assets/%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E4%B8%8E%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5.png" /></p>
 <ul>
-<li>
-<p>静态链接</p>
-<p>将所有的目标文件都链接到一个可执行（ELF）文件中</p>
-<ul>
-<li>优点：可执行文件独立，不依赖于其他文件，在各种环境中都可执行</li>
-<li>缺点：通常会使可执行文件大小增加</li>
-</ul>
-</li>
-<li>
-<p>动态链接</p>
-<p>所有的目标文件都链接到一个储存在系统中的动态链接库（Dylib/So）中，无需单独储存</p>
-<ul>
-<li>优点：节省磁盘空间，减少内存占用</li>
-<li>
-<p>缺点：依赖于系统中的动态链接库，动态链接库的版本等不同可能会导致兼容性问题；</p>
-<p>动态链接的过程中会有额外开销，可能会影响程序的性能，但有一些优化策略</p>
+<li>静态链接<p>将所有的目标文件都链接到一个可执行（ELF）文件中</p>
+<p>- 优点：可执行文件独立，不依赖于其他文件，在各种环境中都可执行
+  - 缺点：通常会使可执行文件大小增加</p>
 </li>
 </ul>
+<ul>
+<li>动态链接<p>所有的目标文件都链接到一个储存在系统中的动态链接库（Dylib/So）中，无需单独储存</p>
+<p>- 优点：节省磁盘空间，减少内存占用
+  - 缺点：依赖于系统中的动态链接库，动态链接库的版本等不同可能会导致兼容性问题；</p>
+<div class="highlight"><pre><span></span><code>  动态链接的过程中会有额外开销，可能会影响程序的性能，但有一些优化策略
+</code></pre></div>
 </li>
 </ul>
 <h4 id="pltgot">动态链接的PLT与GOT<a class="headerlink" href="#pltgot" title="Permanent link">&para;</a></h4>
 <ul>
-<li>
-<p>PLT:  Procedure Linkage Table</p>
-<p>动态链接的“跳板”</p>
+<li>PLT:  Procedure Linkage Table<p>动态链接的“跳板”</p>
 </li>
-<li>
-<p>GOT:  Global Offset Table</p>
-</li>
+</ul>
+<ul>
+<li>GOT:  Global Offset Table</li>
 <li>lazy binding optimization（延迟绑定优化）以及 full-relro 保护</li>
 </ul>
 <h2 id="elf_7">ELF 程序的装载和运行<a class="headerlink" href="#elf_7" title="Permanent link">&para;</a></h2>
 <h3 id="_4">程序到进程<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <ul>
 <li>可执行程序 (Program) 是静态，文件的概念</li>
-<li>进程 (Process) 是动态、系统运行时的概念<ul>
-<li>进程和线程 (Thread)</li>
-</ul>
-</li>
+<li>进程 (Process) 是动态、系统运行时的概念
+    - 进程和线程 (Thread)</li>
 </ul>
 <h3 id="elf_8">ELF程序的生命周期<a class="headerlink" href="#elf_8" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2495,17 +2480,15 @@
 <img alt="before-after" src="../assets/before-after.png" /></p>
 </details>
 <ul>
-<li>
-<p>静态链接程序：</p>
-<p>内核以可执行文件 e_entry 位置 (即_start) 作为起点</p>
+<li>静态链接程序：<p>内核以可执行文件 e_entry 位置 (即_start) 作为起点</p>
 </li>
-<li>
-<p>动态链接程序：</p>
-<p>内核以 interpreter 文件的 e_entry 位置作为起点</p>
+</ul>
+<ul>
+<li>动态链接程序：<p>内核以 interpreter 文件的 e_entry 位置作为起点</p>
 </li>
-<li>
-<p>等了解交互/调试之后进行 revisit</p>
-</li>
+</ul>
+<ul>
+<li>等了解交互/调试之后进行 revisit</li>
 </ul>
 <h4 id="_start">_start<a class="headerlink" href="#_start" title="Permanent link">&para;</a></h4>
 <ul>
@@ -2528,17 +2511,13 @@
 <h2 id="elf_9">ELF 程序的交互、调试<a class="headerlink" href="#elf_9" title="Permanent link">&para;</a></h2>
 <h3 id="_5">通过命令行人工与程序交互<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <ul>
-<li>绝对路径 / 相对路径<ul>
-<li>-h / --help</li>
-<li>manual</li>
-<li>PATH 路径</li>
-</ul>
-</li>
-<li>通过虚拟机或者沙箱进行交互<ul>
-<li><a href="https://firejail.wordpress.com/">https://firejail.wordpress.com/</a> </li>
-<li><a href="https://github.com/google/nsjail">https://github.com/google/nsjail</a></li>
-</ul>
-</li>
+<li>绝对路径 / 相对路径
+    - -h / --help
+    - manual
+    - PATH 路径</li>
+<li>通过虚拟机或者沙箱进行交互
+    - <a href="https://firejail.wordpress.com/">https://firejail.wordpress.com/</a> 
+    - <a href="https://github.com/google/nsjail">https://github.com/google/nsjail</a></li>
 </ul>
 <h3 id="_6">通过编程与程序交互<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2549,40 +2528,30 @@
 </ul>
 <h3 id="gdb-gnu-debugger">GDB: GNU DeBugger<a class="headerlink" href="#gdb-gnu-debugger" title="Permanent link">&para;</a></h3>
 <ul>
-<li>调试模式<ul>
-<li>调试器执行模式</li>
-<li>attach 模式</li>
-<li>remote 模式</li>
-</ul>
-</li>
-<li>常用调试功能<ul>
-<li>执行断点</li>
-<li>硬件断点</li>
-<li>查看寄存器 / 内存</li>
-<li>set 修改寄存器 / 内存</li>
-</ul>
-</li>
+<li>调试模式
+    - 调试器执行模式
+    - attach 模式
+    - remote 模式</li>
+<li>常用调试功能
+    - 执行断点
+    - 硬件断点
+    - 查看寄存器 / 内存
+    - set 修改寄存器 / 内存</li>
 <li>gdb 插件</li>
 </ul>
 <h2 id="elf_10">ELF程序的逆向<a class="headerlink" href="#elf_10" title="Permanent link">&para;</a></h2>
 <p><img alt="正向与逆向" src="../assets/%E6%AD%A3%E5%90%91%E4%B8%8E%E9%80%86%E5%90%91.png" /></p>
 <h3 id="elf_11">ELF的静态逆向<a class="headerlink" href="#elf_11" title="Permanent link">&para;</a></h3>
 <ul>
-<li>反汇编：机器指令 <span class="arithmatex">\(\rightarrow\)</span> 汇编指令（查表、准确）<ul>
-<li>objdump</li>
-</ul>
-</li>
-<li>反编译：汇编指令 =&gt; 编程语言（分析/特征匹配/启发式 … 、往往不准确）<ul>
-<li>IDA Pro (<a href="https://hex-rays.com/ida-pro/">https://hex-rays.com/ida-pro/</a>)</li>
-<li>Binary Ninja (<a href="https://binary.ninja">https://binary.ninja</a>)<ul>
-<li>with free version</li>
-</ul>
-</li>
-<li>Ghidra (<a href="https://github.com/NationalSecurityAgency/ghidra">https://github.com/NationalSecurityAgency/ghidra</a>)</li>
-<li>Cutter / radare (<a href="https://github.com/rizinorg/cutter">https://github.com/rizinorg/cutter</a> )</li>
-<li>大语言模型 ;D (<a href="https://mlm.lingyiwanwu.com/">https://mlm.lingyiwanwu.com/</a>)</li>
-</ul>
-</li>
+<li>反汇编：机器指令 <span class="arithmatex">\(\rightarrow\)</span> 汇编指令（查表、准确）
+    - objdump</li>
+<li>反编译：汇编指令 =&gt; 编程语言（分析/特征匹配/启发式 … 、往往不准确）
+    - IDA Pro (<a href="https://hex-rays.com/ida-pro/">https://hex-rays.com/ida-pro/</a>)
+    - Binary Ninja (<a href="https://binary.ninja">https://binary.ninja</a>)
+        - with free version
+    - Ghidra (<a href="https://github.com/NationalSecurityAgency/ghidra">https://github.com/NationalSecurityAgency/ghidra</a>)
+    - Cutter / radare (<a href="https://github.com/rizinorg/cutter">https://github.com/rizinorg/cutter</a> )
+    - 大语言模型 ;D (<a href="https://mlm.lingyiwanwu.com/">https://mlm.lingyiwanwu.com/</a>)</li>
 </ul>
 <h4 id="_7">静态逆向技巧<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
 <p>对于静态链接目标</p>
@@ -2825,12 +2794,6 @@
         <script src="../../../js/print-site.js"></script>
       
         <script src="../../../javascripts/katex.js"></script>
-      
-        <script src="../../../javascripts/toc.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
         <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
       

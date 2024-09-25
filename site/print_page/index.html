@@ -111,7 +111,7 @@
     
       <link rel="stylesheet" href="https://fonts.font.im/css?family=Gloria+Hallelujah">
     
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
     
       <link rel="stylesheet" href="https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css">
     
@@ -622,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ComputerScience/ADS/chap-1/" class="md-nav__link">
+      <a href="../ComputerScience/ADS/lec-1/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1803,7 +1803,7 @@
 <p>做的比较潦草，但是也没什么人看所以无所谓了（×</p>
 <blockquote>
 <p>严重拖延症患者，不定时更新，笔记若有误请大胆提出</p>
-<p>目前共有 29 个页面，24666 个字，225 行代码。</p>
+<p>目前共有 28 个页面，26705 个字，225 行代码。</p>
 </blockquote>
 <div class="admonition 感谢">
 <p class="admonition-title">感谢</p>
@@ -1941,11 +1941,9 @@
 </div>
 <h2 id="computerscience-table-of-contents">Table of Contents<a class="headerlink" href="#computerscience-table-of-contents" title="Permanent link">&para;</a></h2>
 <ul>
-<li>专业课程:<ul>
-<li><a href="#computerscience-cod">计算机组成与设计</a></li>
-<li><a href="#computerscience-ads">高级数据结构与算法分析</a></li>
-</ul>
-</li>
+<li>专业课程:
+    - <a href="#computerscience-cod">计算机组成与设计</a>
+    - <a href="#computerscience-ads">高级数据结构与算法分析</a></li>
 <li>编程语言（暂无）:</li>
 <li>常用工具备忘（暂无）:</li>
 </ul></section>
@@ -1962,25 +1960,21 @@
 <div class="admonition abstract">
 <p class="admonition-title">成绩组成</p>
 <ul>
-<li>期末以外部分累计不超过 60%<ul>
-<li>Homework 10%</li>
-<li>Discussions 10%++</li>
-<li>project 30%</li>
-<li>期中 10%</li>
-</ul>
-</li>
+<li>期末以外部分累计不超过 60%
+    - Homework 10%
+    - Discussions 10%++
+    - project 30%
+    - 期中 10%</li>
 <li>期末 40%</li>
 </ul>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Data Structures</p>
 <ul>
-<li>Balanced Search Trees:<ul>
-<li>AVL Tree, Splay Tree</li>
-<li>B+ Tree</li>
-<li>Red-Black Tree</li>
-</ul>
-</li>
+<li>Balanced Search Trees:
+    - AVL Tree, Splay Tree
+    - B+ Tree
+    - Red-Black Tree</li>
 <li>Leftist Heaps, Skew Heaps</li>
 <li>Binomial Queue</li>
 <li>Inverted File Index</li>
@@ -1999,23 +1993,21 @@
 </div>
 <h2 id="computerscience-ads-table-of-contents">Table of Contents<a class="headerlink" href="#computerscience-ads-table-of-contents" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="#computerscience-ads-chap-1">AVL Trees, Splay Trees,and Amortized Analysis</a></li>
-</ul></section><section class="print-page" id="computerscience-ads-chap-1"><h1 id="computerscience-ads-chap-1-avl-trees-splay-treesand-amortized-analysis">AVL Trees, Splay Trees,and Amortized Analysis<a class="headerlink" href="#computerscience-ads-chap-1-avl-trees-splay-treesand-amortized-analysis" title="Permanent link">&para;</a></h1>
+<li><a href="#computerscience-ads-chap-1.md">AVL Trees, Splay Trees,and Amortized Analysis</a></li>
+</ul></section><section class="print-page" id="computerscience-ads-lec-1"><h1 id="computerscience-ads-lec-1-avl-trees-splay-treesand-amortized-analysis">AVL Trees, Splay Trees,and Amortized Analysis<a class="headerlink" href="#computerscience-ads-lec-1-avl-trees-splay-treesand-amortized-analysis" title="Permanent link">&para;</a></h1>
 <div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8zm6.78 1a.7.7 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38z"/></svg></span> 约 2240 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6m80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3l89.3 89.4-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3"/></svg></span> 66 行代码 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3z"/></svg></span> 预计阅读时间 10 分钟</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8zm6.78 1a.7.7 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38z"/></svg></span> 约 3933 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6m80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3l89.3 89.4-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3"/></svg></span> 66 行代码 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3z"/></svg></span> 预计阅读时间 17 分钟</p>
 </div>
-<h2 id="computerscience-ads-chap-1-avl-tree">AVL Tree<a class="headerlink" href="#computerscience-ads-chap-1-avl-tree" title="Permanent link">&para;</a></h2>
-<h3 id="computerscience-ads-chap-1-avl-tree_1">AVL Tree的定义<a class="headerlink" href="#computerscience-ads-chap-1-avl-tree_1" title="Permanent link">&para;</a></h3>
+<h2 id="computerscience-ads-lec-1-avl-tree">AVL Tree<a class="headerlink" href="#computerscience-ads-lec-1-avl-tree" title="Permanent link">&para;</a></h2>
+<h3 id="computerscience-ads-lec-1-avl-tree_1">AVL Tree的定义<a class="headerlink" href="#computerscience-ads-lec-1-avl-tree_1" title="Permanent link">&para;</a></h3>
 <p>AVL Tree的主要思路是每次进行插入和删除之后，都要检查树的平衡性，如果不平衡，则通过“旋转”操作来使树恢复平衡。</p>
 <div class="admonition note">
 <p class="admonition-title">AVL Tree的递归定义</p>
 <ul>
 <li>空树是 AVL 树</li>
-<li>如果 T 不是空的，那么 T 是 AVL 树当且仅当<ul>
-<li>它的左子树和右子树的高度差不超过 1</li>
-<li>T 的左子树和右子树也是 AVL 树</li>
-</ul>
-</li>
+<li>如果 T 不是空的，那么 T 是 AVL 树当且仅当
+    - 它的左子树和右子树的高度差不超过 1
+    - T 的左子树和右子树也是 AVL 树</li>
 </ul>
 </div>
 <div class="admonition note">
@@ -2029,30 +2021,30 @@
 <div class="admonition info">
 <p class="admonition-title">AVL Tree的C++实现</p>
 <p>由于AVL Tree关于平衡性的要求，因此在实现时需要维护每个结点的<code>height</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#computerscience-ads-chap-1-__codelineno-0-1"></a><span class="k">using</span><span class="w"> </span><span class="n">AVLTree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">TreeNode</span><span class="o">*</span><span class="p">;</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#computerscience-ads-chap-1-__codelineno-0-2"></a><span class="k">struct</span><span class="w"> </span><span class="nc">TreeNode</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#computerscience-ads-chap-1-__codelineno-0-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="p">{};</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#computerscience-ads-chap-1-__codelineno-0-4"></a><span class="w">    </span><span class="n">TreeNode</span><span class="o">*</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="p">{};</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#computerscience-ads-chap-1-__codelineno-0-5"></a><span class="w">    </span><span class="n">TreeNode</span><span class="o">*</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="p">{};</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#computerscience-ads-chap-1-__codelineno-0-6"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#computerscience-ads-chap-1-__codelineno-0-7"></a><span class="p">};</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#computerscience-ads-lec-1-__codelineno-0-1"></a><span class="k">using</span><span class="w"> </span><span class="n">AVLTree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">TreeNode</span><span class="o">*</span><span class="p">;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#computerscience-ads-lec-1-__codelineno-0-2"></a><span class="k">struct</span><span class="w"> </span><span class="nc">TreeNode</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#computerscience-ads-lec-1-__codelineno-0-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="p">{};</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#computerscience-ads-lec-1-__codelineno-0-4"></a><span class="w">    </span><span class="n">TreeNode</span><span class="o">*</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="p">{};</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#computerscience-ads-lec-1-__codelineno-0-5"></a><span class="w">    </span><span class="n">TreeNode</span><span class="o">*</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="p">{};</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#computerscience-ads-lec-1-__codelineno-0-6"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#computerscience-ads-lec-1-__codelineno-0-7"></a><span class="p">};</span>
 </code></pre></div>
 <ul>
 <li>对于高度通常有不同的定义方式，具体要根据来判断，在这里我们认为空结点的高度是-1，而叶结点的高度是0。</li>
 </ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#computerscience-ads-chap-1-__codelineno-1-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">height</span><span class="p">(</span><span class="n">AVLTree</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#computerscience-ads-chap-1-__codelineno-1-2"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="o">==</span><span class="k">nullptr</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">height</span><span class="p">;</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#computerscience-ads-chap-1-__codelineno-1-3"></a><span class="p">}</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#computerscience-ads-chap-1-__codelineno-1-4"></a>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#computerscience-ads-chap-1-__codelineno-1-5"></a><span class="kt">void</span><span class="w"> </span><span class="nf">updateHeight</span><span class="p">(</span><span class="n">AVLTree</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#computerscience-ads-chap-1-__codelineno-1-6"></a><span class="w">    </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">),</span><span class="w"> </span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">));</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#computerscience-ads-chap-1-__codelineno-1-7"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#computerscience-ads-lec-1-__codelineno-1-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">height</span><span class="p">(</span><span class="n">AVLTree</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#computerscience-ads-lec-1-__codelineno-1-2"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="o">==</span><span class="k">nullptr</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">height</span><span class="p">;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#computerscience-ads-lec-1-__codelineno-1-3"></a><span class="p">}</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#computerscience-ads-lec-1-__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#computerscience-ads-lec-1-__codelineno-1-5"></a><span class="kt">void</span><span class="w"> </span><span class="nf">updateHeight</span><span class="p">(</span><span class="n">AVLTree</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#computerscience-ads-lec-1-__codelineno-1-6"></a><span class="w">    </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">max</span><span class="p">(</span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">),</span><span class="w"> </span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">));</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#computerscience-ads-lec-1-__codelineno-1-7"></a><span class="p">}</span>
 </code></pre></div>
 </div>
 <hr />
-<h3 id="computerscience-ads-chap-1-avl-tree_2">AVL Tree的旋转<a class="headerlink" href="#computerscience-ads-chap-1-avl-tree_2" title="Permanent link">&para;</a></h3>
+<h3 id="computerscience-ads-lec-1-avl-tree_2">AVL Tree的旋转<a class="headerlink" href="#computerscience-ads-lec-1-avl-tree_2" title="Permanent link">&para;</a></h3>
 <p>AVL树的特点在于“旋转”操作，它能够在不影响二叉树的中序遍历序列的前提下，使失衡结点重新恢复平衡。换句话说，旋转操作既能保持“二叉搜索树”的性质，也能使树重新变为“平衡二叉树”。</p>
-<h4 id="computerscience-ads-chap-1-rr-">RR型旋转-左旋<a class="headerlink" href="#computerscience-ads-chap-1-rr-" title="Permanent link">&para;</a></h4>
+<h4 id="computerscience-ads-lec-1-rr-">RR型旋转-左旋<a class="headerlink" href="#computerscience-ads-lec-1-rr-" title="Permanent link">&para;</a></h4>
 <p>在某个结点的右子树(R)的右子树(R)上插入结点，导致该结点失衡，其平衡因子变为-2，需要进行左旋操作。</p>
 <ul>
 <li>A向左旋转成为B的左子树</li>
@@ -2061,17 +2053,17 @@
 <p><img alt="RR型旋转" src="../ComputerScience/ADS/assets/RR_rotation1.png" /></p>
 <details class="example">
 <summary>RR型旋转</summary>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="computerscience-ads-chap-1-__tabbed_1_1" name="computerscience-ads-chap-1-__tabbed_1" type="radio" /><input id="computerscience-ads-chap-1-__tabbed_1_2" name="computerscience-ads-chap-1-__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="computerscience-ads-chap-1-__tabbed_1_1">代码实现</label><label for="computerscience-ads-chap-1-__tabbed_1_2">图示</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="computerscience-ads-lec-1-__tabbed_1_1" name="computerscience-ads-lec-1-__tabbed_1" type="radio" /><input id="computerscience-ads-lec-1-__tabbed_1_2" name="computerscience-ads-lec-1-__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="computerscience-ads-lec-1-__tabbed_1_1">代码实现</label><label for="computerscience-ads-lec-1-__tabbed_1_2">图示</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#computerscience-ads-chap-1-__codelineno-2-1"></a><span class="n">AVLTree</span><span class="w"> </span><span class="nf">RR_Rotate</span><span class="p">(</span><span class="n">AVLTree</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#computerscience-ads-chap-1-__codelineno-2-2"></a><span class="w">    </span><span class="n">AVLTree</span><span class="w"> </span><span class="n">newRoot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#computerscience-ads-chap-1-__codelineno-2-3"></a><span class="w">    </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newRoot</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#computerscience-ads-chap-1-__codelineno-2-4"></a><span class="w">    </span><span class="n">newRoot</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#computerscience-ads-chap-1-__codelineno-2-5"></a><span class="w">    </span><span class="n">updateHeight</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#computerscience-ads-chap-1-__codelineno-2-6"></a><span class="w">    </span><span class="n">updateHeight</span><span class="p">(</span><span class="n">newRoot</span><span class="p">);</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#computerscience-ads-chap-1-__codelineno-2-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">newRoot</span><span class="p">;</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#computerscience-ads-chap-1-__codelineno-2-8"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#computerscience-ads-lec-1-__codelineno-2-1"></a><span class="n">AVLTree</span><span class="w"> </span><span class="nf">RR_Rotate</span><span class="p">(</span><span class="n">AVLTree</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#computerscience-ads-lec-1-__codelineno-2-2"></a><span class="w">    </span><span class="n">AVLTree</span><span class="w"> </span><span class="n">newRoot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#computerscience-ads-lec-1-__codelineno-2-3"></a><span class="w">    </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newRoot</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#computerscience-ads-lec-1-__codelineno-2-4"></a><span class="w">    </span><span class="n">newRoot</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#computerscience-ads-lec-1-__codelineno-2-5"></a><span class="w">    </span><span class="n">updateHeight</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#computerscience-ads-lec-1-__codelineno-2-6"></a><span class="w">    </span><span class="n">updateHeight</span><span class="p">(</span><span class="n">newRoot</span><span class="p">);</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#computerscience-ads-lec-1-__codelineno-2-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">newRoot</span><span class="p">;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#computerscience-ads-lec-1-__codelineno-2-8"></a><span class="p">}</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -2081,7 +2073,7 @@
 </div>
 </details>
 <hr />
-<h4 id="computerscience-ads-chap-1-ll-">LL型旋转-右旋<a class="headerlink" href="#computerscience-ads-chap-1-ll-" title="Permanent link">&para;</a></h4>
+<h4 id="computerscience-ads-lec-1-ll-">LL型旋转-右旋<a class="headerlink" href="#computerscience-ads-lec-1-ll-" title="Permanent link">&para;</a></h4>
 <p>在某个结点的左子树(L)的左子树(L)上插入结点，导致该结点失衡，其平衡因子变为2，需要进行右旋操作。</p>
 <ul>
 <li>A向右旋转成为B的右子树</li>
@@ -2090,17 +2082,17 @@
 <p><img alt="LL型旋转" src="../ComputerScience/ADS/assets/LL_rotation1.png" /></p>
 <details class="example">
 <summary>LL型旋转</summary>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="computerscience-ads-chap-1-__tabbed_2_1" name="computerscience-ads-chap-1-__tabbed_2" type="radio" /><input id="computerscience-ads-chap-1-__tabbed_2_2" name="computerscience-ads-chap-1-__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="computerscience-ads-chap-1-__tabbed_2_1">代码实现</label><label for="computerscience-ads-chap-1-__tabbed_2_2">图示</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="computerscience-ads-lec-1-__tabbed_2_1" name="computerscience-ads-lec-1-__tabbed_2" type="radio" /><input id="computerscience-ads-lec-1-__tabbed_2_2" name="computerscience-ads-lec-1-__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="computerscience-ads-lec-1-__tabbed_2_1">代码实现</label><label for="computerscience-ads-lec-1-__tabbed_2_2">图示</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#computerscience-ads-chap-1-__codelineno-3-1"></a><span class="n">AVLTree</span><span class="w"> </span><span class="nf">LL_Rotate</span><span class="p">(</span><span class="n">AVLTree</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#computerscience-ads-chap-1-__codelineno-3-2"></a><span class="w">    </span><span class="n">AVLTree</span><span class="w"> </span><span class="n">newRoot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#computerscience-ads-chap-1-__codelineno-3-3"></a><span class="w">    </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newRoot</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#computerscience-ads-chap-1-__codelineno-3-4"></a><span class="w">    </span><span class="n">newRoot</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#computerscience-ads-chap-1-__codelineno-3-5"></a><span class="w">    </span><span class="n">updateHeight</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#computerscience-ads-chap-1-__codelineno-3-6"></a><span class="w">    </span><span class="n">updateHeight</span><span class="p">(</span><span class="n">newRoot</span><span class="p">);</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#computerscience-ads-chap-1-__codelineno-3-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">newRoot</span><span class="p">;</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#computerscience-ads-chap-1-__codelineno-3-8"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#computerscience-ads-lec-1-__codelineno-3-1"></a><span class="n">AVLTree</span><span class="w"> </span><span class="nf">LL_Rotate</span><span class="p">(</span><span class="n">AVLTree</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#computerscience-ads-lec-1-__codelineno-3-2"></a><span class="w">    </span><span class="n">AVLTree</span><span class="w"> </span><span class="n">newRoot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#computerscience-ads-lec-1-__codelineno-3-3"></a><span class="w">    </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newRoot</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#computerscience-ads-lec-1-__codelineno-3-4"></a><span class="w">    </span><span class="n">newRoot</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#computerscience-ads-lec-1-__codelineno-3-5"></a><span class="w">    </span><span class="n">updateHeight</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#computerscience-ads-lec-1-__codelineno-3-6"></a><span class="w">    </span><span class="n">updateHeight</span><span class="p">(</span><span class="n">newRoot</span><span class="p">);</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#computerscience-ads-lec-1-__codelineno-3-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">newRoot</span><span class="p">;</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#computerscience-ads-lec-1-__codelineno-3-8"></a><span class="p">}</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -2110,7 +2102,7 @@
 </div>
 </details>
 <hr />
-<h4 id="computerscience-ads-chap-1-lr-">LR型旋转-先左旋后右旋<a class="headerlink" href="#computerscience-ads-chap-1-lr-" title="Permanent link">&para;</a></h4>
+<h4 id="computerscience-ads-lec-1-lr-">LR型旋转-先左旋后右旋<a class="headerlink" href="#computerscience-ads-lec-1-lr-" title="Permanent link">&para;</a></h4>
 <p>在某个结点的左子树(L)的右子树(R)上插入结点，导致该结点失衡，其平衡因子变为2，需要进行先左旋后右旋操作。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -2123,13 +2115,13 @@
 </ul>
 <details class="example">
 <summary>LR型旋转</summary>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="computerscience-ads-chap-1-__tabbed_3_1" name="computerscience-ads-chap-1-__tabbed_3" type="radio" /><input id="computerscience-ads-chap-1-__tabbed_3_2" name="computerscience-ads-chap-1-__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="computerscience-ads-chap-1-__tabbed_3_1">代码实现</label><label for="computerscience-ads-chap-1-__tabbed_3_2">图示</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="computerscience-ads-lec-1-__tabbed_3_1" name="computerscience-ads-lec-1-__tabbed_3" type="radio" /><input id="computerscience-ads-lec-1-__tabbed_3_2" name="computerscience-ads-lec-1-__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="computerscience-ads-lec-1-__tabbed_3_1">代码实现</label><label for="computerscience-ads-lec-1-__tabbed_3_2">图示</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#computerscience-ads-chap-1-__codelineno-4-1"></a><span class="n">AVLTree</span><span class="w"> </span><span class="nf">LR_Rotate</span><span class="p">(</span><span class="n">AVLTree</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#computerscience-ads-chap-1-__codelineno-4-2"></a><span class="w">    </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RR_Rotate</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#computerscience-ads-chap-1-__codelineno-4-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">LL_Rotate</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#computerscience-ads-chap-1-__codelineno-4-4"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#computerscience-ads-lec-1-__codelineno-4-1"></a><span class="n">AVLTree</span><span class="w"> </span><span class="nf">LR_Rotate</span><span class="p">(</span><span class="n">AVLTree</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#computerscience-ads-lec-1-__codelineno-4-2"></a><span class="w">    </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RR_Rotate</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#computerscience-ads-lec-1-__codelineno-4-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">LL_Rotate</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#computerscience-ads-lec-1-__codelineno-4-4"></a><span class="p">}</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -2139,7 +2131,7 @@
 </div>
 </details>
 <hr />
-<h4 id="computerscience-ads-chap-1-rl-">RL型旋转-先右旋后左旋<a class="headerlink" href="#computerscience-ads-chap-1-rl-" title="Permanent link">&para;</a></h4>
+<h4 id="computerscience-ads-lec-1-rl-">RL型旋转-先右旋后左旋<a class="headerlink" href="#computerscience-ads-lec-1-rl-" title="Permanent link">&para;</a></h4>
 <p>在某个结点的右子树(R)的左子树(L)上插入结点，导致该结点失衡，其平衡因子变为-2，需要进行先右旋后左旋操作。</p>
 <ul>
 <li>先对失衡结点的右子树进行右旋操作</li>
@@ -2147,13 +2139,13 @@
 </ul>
 <details class="example">
 <summary>RL型旋转</summary>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="computerscience-ads-chap-1-__tabbed_4_1" name="computerscience-ads-chap-1-__tabbed_4" type="radio" /><input id="computerscience-ads-chap-1-__tabbed_4_2" name="computerscience-ads-chap-1-__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="computerscience-ads-chap-1-__tabbed_4_1">代码实现</label><label for="computerscience-ads-chap-1-__tabbed_4_2">图示</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="computerscience-ads-lec-1-__tabbed_4_1" name="computerscience-ads-lec-1-__tabbed_4" type="radio" /><input id="computerscience-ads-lec-1-__tabbed_4_2" name="computerscience-ads-lec-1-__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="computerscience-ads-lec-1-__tabbed_4_1">代码实现</label><label for="computerscience-ads-lec-1-__tabbed_4_2">图示</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#computerscience-ads-chap-1-__codelineno-5-1"></a><span class="n">AVLTree</span><span class="w"> </span><span class="nf">RL_Rotate</span><span class="p">(</span><span class="n">AVLTree</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#computerscience-ads-chap-1-__codelineno-5-2"></a><span class="w">    </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LL_Rotate</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#computerscience-ads-chap-1-__codelineno-5-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">RR_Rotate</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#computerscience-ads-chap-1-__codelineno-5-4"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#computerscience-ads-lec-1-__codelineno-5-1"></a><span class="n">AVLTree</span><span class="w"> </span><span class="nf">RL_Rotate</span><span class="p">(</span><span class="n">AVLTree</span><span class="w"> </span><span class="n">root</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#computerscience-ads-lec-1-__codelineno-5-2"></a><span class="w">    </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LL_Rotate</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#computerscience-ads-lec-1-__codelineno-5-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">RR_Rotate</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#computerscience-ads-lec-1-__codelineno-5-4"></a><span class="p">}</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -2201,8 +2193,8 @@
 <p>虽然LR旋转和RL旋转实际上要进行两次旋转，但我们一般还是认为它们都是<strong>一次旋转</strong>。</p>
 </div>
 <hr />
-<h3 id="computerscience-ads-chap-1-avl-tree_3">AVL Tree的常用操作<a class="headerlink" href="#computerscience-ads-chap-1-avl-tree_3" title="Permanent link">&para;</a></h3>
-<h4 id="computerscience-ads-chap-1-_1">插入<a class="headerlink" href="#computerscience-ads-chap-1-_1" title="Permanent link">&para;</a></h4>
+<h3 id="computerscience-ads-lec-1-avl-tree_3">AVL Tree的常用操作<a class="headerlink" href="#computerscience-ads-lec-1-avl-tree_3" title="Permanent link">&para;</a></h3>
+<h4 id="computerscience-ads-lec-1-_1">插入<a class="headerlink" href="#computerscience-ads-lec-1-_1" title="Permanent link">&para;</a></h4>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>AVL树在进行插入操作后，从该结点到根结点的路径上可能会出现一连串的失衡结点，但实际上只需要对最近的一个失衡结点进行旋转操作即可，因为旋转操作会使失衡结点的父结点高度减小，从而使更远的结点恢复平衡。</p>
@@ -2210,50 +2202,50 @@
 <ul>
 <li>找到要插入的位置所需时间复杂度为 <span class="arithmatex">\(O(\log n)\)</span>，且只需进行一次 <span class="arithmatex">\(O(1)\)</span> 的旋转操作，因此插入操作的时间复杂度为 <span class="arithmatex">\(O(\log n)\)</span>。</li>
 </ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#computerscience-ads-chap-1-__codelineno-6-1"></a><span class="n">AVLTree</span><span class="w"> </span><span class="nf">insert</span><span class="p">(</span><span class="n">AVLTree</span><span class="w"> </span><span class="n">root</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#computerscience-ads-chap-1-__codelineno-6-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#computerscience-ads-chap-1-__codelineno-6-3"></a><span class="w">        </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TreeNode</span><span class="p">;</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#computerscience-ads-chap-1-__codelineno-6-4"></a><span class="w">        </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#computerscience-ads-chap-1-__codelineno-6-5"></a><span class="w">        </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#computerscience-ads-chap-1-__codelineno-6-6"></a><span class="w">        </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#computerscience-ads-chap-1-__codelineno-6-7"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#computerscience-ads-chap-1-__codelineno-6-8"></a><span class="w">        </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">insert</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9" href="#computerscience-ads-chap-1-__codelineno-6-9"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10" href="#computerscience-ads-chap-1-__codelineno-6-10"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11" href="#computerscience-ads-chap-1-__codelineno-6-11"></a><span class="w">                </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LL_Rotate</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
-<a id="__codelineno-6-12" name="__codelineno-6-12" href="#computerscience-ads-chap-1-__codelineno-6-12"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13" href="#computerscience-ads-chap-1-__codelineno-6-13"></a><span class="w">                </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LR_Rotate</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
-<a id="__codelineno-6-14" name="__codelineno-6-14" href="#computerscience-ads-chap-1-__codelineno-6-14"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-6-15" name="__codelineno-6-15" href="#computerscience-ads-chap-1-__codelineno-6-15"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-6-16" name="__codelineno-6-16" href="#computerscience-ads-chap-1-__codelineno-6-16"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-17" name="__codelineno-6-17" href="#computerscience-ads-chap-1-__codelineno-6-17"></a><span class="w">        </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">insert</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span>
-<a id="__codelineno-6-18" name="__codelineno-6-18" href="#computerscience-ads-chap-1-__codelineno-6-18"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-19" name="__codelineno-6-19" href="#computerscience-ads-chap-1-__codelineno-6-19"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-20" name="__codelineno-6-20" href="#computerscience-ads-chap-1-__codelineno-6-20"></a><span class="w">                </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RR_Rotate</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
-<a id="__codelineno-6-21" name="__codelineno-6-21" href="#computerscience-ads-chap-1-__codelineno-6-21"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-22" name="__codelineno-6-22" href="#computerscience-ads-chap-1-__codelineno-6-22"></a><span class="w">                </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RL_Rotate</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
-<a id="__codelineno-6-23" name="__codelineno-6-23" href="#computerscience-ads-chap-1-__codelineno-6-23"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-6-24" name="__codelineno-6-24" href="#computerscience-ads-chap-1-__codelineno-6-24"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-6-25" name="__codelineno-6-25" href="#computerscience-ads-chap-1-__codelineno-6-25"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-6-26" name="__codelineno-6-26" href="#computerscience-ads-chap-1-__codelineno-6-26"></a><span class="w">    </span><span class="n">updateHeight</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
-<a id="__codelineno-6-27" name="__codelineno-6-27" href="#computerscience-ads-chap-1-__codelineno-6-27"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
-<a id="__codelineno-6-28" name="__codelineno-6-28" href="#computerscience-ads-chap-1-__codelineno-6-28"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#computerscience-ads-lec-1-__codelineno-6-1"></a><span class="n">AVLTree</span><span class="w"> </span><span class="nf">insert</span><span class="p">(</span><span class="n">AVLTree</span><span class="w"> </span><span class="n">root</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#computerscience-ads-lec-1-__codelineno-6-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">root</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#computerscience-ads-lec-1-__codelineno-6-3"></a><span class="w">        </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TreeNode</span><span class="p">;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#computerscience-ads-lec-1-__codelineno-6-4"></a><span class="w">        </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#computerscience-ads-lec-1-__codelineno-6-5"></a><span class="w">        </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#computerscience-ads-lec-1-__codelineno-6-6"></a><span class="w">        </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#computerscience-ads-lec-1-__codelineno-6-7"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#computerscience-ads-lec-1-__codelineno-6-8"></a><span class="w">        </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">insert</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#computerscience-ads-lec-1-__codelineno-6-9"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#computerscience-ads-lec-1-__codelineno-6-10"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#computerscience-ads-lec-1-__codelineno-6-11"></a><span class="w">                </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LL_Rotate</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#computerscience-ads-lec-1-__codelineno-6-12"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#computerscience-ads-lec-1-__codelineno-6-13"></a><span class="w">                </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LR_Rotate</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#computerscience-ads-lec-1-__codelineno-6-14"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#computerscience-ads-lec-1-__codelineno-6-15"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#computerscience-ads-lec-1-__codelineno-6-16"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#computerscience-ads-lec-1-__codelineno-6-17"></a><span class="w">        </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">insert</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">);</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#computerscience-ads-lec-1-__codelineno-6-18"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#computerscience-ads-lec-1-__codelineno-6-19"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#computerscience-ads-lec-1-__codelineno-6-20"></a><span class="w">                </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RR_Rotate</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#computerscience-ads-lec-1-__codelineno-6-21"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#computerscience-ads-lec-1-__codelineno-6-22"></a><span class="w">                </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RL_Rotate</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#computerscience-ads-lec-1-__codelineno-6-23"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#computerscience-ads-lec-1-__codelineno-6-24"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#computerscience-ads-lec-1-__codelineno-6-25"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#computerscience-ads-lec-1-__codelineno-6-26"></a><span class="w">    </span><span class="n">updateHeight</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#computerscience-ads-lec-1-__codelineno-6-27"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">root</span><span class="p">;</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#computerscience-ads-lec-1-__codelineno-6-28"></a><span class="p">}</span>
 </code></pre></div>
 <hr />
-<h4 id="computerscience-ads-chap-1-_2">删除<a class="headerlink" href="#computerscience-ads-chap-1-_2" title="Permanent link">&para;</a></h4>
+<h4 id="computerscience-ads-lec-1-_2">删除<a class="headerlink" href="#computerscience-ads-lec-1-_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li>课件中并未要求实现AVL树的删除操作，但值得注意的是，AVL树的删除后旋转最多进行 <span class="arithmatex">\(O(\log n)\)</span> 次，而找到要删除的结点所需时间复杂度也是 <span class="arithmatex">\(O(\log n)\)</span>，因此删除操作的时间复杂度仍然是 <span class="arithmatex">\(O(\log n)\)</span>。</li>
 <li>由于删除操作可能涉及到不止一次的旋转操作，因此需要<strong>从被删除的结点开始，自底向上执行旋转操作，使所有失衡结点恢复平衡</strong></li>
 </ul>
 <p>因为我懒得写，而且似乎考试也没有要求，所以这里就不写了。🤪</p>
 <hr />
-<h4 id="computerscience-ads-chap-1-_3">查找<a class="headerlink" href="#computerscience-ads-chap-1-_3" title="Permanent link">&para;</a></h4>
+<h4 id="computerscience-ads-lec-1-_3">查找<a class="headerlink" href="#computerscience-ads-lec-1-_3" title="Permanent link">&para;</a></h4>
 <ul>
 <li>AVL树的查找操作与普通二叉搜索树相同，其时间复杂度为<span class="arithmatex">\(O(\log n)\)</span>，在此不再赘述。</li>
 </ul>
 <p><strong>综上所述，AVL树的插入、删除和查找操作的时间复杂度均为<span class="arithmatex">\(O(\log n)\)</span>。</strong></p>
 <hr />
-<h2 id="computerscience-ads-chap-1-splay-tree">Splay Tree<a class="headerlink" href="#computerscience-ads-chap-1-splay-tree" title="Permanent link">&para;</a></h2>
+<h2 id="computerscience-ads-lec-1-splay-tree">Splay Tree<a class="headerlink" href="#computerscience-ads-lec-1-splay-tree" title="Permanent link">&para;</a></h2>
 <p>Splay树的目的是希望在不像AVL Tree那样保持严格的平衡约束的同时，满足一定程度上对树的操作的对数时间复杂度（即对于一个空的树的连续<span class="arithmatex">\(M\)</span>个树操作，总共的所需的时间不超过 <span class="arithmatex">\(O(M \log n)\)</span>）。</p>
 <ul>
 <li>Splay树在进行访问时（包括插入、删除、搜索等操作），会将访问的结点调整到树的根结点，这样可以使刚刚被访问的结点在接下来的操作中更容易被访问到，从而提高访问效率。</li>
@@ -2278,11 +2270,9 @@
 <p>对于任何不是根结点的结点X，我们关心它的parent结点P和grandparent结点G</p>
 <ul>
 <li>case 1: 若P是根结点，直接旋转交换X和P</li>
-<li>case 2: 若P不是根结点，可再分为两种情况<ul>
-<li>Zig-zag: 双旋(double rotation)，操作方法与AVL树的RL或LR旋转一致</li>
-<li>Zig-zig: 单旋(single rotation)，实际上也是旋转了两次。<strong>Zig-zig操作与AVL树的LL或RR旋转不同，是先将P和G旋转交换，再把X和P旋转交换</strong></li>
-</ul>
-</li>
+<li>case 2: 若P不是根结点，可再分为两种情况
+    - Zig-zag: 双旋(double rotation)，操作方法与AVL树的RL或LR旋转一致
+    - Zig-zig: 单旋(single rotation)，实际上也是旋转了两次。<strong>Zig-zig操作与AVL树的LL或RR旋转不同，是先将P和G旋转交换，再把X和P旋转交换</strong></li>
 </ul>
 <p><img alt="splay旋转操作" src="../ComputerScience/ADS/assets/splay.png" /></p>
 </div>
@@ -2293,7 +2283,86 @@
 <li>FindMax(<span class="arithmatex">\(T_L\)</span>)（左子树的最大结点没有右子树）</li>
 <li>Make <span class="arithmatex">\(T_R\)</span> the right child of the root of <span class="arithmatex">\(T_L\)</span> (后两步实际上就是一般的merge操作)</li>
 </ol>
-<h2 id="computerscience-ads-chap-1-amortized-anyl">amortized anyl<a class="headerlink" href="#computerscience-ads-chap-1-amortized-anyl" title="Permanent link">&para;</a></h2></section><h1 class='nav-section-title-end'>Ended: 高级数据结构与算法分析</h1>
+<hr />
+<h2 id="computerscience-ads-lec-1-amortized-analysis">Amortized Analysis(摊还分析)<a class="headerlink" href="#computerscience-ads-lec-1-amortized-analysis" title="Permanent link">&para;</a></h2>
+<p>摊还分析的主要想法来自于我们希望能够通过适当的方法估计一系列操作的平均时间复杂度，但平均时间复杂度往往不太好估计，因此我们希望能够找到一种更好的方法。</p>
+<p>假如直接把直接用所有情况中最差的时间复杂度作为平均情况的上界，这也是不恰当的，因为不可能每一步操作都是最坏的情况，因此我们要通过摊还分析对平均时间复杂度的上界进行估计和约束，即找到某种方式把时间复杂度“平摊”到每一步操作上，同时“平摊”后的结果也不小于直接平均得到的结果，那么我们就成功地约束和估计了平均时间的上界。</p>
+<blockquote>
+<p>worst-case bound <span class="arithmatex">\(\geq\)</span>  amortized bound <span class="arithmatex">\(\geq\)</span> average-case bound</p>
+</blockquote>
+<p>我们可以采取以下三种方法：聚合分析、核算法以及势能法。通过栈来举例分析，Push和Pop的复杂度是<span class="arithmatex">\(O(1)\)</span>，Multipop（将所有元素弹出）的复杂度是<span class="arithmatex">\(O(n)\)</span>，其中<span class="arithmatex">\(n\)</span>是当前栈中元素的个数。</p>
+<hr />
+<h3 id="computerscience-ads-lec-1-aggregate-analysis">聚合分析(Aggregate analysis)<a class="headerlink" href="#computerscience-ads-lec-1-aggregate-analysis" title="Permanent link">&para;</a></h3>
+<p>显然，平均时间复杂度的最差情况是所有操作都是Multipop，但是空栈时显然不可能达到这样的时间复杂度，因此我们要只考虑<strong>可能出现</strong>的情况中最差的时间复杂度，即从一个空栈开始的连续<span class="arithmatex">\(n\)</span>次操作中，前<span class="arithmatex">\(n-1\)</span>次都是Push，最后一次是Multipop</p>
+<p>因此，从空栈开始的连续<span class="arithmatex">\(n\)</span>次操作中，最差的操作代价是<span class="arithmatex">\(2n−2\)</span>，因此摊还分析复杂度为<span class="arithmatex">\(O(1)\)</span></p>
+<hr />
+<h3 id="computerscience-ads-lec-1-accounting-method">核算法(Accounting method)<a class="headerlink" href="#computerscience-ads-lec-1-accounting-method" title="Permanent link">&para;</a></h3>
+<p>核算法的目标是求出平均时间成本，但将所有时间完美的平均十分困难，那我们只需要尽可能地<strong>截长补短</strong>，把成本大的截取出来分给成本小的，并且保证所有操作的总成本不会减小，这样才能保证摊还时间复杂度是平均时间的上界。</p>
+<p>我们设第<span class="arithmatex">\(i\)</span>种操作的真实成本是<span class="arithmatex">\(c_i\)</span>，截长补短后的摊还成本是
+$$ \hat{c_i} = c_i + \Delta_i $$</p>
+<p>其中<span class="arithmatex">\(\Delta_i\)</span>就是从长的截取出来部分（负值），或者给短的补充上去的部分（正值），并且我们要保证摊还成本不小于平均成本，那么就要有
+$$ \sum_{i=1}^n \hat{c_i} \geq \sum_{i=1}^n c_i $$</p>
+<p>也即 <span class="arithmatex">\(\sum_{i=1}^n \Delta_i \geq 0\)</span>。</p>
+<p>因为我们希望每一次操作的摊还成本是<span class="arithmatex">\(O(1)\)</span>，所以我们希望这三种操作的成本都是常数级的，而Multipop的成本比较大，我们就要使它对应的 <span class="arithmatex">\(\Delta_i &lt; 0\)</span>，那么就要让成本小的操作 <span class="arithmatex">\(\Delta_i &gt; 0\)</span></p>
+<p>就像PPT中的例子那样，把Push的操作代价调整为2，Pop和Multipop的操作代价调整为0，那么连续<span class="arithmatex">\(n\)</span>次操作的时间复杂度至多为<span class="arithmatex">\(O(2n) = O(n)\)</span>，分摊给<span class="arithmatex">\(n\)</span>次操作后就是<span class="arithmatex">\(O(1)\)</span>。</p>
+<p>上述处理的合理性的证明是显然的，因为size<span class="arithmatex">\((S) \geq 0\)</span>，即进行Pop和Multipop之前必须Push，每一次Push的代价加1就足以抵消掉Pop和Multipop的所有代价，那么这就证明了<span class="arithmatex">\(\sum_{i=1}^n \Delta_i \geq 0\)</span></p>
+<p>核算法(Accounting method)的名称可以理解为在银行中存取款，显然在取款之前必须存款，足够的存款才能抵消掉你的开销。</p>
+<hr />
+<h3 id="computerscience-ads-lec-1-potential-method">势能法(Potential method)<a class="headerlink" href="#computerscience-ads-lec-1-potential-method" title="Permanent link">&para;</a></h3>
+<p>我们可以为整个结构设计一个势函数<span class="arithmatex">\(\Phi\)</span>，使得第<span class="arithmatex">\(i\)</span>次操作的摊还代价为
+$$ \hat{c_i} = c_i + \left( \Phi(D_i) - \Phi(D_{i-1}) \right) $$</p>
+<p>这里的<span class="arithmatex">\(i\)</span>表示连续<span class="arithmatex">\(n\)</span>个操作中的第<span class="arithmatex">\(i\)</span>个，而非上面核算法的第<span class="arithmatex">\(i\)</span>种。</p>
+<p>所以每一步操作的摊还代价等于操作的真实代价加上势函数的变化，求和得到</p>
+<div class="arithmatex">\[\begin{aligned}
+\sum_{i=1}^n \hat{c_i} &amp;= \sum_{i=1}^n (\hat{c_i} + \Phi(D_i) - \Phi(D_{i-1}) ) \\
+&amp;= \left( \sum_{i=1}^n c_i \right) + \Phi(D_n) - \Phi(D_0)
+\end{aligned}\]</div>
+<p>我们希望这个摊还代价不小于真实代价，即 <span class="arithmatex">\(\sum_{i=1}^n \hat{c_i} \geq \sum_{i=1}^n c_i\)</span>，那么就要有 <span class="arithmatex">\(\Phi(D_n) \geq \Phi(D_0)\)</span>，即势函数的变化不小于0。
+我们在设计势函数时可以使得 <span class="arithmatex">\(\Phi(D_0) = 0\)</span>，即初始状态的势能为0，并且其他任何时候的势能不小于0，那么就可以保证摊还代价不小于真实代价。</p>
+<hr />
+<h3 id="computerscience-ads-lec-1-splay-tree_1">Splay Tree的摊还分析<a class="headerlink" href="#computerscience-ads-lec-1-splay-tree_1" title="Permanent link">&para;</a></h3>
+<p>我们知道最后得到的摊还分析结果是<span class="arithmatex">\(O(\log n)\)</span>，那么<span class="arithmatex">\(\Phi(D_n)\)</span>就应当是<span class="arithmatex">\(O(n\log n)\)</span>量级的，所以势函数中就要带有一个对数函数。最终得到了如下的定义：
+$$ \Phi(D_i) = \sum_{i \in T} \log S(i) $$
+其中<span class="arithmatex">\(S(i)\)</span>表示子树<span class="arithmatex">\(i\)</span>的大小（包括<span class="arithmatex">\(i\)</span>自己在内的所有结点的个数）</p>
+<p><img alt="Splay Tree的摊还分析" src="../ComputerScience/ADS/assets/splay%E6%A0%91%E7%9A%84%E6%91%8A%E8%BF%98%E5%88%86%E6%9E%90.png" />
+那么对于结点<span class="arithmatex">\(X\)</span>在进行第<span class="arithmatex">\(i\)</span>次操作时，我们可以得到如下的分析：</p>
+<ul>
+<li>zig操作的摊还代价</li>
+</ul>
+<div class="arithmatex">\[\begin{aligned}
+\hat{c_i} &amp;= 1 + R_i(X) - R_{i-1}(X) + R_i(P) - R_{i-1}(P) \\
+&amp;\leq 1 + (R_i(X) - R_{i-1}(X)) \\
+&amp;\leq 1 + 3(R_i(X) - R_{i-1}(X))
+\end{aligned}\]</div>
+<p>这里 <span class="arithmatex">\(R_i(P) - R_{i-1}(P)\)</span> 显然为正值，因此去掉这两项之后可以得到第一个不等号</p>
+<ul>
+<li>zig-zag操作的摊还代价</li>
+</ul>
+<div class="arithmatex">\[\begin{aligned}
+\hat{c_i} &amp;= 2 + R_i(X) - R_{i-1}(X) + R_i(P) - R_{i-1}(P) + R_i(G) - R_{i-1}(G) \\
+&amp;\leq 2(R_i(X) - R_{i-1}(X)) \\
+&amp;\leq 1 + 3(R_i(X) - R_{i-1}(X))
+\end{aligned}\]</div>
+<ul>
+<li>zig-zig操作的摊还代价</li>
+</ul>
+<div class="arithmatex">\[\begin{aligned}
+\hat{c_i} &amp;= 2 + R_i(X) - R_{i-1}(X) + R_i(P) - R_{i-1}(P) + R_i(G) - R_{i-1}(G) \\
+&amp;\leq 1 + 3(R_i(X) - R_{i-1}(X))
+\end{aligned}\]</div>
+<p>上面我们得到了每一次操作的摊还代价，那么就需要计算结点<span class="arithmatex">\(X\)</span>从它所在的位置连续移动到根结点总共需要的摊还代价。设<span class="arithmatex">\(X\)</span>的高度为<span class="arithmatex">\(H(X)\)</span>，则可能的旋转次数为</p>
+<div class="arithmatex">\[ k = \begin{cases}
+H(X)/2 &amp; H(X)\text{为偶数}  \\
+(H(X)-1)/2 + 1 &amp; H(X)\text{为奇数} 
+\end{cases} \]</div>
+<p>其中偶数的情况里所有的旋转都是zig-zig或zia-zag，奇数则是除了最后一次操作是zig之外，其他都是zig-zig或zig-zag。</p>
+<p>考虑最坏的情况，即一定要旋转<span class="arithmatex">\(k\)</span>次，那么总的摊还代价为</p>
+<div class="arithmatex">\[\begin{aligned}
+\sum_{i=1}^{k+1} \hat{c_i} &amp;\leq 1 + 3(R_{k+1}(X) - R_k(X)) + \sum_{i=1}^{k} 3(R_{i}(X) - R_{i-1}(X)) \\
+&amp;= 1 + 3(R_{k+1}(X) - R_0(X)) = O(\log n)
+\end{aligned}\]</div>
+<p>这里最后的等于<span class="arithmatex">\(O(\log n)\)</span>来自于势函数的定义（对数的累和）</p>
+<p><strong>综上所述，Splay树的搜索、插入和删除的摊还复杂度均为<span class="arithmatex">\(O(\log n)\)</span></strong>·</p></section><h1 class='nav-section-title-end'>Ended: 高级数据结构与算法分析</h1>
                         <h2 class='nav-section-title' id='section-计算机组成与设计'>
                             计算机组成与设计 <a class='headerlink' href='#section-计算机组成与设计' title='Permanent link'>↵</a>
                         </h2>
@@ -2310,14 +2379,10 @@
 <p class="admonition-title">成绩组成</p>
 <ul>
 <li>实验 30%</li>
-<li>理论 70%<ul>
-<li>Homework + Quiz + Midterm 30%</li>
-<li>期末 40%<ul>
-<li>一份A4小抄</li>
-</ul>
-</li>
-</ul>
-</li>
+<li>理论 70%
+    - Homework + Quiz + Midterm 30%
+    - 期末 40%
+        - 一份A4小抄</li>
 </ul>
 </div>
 <h2 id="computerscience-cod-table-of-contents">Table of Contents<a class="headerlink" href="#computerscience-cod-table-of-contents" title="Permanent link">&para;</a></h2>
@@ -2350,25 +2415,17 @@ D--->H
 <h2 id="computerscience-cod-chap-1-eight-great-ideas-in-computer-architecture">Eight Great Ideas in Computer Architecture<a class="headerlink" href="#computerscience-cod-chap-1-eight-great-ideas-in-computer-architecture" title="Permanent link">&para;</a></h2>
 <p>有一些在实际的题目中难以区分，需要注意题目中的某些暗示。</p>
 <ul>
-<li>Design for Moore’s Law (设计紧跟摩尔定律)<ul>
-<li>Moore's Law: Integrated circuit resources double every 18-24 months.</li>
-</ul>
-</li>
-<li>Use Abstraction to Simplify Design (采用抽象简化设计)<ul>
-<li>采用层次化、模块化的设计</li>
-</ul>
-</li>
+<li>Design for Moore’s Law (设计紧跟摩尔定律)
+    - Moore's Law: Integrated circuit resources double every 18-24 months.</li>
+<li>Use Abstraction to Simplify Design (采用抽象简化设计)
+    - 采用层次化、模块化的设计</li>
 <li>Make the Common Case Fast (加速常见事件)</li>
 <li>Performance via Pipelining (通过并行提高性能)</li>
-<li>Performance via Pipelining (通过流水线提高性能)<ul>
-<li>所有流程同时进行，每个流程工作的对象是相邻流程的产品</li>
-</ul>
-</li>
+<li>Performance via Pipelining (通过流水线提高性能)
+    - 所有流程同时进行，每个流程工作的对象是相邻流程的产品</li>
 <li>Performance via Prediction (通过预测提高性能)</li>
-<li>Hierarchy of Memories (存储器层次)<ul>
-<li>Disk / Tape <span class="arithmatex">\(\xrightarrow{Files}\)</span> Main Memory(DRAM) <span class="arithmatex">\(\xrightarrow{Pages}\)</span> L2-Cache(SRAM) <span class="arithmatex">\(\xrightarrow{Blocks}\)</span> L1-Cache(On-Chip) <span class="arithmatex">\(\xrightarrow[Operands]{Instr.}\)</span> Registers</li>
-</ul>
-</li>
+<li>Hierarchy of Memories (存储器层次)
+    - Disk / Tape <span class="arithmatex">\(\xrightarrow{Files}\)</span> Main Memory(DRAM) <span class="arithmatex">\(\xrightarrow{Pages}\)</span> L2-Cache(SRAM) <span class="arithmatex">\(\xrightarrow{Blocks}\)</span> L1-Cache(On-Chip) <span class="arithmatex">\(\xrightarrow[Operands]{Instr.}\)</span> Registers</li>
 <li>Dependability via Redundancy (通过冗余提高可靠性)</li>
 </ul>
 <hr />
@@ -2377,19 +2434,13 @@ D--->H
 <ul>
 <li>input;</li>
 <li>output;</li>
-<li>memory (DRAM);<ul>
-<li>程序、数据存储的地方，也是程序“运行的位置”；</li>
-<li>cache memory (SRAM): buffer for the DRAM memory;</li>
-</ul>
-</li>
-<li>datapath;<ul>
-<li>负责实际的数据处理；</li>
-</ul>
-</li>
-<li>control;<ul>
-<li>负责指挥控制如何进行数据处理，给出控制信号；</li>
-</ul>
-</li>
+<li>memory (DRAM);
+    - 程序、数据存储的地方，也是程序“运行的位置”；
+    - cache memory (SRAM): buffer for the DRAM memory;</li>
+<li>datapath;
+    - 负责实际的数据处理；</li>
+<li>control;
+    - 负责指挥控制如何进行数据处理，给出控制信号；</li>
 </ul>
 <p><img alt="computer system" src="../ComputerScience/COD/assets/CS.png" /></p>
 <hr />
@@ -2526,7 +2577,7 @@ $$ \oint \vec{B}·d\vec{l} = \mu_0 I + \mu_0 \epsilon_0 \frac{d\Phi_E}{dt} $$</p
 <li><a href="#mathematicsandphysics-phy2-electromagnetic">第一章 电磁场的基本概念</a></li>
 </ul></section><section class="print-page" id="mathematicsandphysics-phy2-electromagnetic"><h1 id="mathematicsandphysics-phy2-electromagnetic-_1">电磁学<a class="headerlink" href="#mathematicsandphysics-phy2-electromagnetic-_1" title="Permanent link">&para;</a></h1>
 <div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8zm6.78 1a.7.7 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38z"/></svg></span> 约 1159 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3z"/></svg></span> 预计阅读时间 5 分钟</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8zm6.78 1a.7.7 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38z"/></svg></span> 约 1548 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3z"/></svg></span> 预计阅读时间 6 分钟</p>
 </div>
 <h2 id="mathematicsandphysics-phy2-electromagnetic-chap25">Chap25 电荷和库仑定律<a class="headerlink" href="#mathematicsandphysics-phy2-electromagnetic-chap25" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2548,24 +2599,24 @@ $$ \oint \vec{B}·d\vec{l} = \mu_0 I + \mu_0 \epsilon_0 \frac{d\Phi_E}{dt} $$</p
 <li>Volume Charge Density(体电荷密度) <span class="arithmatex">\(\rho = \dfrac{q}{V}\)</span></li>
 </ol>
 <h4 id="mathematicsandphysics-phy2-electromagnetic-a-ring-of-charge">A Ring of Charge<a class="headerlink" href="#mathematicsandphysics-phy2-electromagnetic-a-ring-of-charge" title="Permanent link">&para;</a></h4>
-<p><img align="left," alt="a ring of charge" src="../MathematicsAndPhysics/Phy2/assets/%E7%8E%AF%E7%94%B5%E8%8D%B7.png" width="250px" /></p>
+<p><img align="left" alt="a ring of charge" src="../MathematicsAndPhysics/Phy2/assets/%E7%8E%AF%E7%94%B5%E8%8D%B7.png" width="225px" /></p>
 <p>推导：
 $$ \lambda = \dfrac{q}{2\pi R}$$
-$$ dF = \dfrac{1}{4\pi\epsilon_0} \dfrac{q_0dq}{r^2} = \dfrac{1}{4\pi\epsilon_0} \dfrac{q_0\lambda Rd\Phi}{(z^2+R^2)} $$</p>
-<div class="arithmatex">\[
+$$ dF = \dfrac{1}{4\pi\epsilon_0} \dfrac{q_0dq}{r^2} = \dfrac{1}{4\pi\epsilon_0} \dfrac{q_0\lambda Rd\Phi}{(z^2+R^2)} $$
+$$
 \begin{aligned}
-F_z &amp;= \int dF_z = \int dF\cos\theta \\\\
-&amp;= \int \dfrac{1}{4\pi\epsilon_0} \dfrac{q_0\lambda Rd\Phi}{z^2+R^2} \dfrac{z}{\sqrt{z^2+R^2}}\\\\
-&amp;= \dfrac{1}{4\pi\epsilon_0} \dfrac{q_0\lambda Rz}{(z^2+R^2)^{3/2}} \int_0^{2\pi} d\Phi \\\\
-&amp;= \dfrac{1}{4\pi\epsilon_0} \dfrac{q_0qz}{(z^2+R^2)^{3/2}} \\\\
+F_z &amp;= \int dF_z = \int dF\cos\theta \\
+&amp;= \int \dfrac{1}{4\pi\epsilon_0} \dfrac{q_0\lambda Rd\Phi}{z^2+R^2} \dfrac{z}{\sqrt{z^2+R^2}}\\
+&amp;= \dfrac{1}{4\pi\epsilon_0} \dfrac{q_0\lambda Rz}{(z^2+R^2)^{3/2}} \int_0^{2\pi} d\Phi \\
+&amp;= \dfrac{1}{4\pi\epsilon_0} \dfrac{q_0qz}{(z^2+R^2)^{3/2}} \\
 \end{aligned}
-\]</div>
+$$</p>
 <p>从而推得
-$$ \vec{F} = \dfrac{1}{4\pi\epsilon_0} \dfrac{q_0qz}{(z^2+R^2)^{3/2}} \hat{k}$$</p>
+$$ \boldsymbol{F} = \dfrac{1}{4\pi\epsilon_0} \dfrac{q_0qz}{(z^2+R^2)^{3/2}} \hat{k}$$</p>
 <p>当<span class="arithmatex">\(z &gt;&gt; R\)</span>时，有
-$$ \vec{F} \approx \dfrac{1}{4\pi\epsilon_0} \dfrac{q_0q}{z^2} \hat{k}$$</p>
+$$ \boldsymbol{F} \approx \dfrac{1}{4\pi\epsilon_0} \dfrac{q_0q}{z^2} \hat{k}$$</p>
 <h4 id="mathematicsandphysics-phy2-electromagnetic-a-disk-of-charge">A Disk of Charge<a class="headerlink" href="#mathematicsandphysics-phy2-electromagnetic-a-disk-of-charge" title="Permanent link">&para;</a></h4>
-<p><img align="left," alt="a disk of charge" src="../MathematicsAndPhysics/Phy2/assets/%E9%9D%A2%E7%94%B5%E8%8D%B7.png" width="250px" /></p>
+<p><img align="left" alt="a disk of charge" src="../MathematicsAndPhysics/Phy2/assets/%E9%9D%A2%E7%94%B5%E8%8D%B7.png" width="250px" /></p>
 <p>推导：
 $$ \sigma = \dfrac{q}{\pi R^2} $$
 $$ dq = \sigma dA = \sigma(2\pi \omega d\omega) = 2\pi\sigma\omega d\omega $$
@@ -2586,30 +2637,37 @@ F_z &amp;= \dfrac{1}{4\pi\epsilon_0} q_02\pi\sigma z \int_0^R \dfrac{\omega d\om
 </div>
 <h2 id="mathematicsandphysics-phy2-electromagnetic-chap26">Chap26 电场<a class="headerlink" href="#mathematicsandphysics-phy2-electromagnetic-chap26" title="Permanent link">&para;</a></h2>
 <p>Coulomb's Law:
-$$ \vec{F} = \dfrac{1}{4\pi\epsilon_0} \dfrac{Q_0}{r^2} \hat{r} $$</p>
+$$ \boldsymbol{F} = \dfrac{1}{4\pi\epsilon_0} \dfrac{Q_0}{r^2} \hat{r} $$
+$$ \boldsymbol{E} = \lim_{q_0 \rightarrow 0} \dfrac{\boldsymbol{F}}{q_0} $$</p>
 <pre  class="mermaid"><code>graph LR
 A[Charge] <===>C[Field]<===> B[Charge]
 </code></pre>
-<div class="arithmatex">\[ \vec{E} = \lim_{q_0 \rightarrow 0} \dfrac{\vec{F}}{q_0} \]</div>
 <h3 id="mathematicsandphysics-phy2-electromagnetic-dipole">Dipole（电偶极矩）<a class="headerlink" href="#mathematicsandphysics-phy2-electromagnetic-dipole" title="Permanent link">&para;</a></h3>
-<p>定义：两个相反等量电荷之间的距离乘以电荷量，<span class="arithmatex">\(\vec{p} = q\vec{d}\)</span>
+<p>定义：两个相反等量电荷之间的距离乘以电荷量，<span class="arithmatex">\(\boldsymbol{p} = q\boldsymbol{d}\)</span>
 <pre  class="mermaid"><code>flowchart LR
 A(( -q )) --> B(( +q ))
 </code></pre></p>
-<p><strong>在x轴上的点</strong></p>
-<p><img align="left," alt="dipole1" src="../MathematicsAndPhysics/Phy2/assets/%E7%94%B5%E5%81%B6%E6%9E%81%E7%9F%A91.png" width="300px" /></p>
-<div class="arithmatex">\[ E_x(x,0) =0 \]</div>
+<div class="admonition note">
+<p class="admonition-title">坐标轴上的电偶极矩</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="mathematicsandphysics-phy2-electromagnetic-__tabbed_1_1" name="mathematicsandphysics-phy2-electromagnetic-__tabbed_1" type="radio" /><input id="mathematicsandphysics-phy2-electromagnetic-__tabbed_1_2" name="mathematicsandphysics-phy2-electromagnetic-__tabbed_1" type="radio" /><input id="mathematicsandphysics-phy2-electromagnetic-__tabbed_1_3" name="mathematicsandphysics-phy2-electromagnetic-__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="mathematicsandphysics-phy2-electromagnetic-__tabbed_1_1">在x轴上的点</label><label for="mathematicsandphysics-phy2-electromagnetic-__tabbed_1_2">在y轴上的点</label><label for="mathematicsandphysics-phy2-electromagnetic-__tabbed_1_3">沿坐标轴的点</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><img align="left" alt="dipole1" src="../MathematicsAndPhysics/Phy2/assets/%E7%94%B5%E5%81%B6%E6%9E%81%E7%9F%A91.png" width="250px" />
+$$ E_x(x,0) = 0 $$</p>
 <div class="arithmatex">\[ E_y(x,0) = -2 \dfrac{1}{4\pi\epsilon_0} \dfrac{Q}{r^2} \sin\theta \]</div>
 <p>又有 <span class="arithmatex">\(\sin\theta = \dfrac{a}{r}\)</span>, <span class="arithmatex">\(r^2 = x^2+a^2\)</span>, 从而
 $$ E_y(x,0) = -2 \dfrac{1}{4\pi\epsilon_0} \dfrac{Qa}{(x^2+a^2)^{3/2}} $$</p>
-<p><strong>在y轴上的点</strong></p>
-<p><img align="left," alt="dipole2" src="../MathematicsAndPhysics/Phy2/assets/%E7%94%B5%E5%81%B6%E6%9E%81%E7%9F%A92.png" width="300px" /></p>
-<div class="arithmatex">\[ E_x(0,y) =0 \]</div>
+</div>
+<div class="tabbed-block">
+<p><img align="left" alt="dipole2" src="../MathematicsAndPhysics/Phy2/assets/%E7%94%B5%E5%81%B6%E6%9E%81%E7%9F%A92.png" width="250px" />
+$$ E_x(0,y) =0 $$</p>
 <div class="arithmatex">\[\begin{aligned}
 E_x(0,y) &amp;= \dfrac{Q}{4\pi\epsilon_0} \left( \dfrac{1}{(y-a)^2} - \dfrac{1}{(y+a)^2} \right) \\\\
 &amp;= \dfrac{Q}{4\pi\epsilon_0}  \dfrac{4ay}{y^4 \left( 1-\dfrac{a^2}{y^2} \right)^2}
 \end{aligned}\]</div>
-<p><strong>沿坐标轴的点</strong>，且<span class="arithmatex">\(r &gt;&gt; a\)</span></p>
+</div>
+<div class="tabbed-block">
+<p>由<span class="arithmatex">\(r &gt;&gt; a\)</span></p>
 <p>沿x轴：
 $$ E_x(r,0) = 0 $$
 $$ E_y(r,0) = -2 \dfrac{1}{4\pi\epsilon_0} \dfrac{Qa}{(r^2+a^2)^{3/2}} $$</p>
@@ -2622,13 +2680,17 @@ $$
 $$
 E_y(0,r) = \dfrac{Q}{4\pi\epsilon_0}  \dfrac{4ar}{r^4 \left( 1-\dfrac{a^2}{r^2} \right)^2}
 $$</p>
+</div>
+</div>
+</div>
+</div>
 <p>For <span class="arithmatex">\(r &gt;&gt; a\)</span>,
 $$ E_y(0,r) \approx 4\dfrac{1}{4\pi\epsilon_0}  \dfrac{Qa}{r^3} $$
 此时我们可以得到
 $$ E \propto \dfrac{1}{r^3} $$</p>
 <h3 id="mathematicsandphysics-phy2-electromagnetic-infinite-line-of-charge">Infinite Line of Charge<a class="headerlink" href="#mathematicsandphysics-phy2-electromagnetic-infinite-line-of-charge" title="Permanent link">&para;</a></h3>
-<p><img align="left," alt="infinite line of charge" src="../MathematicsAndPhysics/Phy2/assets/%E6%97%A0%E9%99%90%E7%BA%BF%E7%94%B5%E8%8D%B7.png" width="350px" /></p>
-<div class="arithmatex">\[ dE = \dfrac{1}{4\pi\epsilon_0} \dfrac{dq}{r'^2} , dq = \lambda dx, r' =\dfrac{r}{\cos\theta} \]</div>
+<p><img alt="infinite line of charge" src="../MathematicsAndPhysics/Phy2/assets/%E6%97%A0%E9%99%90%E7%BA%BF%E7%94%B5%E8%8D%B7.png" width="380px" /></p>
+<div class="arithmatex">\[ dE = \dfrac{1}{4\pi\epsilon_0} \dfrac{dq}{r'^2} ,\ dq = \lambda dx, \  r' =\dfrac{r}{\cos\theta} \]</div>
 <p>Therefore,
 $$ dE = \dfrac{1}{4\pi\epsilon_0} \dfrac{\lambda \cos^2 \theta dx}{r^2} $$</p>
 <p>又因为
@@ -2648,8 +2710,8 @@ $$ E_y = \int dE_y = \dfrac{1}{4\pi\epsilon_0} \dfrac{\lambda}{r} \int_{-\pi /2}
 <li>Infinite Line of Charge: $E \propto \dfrac{1}{r} $</li>
 </ul>
 <h3 id="mathematicsandphysics-phy2-electromagnetic-a-uniform-ring-of-charge">A Uniform Ring of Charge<a class="headerlink" href="#mathematicsandphysics-phy2-electromagnetic-a-uniform-ring-of-charge" title="Permanent link">&para;</a></h3>
-<p><img align="left," alt="uniform ring of charge" src="../MathematicsAndPhysics/Phy2/assets/%E5%9D%87%E5%8C%80%E7%8E%AF%E7%94%B5%E8%8D%B7.png" width="300px" /></p>
-<div class="arithmatex">\[ dE = \dfrac{\lambda ds}{4\pi\epsilon_0} = \dfrac{\lambda ds}{4\pi\epsilon_0(z^2+R^2)} \]</div>
+<p><img align="left" alt="uniform ring of charge" src="../MathematicsAndPhysics/Phy2/assets/%E5%9D%87%E5%8C%80%E7%8E%AF%E7%94%B5%E8%8D%B7.png" width="250px" />
+$$ dE = \dfrac{\lambda ds}{4\pi\epsilon_0} = \dfrac{\lambda ds}{4\pi\epsilon_0(z^2+R^2)} $$</p>
 <div class="arithmatex">\[ E_x = E_y = 0, E_z \neq 0 \]</div>
 <div class="arithmatex">\[\begin{aligned}
 dE_z &amp;= dE\cos\theta = \dfrac{\lambda ds}{4\pi\epsilon_0(z^2+R^2)} \dfrac{z}{(z^2+R^2)^{1/2}}  \\\\
@@ -2662,8 +2724,8 @@ E_z &amp;= \int dE_z = \int \dfrac{z\lambda ds}{4\pi\epsilon_0(z^2+R^2)^{3/2}} \
 <p>if <span class="arithmatex">\(z &gt;&gt; R\)</span>, then <span class="arithmatex">\(E_z \approx \dfrac{q}{4\pi\epsilon_0z^2}\)</span></p>
 <p>if <span class="arithmatex">\(z \rightarrow 0\)</span>, then <span class="arithmatex">\(E_z \approx 0\)</span></p>
 <h3 id="mathematicsandphysics-phy2-electromagnetic-a-uniform-disk-of-charge">A Uniform Disk of Charge<a class="headerlink" href="#mathematicsandphysics-phy2-electromagnetic-a-uniform-disk-of-charge" title="Permanent link">&para;</a></h3>
-<p><img align="left," alt="uniform disk of charge" src="../MathematicsAndPhysics/Phy2/assets/%E5%9D%87%E5%8C%80%E9%9D%A2%E7%94%B5%E8%8D%B7.png" width="250px" /></p>
-<div class="arithmatex">\[ dq = 2\pi\omega·d\omega·\sigma \]</div>
+<p><img align="left" alt="uniform disk of charge" src="../MathematicsAndPhysics/Phy2/assets/%E5%9D%87%E5%8C%80%E9%9D%A2%E7%94%B5%E8%8D%B7.png" width="250px" />
+$$ dq = 2\pi\omega·d\omega·\sigma $$</p>
 <div class="arithmatex">\[ dE = \dfrac{zdq}{4\pi\epsilon_0(z^2+\omega^2)^{3/2}} = \dfrac{z·2\pi\sigma\theta d\theta}{4\pi\epsilon_0(z^2+\omega^2)^{3/2}} \]</div>
 <div class="arithmatex">\[\begin{aligned}
 E &amp;= \int dE = \dfrac{\sigma z}{2\epsilon} \int_0^R \dfrac{\omega d\omega}{(z^2+\omega^2)^{3/2}} \\\\
@@ -2671,19 +2733,94 @@ E &amp;= \int dE = \dfrac{\sigma z}{2\epsilon} \int_0^R \dfrac{\omega d\omega}{(
 &amp;= \dfrac{\sigma}{2\epsilon} \left( 1- \dfrac{1}{\sqrt{1+\dfrac{R^2}{z^2}}} \right)
 \end{aligned}\]</div>
 <ul>
-<li>
-<p>if <span class="arithmatex">\(R &gt;&gt; z\)</span>， <span class="arithmatex">\(\dfrac{1}{\sqrt{1+\dfrac{R^2}{z^2}}} \rightarrow 0\)</span>, so <span class="arithmatex">\(E = \dfrac{\sigma}{2\epsilon}\)</span> (Infinite sheet)</p>
-</li>
-<li>
-<p>if <span class="arithmatex">\(z &gt;&gt; R\)</span>， <span class="arithmatex">\(\dfrac{1}{\sqrt{1+\dfrac{R^2}{z^2}}} = 1 - \dfrac{1}{2} \dfrac{R^2}{z^2} + \dfrac{3}{8} \dfrac{R^4}{z^4} - \cdots\)</span>\\
-so $E = \dfrac{\sigma}{2\epsilon} \left( 1- \dfrac{1}{2} \dfrac{R^2}{z^2} + \dfrac{3}{8} \dfrac{R^4}{z^4} - \cdots \right) \propto \dfrac{\sigma}{2\epsilon} \dfrac{1}{2} \dfrac{R^2}{z^2} = \dfrac{q}{4\pi\epsilon_0 z^2} $</p>
-</li>
+<li>if <span class="arithmatex">\(R &gt;&gt; z\)</span>， <span class="arithmatex">\(\dfrac{1}{\sqrt{1+\dfrac{R^2}{z^2}}} \rightarrow 0\)</span>, so <span class="arithmatex">\(E = \dfrac{\sigma}{2\epsilon}\)</span> (Infinite sheet)</li>
+</ul>
+<ul>
+<li>if <span class="arithmatex">\(z &gt;&gt; R\)</span>， <span class="arithmatex">\(\dfrac{1}{\sqrt{1+\dfrac{R^2}{z^2}}} = 1 - \dfrac{1}{2} \dfrac{R^2}{z^2} + \dfrac{3}{8} \dfrac{R^4}{z^4} - \cdots\)</span></li>
+</ul>
+<ul>
+<li>so $E = \dfrac{\sigma}{2\epsilon} \left( 1- \dfrac{1}{2} \dfrac{R^2}{z^2} + \dfrac{3}{8} \dfrac{R^4}{z^4} - \cdots \right) \propto \dfrac{\sigma}{2\epsilon} \dfrac{1}{2} \dfrac{R^2}{z^2} = \dfrac{q}{4\pi\epsilon_0 z^2} $</li>
 </ul>
 <h3 id="mathematicsandphysics-phy2-electromagnetic-a-dipole-in-an-electric-field">A Dipole in an Electric field<a class="headerlink" href="#mathematicsandphysics-phy2-electromagnetic-a-dipole-in-an-electric-field" title="Permanent link">&para;</a></h3>
-<p><img align="left," alt="dipole in an electric field" src="../MathematicsAndPhysics/Phy2/assets/%E7%94%B5%E5%81%B6%E6%9E%81%E7%9F%A9%E7%9F%A2%E9%87%8F.png" width="250px" /></p>
-<p>电偶极矩矢量：$ \vec{p} = q\vec{d} $</p>
-<p><img align="left," alt="dipole moment vector" src="../MathematicsAndPhysics/Phy2/assets/%E7%94%B5%E5%81%B6%E6%9E%81%E7%9F%A9%E5%8A%9B%E7%9F%A9.png" width="200px" /></p>
-<div class="arithmatex">\[ \vec{\tau} = \vec{p} \times \vec{E} \]</div></section><h1 class='nav-section-title-end'>Ended: 普通物理学Ⅱ</h1>
+<p><img align="left" alt="dipole in an electric field" src="../MathematicsAndPhysics/Phy2/assets/%E7%94%B5%E5%81%B6%E6%9E%81%E7%9F%A9%E7%9F%A2%E9%87%8F.png" width="270px" /></p>
+<p><img alt="dipole moment vector" src="../MathematicsAndPhysics/Phy2/assets/%E7%94%B5%E5%81%B6%E6%9E%81%E7%9F%A9%E5%8A%9B%E7%9F%A9.png" width="320px" /></p>
+<p>电偶极矩矢量：$ \boldsymbol{p} = q \boldsymbol{d} $
+$$ \boldsymbol{\tau} = \boldsymbol{p} \times \boldsymbol{E} $$</p>
+<h2 id="mathematicsandphysics-phy2-electromagnetic-chap27-gausss-law">Chap27 Gauss's Law(高斯定理)<a class="headerlink" href="#mathematicsandphysics-phy2-electromagnetic-chap27-gausss-law" title="Permanent link">&para;</a></h2>
+<h3 id="mathematicsandphysics-phy2-electromagnetic-_5">通量<a class="headerlink" href="#mathematicsandphysics-phy2-electromagnetic-_5" title="Permanent link">&para;</a></h3>
+<p>Flux，流量，通量: <span class="arithmatex">\(\Phi = \vec{E} \cdot \boldsymbol{A} = EA\cos\theta\)</span></p>
+<details class="example">
+<summary>速度场的通量</summary>
+<p><img alt="velocity field1" src="../MathematicsAndPhysics/Phy2/assets/%E9%80%9F%E5%BA%A6%E5%9C%BA%E7%9A%84%E9%80%9A%E9%87%8F1.png" /></p>
+<div class="arithmatex">\[\Phi = \boldsymbol{v} \cdot \boldsymbol{A} = vA\cos\theta\]</div>
+<p><img alt="velocity field2" src="../MathematicsAndPhysics/Phy2/assets/%E9%80%9F%E5%BA%A6%E5%9C%BA%E7%9A%84%E9%80%9A%E9%87%8F2.png" width="700px" /></p>
+<div class="arithmatex">\[ \Phi = \sum\boldsymbol{v} \cdot \boldsymbol{A} \]</div>
+<p><img alt="velocity field3" src="../MathematicsAndPhysics/Phy2/assets/%E9%80%9F%E5%BA%A6%E5%9C%BA%E7%9A%84%E9%80%9A%E9%87%8F3.png" width="300px" />
+对于任意的一个闭合曲面，有</p>
+<div class="arithmatex">\[\begin{aligned}
+\Phi &amp;= \oiint \boldsymbol{v} \cdot d\boldsymbol{A} \\\\
+d\Phi &amp;= \boldsymbol{v} \cdot d\boldsymbol{A} \\\\
+d\boldsymbol{A} &amp;= dydz\boldsymbol{i} + dzdx\boldsymbol{j} + dxdy\boldsymbol{k} \\\\
+\boldsymbol{v} &amp;= v_x\boldsymbol{i} + v_y\boldsymbol{j} + v_z\boldsymbol{k} \\\\
+\boldsymbol{v} \cdot d\boldsymbol{A} &amp;= v_xdydz + v_ydzdx + v_xdxdy \\\\
+\end{aligned}\]</div>
+</details>
+<p>If there were within the volume no sources or sink of fluid.</p>
+<p>如果在体积内没有流体的源头或汇集点，那么
+$$ \Phi = \oiint \boldsymbol{v} \cdot d\boldsymbol{A} = 0 $$</p>
+<p>If there were a source (源) within the volume:
+$$ \Phi = \oiint \boldsymbol{v} \cdot d\boldsymbol{A} &gt; 0 $$</p>
+<p>If there were a sink of fluid:
+$$ \Phi = \oiint \boldsymbol{v} \cdot d\boldsymbol{A} &lt; 0 $$</p>
+<h3 id="mathematicsandphysics-phy2-electromagnetic-_6">电通量<a class="headerlink" href="#mathematicsandphysics-phy2-electromagnetic-_6" title="Permanent link">&para;</a></h3>
+<p>Define:  electric flux <span class="arithmatex">\(\Phi_E\)</span> through the closed surface <span class="arithmatex">\(A\)</span>
+$$ \Phi = \sum \boldsymbol{E} \cdot \boldsymbol{A} = \oiint \boldsymbol{E} \cdot d\boldsymbol{A} $$</p>
+<ul>
+<li>规定电通量“向外”为正，“向内”为负</li>
+<li>对于一个开放曲面（不闭合），它的方向不确定，因此电通量的符号也不确定</li>
+</ul>
+<details class="example">
+<summary>例题</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="mathematicsandphysics-phy2-electromagnetic-__tabbed_2_1" name="mathematicsandphysics-phy2-electromagnetic-__tabbed_2" type="radio" /><input id="mathematicsandphysics-phy2-electromagnetic-__tabbed_2_2" name="mathematicsandphysics-phy2-electromagnetic-__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="mathematicsandphysics-phy2-electromagnetic-__tabbed_2_1">例一</label><label for="mathematicsandphysics-phy2-electromagnetic-__tabbed_2_2">例二</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><img align="right" alt="cube in electric field" src="../MathematicsAndPhysics/Phy2/assets/%E7%94%B5%E5%9C%BA%E4%B8%AD%E7%9A%84%E7%AB%8B%E6%96%B9%E4%BD%93.png" width="150px" />
+Imagine a cube of side a positioned in a region of constant electric field as shown</p>
+<p>Which of the following statements about the net electric flux <span class="arithmatex">\(\Phi_E\)</span> through the surface of this cube is true?</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> A. <span class="arithmatex">\(\Phi_E = 0\)</span> </li>
+<li>B. Phi_E \propto 2a^2$ </li>
+<li>C. <span class="arithmatex">\(\Phi_E \propto 6a^2\)</span></li>
+</ul>
+<div class="arithmatex">\[ \Phi = \sum \boldsymbol{E} \cdot \boldsymbol{A} = \oiint \boldsymbol{E} \cdot d\boldsymbol{A} \]</div>
+</div>
+<div class="tabbed-block">
+<p><img align="right" alt="例二" src="../MathematicsAndPhysics/Phy2/assets/%E4%BE%8B%E4%BA%8C.png" width="150px" />
+Consider 2 spheres (of radius R and 2R) drawn around a single charge as shown.</p>
+<p>Which of the following statements about the net electric flux through the 2 surfaces (<span class="arithmatex">\(\Phi_{2R}\)</span> and <span class="arithmatex">\(\Phi_R\)</span>) is true?</p>
+<ul class="task-list">
+<li><span class="arithmatex">\(\Phi_R &lt; \Phi_{2R}\)</span></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <span class="arithmatex">\(\Phi_R = \Phi_{2R}\)</span></li>
+<li><span class="arithmatex">\(\Phi_R &gt; \Phi_{2R}\)</span></li>
+</ul>
+<p><strong>解析</strong>：首先观察图片可以知道通过两个球面的电力线总数是相等的，因此电通量也是相等的。</p>
+<p>具体来说，根据 $ \Phi = \oiint \boldsymbol{E} \cdot d\boldsymbol{A} <span class="arithmatex">\(，我们知道 <span class="arithmatex">\(\boldsymbol{E} \propto r^2\)</span> 和 <span class="arithmatex">\(\boldsymbol{A} \propto \dfrac{1}{r^2}\)</span>，因此\)</span>r^2<span class="arithmatex">\(和\)</span>\dfrac{1}{r^2}$就抵消了，所以在这里电通量是一个与距离无关的定值。</p>
+</div>
+</div>
+</div>
+</details>
+<h3 id="mathematicsandphysics-phy2-electromagnetic-gauss-law">Gauss' Law（高斯公式）<a class="headerlink" href="#mathematicsandphysics-phy2-electromagnetic-gauss-law" title="Permanent link">&para;</a></h3>
+<p>通过一个闭合曲面的总电通量与被这个曲面所包围的电荷量成正比</p>
+<div class="arithmatex">\[ \Phi = \oiint \boldsymbol{E} \cdot d\boldsymbol{A} = \Phi_E = \dfrac{q_{enclosed}}{\epsilon_0} \]</div>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p><img align="left" alt="..." src="../MathematicsAndPhysics/Phy2/assets/%E9%AB%98%E6%96%AF%E5%85%AC%E5%BC%8F%E4%BE%8B%E5%AD%90.png" width="300" /></p>
+<div class="arithmatex">\[ \begin{aligned}
+&amp;a: \epsilon \oiint \boldsymbol{E} \cdot d\boldsymbol{A} = q &gt; 0 \\\\
+&amp;b: \epsilon \oiint \boldsymbol{E} \cdot d\boldsymbol{A} = -q &lt; 0 \\\\
+&amp;c: \epsilon \oiint \boldsymbol{E} \cdot d\boldsymbol{A} = q-q = 0 
+\end{aligned}\]</div>
+</div></section><h1 class='nav-section-title-end'>Ended: 普通物理学Ⅱ</h1>
                         <h2 class='nav-section-title' id='section-概率论'>
                             概率论 <a class='headerlink' href='#section-概率论' title='Permanent link'>↵</a>
                         </h2>
@@ -2824,7 +2961,7 @@ $$ P(A_g) = \frac{g 的测度}{\Omega 的测度} $$
 </ol>
 <p>满足这三个条件的集合 <span class="arithmatex">\(\mathscr{F}\)</span> 称为 <span class="arithmatex">\(\Omega\)</span> 上的 <span class="arithmatex">\(\sigma\)</span>-代数或 <span class="arithmatex">\(\sigma\)</span>-域。<span class="arithmatex">\(\mathscr{F}\)</span> 中的元素（<span class="arithmatex">\(\Omega\)</span> 的子集）称为事件。</p>
 <p>由这三个条件，可以推得事件域有下列性质：</p>
-<ol start="4">
+<ol>
 <li><span class="arithmatex">\(\emptyset \in \mathscr{F}\)</span>（因为 <span class="arithmatex">\(\overline{\Omega} = \emptyset\)</span>）</li>
 <li>若 <span class="arithmatex">\(A_1,A_2,\cdots, A_n, \cdots \in \mathscr{F}\)</span>，则 <span class="arithmatex">\(\cap_{n=1}^{\infty}A_n \in \mathscr{F}\)</span>（因为 <span class="arithmatex">\(\overline{\cup_{n=1}^{\infty}A_n} = \cap_{n=1}^{\infty}\overline{A_n}\)</span>）</li>
 <li>若 <span class="arithmatex">\(A_1,A_2,\cdots, A_n \in \mathscr{F}\)</span>，则 <span class="arithmatex">\(\cup_{i=1}^{n}A_i \in \mathscr{F}\)</span>，<span class="arithmatex">\(\cap_{i=1}^{n}A_i \in \mathscr{F}\)</span></li>
@@ -2832,12 +2969,10 @@ $$ P(A_g) = \frac{g 的测度}{\Omega 的测度} $$
 <p>事件域也可根据问题选择，对同一样本空间 <span class="arithmatex">\(\Omega\)</span> 可能有不同的 <span class="arithmatex">\(\sigma\)</span>-代数。</p>
 <ul>
 <li>如最简单的事件域 <span class="arithmatex">\(\mathscr{F}_1 = \{ \emptyset, \Omega \}\)</span>，称为平凡 <span class="arithmatex">\(\sigma\)</span>-代数。</li>
-<li>
-<p>复杂的如 <span class="arithmatex">\(\mathscr{F}_2 =\)</span> { <span class="arithmatex">\(\Omega\)</span> 的一切子集 }。</p>
-</li>
-<li>
-<p>若 <span class="arithmatex">\(\Omega\)</span> 由有限或可列个样本点组成，则常取 <span class="arithmatex">\(\Omega\)</span> 的一切子集所成的集类作为 <span class="arithmatex">\(\mathscr{F}\)</span></p>
-</li>
+<li>复杂的如 <span class="arithmatex">\(\mathscr{F}_2 =\)</span> { <span class="arithmatex">\(\Omega\)</span> 的一切子集 }。</li>
+</ul>
+<ul>
+<li>若 <span class="arithmatex">\(\Omega\)</span> 由有限或可列个样本点组成，则常取 <span class="arithmatex">\(\Omega\)</span> 的一切子集所成的集类作为 <span class="arithmatex">\(\mathscr{F}\)</span></li>
 <li>若 <span class="arithmatex">\(\Omega = \mathbf{R}\)</span>（一维实数全体），此时常取一切左开右闭有界区间和它们的（有限或可列）并、（有限或可列）交、逆所成的集的全体为 <span class="arithmatex">\(\mathscr{F}\)</span>（通常记为 <span class="arithmatex">\(\mathscr{B}\)</span>）称为一维波雷尔（Borel）<span class="arithmatex">\(\sigma\)</span>-代数，其中的集称为一维波雷尔集，它是比全体区间大得多的一个集类。</li>
 <li>若 <span class="arithmatex">\(\Omega = \mathbf{R}^n\)</span>（<span class="arithmatex">\(n\)</span> 维实数全体），则常取一切左开右闭有界 <span class="arithmatex">\(n\)</span> 维矩形和它们的（有限或可列）并、（有限或可列）交、逆所成的集的全体为 <span class="arithmatex">\(\mathscr{F}\)</span>（通常记为 <span class="arithmatex">\(\mathscr{B}^n\)</span>），称为 <span class="arithmatex">\(n\)</span> 维波雷尔 <span class="arithmatex">\(\sigma\)</span>-代数，其中的集称为 <span class="arithmatex">\(n\)</span> 维波雷尔集。</li>
 </ul>
@@ -2932,12 +3067,10 @@ $$ P(A_i|B) = \frac{P(A_i)P(B|A_i)}{\sum_{k=1}^{\infty}P(A_k)P(B|A_k)} $$</p>
 </div>
 <ul>
 <li><span class="arithmatex">\(P(A_i)\)</span> 是没有进一步的信息（不知道 <span class="arithmatex">\(B\)</span> 是否发生）时，对 <span class="arithmatex">\(A_i\)</span> 概率的估计，称为<strong>先验概率</strong></li>
-<li>
-<p><span class="arithmatex">\(P(A_i|B)\)</span> 是在事件 <span class="arithmatex">\(B\)</span> 发生后对 <span class="arithmatex">\(A_i\)</span> 发生概率的估计，称为<strong>后验概率</strong></p>
-</li>
-<li>
-<p>全概率公式：“由原因推结果”</p>
-</li>
+<li><span class="arithmatex">\(P(A_i|B)\)</span> 是在事件 <span class="arithmatex">\(B\)</span> 发生后对 <span class="arithmatex">\(A_i\)</span> 发生概率的估计，称为<strong>后验概率</strong></li>
+</ul>
+<ul>
+<li>全概率公式：“由原因推结果”</li>
 <li>贝叶斯公式：“由结果推原因”</li>
 </ul>
 <h3 id="mathematicsandphysics-probability-chap-1-_8">事件独立性<a class="headerlink" href="#mathematicsandphysics-probability-chap-1-_8" title="Permanent link">&para;</a></h3>
@@ -3045,15 +3178,11 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <p class="admonition-title">分数组成</p>
 <ul>
 <li>考勤 5%</li>
-<li>基础周 55%<ul>
-<li>lab0 5%</li>
-<li>5个方向的lab1 10% <span class="arithmatex">\(\times\)</span> 5</li>
-</ul>
-</li>
-<li>专题周 40%<ul>
-<li>5个方向 5选2 每个方向2个lab，每个占10%</li>
-</ul>
-</li>
+<li>基础周 55%
+    - lab0 5%
+    - 5个方向的lab1 10% <span class="arithmatex">\(\times\)</span> 5</li>
+<li>专题周 40%
+    - 5个方向 5选2 每个方向2个lab，每个占10%</li>
 <li>少量bonus：考勤 / 基础周 / 专题周 三个部分相互独立，不互相溢出</li>
 </ul>
 </div>
@@ -3084,24 +3213,18 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <h2 id="ctf-fundament-lec2-web-web">Web应用架构：客户端+服务端<a class="headerlink" href="#ctf-fundament-lec2-web-web" title="Permanent link">&para;</a></h2>
 <p>桌面应用和Web应用在架构上有显著的区别。桌面应用通常是在本地运行的独立程序，而Web应用则需要依赖客户端和服务端的协作。</p>
 <ul>
-<li>客户端：你的浏览器<ul>
-<li>可视化：图形、图片、布局…… HTML + CSS</li>
-<li>人机交互逻辑：按钮点击，登录，发送请求……JS</li>
-<li>缓存、Cookie</li>
-<li>安全：不能将私密的、不该获取的信息传出去（比如 Cookie），不能为所欲为（比如注销其他网站的账号）</li>
-</ul>
-</li>
-<li>服务端：某台或很多台服务器<ul>
-<li>认证与鉴权：如何证明你是你<ul>
-<li>Authentication（认证）：知道你是谁</li>
-<li>Authorization（鉴权）：确认你有何权限</li>
-</ul>
-</li>
-<li>处理请求：用户需要做什么？将结果返回客户端</li>
-<li>服务器也可以有不同分工：前端后端、数据库……</li>
-<li>安全：用户不能获得不该获取的信息（比如 flag），不能为所欲为（比如任意代码执行 RCE）</li>
-</ul>
-</li>
+<li>客户端：你的浏览器
+    - 可视化：图形、图片、布局…… HTML + CSS
+    - 人机交互逻辑：按钮点击，登录，发送请求……JS
+    - 缓存、Cookie
+    - 安全：不能将私密的、不该获取的信息传出去（比如 Cookie），不能为所欲为（比如注销其他网站的账号）</li>
+<li>服务端：某台或很多台服务器
+    - 认证与鉴权：如何证明你是你
+        - Authentication（认证）：知道你是谁
+        - Authorization（鉴权）：确认你有何权限
+    - 处理请求：用户需要做什么？将结果返回客户端
+    - 服务器也可以有不同分工：前端后端、数据库……
+    - 安全：用户不能获得不该获取的信息（比如 flag），不能为所欲为（比如任意代码执行 RCE）</li>
 </ul>
 <h2 id="ctf-fundament-lec2-web-_1">网络：数据交换<a class="headerlink" href="#ctf-fundament-lec2-web-_1" title="Permanent link">&para;</a></h2>
 <h3 id="ctf-fundament-lec2-web-_2">数据包的传输与路由<a class="headerlink" href="#ctf-fundament-lec2-web-_2" title="Permanent link">&para;</a></h3>
@@ -3121,18 +3244,14 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <h3 id="ctf-fundament-lec2-web-tcpip">TCP/IP 协议详解<a class="headerlink" href="#ctf-fundament-lec2-web-tcpip" title="Permanent link">&para;</a></h3>
 <ul>
 <li>IP: 网络层 = 主机到主机，数据包寻址（快递公司）</li>
-<li>
-<p>TCP: 传输层 = 应用到应用，或者说端到端（菜鸟驿站）</p>
-<p>无边界的字节流，类比电报报文，电报的格式是应用层协议该做的，电报本身只发字母数字</p>
+<li>TCP: 传输层 = 应用到应用，或者说端到端（菜鸟驿站）<p>无边界的字节流，类比电报报文，电报的格式是应用层协议该做的，电报本身只发字母数字</p>
 </li>
 </ul>
 <h3 id="ctf-fundament-lec2-web-http-hyper-text-transfer-protocol">HTTP 协议详解（Hyper Text Transfer Protocol）<a class="headerlink" href="#ctf-fundament-lec2-web-http-hyper-text-transfer-protocol" title="Permanent link">&para;</a></h3>
 <ul>
 <li>应用层，基于TCP</li>
-<li>特点：无状态（需要应用层自行维护），纯文本<ul>
-<li>需要维持状态（比如：用户已登录）怎么办？Cookie</li>
-</ul>
-</li>
+<li>特点：无状态（需要应用层自行维护），纯文本
+    - 需要维持状态（比如：用户已登录）怎么办？Cookie</li>
 <li>格式</li>
 </ul>
 <p><img alt="HTTP" src="../CTF/fundament/assets/HTTP.png" /></p>
@@ -3173,15 +3292,11 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <ul>
 <li>常见后端技术栈（如Node.js、PHP、Python、Ruby、Go、Rust 等）</li>
 <li>后端安全：永远不要相信用户的数据，一切前端的过滤都等于没有过滤！</li>
-<li>
-<p>CTF: 通过逻辑漏洞等欺骗后端</p>
-<p>逻辑漏洞：<code>if money!=0 then money-=price.</code> What if <code>money=-1</code> ?</p>
+<li>CTF: 通过逻辑漏洞等欺骗后端<p>逻辑漏洞：<code>if money!=0 then money-=price.</code> What if <code>money=-1</code> ?</p>
 <p>没接触安全领域前关于安全的错觉：</p>
-<ul>
-<li>这么蠢的洞也有人写？</li>
-<li>这么写怎么可能有洞？</li>
-<li>这么多人用怎么可能有洞？</li>
-</ul>
+<p>- 这么蠢的洞也有人写？
+  - 这么写怎么可能有洞？
+  - 这么多人用怎么可能有洞？</p>
 </li>
 </ul>
 <p>事实：连SSH今年都还能有高危漏洞 CVE-2024-6387</p>
@@ -3304,9 +3419,7 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <ul>
 <li>发音 <span class="arithmatex">\(\texttt{S-Q-L}\)</span> 或 <span class="arithmatex">\(\texttt{Sequel}\)</span></li>
 <li>结构化查询语言 <span class="arithmatex">\(\texttt{Structured Query Language}\)</span></li>
-<li>
-<p>用来做什么？</p>
-<p>数据库维护应用的数据，而与数据库交互的接口往往是基于 SQL 语句的</p>
+<li>用来做什么？<p>数据库维护应用的数据，而与数据库交互的接口往往是基于 SQL 语句的</p>
 </li>
 </ul>
 <h4 id="ctf-fundament-lec2-web-_7">常用操作<a class="headerlink" href="#ctf-fundament-lec2-web-_7" title="Permanent link">&para;</a></h4>
@@ -3332,16 +3445,12 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <h3 id="ctf-fundament-lec2-web-_8">安全相关话题<a class="headerlink" href="#ctf-fundament-lec2-web-_8" title="Permanent link">&para;</a></h3>
 <h4 id="ctf-fundament-lec2-web-cookie-session">Cookie 与 Session<a class="headerlink" href="#ctf-fundament-lec2-web-cookie-session" title="Permanent link">&para;</a></h4>
 <ul>
-<li><strong>Cookie</strong>：存储在客户端的小型文本文件，通常用于存储用户的偏好设置、身份验证信息等。<ul>
-<li><strong>示例</strong>：用户登录后，服务器发送一个包含用户ID的Cookie到客户端，客户端在后续请求中自动包含该Cookie，以便服务器识别用户。</li>
-<li><strong>Cookie劫持</strong>：攻击者通过XSS攻击或其他手段获取用户的Cookie，从而冒充用户身份。</li>
-</ul>
-</li>
-<li><strong>Session</strong>：存储在服务器端的临时数据存储区域，通常用于存储用户的会话状态信息。<ul>
-<li><strong>示例</strong>：用户登录后，服务器创建一个Session，并将Session ID通过Cookie发送给客户端。客户端在后续请求中包含该Session ID，服务器根据Session ID查找对应的Session数据。</li>
-<li>如果服务器被攻破，Session中就可能有一些敏感信息。</li>
-</ul>
-</li>
+<li><strong>Cookie</strong>：存储在客户端的小型文本文件，通常用于存储用户的偏好设置、身份验证信息等。
+    - <strong>示例</strong>：用户登录后，服务器发送一个包含用户ID的Cookie到客户端，客户端在后续请求中自动包含该Cookie，以便服务器识别用户。
+    - <strong>Cookie劫持</strong>：攻击者通过XSS攻击或其他手段获取用户的Cookie，从而冒充用户身份。</li>
+<li><strong>Session</strong>：存储在服务器端的临时数据存储区域，通常用于存储用户的会话状态信息。
+    - <strong>示例</strong>：用户登录后，服务器创建一个Session，并将Session ID通过Cookie发送给客户端。客户端在后续请求中包含该Session ID，服务器根据Session ID查找对应的Session数据。
+    - 如果服务器被攻破，Session中就可能有一些敏感信息。</li>
 </ul>
 <h4 id="ctf-fundament-lec2-web-_9">逻辑漏洞<a class="headerlink" href="#ctf-fundament-lec2-web-_9" title="Permanent link">&para;</a></h4>
 <p>验证不充分、想当然的写法、条件竞争、未发现的旁门左道...</p>
@@ -3419,12 +3528,10 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <h4 id="ctf-fundament-lec2-web-css">CSS<a class="headerlink" href="#ctf-fundament-lec2-web-css" title="Permanent link">&para;</a></h4>
 <ul>
 <li>用途：元素宽度、外部间隔、内部边距、字体颜色……</li>
-<li>选择器语法：选择你要把这些属性应用给哪些元素<ul>
-<li>元素选择器<code>body</code></li>
-<li>类选择器<code>.my-class</code></li>
-<li>ID选择器<code>#myid</code></li>
-</ul>
-</li>
+<li>选择器语法：选择你要把这些属性应用给哪些元素
+    - 元素选择器<code>body</code>
+    - 类选择器<code>.my-class</code>
+    - ID选择器<code>#myid</code></li>
 </ul>
 <details class="css例子">
 <summary>Css例子</summary>
@@ -3685,56 +3792,53 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <p><strong>JavaScript的基本语法和特点</strong></p>
 <p>JavaScript语法灵活，具有动态类型、函数式编程和原型继承等特点。</p>
 <ul>
-<li>
-<p><strong>变量声明</strong>：使用<code>var</code>、<code>let</code>和<code>const</code>声明变量。
+<li><strong>变量声明</strong>：使用<code>var</code>、<code>let</code>和<code>const</code>声明变量。
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#ctf-fundament-lec2-web-__codelineno-6-1"></a><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#ctf-fundament-lec2-web-__codelineno-6-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#ctf-fundament-lec2-web-__codelineno-6-3"></a><span class="kd">const</span><span class="w"> </span><span class="nx">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">15</span><span class="p">;</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>函数定义</strong>：
+</code></pre></div></li>
+</ul>
+<ul>
+<li><strong>函数定义</strong>：
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#ctf-fundament-lec2-web-__codelineno-7-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#ctf-fundament-lec2-web-__codelineno-7-2"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">;</span>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#ctf-fundament-lec2-web-__codelineno-7-3"></a><span class="p">}</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>条件判断</strong>：
+</code></pre></div></li>
+</ul>
+<ul>
+<li><strong>条件判断</strong>：
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#ctf-fundament-lec2-web-__codelineno-8-1"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#ctf-fundament-lec2-web-__codelineno-8-2"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;x is greater than y&quot;</span><span class="p">);</span>
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#ctf-fundament-lec2-web-__codelineno-8-3"></a><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-8-4" name="__codelineno-8-4" href="#ctf-fundament-lec2-web-__codelineno-8-4"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;x is less than or equal to y&quot;</span><span class="p">);</span>
 <a id="__codelineno-8-5" name="__codelineno-8-5" href="#ctf-fundament-lec2-web-__codelineno-8-5"></a><span class="p">}</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>循环</strong>：
+</code></pre></div></li>
+</ul>
+<ul>
+<li><strong>循环</strong>：
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#ctf-fundament-lec2-web-__codelineno-9-1"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">5</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#ctf-fundament-lec2-web-__codelineno-9-2"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
 <a id="__codelineno-9-3" name="__codelineno-9-3" href="#ctf-fundament-lec2-web-__codelineno-9-3"></a><span class="p">}</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>事件处理</strong>：
+</code></pre></div></li>
+</ul>
+<ul>
+<li><strong>事件处理</strong>：
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#ctf-fundament-lec2-web-__codelineno-10-1"></a><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myButton&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#ctf-fundament-lec2-web-__codelineno-10-2"></a><span class="w">    </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Button clicked!&quot;</span><span class="p">);</span>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#ctf-fundament-lec2-web-__codelineno-10-3"></a><span class="p">});</span>
-</code></pre></div></p>
-</li>
+</code></pre></div></li>
 </ul>
 <p>JavaScript灵活性很强，但这也带来了某些潜在问题，比如类型不安全、代码维护性差等。</p>
 <h4 id="ctf-fundament-lec2-web-typescript">TypeScript<a class="headerlink" href="#ctf-fundament-lec2-web-typescript" title="Permanent link">&para;</a></h4>
 <p><strong>TypeScript的特点和优点</strong></p>
 <p>TypeScript（简称TS）是由微软开发的一种开源编程语言，是JavaScript的超集，增加了静态类型和类等特性。</p>
 <ul>
-<li>
-<p><strong>静态类型</strong>：通过类型检查减少运行时错误，提高代码的可维护性。
+<li><strong>静态类型</strong>：通过类型检查减少运行时错误，提高代码的可维护性。
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#ctf-fundament-lec2-web-__codelineno-11-1"></a>let message: string = &quot;Hello, TypeScript!&quot;;
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>类和接口</strong>：支持面向对象编程，增强代码结构性。
+</code></pre></div></li>
+</ul>
+<ul>
+<li><strong>类和接口</strong>：支持面向对象编程，增强代码结构性。
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#ctf-fundament-lec2-web-__codelineno-12-1"></a>class Greeter {
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#ctf-fundament-lec2-web-__codelineno-12-2"></a>  greeting: string;
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#ctf-fundament-lec2-web-__codelineno-12-3"></a>  constructor(message: string) {
@@ -3747,14 +3851,13 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <a id="__codelineno-12-10" name="__codelineno-12-10" href="#ctf-fundament-lec2-web-__codelineno-12-10"></a>
 <a id="__codelineno-12-11" name="__codelineno-12-11" href="#ctf-fundament-lec2-web-__codelineno-12-11"></a>let greeter = new Greeter(&quot;world&quot;);
 <a id="__codelineno-12-12" name="__codelineno-12-12" href="#ctf-fundament-lec2-web-__codelineno-12-12"></a>console.log(greeter.greet());
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>模块化</strong>：支持模块化编程，提高代码复用性和组织性。
+</code></pre></div></li>
+</ul>
+<ul>
+<li><strong>模块化</strong>：支持模块化编程，提高代码复用性和组织性。
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#ctf-fundament-lec2-web-__codelineno-13-1"></a>import { add } from &#39;./math&#39;;
 <a id="__codelineno-13-2" name="__codelineno-13-2" href="#ctf-fundament-lec2-web-__codelineno-13-2"></a>console.log(add(2, 3));
-</code></pre></div></p>
-</li>
+</code></pre></div></li>
 </ul>
 <p><strong>TypeScript在现代Web开发中的应用</strong></p>
 <p>TypeScript在大型项目中尤为受欢迎，例如Angular、Vue 3和React等前端框架都支持或推荐使用TypeScript。TypeScript通过类型检查和IDE支持（如VS Code），大大提高了开发效率和代码质量。</p>
@@ -3768,8 +3871,7 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <p><strong>Node.js的基本使用方法与应用场景</strong></p>
 <p>Node.js通过事件驱动、非阻塞I/O模型，使其在处理大量并发请求时具有显著优势。</p>
 <ul>
-<li>
-<p><strong>基本使用</strong>：
+<li><strong>基本使用</strong>：
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#ctf-fundament-lec2-web-__codelineno-14-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">http</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#ctf-fundament-lec2-web-__codelineno-14-2"></a>
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#ctf-fundament-lec2-web-__codelineno-14-3"></a><span class="kd">const</span><span class="w"> </span><span class="nx">hostname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">;</span>
@@ -3784,11 +3886,10 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <a id="__codelineno-14-12" name="__codelineno-14-12" href="#ctf-fundament-lec2-web-__codelineno-14-12"></a><span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span><span class="w"> </span><span class="nx">hostname</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-14-13" name="__codelineno-14-13" href="#ctf-fundament-lec2-web-__codelineno-14-13"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server running at &lt;http://$&gt;{hostname}:</span><span class="si">${</span><span class="nx">port</span><span class="si">}</span><span class="sb">/`</span><span class="p">);</span>
 <a id="__codelineno-14-14" name="__codelineno-14-14" href="#ctf-fundament-lec2-web-__codelineno-14-14"></a><span class="p">});</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>应用场景</strong>：Node.js常用于构建实时应用（如聊天应用）、API服务、微服务架构等。</p>
-</li>
+</code></pre></div></li>
+</ul>
+<ul>
+<li><strong>应用场景</strong>：Node.js常用于构建实时应用（如聊天应用）、API服务、微服务架构等。</li>
 </ul>
 <h3 id="ctf-fundament-lec2-web-_14">相关安全话题<a class="headerlink" href="#ctf-fundament-lec2-web-_14" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3799,37 +3900,25 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <h2 id="ctf-fundament-lec2-web-_15">尾声<a class="headerlink" href="#ctf-fundament-lec2-web-_15" title="Permanent link">&para;</a></h2>
 <p>经典老番：地址栏输入网址并访问后发生了什么</p>
 <ol>
-<li><strong>DNS解析（域名解析）</strong>：<ul>
-<li>浏览器会首先检查本地缓存中是否有该网址对应的IP地址。</li>
-<li>如果没有，它会向DNS服务器发送请求，查询该网址的IP地址。</li>
-<li>DNS服务器返回该网址对应的IP地址给浏览器。</li>
-</ul>
-</li>
-<li><strong>建立TCP连接</strong>：<ul>
-<li>浏览器使用前面得到的IP地址，通过TCP/IP协议与目标服务器建立连接。</li>
-<li>这包括三次握手过程：客户端发送SYN包，服务器返回SYN-ACK包，客户端再发送ACK包确认连接。</li>
-</ul>
-</li>
-<li><strong>发送HTTP请求</strong>：<ul>
-<li>建立连接后，浏览器会发送一个HTTP请求到服务器。这个请求包含了请求方法（如GET或POST）、请求的资源路径以及一些头信息（如浏览器类型、可接受的文件类型等）。</li>
-</ul>
-</li>
-<li><strong>服务器处理请求并返回响应</strong>：<ul>
-<li>服务器接收到请求后，会处理该请求，查找请求的资源（如HTML文件、图片、视频等）。</li>
-<li>服务器会将找到的资源以及一些头信息（如内容类型、内容长度等）打包成HTTP响应，返回给浏览器。</li>
-</ul>
-</li>
-<li><strong>浏览器接收响应并渲染页面</strong>：<ul>
-<li>浏览器接收到服务器返回的HTTP响应后，会解析响应的头信息和内容。</li>
-<li>如果内容是HTML文件，浏览器会解析HTML并根据其中的指令（如加载CSS文件、执行JavaScript脚本等）进行渲染。</li>
-<li>浏览器会逐步构建DOM树和CSSOM树，并根据它们生成渲染树，最后将内容绘制到屏幕上。</li>
-</ul>
-</li>
-<li><strong>加载资源</strong>：<ul>
-<li>如果HTML文件中包含了其他资源（如图片、CSS、JavaScript等），浏览器会根据需要发送额外的HTTP请求来加载这些资源。</li>
-<li>这些资源加载完成后，浏览器会继续渲染页面，更新显示内容。</li>
-</ul>
-</li>
+<li><strong>DNS解析（域名解析）</strong>：
+    - 浏览器会首先检查本地缓存中是否有该网址对应的IP地址。
+    - 如果没有，它会向DNS服务器发送请求，查询该网址的IP地址。
+    - DNS服务器返回该网址对应的IP地址给浏览器。</li>
+<li><strong>建立TCP连接</strong>：
+    - 浏览器使用前面得到的IP地址，通过TCP/IP协议与目标服务器建立连接。
+    - 这包括三次握手过程：客户端发送SYN包，服务器返回SYN-ACK包，客户端再发送ACK包确认连接。</li>
+<li><strong>发送HTTP请求</strong>：
+    - 建立连接后，浏览器会发送一个HTTP请求到服务器。这个请求包含了请求方法（如GET或POST）、请求的资源路径以及一些头信息（如浏览器类型、可接受的文件类型等）。</li>
+<li><strong>服务器处理请求并返回响应</strong>：
+    - 服务器接收到请求后，会处理该请求，查找请求的资源（如HTML文件、图片、视频等）。
+    - 服务器会将找到的资源以及一些头信息（如内容类型、内容长度等）打包成HTTP响应，返回给浏览器。</li>
+<li><strong>浏览器接收响应并渲染页面</strong>：
+    - 浏览器接收到服务器返回的HTTP响应后，会解析响应的头信息和内容。
+    - 如果内容是HTML文件，浏览器会解析HTML并根据其中的指令（如加载CSS文件、执行JavaScript脚本等）进行渲染。
+    - 浏览器会逐步构建DOM树和CSSOM树，并根据它们生成渲染树，最后将内容绘制到屏幕上。</li>
+<li><strong>加载资源</strong>：
+    - 如果HTML文件中包含了其他资源（如图片、CSS、JavaScript等），浏览器会根据需要发送额外的HTTP请求来加载这些资源。
+    - 这些资源加载完成后，浏览器会继续渲染页面，更新显示内容。</li>
 </ol>
 <p>整个过程通常在短时间内完成，以确保用户能够快速看到网页内容。</p></section><section class="print-page" id="ctf-fundament-lec3-misc"><h1 id="ctf-fundament-lec3-misc-lec3-misc">Lec3-Misc<a class="headerlink" href="#ctf-fundament-lec3-misc-lec3-misc" title="Permanent link">&para;</a></h1>
 <div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
@@ -3856,10 +3945,8 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <ul>
 <li>用于尝试学习新东西，许多题目需要快速入门/快速上手新工具</li>
 <li>思维活跃，大胆尝试</li>
-<li>一定的编程能力<ul>
-<li><strong>熟练掌握</strong>Python或其他一门语言</li>
-</ul>
-</li>
+<li>一定的编程能力
+    - <strong>熟练掌握</strong>Python或其他一门语言</li>
 <li>多做题</li>
 </ul>
 <h2 id="ctf-fundament-lec3-misc-_1">基础编解码知识<a class="headerlink" href="#ctf-fundament-lec3-misc-_1" title="Permanent link">&para;</a></h2>
@@ -3872,23 +3959,15 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 </ul>
 <p>常见的字符编码：</p>
 <ul>
-<li>ASCII：一共 128 个项，即每个字符可以用一个7位的01串表示（或一字节）<ul>
-<li>00-1F：制字符；20-7E：可见字符；7F：控制字符（DEL）</li>
-</ul>
-</li>
-<li>Latin-1（ISO-8859-1）：扩展了 ASCII，一共 256 个项<ul>
-<li>80-9F：控制字符；A0-FF：可见字符</li>
-<li>特点：任何字节流都可以用其解码</li>
-</ul>
-</li>
-<li>利用Unicode 字符集的一系列编码<ul>
-<li>UTF-8 / UTF-16 / UTF-32 / UCS</li>
-</ul>
-</li>
-<li>中国国标字符集系列编码8<ul>
-<li>GB 2312 / GBK / GB 18030-202</li>
-</ul>
-</li>
+<li>ASCII：一共 128 个项，即每个字符可以用一个7位的01串表示（或一字节）
+    - 00-1F：制字符；20-7E：可见字符；7F：控制字符（DEL）</li>
+<li>Latin-1（ISO-8859-1）：扩展了 ASCII，一共 256 个项
+    - 80-9F：控制字符；A0-FF：可见字符
+    - 特点：任何字节流都可以用其解码</li>
+<li>利用Unicode 字符集的一系列编码
+    - UTF-8 / UTF-16 / UTF-32 / UCS</li>
+<li>中国国标字符集系列编码8
+    - GB 2312 / GBK / GB 18030-202</li>
 </ul>
 <h3 id="ctf-fundament-lec3-misc-unicodeutf">Unicode字符集与UTF编码<a class="headerlink" href="#ctf-fundament-lec3-misc-unicodeutf" title="Permanent link">&para;</a></h3>
 <p>参考：<a href="https://note.tonycrane.cc/cs/unicode/">TonyCrane的笔记</a></p>
@@ -3903,18 +3982,14 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 </ul>
 <p>UTF（Unicode Transformation Format）：Unicode字符集的编码方式</p>
 <ul>
-<li>UTF-8：变长编码，1~4字节表示一个字符，兼容ASCII<ul>
-<li>1字节：0xxxxxxx；</li>
-<li>2字节：110xxxxx 10xxxxxx；</li>
-<li>3字节：1110xxxx 10xxxxxx 10xxxxxx；</li>
-<li>4字节：11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</li>
-<li>ASCII字符：1字节；常用字符：2字节；其他字符：3字节或4字节</li>
-</ul>
-</li>
-<li>UTF-16：2字节或4字节表示一个字符，不兼容ASCII<ul>
-<li>BMP（基本多文种平面）：2字节表示；SMP（补充多文种平面）：4字节表示</li>
-</ul>
-</li>
+<li>UTF-8：变长编码，1~4字节表示一个字符，兼容ASCII
+    - 1字节：0xxxxxxx；
+    - 2字节：110xxxxx 10xxxxxx；
+    - 3字节：1110xxxx 10xxxxxx 10xxxxxx；
+    - 4字节：11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+    - ASCII字符：1字节；常用字符：2字节；其他字符：3字节或4字节</li>
+<li>UTF-16：2字节或4字节表示一个字符，不兼容ASCII
+    - BMP（基本多文种平面）：2字节表示；SMP（补充多文种平面）：4字节表示</li>
 </ul>
 <h3 id="ctf-fundament-lec3-misc-_3">出现乱码原因<a class="headerlink" href="#ctf-fundament-lec3-misc-_3" title="Permanent link">&para;</a></h3>
 <p>几个字符集不兼容的部分互相编解码</p>
@@ -3930,11 +4005,9 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <h3 id="ctf-fundament-lec3-misc-morse-code">摩尔斯电码(Morse Code)<a class="headerlink" href="#ctf-fundament-lec3-misc-morse-code" title="Permanent link">&para;</a></h3>
 <p>字符 $ \iff $ 字符</p>
 <ul>
-<li>摩尔斯电码：一种用点（·）和划（-）（时间长短）表示字符<ul>
-<li>点·：1单位；划-：3单位</li>
-<li>点划之间间隔：1单位；字符之间间隔：3单位；单词之间间隔：7单位</li>
-</ul>
-</li>
+<li>摩尔斯电码：一种用点（·）和划（-）（时间长短）表示字符
+    + 点·：1单位；划-：3单位
+    + 点划之间间隔：1单位；字符之间间隔：3单位；单词之间间隔：7单位</li>
 <li>字符集：A-Z、0-9、标点符号等（. : , ; ? = ' / ! - _ " ( ) $ &amp; @ +）</li>
 <li>表示中文：电码表（一个汉字对应四个数字），数字使用短码发送</li>
 </ul>
@@ -3942,33 +4015,25 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <p>01串 $ \iff $ 字符，Base家族的结果都可以转为可见字符</p>
 <ul>
 <li>Base16：16进制编码表示字节流</li>
-<li>Base32：5bit一组（0-31），按照字符表（A-Z、2-7）映射<ul>
-<li>最终长度必须是5的倍数，不足的用=补齐（明显特征）</li>
-</ul>
-</li>
-<li>Base64：6bit一组（0-63），按照字符表映射<ul>
-<li>标准字符表：A-Z a-z 0-9 + /</li>
-<li>另有多种常用字符表，如URL安全字符表：A-Z a-z 0-9 - _</li>
-<li>最终长度必须是4的倍数，不足的用=补齐（1~2个，明显特征）</li>
-</ul>
-</li>
+<li>Base32：5bit一组（0-31），按照字符表（A-Z、2-7）映射
+    - 最终长度必须是5的倍数，不足的用=补齐（明显特征）</li>
+<li>Base64：6bit一组（0-63），按照字符表映射
+    - 标准字符表：A-Z a-z 0-9 + /
+    - 另有多种常用字符表，如URL安全字符表：A-Z a-z 0-9 - _
+    - 最终长度必须是4的倍数，不足的用=补齐（1~2个，明显特征）</li>
 </ul>
 <p><img alt="base" src="../CTF/fundament/assets/Base.png" /></p>
 <p>Base-n系列编码的本质：字节流 <span class="arithmatex">\(\rightarrow\)</span> 整数 <span class="arithmatex">\(\rightarrow\)</span> n进制 <span class="arithmatex">\(\rightarrow\)</span> 系数查表</p>
 <p>除了16/32/64进制外，还有一些其他的Base编码：</p>
 <ul>
-<li>Base85：4字节整数 <span class="arithmatex">\(\rightarrow\)</span> 85进制 <span class="arithmatex">\(\rightarrow\)</span> 5个系数<ul>
-<li>常用字符表：0-9 A-Z a-z ! # $ % &amp; ( ) * + - ; &lt; = &gt; ? @ ^ _ ` { | } ~</li>
-<li>标准字符表： !-u（ASCII 0x21-0x75）</li>
-</ul>
-</li>
-<li>作为大整数转换进制：<ul>
-<li>Base62：0-9 A-Z a-z（比Base64少了+ /）</li>
-<li>Base58：0-9 A-Z a-z（比Base62少了不易区分的0 O I l）</li>
-<li>Base56：比Base58少了1和o</li>
-<li>Base36：0-9 A-Z（比Base62少了a-z）</li>
-</ul>
-</li>
+<li>Base85：4字节整数 <span class="arithmatex">\(\rightarrow\)</span> 85进制 <span class="arithmatex">\(\rightarrow\)</span> 5个系数
+    - 常用字符表：0-9 A-Z a-z ! # $ % &amp; ( ) * + - ; &lt; = &gt; ? @ ^ _ ` { | } ~
+    - 标准字符表： !-u（ASCII 0x21-0x75）</li>
+<li>作为大整数转换进制：
+    - Base62：0-9 A-Z a-z（比Base64少了+ /）
+    - Base58：0-9 A-Z a-z（比Base62少了不易区分的0 O I l）
+    - Base56：比Base58少了1和o
+    - Base36：0-9 A-Z（比Base62少了a-z）</li>
 </ul>
 <h3 id="ctf-fundament-lec3-misc-_4">一些其他编码<a class="headerlink" href="#ctf-fundament-lec3-misc-_4" title="Permanent link">&para;</a></h3>
 <p>其他常用编码</p>
@@ -3994,10 +4059,8 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <p>一般在misc题目中出现即反之信息搜集，有几种情况：</p>
 <ul>
 <li>构造了一个全新的虚拟身份，搜集得到出题人准备好的信息</li>
-<li>根据图片、文档等附件泄漏的信息进行推理（主要）<ul>
-<li>包括根据图片内容推理找到拍摄位置、当时环境等信息</li>
-</ul>
-</li>
+<li>根据图片、文档等附件泄漏的信息进行推理（主要）
+    - 包括根据图片内容推理找到拍摄位置、当时环境等信息</li>
 </ul>
 <h3 id="ctf-fundament-lec3-misc-_5">信息搜集/查询基础<a class="headerlink" href="#ctf-fundament-lec3-misc-_5" title="Permanent link">&para;</a></h3>
 <p>数字信息搜集工具：<a href="https://github.com/ffffffff0x/Digital-Privacy">https://github.com/ffffffff0x/Digital-Privacy</a></p>
@@ -4036,11 +4099,9 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <li>百度识图搜索：中文互联网图片搜索结果</li>
 <li>Google 图片搜索：用来搜索外国范围的图片</li>
 <li>Bing 图片搜索：和Google差不多，都可以参考</li>
-<li>Yandex 图片搜索：<ul>
-<li>搜索相似图片</li>
-<li>搜索风景时更常用</li>
-</ul>
-</li>
+<li>Yandex 图片搜索：
+    - 搜索相似图片
+    - 搜索风景时更常用</li>
 <li>TinEye：搜索完全相同的图片（找来源）</li>
 </ul>
 <h4 id="ctf-fundament-lec3-misc-_9">地点线索搜集<a class="headerlink" href="#ctf-fundament-lec3-misc-_9" title="Permanent link">&para;</a></h4>
@@ -4055,20 +4116,16 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <h4 id="ctf-fundament-lec3-misc-_10">环境信息分析<a class="headerlink" href="#ctf-fundament-lec3-misc-_10" title="Permanent link">&para;</a></h4>
 <ul>
 <li>几何学透视简单分析照片拍摄者高度</li>
-<li>太阳角度、阴影长度等太阳相关信息<ul>
-<li>时间 <span class="arithmatex">\(\iff\)</span> 位置相互估计</li>
-<li><a href="https://www.suncalc.org">suncalc.org</a></li>
-<li><a href="https://www.sunearthtools.com">sunearthtools.com</a></li>
-</ul>
-</li>
+<li>太阳角度、阴影长度等太阳相关信息
+    - 时间 <span class="arithmatex">\(\iff\)</span> 位置相互估计
+    - <a href="https://www.suncalc.org">suncalc.org</a>
+    - <a href="https://www.sunearthtools.com">sunearthtools.com</a></li>
 <li>天气信息、云层信息等</li>
-<li>飞机航班信息<ul>
-<li>估计方向、位置、时间等</li>
-<li><a href="https://www.flightradar24.com">flightradar24.com</a></li>
-<li><a href="https://www.flightaware.com/">flightaware.com</a></li>
-<li><a href="https://www.adsbexchange.com/">adsbexchange.com</a></li>
-</ul>
-</li>
+<li>飞机航班信息
+    - 估计方向、位置、时间等
+    - <a href="https://www.flightradar24.com">flightradar24.com</a>
+    - <a href="https://www.flightaware.com/">flightaware.com</a>
+    - <a href="https://www.adsbexchange.com/">adsbexchange.com</a></li>
 <li>风景信息 <span class="arithmatex">\(\rightarrow\)</span> Yandex 图片搜索</li>
 </ul></section><section class="print-page" id="ctf-fundament-lec4-rev"><h1 id="ctf-fundament-lec4-rev-lec4-reverse">Lec4-Reverse<a class="headerlink" href="#ctf-fundament-lec4-rev-lec4-reverse" title="Permanent link">&para;</a></h1>
 <div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
@@ -4087,13 +4144,11 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <p><img alt="编译的前端与后端" src="../CTF/fundament/assets/%E7%BC%96%E8%AF%91%E7%9A%84%E5%89%8D%E7%AB%AF%E4%B8%8E%E5%90%8E%E7%AB%AF.png" /></p>
 <h3 id="ctf-fundament-lec4-rev-compiled-vs-interpreted">Compiled V.S. Interpreted<a class="headerlink" href="#ctf-fundament-lec4-rev-compiled-vs-interpreted" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>编译执行</p>
-<p>上述通过编译器 (compiler) 将代码转化为机器指令格式的程序，进而执行</p>
+<li>编译执行<p>上述通过编译器 (compiler) 将代码转化为机器指令格式的程序，进而执行</p>
 </li>
-<li>
-<p>解释执行</p>
-<p>通过解释器 (interpreter) 将代码转化为 VM 格式的程序（如字节码），进而在 VM 上执行</p>
+</ul>
+<ul>
+<li>解释执行<p>通过解释器 (interpreter) 将代码转化为 VM 格式的程序（如字节码），进而在 VM 上执行</p>
 </li>
 </ul>
 <p><img alt="编译型语言" src="../CTF/fundament/assets/%E7%BC%96%E8%AF%91%E5%9E%8B%E8%AF%AD%E8%A8%80.png" /></p>
@@ -4188,54 +4243,41 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <ul>
 <li>目标文件 <code>hello.o</code> 中有多个段</li>
 <li>目标文件 <code>hello.o</code> 还不足以包含程序运行的信息，需要进行链接</li>
-<li>符号解析与重定位<ul>
-<li>"essentially merging"</li>
-</ul>
-</li>
+<li>符号解析与重定位
+    - "essentially merging"</li>
 </ul>
 <p><img alt="ELF链接" src="../CTF/fundament/assets/ELF%E9%93%BE%E6%8E%A5.png" /></p>
 <h4 id="ctf-fundament-lec4-rev-_3">静态链接与动态链接<a class="headerlink" href="#ctf-fundament-lec4-rev-_3" title="Permanent link">&para;</a></h4>
 <p><img alt="静态链接与动态链接" src="../CTF/fundament/assets/%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E4%B8%8E%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5.png" /></p>
 <ul>
-<li>
-<p>静态链接</p>
-<p>将所有的目标文件都链接到一个可执行（ELF）文件中</p>
-<ul>
-<li>优点：可执行文件独立，不依赖于其他文件，在各种环境中都可执行</li>
-<li>缺点：通常会使可执行文件大小增加</li>
-</ul>
-</li>
-<li>
-<p>动态链接</p>
-<p>所有的目标文件都链接到一个储存在系统中的动态链接库（Dylib/So）中，无需单独储存</p>
-<ul>
-<li>优点：节省磁盘空间，减少内存占用</li>
-<li>
-<p>缺点：依赖于系统中的动态链接库，动态链接库的版本等不同可能会导致兼容性问题；</p>
-<p>动态链接的过程中会有额外开销，可能会影响程序的性能，但有一些优化策略</p>
+<li>静态链接<p>将所有的目标文件都链接到一个可执行（ELF）文件中</p>
+<p>- 优点：可执行文件独立，不依赖于其他文件，在各种环境中都可执行
+  - 缺点：通常会使可执行文件大小增加</p>
 </li>
 </ul>
+<ul>
+<li>动态链接<p>所有的目标文件都链接到一个储存在系统中的动态链接库（Dylib/So）中，无需单独储存</p>
+<p>- 优点：节省磁盘空间，减少内存占用
+  - 缺点：依赖于系统中的动态链接库，动态链接库的版本等不同可能会导致兼容性问题；</p>
+<div class="highlight"><pre><span></span><code>  动态链接的过程中会有额外开销，可能会影响程序的性能，但有一些优化策略
+</code></pre></div>
 </li>
 </ul>
 <h4 id="ctf-fundament-lec4-rev-pltgot">动态链接的PLT与GOT<a class="headerlink" href="#ctf-fundament-lec4-rev-pltgot" title="Permanent link">&para;</a></h4>
 <ul>
-<li>
-<p>PLT:  Procedure Linkage Table</p>
-<p>动态链接的“跳板”</p>
+<li>PLT:  Procedure Linkage Table<p>动态链接的“跳板”</p>
 </li>
-<li>
-<p>GOT:  Global Offset Table</p>
-</li>
+</ul>
+<ul>
+<li>GOT:  Global Offset Table</li>
 <li>lazy binding optimization（延迟绑定优化）以及 full-relro 保护</li>
 </ul>
 <h2 id="ctf-fundament-lec4-rev-elf_7">ELF 程序的装载和运行<a class="headerlink" href="#ctf-fundament-lec4-rev-elf_7" title="Permanent link">&para;</a></h2>
 <h3 id="ctf-fundament-lec4-rev-_4">程序到进程<a class="headerlink" href="#ctf-fundament-lec4-rev-_4" title="Permanent link">&para;</a></h3>
 <ul>
 <li>可执行程序 (Program) 是静态，文件的概念</li>
-<li>进程 (Process) 是动态、系统运行时的概念<ul>
-<li>进程和线程 (Thread)</li>
-</ul>
-</li>
+<li>进程 (Process) 是动态、系统运行时的概念
+    - 进程和线程 (Thread)</li>
 </ul>
 <h3 id="ctf-fundament-lec4-rev-elf_8">ELF程序的生命周期<a class="headerlink" href="#ctf-fundament-lec4-rev-elf_8" title="Permanent link">&para;</a></h3>
 <ul>
@@ -4266,17 +4308,15 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <img alt="before-after" src="../CTF/fundament/assets/before-after.png" /></p>
 </details>
 <ul>
-<li>
-<p>静态链接程序：</p>
-<p>内核以可执行文件 e_entry 位置 (即_start) 作为起点</p>
+<li>静态链接程序：<p>内核以可执行文件 e_entry 位置 (即_start) 作为起点</p>
 </li>
-<li>
-<p>动态链接程序：</p>
-<p>内核以 interpreter 文件的 e_entry 位置作为起点</p>
+</ul>
+<ul>
+<li>动态链接程序：<p>内核以 interpreter 文件的 e_entry 位置作为起点</p>
 </li>
-<li>
-<p>等了解交互/调试之后进行 revisit</p>
-</li>
+</ul>
+<ul>
+<li>等了解交互/调试之后进行 revisit</li>
 </ul>
 <h4 id="ctf-fundament-lec4-rev-_start">_start<a class="headerlink" href="#ctf-fundament-lec4-rev-_start" title="Permanent link">&para;</a></h4>
 <ul>
@@ -4299,17 +4339,13 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 <h2 id="ctf-fundament-lec4-rev-elf_9">ELF 程序的交互、调试<a class="headerlink" href="#ctf-fundament-lec4-rev-elf_9" title="Permanent link">&para;</a></h2>
 <h3 id="ctf-fundament-lec4-rev-_5">通过命令行人工与程序交互<a class="headerlink" href="#ctf-fundament-lec4-rev-_5" title="Permanent link">&para;</a></h3>
 <ul>
-<li>绝对路径 / 相对路径<ul>
-<li>-h / --help</li>
-<li>manual</li>
-<li>PATH 路径</li>
-</ul>
-</li>
-<li>通过虚拟机或者沙箱进行交互<ul>
-<li><a href="https://firejail.wordpress.com/">https://firejail.wordpress.com/</a> </li>
-<li><a href="https://github.com/google/nsjail">https://github.com/google/nsjail</a></li>
-</ul>
-</li>
+<li>绝对路径 / 相对路径
+    - -h / --help
+    - manual
+    - PATH 路径</li>
+<li>通过虚拟机或者沙箱进行交互
+    - <a href="https://firejail.wordpress.com/">https://firejail.wordpress.com/</a> 
+    - <a href="https://github.com/google/nsjail">https://github.com/google/nsjail</a></li>
 </ul>
 <h3 id="ctf-fundament-lec4-rev-_6">通过编程与程序交互<a class="headerlink" href="#ctf-fundament-lec4-rev-_6" title="Permanent link">&para;</a></h3>
 <ul>
@@ -4320,40 +4356,30 @@ $$ \sum_{i=0}^n \binom{n}{i} \binom{n}{i} = \binom{2n}{n} $$</p></section><secti
 </ul>
 <h3 id="ctf-fundament-lec4-rev-gdb-gnu-debugger">GDB: GNU DeBugger<a class="headerlink" href="#ctf-fundament-lec4-rev-gdb-gnu-debugger" title="Permanent link">&para;</a></h3>
 <ul>
-<li>调试模式<ul>
-<li>调试器执行模式</li>
-<li>attach 模式</li>
-<li>remote 模式</li>
-</ul>
-</li>
-<li>常用调试功能<ul>
-<li>执行断点</li>
-<li>硬件断点</li>
-<li>查看寄存器 / 内存</li>
-<li>set 修改寄存器 / 内存</li>
-</ul>
-</li>
+<li>调试模式
+    - 调试器执行模式
+    - attach 模式
+    - remote 模式</li>
+<li>常用调试功能
+    - 执行断点
+    - 硬件断点
+    - 查看寄存器 / 内存
+    - set 修改寄存器 / 内存</li>
 <li>gdb 插件</li>
 </ul>
 <h2 id="ctf-fundament-lec4-rev-elf_10">ELF程序的逆向<a class="headerlink" href="#ctf-fundament-lec4-rev-elf_10" title="Permanent link">&para;</a></h2>
 <p><img alt="正向与逆向" src="../CTF/fundament/assets/%E6%AD%A3%E5%90%91%E4%B8%8E%E9%80%86%E5%90%91.png" /></p>
 <h3 id="ctf-fundament-lec4-rev-elf_11">ELF的静态逆向<a class="headerlink" href="#ctf-fundament-lec4-rev-elf_11" title="Permanent link">&para;</a></h3>
 <ul>
-<li>反汇编：机器指令 <span class="arithmatex">\(\rightarrow\)</span> 汇编指令（查表、准确）<ul>
-<li>objdump</li>
-</ul>
-</li>
-<li>反编译：汇编指令 =&gt; 编程语言（分析/特征匹配/启发式 … 、往往不准确）<ul>
-<li>IDA Pro (<a href="https://hex-rays.com/ida-pro/">https://hex-rays.com/ida-pro/</a>)</li>
-<li>Binary Ninja (<a href="https://binary.ninja">https://binary.ninja</a>)<ul>
-<li>with free version</li>
-</ul>
-</li>
-<li>Ghidra (<a href="https://github.com/NationalSecurityAgency/ghidra">https://github.com/NationalSecurityAgency/ghidra</a>)</li>
-<li>Cutter / radare (<a href="https://github.com/rizinorg/cutter">https://github.com/rizinorg/cutter</a> )</li>
-<li>大语言模型 ;D (<a href="https://mlm.lingyiwanwu.com/">https://mlm.lingyiwanwu.com/</a>)</li>
-</ul>
-</li>
+<li>反汇编：机器指令 <span class="arithmatex">\(\rightarrow\)</span> 汇编指令（查表、准确）
+    - objdump</li>
+<li>反编译：汇编指令 =&gt; 编程语言（分析/特征匹配/启发式 … 、往往不准确）
+    - IDA Pro (<a href="https://hex-rays.com/ida-pro/">https://hex-rays.com/ida-pro/</a>)
+    - Binary Ninja (<a href="https://binary.ninja">https://binary.ninja</a>)
+        - with free version
+    - Ghidra (<a href="https://github.com/NationalSecurityAgency/ghidra">https://github.com/NationalSecurityAgency/ghidra</a>)
+    - Cutter / radare (<a href="https://github.com/rizinorg/cutter">https://github.com/rizinorg/cutter</a> )
+    - 大语言模型 ;D (<a href="https://mlm.lingyiwanwu.com/">https://mlm.lingyiwanwu.com/</a>)</li>
 </ul>
 <h4 id="ctf-fundament-lec4-rev-_7">静态逆向技巧<a class="headerlink" href="#ctf-fundament-lec4-rev-_7" title="Permanent link">&para;</a></h4>
 <p>对于静态链接目标</p>
@@ -4409,26 +4435,20 @@ C--->E
 </code></pre>
 <p>pwn 赛题结构</p>
 <ul>
-<li>
-<p>赛题文件</p>
-</li>
-<li>
-<p>往往需要逆向</p>
-</li>
-<li>
-<p>漏洞描述 (diff)</p>
-</li>
-<li>
-<p>赛题环境</p>
-<ul>
-<li>libc and ld</li>
-<li>Dockerfile</li>
-<li>"good challenge should issue everything you needed to run and test it"</li>
+<li>赛题文件</li>
 </ul>
+<ul>
+<li>往往需要逆向</li>
+<li>漏洞描述 (diff)</li>
+</ul>
+<ul>
+<li>赛题环境<p>- libc and ld
+  - Dockerfile
+  - "good challenge should issue everything you needed to run and test it"</p>
 </li>
-<li>
-<p>赛题远程</p>
-</li>
+</ul>
+<ul>
+<li>赛题远程</li>
 </ul>
 <hr />
 <h2 id="ctf-fundament-lec5-pwn-code-injection">代码注入 (Code Injection)<a class="headerlink" href="#ctf-fundament-lec5-pwn-code-injection" title="Permanent link">&para;</a></h2>
@@ -4495,26 +4515,18 @@ C--->F
 <li>消息被称为明文（Plaintext）。用某种方法伪装消息以隐藏它的内容的过程称为加密 （Encryption），被加密的消息称为密文（Ciphertext），把密文恢复为明文的过程称为密（Decryption）。</li>
 <li>密码算法（Cryptography Algorithm）：是用于加密和解密的数学函数。</li>
 <li>密钥（Key）：加密或解密所需要的除密码算法之外的关键信息。</li>
-<li>对称加密（Symmetric Cryptography）<ul>
-<li>特点：在加密和解密时使用同一密钥</li>
-<li>例子：流密码（RC4），块密码（AES，DES）</li>
-</ul>
-</li>
-<li>非对称加密（Asymmetric Cryptography）<ul>
-<li>特点：在加密和解密时使用不同密钥，加密使用公钥，解密使用私钥</li>
-<li>例子：RSA，ElGamal，ECC</li>
-</ul>
-</li>
-<li>哈希函数（Hash Function）<ul>
-<li>特点：把输入内容单向映射到一个短的摘要上</li>
-<li>应用：下载文件完整性校验</li>
-<li>例子：CRC，MD5，SHA系列</li>
-</ul>
-</li>
-<li>数字签名（Digital Signature）<ul>
-<li>应用：对消息进行签名（也是一个短的消息），以防消息的冒名伪造或篡改</li>
-</ul>
-</li>
+<li>对称加密（Symmetric Cryptography）
+    - 特点：在加密和解密时使用同一密钥
+    - 例子：流密码（RC4），块密码（AES，DES）</li>
+<li>非对称加密（Asymmetric Cryptography）
+    - 特点：在加密和解密时使用不同密钥，加密使用公钥，解密使用私钥
+    - 例子：RSA，ElGamal，ECC</li>
+<li>哈希函数（Hash Function）
+    - 特点：把输入内容单向映射到一个短的摘要上
+    - 应用：下载文件完整性校验
+    - 例子：CRC，MD5，SHA系列</li>
+<li>数字签名（Digital Signature）
+    - 应用：对消息进行签名（也是一个短的消息），以防消息的冒名伪造或篡改</li>
 </ul>
 <p><img alt="密码学基本术语" src="../CTF/fundament/assets/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%9F%BA%E6%9C%AC%E6%9C%AF%E8%AF%AD.png" /></p>
 <h2 id="ctf-fundament-lec6-crypto-_5">数学基础<a class="headerlink" href="#ctf-fundament-lec6-crypto-_5" title="Permanent link">&para;</a></h2>
@@ -4577,11 +4589,9 @@ $$ x = \sum_{i=1}^{k} a_iM_iN_i $$</p>
 <li>选择两个大质数 <span class="arithmatex">\(p, q\)</span>，计算 <span class="arithmatex">\(n = p \times q\)</span>，<span class="arithmatex">\(\varphi(n) = (p-1)(q-1)\)</span></li>
 <li>选择 <span class="arithmatex">\(e\)</span>，使得 <span class="arithmatex">\(1 &lt; e &lt; \varphi(n)\)</span>，且 <span class="arithmatex">\(\gcd(e, \varphi(n)) = 1\)</span></li>
 <li>计算 <span class="arithmatex">\(d\)</span>，使得 <span class="arithmatex">\(d \equiv e^{-1} \pmod{\varphi(n)}\)</span> ，即 <span class="arithmatex">\(d \times e \equiv 1 \pmod{\varphi(n)}\)</span></li>
-<li>于是得到公钥为 <span class="arithmatex">\((e, n)\)</span>，私钥为 <span class="arithmatex">\((d, n)\)</span>， 设明文为 <span class="arithmatex">\(m\)</span>，密文为 <span class="arithmatex">\(c\)</span>，若消息太长，可将消息分段加密<ul>
-<li>加密：<span class="arithmatex">\(c = m^e \mod n\)</span></li>
-<li>解密：<span class="arithmatex">\(m = c^d \mod n\)</span></li>
-</ul>
-</li>
+<li>于是得到公钥为 <span class="arithmatex">\((e, n)\)</span>，私钥为 <span class="arithmatex">\((d, n)\)</span>， 设明文为 <span class="arithmatex">\(m\)</span>，密文为 <span class="arithmatex">\(c\)</span>，若消息太长，可将消息分段加密
+    + 加密：<span class="arithmatex">\(c = m^e \mod n\)</span>
+    + 解密：<span class="arithmatex">\(m = c^d \mod n\)</span></li>
 </ul>
 <h2 id="ctf-fundament-lec6-crypto-_11">古典密码<a class="headerlink" href="#ctf-fundament-lec6-crypto-_11" title="Permanent link">&para;</a></h2>
 <ul>
@@ -4714,9 +4724,7 @@ $ K = \begin{bmatrix}
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#ctf-web-web-1-__codelineno-0-5"></a><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="n">COLUMNS</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="p">;</span><span class="w"> </span><span class="cm">/*输出列*/</span>
 </code></pre></div>
 <ul>
-<li>
-<p>SELECT语句的结构</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#ctf-web-web-1-__codelineno-1-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">field1</span><span class="p">,</span><span class="w"> </span><span class="n">field2</span><span class="p">,...</span><span class="n">fieldN</span><span class="w"> </span><span class="p">(</span><span class="k">FROM</span><span class="w"> </span><span class="n">table_name1</span><span class="p">,</span><span class="w"> </span><span class="n">table_name2</span><span class="p">...</span><span class="w"> </span><span class="p">[</span><span class="k">WHERE</span><span class="w"> </span><span class="n">condition1</span><span class="w"> </span><span class="p">[</span><span class="k">AND</span><span class="w"> </span><span class="p">[</span><span class="k">OR</span><span class="p">]]</span><span class="w"> </span><span class="n">condition2</span><span class="p">...])</span>
+<li>SELECT语句的结构<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#ctf-web-web-1-__codelineno-1-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">field1</span><span class="p">,</span><span class="w"> </span><span class="n">field2</span><span class="p">,...</span><span class="n">fieldN</span><span class="w"> </span><span class="p">(</span><span class="k">FROM</span><span class="w"> </span><span class="n">table_name1</span><span class="p">,</span><span class="w"> </span><span class="n">table_name2</span><span class="p">...</span><span class="w"> </span><span class="p">[</span><span class="k">WHERE</span><span class="w"> </span><span class="n">condition1</span><span class="w"> </span><span class="p">[</span><span class="k">AND</span><span class="w"> </span><span class="p">[</span><span class="k">OR</span><span class="p">]]</span><span class="w"> </span><span class="n">condition2</span><span class="p">...])</span>
 </code></pre></div>
 <p>Examples:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#ctf-web-web-1-__codelineno-2-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">SLEEP</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
@@ -4724,9 +4732,9 @@ $ K = \begin{bmatrix}
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#ctf-web-web-1-__codelineno-2-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="k">DATABASE</span><span class="p">(),</span><span class="w"> </span><span class="k">VERSION</span><span class="p">(),</span><span class="w"> </span><span class="k">USER</span><span class="p">(),</span><span class="w"> </span><span class="n">ASCII</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">),</span><span class="w"> </span><span class="n">CONCAT</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="p">);</span>
 </code></pre></div>
 </li>
-<li>
-<p>关于注释</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#ctf-web-web-1-__codelineno-3-1"></a><span class="cm">/*</span>
+</ul>
+<ul>
+<li>关于注释<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#ctf-web-web-1-__codelineno-3-1"></a><span class="cm">/*</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#ctf-web-web-1-__codelineno-3-2"></a><span class="cm">这是注释，支持多行</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#ctf-web-web-1-__codelineno-3-3"></a><span class="cm">*/</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#ctf-web-web-1-__codelineno-3-4"></a>
@@ -4737,9 +4745,9 @@ $ K = \begin{bmatrix}
 <a id="__codelineno-3-9" name="__codelineno-3-9" href="#ctf-web-web-1-__codelineno-3-9"></a><span class="cm">/*!version_number 当数据库版本大于version_number(或version_number为空)时注释内容会被执行，否则就是普通注释*/</span>
 </code></pre></div>
 </li>
-<li>
-<p>一些SELECT的其他例子</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#ctf-web-web-1-__codelineno-4-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="cm">/*从特定表中获取特定列*/</span>
+</ul>
+<ul>
+<li>一些SELECT的其他例子<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#ctf-web-web-1-__codelineno-4-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="cm">/*从特定表中获取特定列*/</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#ctf-web-web-1-__codelineno-4-2"></a>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#ctf-web-web-1-__codelineno-4-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="cm">/*从特定表中获取全部列*/</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#ctf-web-web-1-__codelineno-4-4"></a>
@@ -4756,17 +4764,15 @@ $ K = \begin{bmatrix}
 <a id="__codelineno-4-15" name="__codelineno-4-15" href="#ctf-web-web-1-__codelineno-4-15"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">group_concat</span><span class="p">(</span><span class="n">col_name1</span><span class="p">,</span><span class="w"> </span><span class="n">col_name2</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="cm">/*整合行、列数据*/</span>
 </code></pre></div>
 </li>
-<li>
-<p>一些常用的URL编码：</p>
-<ul>
-<li>Space: %20</li>
-<li>#: %23</li>
-<li>': %27</li>
-<li>": %22</li>
-<li>+: %2B</li>
-<li># + $ - _ . ! * ( ) 浏览器地址栏默认不编码，但是不意味着不能编码</li>
 </ul>
-</li>
+<ul>
+<li>一些常用的URL编码：
+    - Space: %20
+    - #: %23
+    - ': %27
+    - ": %22
+    - +: %2B
+    - # + $ - _ . ! * ( ) 浏览器地址栏默认不编码，但是不意味着不能编码</li>
 </ul>
 <h2 id="ctf-web-web-1-sql_1">SQL注入<a class="headerlink" href="#ctf-web-web-1-sql_1" title="Permanent link">&para;</a></h2>
 <h3 id="ctf-web-web-1-sql_2">直接回显的SQL注入<a class="headerlink" href="#ctf-web-web-1-sql_2" title="Permanent link">&para;</a></h3>
@@ -4780,33 +4786,25 @@ $ K = \begin{bmatrix}
 <p>存在注入-&gt;SQL语句可以以一种“意料之外”的方式被解析</p>
 <p>而最简单的“意料之外”就是把他搞坏</p>
 <ul>
-<li>
-<p>传入全部各种特殊字符 '"~!@#$%^&amp;*()`</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#ctf-web-web-1-__codelineno-6-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">&#39;&quot;</span><span class="o">~!@#</span><span class="err">$</span><span class="o">%^&amp;*</span><span class="p">()</span><span class="o">`</span><span class="p">;</span><span class="w">     </span><span class="cm">/*数字型*/</span>
+<li>传入全部各种特殊字符 '"~!@#$%^&amp;*()`<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#ctf-web-web-1-__codelineno-6-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">&#39;&quot;</span><span class="o">~!@#</span><span class="err">$</span><span class="o">%^&amp;*</span><span class="p">()</span><span class="o">`</span><span class="p">;</span><span class="w">     </span><span class="cm">/*数字型*/</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#ctf-web-web-1-__codelineno-7-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="err">&quot;</span><span class="o">~!@#</span><span class="err">$</span><span class="o">%^&amp;*</span><span class="p">()</span><span class="o">`</span><span class="err">&#39;</span><span class="p">;</span><span class="w">   </span><span class="cm">/*字符型*/</span>
 </code></pre></div>
 </li>
-<li>
-<p>不管内部结构怎么样，这样肯定能出错，<strong>检测效率高</strong></p>
-</li>
+</ul>
+<ul>
+<li>不管内部结构怎么样，这样肯定能出错，<strong>检测效率高</strong></li>
 </ul>
 <p>判断到底是数字型还是字符型</p>
 <ul>
-<li>
-<p>传入id=2-1</p>
-<ul>
-<li>如果是数字型，语句应该变为：</li>
-</ul>
+<li>传入id=2-1<p>- 如果是数字型，语句应该变为：</p>
 <p><div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#ctf-web-web-1-__codelineno-8-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span>
 </code></pre></div>
-等价于：
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#ctf-web-web-1-__codelineno-9-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+  等价于：
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#ctf-web-web-1-__codelineno-9-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
 </code></pre></div>
-那么就应该能正常返回id=1的页面</p>
-<ul>
-<li>而如果是字符型，语句应该变为：</li>
-</ul>
+  那么就应该能正常返回id=1的页面</p>
+<p>- 而如果是字符型，语句应该变为：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#ctf-web-web-1-__codelineno-10-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2-1&#39;</span>
 </code></pre></div>
 <p>会查询不到内容</p>
@@ -4850,19 +4848,17 @@ $ K = \begin{bmatrix}
 <p>但是，由于我们不知道表名、列名，我们无法获取更多的数据</p>
 <p>幸运的是，MySQL 的默认库<code>information_schema</code>中存放了这些信息。当然，这个技巧只能在 MySQL 中使用</p>
 <ul>
-<li>
-<p>在MySQL中，所有的数据库名存放在<code>information_schema.schemata</code>的<code>schema_name</code>字段下</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#ctf-web-web-1-__codelineno-16-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">schema_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">schemata</span><span class="p">;</span>
+<li>在MySQL中，所有的数据库名存放在<code>information_schema.schemata</code>的<code>schema_name</code>字段下<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#ctf-web-web-1-__codelineno-16-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">schema_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">schemata</span><span class="p">;</span>
 </code></pre></div>
 </li>
-<li>
-<p>所有的表名存放在<code>information_schema.tables</code>的<code>table_name</code>字段下，可以以<code>table_schema</code>为条件筛选</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#ctf-web-web-1-__codelineno-17-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="s1">&#39;db_name&#39;</span><span class="p">;</span>
+</ul>
+<ul>
+<li>所有的表名存放在<code>information_schema.tables</code>的<code>table_name</code>字段下，可以以<code>table_schema</code>为条件筛选<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#ctf-web-web-1-__codelineno-17-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="s1">&#39;db_name&#39;</span><span class="p">;</span>
 </code></pre></div>
 </li>
-<li>
-<p>所有的列名存放在<code>information_schema.columns</code>的<code>column_name</code>字段下，可以以<code>table_schema</code>和<code>table_name</code>为条件筛选</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#ctf-web-web-1-__codelineno-18-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">column_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">table_name</span><span class="o">=</span><span class="s1">&#39;table_name&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="s1">&#39;db_name&#39;</span><span class="p">;</span>
+</ul>
+<ul>
+<li>所有的列名存放在<code>information_schema.columns</code>的<code>column_name</code>字段下，可以以<code>table_schema</code>和<code>table_name</code>为条件筛选<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#ctf-web-web-1-__codelineno-18-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">column_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">table_name</span><span class="o">=</span><span class="s1">&#39;table_name&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="s1">&#39;db_name&#39;</span><span class="p">;</span>
 </code></pre></div>
 </li>
 </ul>
@@ -4885,14 +4881,12 @@ $ K = \begin{bmatrix}
 </code></pre></div>
 <p>验证猜想</p>
 <ul>
-<li>
-<p>传入<code>uname='</code></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#ctf-web-web-1-__codelineno-23-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="err">&#39;</span><span class="w"> </span><span class="cm">/*报错*/</span>
+<li>传入<code>uname='</code><div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#ctf-web-web-1-__codelineno-23-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="err">&#39;</span><span class="w"> </span><span class="cm">/*报错*/</span>
 </code></pre></div>
 </li>
-<li>
-<p>而uname="时</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#ctf-web-web-1-__codelineno-24-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&quot;&#39;</span><span class="w"> </span><span class="cm">/*不报错*/</span>
+</ul>
+<ul>
+<li>而uname="时<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#ctf-web-web-1-__codelineno-24-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">col_name</span><span class="p">(</span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&quot;&#39;</span><span class="w"> </span><span class="cm">/*不报错*/</span>
 </code></pre></div>
 </li>
 </ul>
@@ -5006,13 +5000,11 @@ $ K = \begin{bmatrix}
 <p>而在GBK编码下，<code>df 5c</code>是汉字<code>運</code>的编码，最后这段字符会被数据库理解为<code>運</code>'，导致转义失效，单引号逃逸。这种技巧被称为宽字节注入。</p>
 <h3 id="ctf-web-web-1-_6">一些其他注入漏洞的例子<a class="headerlink" href="#ctf-web-web-1-_6" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p>XXE: XML external entity attack</p>
-<p>比如这段XML发送给某个API后，服务器会解析XML的内容，并返回一个HTML页面。</p>
+<li>XXE: XML external entity attack<p>比如这段XML发送给某个API后，服务器会解析XML的内容，并返回一个HTML页面。</p>
 </li>
-<li>
-<p>SSRF: Server-side request forgery</p>
-<p>诱导服务端对非预期的地址作网络请求，从而获取部分内网信息</p>
+</ul>
+<ul>
+<li>SSRF: Server-side request forgery<p>诱导服务端对非预期的地址作网络请求，从而获取部分内网信息</p>
 </li>
 </ul>
 <h2 id="ctf-web-web-1-_7">总结<a class="headerlink" href="#ctf-web-web-1-_7" title="Permanent link">&para;</a></h2>
@@ -5172,11 +5164,9 @@ $ K = \begin{bmatrix}
 <ul>
 <li>exiftool 识别短数据，或者十六进制编辑器直接观察</li>
 <li>binwalk 识别叠加文件，foremost 提取</li>
-<li>图像末尾叠加一个压缩包，就是所谓的“图种”<ul>
-<li>修改后缀名可能可以解压（部分解压软件会忽略前面的图像）</li>
-<li>其实不如直接分离</li>
-</ul>
-</li>
+<li>图像末尾叠加一个压缩包，就是所谓的“图种”
+    - 修改后缀名可能可以解压（部分解压软件会忽略前面的图像）
+    - 其实不如直接分离</li>
 </ul>
 <p>直接利用元信息</p>
 <ul>
@@ -5229,15 +5219,11 @@ $ K = \begin{bmatrix}
 </ul>
 <p>具体图像模式以及转换</p>
 <ul>
-<li>
-<p>'1'：黑白二值（0/255）；'L'：灰度（8 bit），'l'：32 bit 灰度</p>
-<ul>
-<li>L = 0.299 R + 0.587 G + 0.114 B</li>
+<li>'1'：黑白二值（0/255）；'L'：灰度（8 bit），'l'：32 bit 灰度<p>- L = 0.299 R + 0.587 G + 0.114 B</p>
+</li>
 </ul>
-</li>
-<li>
-<p>'P'：8bit 调色盘，获取的像素值是调色盘索引</p>
-</li>
+<ul>
+<li>'P'：8bit 调色盘，获取的像素值是调色盘索引</li>
 <li>'RGB'、'RGBA'</li>
 <li>'CMYK'：转换时有色差，CMY = 255 - RGB，K = 0</li>
 <li>'YCbCr'、'LAB'、'HSV' 等，转换时有复杂公式（可能出现新的隐写）</li>
@@ -5286,11 +5272,7 @@ $ K = \begin{bmatrix}
 <p>JPEG 的压缩原理是 DCT（离散余弦变换）+ Huffman 编码</p>
 <ul>
 <li>由 RGB 转换到 YCbCr，然后减少 Cb、Cr 的采样率</li>
-<li>
-<p>将图像分块，每个块 8x8，进行 DCT 变换</p>
-<ul>
-<li>将图像转换为频域，便于压缩高频部分</li>
-</ul>
+<li>将图像分块，每个块 8x8，进行 DCT 变换<p>- 将图像转换为频域，便于压缩高频部分</p>
 </li>
 </ul>
 <p>量化，将 DCT 变换后的系数除以量化表中的系数</p>
@@ -5307,33 +5289,25 @@ $ K = \begin{bmatrix}
 <ul>
 <li>每块的结构都是 4 字节长度 + 4 字节类型 + 数据 + 4 字节 CRC 校验</li>
 <li>四个标准数据块：IHDR、PLTE、IDAT、IEND</li>
-<li>其他辅助数据块：eXIf、tEXt、zTXt、tIME、gAMA……<ul>
-<li>eXIf 元信息，tIME 修改时间，tEXt 文本，zTXt 压缩文本</li>
-</ul>
-</li>
+<li>其他辅助数据块：eXIf、tEXt、zTXt、tIME、gAMA……
+    - eXIf 元信息，tIME 修改时间，tEXt 文本，zTXt 压缩文本</li>
 </ul>
 <p>四种标准数据块：</p>
 <ul>
-<li>
-<p>IHDR：包含图像基本信息，必须位于开头</p>
-</li>
-<li>
-<p>4 字节宽度 + 4 字节高度</p>
-</li>
+<li>IHDR：包含图像基本信息，必须位于开头</li>
+</ul>
+<ul>
+<li>4 字节宽度 + 4 字节高度</li>
 <li>1 字节位深度：1、2、4、8、16</li>
 <li>1 字节颜色类型：0 灰度，2 RGB，3 索引，4 灰度透明，6 RGB 透明</li>
 <li>1 字节压缩方式，1 字节滤波方式，均固定为 0</li>
-<li>
-<p>1 字节扫描方式：0 非隔行扫描，1 Adam7 隔行扫描</p>
-</li>
-<li>
-<p>PLTE：调色板，只对索引颜色类型有用</p>
-</li>
-<li>IDAT：图像数据，可以有多个，每个数据块最大 2 31 -1 字节</li>
-<li>IEND：文件结束标志，必须位于最后，内容固定<ul>
-<li>PNG 标准不允许 IEND 之后有数据块</li>
+<li>1 字节扫描方式：0 非隔行扫描，1 Adam7 隔行扫描</li>
 </ul>
-</li>
+<ul>
+<li>PLTE：调色板，只对索引颜色类型有用</li>
+<li>IDAT：图像数据，可以有多个，每个数据块最大 2 31 -1 字节</li>
+<li>IEND：文件结束标志，必须位于最后，内容固定
+    - PNG 标准不允许 IEND 之后有数据块</li>
 </ul>
 <hr />
 <h2 id="ctf-misc-misc-1-_12">隐写进阶技术<a class="headerlink" href="#ctf-misc-misc-1-_12" title="Permanent link">&para;</a></h2>
@@ -5342,10 +5316,8 @@ $ K = \begin{bmatrix}
 <li>PNG 图像按行进行像素数据的压缩，以及存储 / 读取</li>
 <li>当解码时已经达到了 IHDR 中规定的大小就会结束</li>
 <li>因此题目可能会故意修改 IHDR 中的高度数据，使之显示不全</li>
-<li>恢复的话更改高度即可，同时注意 crc 校验码，否则可能报错<ul>
-<li>binascii.crc32(data)，data 为从 IHDR 开始的数据</li>
-</ul>
-</li>
+<li>恢复的话更改高度即可，同时注意 crc 校验码，否则可能报错
+    - binascii.crc32(data)，data 为从 IHDR 开始的数据</li>
 </ul>
 <hr />
 <h3 id="ctf-misc-misc-1-_14">需要原图的图像隐写<a class="headerlink" href="#ctf-misc-misc-1-_14" title="Permanent link">&para;</a></h3>
@@ -5357,22 +5329,14 @@ $ K = \begin{bmatrix}
 </ul>
 <p>接下来利用原图和隐写图像的差异进行分析</p>
 <ul>
-<li>
-<p>图像像素异或观察差异</p>
+<li>图像像素异或观察差异
+    - PIL 手动处理 / ImageChops.difference
+    - stegsolve image combiner</li>
+</ul>
 <ul>
-<li>PIL 手动处理 / ImageChops.difference</li>
-<li>stegsolve image combiner</li>
-</ul>
-</li>
-<li>
-<p>盲水印系列</p>
-<ul>
-<li>给了打水印的代码的话直接尝试根据代码逆推即可</li>
-<li>没有给代码的可能就是常见的现有盲水印工具<ul>
-<li>guofei9987/blind_watermark</li>
-</ul>
-</li>
-</ul>
+<li>盲水印系列<p>- 给了打水印的代码的话直接尝试根据代码逆推即可
+  - 没有给代码的可能就是常见的现有盲水印工具
+      - guofei9987/blind_watermark</p>
 </li>
 </ul>
 <hr />
@@ -5429,10 +5393,8 @@ $ K = \begin{bmatrix}
 <h3 id="ctf-misc-misc-2-_3">流量取证常用工具<a class="headerlink" href="#ctf-misc-misc-2-_3" title="Permanent link">&para;</a></h3>
 <ul>
 <li>tcpdump 抓 TCP 包（Linux 命令行）</li>
-<li><a href="https://www.wireshark.org/">Wireshark</a>： 直接抓包， 得到物理层的全部数据并解析（开源）<ul>
-<li>自带命令行工具 tshark</li>
-</ul>
-</li>
+<li><a href="https://www.wireshark.org/">Wireshark</a>： 直接抓包， 得到物理层的全部数据并解析（开源）
+    + 自带命令行工具 tshark</li>
 <li><a href="https://github.com/gcla/termshark">termshark</a>： 类似 Wireshark 的开源命令行工具</li>
 <li><a href="https://github.com/KimiNewt/pyshark/">pyshark</a>： tshark 的 Python 封装， 可以用 Python 脚本分析</li>
 <li><a href="https://scapy.net/">scapy</a>： Python 库，</li>
@@ -5486,13 +5448,9 @@ $ K = \begin{bmatrix}
 <p>具体题目示例</p>
 <ul>
 <li>本次 lab 中的题目： dnscap</li>
-<li>
-<p>MRCTF 2022： Bleach!</p>
-<ul>
-<li>基于 UDP 的 RTP 协议， 需要手动选择进行解析</li>
-<li>RTP 是一种音视频传输协议， 可以得到音频流</li>
-<li>wav 音频流中 LSB 包含隐写图片</li>
-</ul>
+<li>MRCTF 2022： Bleach!<p>- 基于 UDP 的 RTP 协议， 需要手动选择进行解析
+  - RTP 是一种音视频传输协议， 可以得到音频流
+  - wav 音频流中 LSB 包含隐写图片</p>
 </li>
 </ul>
 <h3 id="ctf-misc-misc-2-_4">其他协议<a class="headerlink" href="#ctf-misc-misc-2-_4" title="Permanent link">&para;</a></h3>
@@ -5536,13 +5494,9 @@ $ K = \begin{bmatrix}
 <h3 id="ctf-misc-misc-2-_6">账户<a class="headerlink" href="#ctf-misc-misc-2-_6" title="Permanent link">&para;</a></h3>
 <p>外部账户（Externally Owned Account）</p>
 <ul>
-<li>
-<p>有一对公私钥， 用于签署交易</p>
-<ul>
-<li>私钥是随机生成的 256 位数（32 字节）</li>
-<li>公钥由私钥经过 ECDSA 算法计算而来， 是一个 64 字节的数</li>
-<li>地址由公钥经过 Keccak-256 哈希后取前 20 字节得到</li>
-</ul>
+<li>有一对公私钥， 用于签署交易<p>- 私钥是随机生成的 256 位数（32 字节）
+  - 公钥由私钥经过 ECDSA 算法计算而来， 是一个 64 字节的数
+  - 地址由公钥经过 Keccak-256 哈希后取前 20 字节得到</p>
 </li>
 </ul>
 <p><img alt="account" src="../CTF/Misc/assets/account.png" /></p>
@@ -5576,12 +5530,8 @@ $ K = \begin{bmatrix}
 <ul>
 <li>通过 <a href="https://etherscan.io/">https://etherscan.io/</a> 查看</li>
 <li>主网（mainnet） ： 真正的金钱交易， 很少使用</li>
-<li>
-<p>测试链： Sepolia / Holesky 链， 可以通过 faucet 获取免费代币</p>
-<ul>
-<li><a href="https://sepolia-faucet.pk910.de/">https://sepolia-faucet.pk910.de/</a></li>
-<li>Ethernaut 等大型公开合约 CTF 平台会使用</li>
-</ul>
+<li>测试链： Sepolia / Holesky 链， 可以通过 faucet 获取免费代币<p>- <a href="https://sepolia-faucet.pk910.de/">https://sepolia-faucet.pk910.de/</a>
+  - Ethernaut 等大型公开合约 CTF 平台会使用</p>
 </li>
 </ul>
 <p>私链： 自己搭建的链， 模拟真实的链</p>
@@ -5876,12 +5826,6 @@ $ K = \begin{bmatrix}
         <script src="../js/print-site.js"></script>
       
         <script src="../javascripts/katex.js"></script>
-      
-        <script src="../javascripts/toc.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
         <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
       

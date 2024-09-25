@@ -115,7 +115,7 @@
     
       <link rel="stylesheet" href="https://fonts.font.im/css?family=Gloria+Hallelujah">
     
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
     
       <link rel="stylesheet" href="https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css">
     
@@ -622,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ComputerScience/ADS/chap-1/" class="md-nav__link">
+      <a href="../../../ComputerScience/ADS/lec-1/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2201,26 +2201,18 @@
 <li>消息被称为明文（Plaintext）。用某种方法伪装消息以隐藏它的内容的过程称为加密 （Encryption），被加密的消息称为密文（Ciphertext），把密文恢复为明文的过程称为密（Decryption）。</li>
 <li>密码算法（Cryptography Algorithm）：是用于加密和解密的数学函数。</li>
 <li>密钥（Key）：加密或解密所需要的除密码算法之外的关键信息。</li>
-<li>对称加密（Symmetric Cryptography）<ul>
-<li>特点：在加密和解密时使用同一密钥</li>
-<li>例子：流密码（RC4），块密码（AES，DES）</li>
-</ul>
-</li>
-<li>非对称加密（Asymmetric Cryptography）<ul>
-<li>特点：在加密和解密时使用不同密钥，加密使用公钥，解密使用私钥</li>
-<li>例子：RSA，ElGamal，ECC</li>
-</ul>
-</li>
-<li>哈希函数（Hash Function）<ul>
-<li>特点：把输入内容单向映射到一个短的摘要上</li>
-<li>应用：下载文件完整性校验</li>
-<li>例子：CRC，MD5，SHA系列</li>
-</ul>
-</li>
-<li>数字签名（Digital Signature）<ul>
-<li>应用：对消息进行签名（也是一个短的消息），以防消息的冒名伪造或篡改</li>
-</ul>
-</li>
+<li>对称加密（Symmetric Cryptography）
+    - 特点：在加密和解密时使用同一密钥
+    - 例子：流密码（RC4），块密码（AES，DES）</li>
+<li>非对称加密（Asymmetric Cryptography）
+    - 特点：在加密和解密时使用不同密钥，加密使用公钥，解密使用私钥
+    - 例子：RSA，ElGamal，ECC</li>
+<li>哈希函数（Hash Function）
+    - 特点：把输入内容单向映射到一个短的摘要上
+    - 应用：下载文件完整性校验
+    - 例子：CRC，MD5，SHA系列</li>
+<li>数字签名（Digital Signature）
+    - 应用：对消息进行签名（也是一个短的消息），以防消息的冒名伪造或篡改</li>
 </ul>
 <p><img alt="密码学基本术语" src="../assets/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%9F%BA%E6%9C%AC%E6%9C%AF%E8%AF%AD.png" /></p>
 <h2 id="_5">数学基础<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
@@ -2283,11 +2275,9 @@ $$ x = \sum_{i=1}^{k} a_iM_iN_i $$</p>
 <li>选择两个大质数 <span class="arithmatex">\(p, q\)</span>，计算 <span class="arithmatex">\(n = p \times q\)</span>，<span class="arithmatex">\(\varphi(n) = (p-1)(q-1)\)</span></li>
 <li>选择 <span class="arithmatex">\(e\)</span>，使得 <span class="arithmatex">\(1 &lt; e &lt; \varphi(n)\)</span>，且 <span class="arithmatex">\(\gcd(e, \varphi(n)) = 1\)</span></li>
 <li>计算 <span class="arithmatex">\(d\)</span>，使得 <span class="arithmatex">\(d \equiv e^{-1} \pmod{\varphi(n)}\)</span> ，即 <span class="arithmatex">\(d \times e \equiv 1 \pmod{\varphi(n)}\)</span></li>
-<li>于是得到公钥为 <span class="arithmatex">\((e, n)\)</span>，私钥为 <span class="arithmatex">\((d, n)\)</span>， 设明文为 <span class="arithmatex">\(m\)</span>，密文为 <span class="arithmatex">\(c\)</span>，若消息太长，可将消息分段加密<ul>
-<li>加密：<span class="arithmatex">\(c = m^e \mod n\)</span></li>
-<li>解密：<span class="arithmatex">\(m = c^d \mod n\)</span></li>
-</ul>
-</li>
+<li>于是得到公钥为 <span class="arithmatex">\((e, n)\)</span>，私钥为 <span class="arithmatex">\((d, n)\)</span>， 设明文为 <span class="arithmatex">\(m\)</span>，密文为 <span class="arithmatex">\(c\)</span>，若消息太长，可将消息分段加密
+    + 加密：<span class="arithmatex">\(c = m^e \mod n\)</span>
+    + 解密：<span class="arithmatex">\(m = c^d \mod n\)</span></li>
 </ul>
 <h2 id="_11">古典密码<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2620,12 +2610,6 @@ $ K = \begin{bmatrix}
         <script src="../../../js/print-site.js"></script>
       
         <script src="../../../javascripts/katex.js"></script>
-      
-        <script src="../../../javascripts/toc.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
         <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
       

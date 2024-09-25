@@ -30,7 +30,7 @@
 <link href="../../../css/timeline.css" rel="stylesheet"/>
 <link href="https://fonts.font.im/css2?family=Noto+Serif+SC" rel="stylesheet"/>
 <link href="https://fonts.font.im/css?family=Gloria+Hallelujah" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css" rel="stylesheet"/>
+<link href="https://unpkg.com/katex@0/dist/katex.min.css" rel="stylesheet"/>
 <link href="https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css" rel="stylesheet"/>
 <link href="https://cdn.tonycrane.cc/lxgw/lxgwscreen.css" rel="stylesheet"/>
 <link href="../../../css/changelogs.css" rel="stylesheet"/>
@@ -269,7 +269,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../ComputerScience/ADS/chap-1/">
+<a class="md-nav__link" href="../../../ComputerScience/ADS/lec-1/">
 <span class="md-ellipsis">
     AVL树与Splay树与摊还分析
   </span>
@@ -714,26 +714,20 @@ C---&gt;E
 </code></pre>
 <p>pwn 赛题结构</p>
 <ul>
-<li>
-<p>赛题文件</p>
-</li>
-<li>
-<p>往往需要逆向</p>
-</li>
-<li>
-<p>漏洞描述 (diff)</p>
-</li>
-<li>
-<p>赛题环境</p>
-<ul>
-<li>libc and ld</li>
-<li>Dockerfile</li>
-<li>"good challenge should issue everything you needed to run and test it"</li>
+<li>赛题文件</li>
 </ul>
+<ul>
+<li>往往需要逆向</li>
+<li>漏洞描述 (diff)</li>
+</ul>
+<ul>
+<li>赛题环境<p>- libc and ld
+  - Dockerfile
+  - "good challenge should issue everything you needed to run and test it"</p>
 </li>
-<li>
-<p>赛题远程</p>
-</li>
+</ul>
+<ul>
+<li>赛题远程</li>
 </ul>
 <hr/>
 <h2 id="code-injection">代码注入 (Code Injection)<a class="headerlink" href="#code-injection" title="Permanent link">¶</a></h2>
@@ -903,9 +897,6 @@ C---&gt;F
 <script src="../../../assets/javascripts/bundle.56dfad97.min.js"></script>
 <script src="../../../js/print-site.js"></script>
 <script src="../../../javascripts/katex.js"></script>
-<script src="../../../javascripts/toc.js"></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
 <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
 <script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
