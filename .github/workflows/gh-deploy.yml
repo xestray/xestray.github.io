@@ -24,4 +24,5 @@ jobs:
       - run: pip install mkdocs-statistics-plugin
       - run: pip install mkdocs-git-revision-date-localized-plugin
       - run: pip install mkdocs-print-site-plugin  
+      - run: pip install mkdocs-mermaid2-plugin
       - run: mkdocs gh-deploy --force
