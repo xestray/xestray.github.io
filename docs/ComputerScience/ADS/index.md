@@ -36,4 +36,4 @@
 
 ## Table of Contents
 
-- [AVL Trees, Splay Trees,and Amortized Analysis](./chap-1.md)
+- [AVL Trees, Splay Trees,and Amortized Analysis](./lec-1.md)
