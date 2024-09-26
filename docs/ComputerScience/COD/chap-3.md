@@ -4,7 +4,7 @@
     counter: true
 ---
 
-# Instructions: Language of the Computer
+# Arithmetic for Computers
 
 
 

@@ -4,9 +4,3 @@
     counter: true
 ---
 
-# Instructions: Language of the Computer
-
-
-
-
-

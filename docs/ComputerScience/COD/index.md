@@ -21,3 +21,5 @@
 ## Table of Contents
 
 - [Chap1 Computer Abstractions and Technology](./chap-1.md)
+- [Chap2 Instructions: Language of the Computer](./chap-2.md)
+- [Chap3 Arithmetic for Computers](./chap-3.md)

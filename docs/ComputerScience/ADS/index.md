@@ -37,3 +37,6 @@
 ## Table of Contents
 
 - [AVL Trees, Splay Trees,and Amortized Analysis](./lec-1.md)
+- [Red-Black Trees and B+ Trees](./lec-2.md)
+- [Inverted File Index](./lec-3.md)
+- [Leftist Heaps and Skew Heaps](./lec-4.md)
