@@ -2,118 +2,142 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://xestray.cc/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/CTF/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/CTF/Misc/Misc-1/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/CTF/Misc/Misc-2/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/CTF/Web/Web-1/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/CTF/fundament/lec1-Intro/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/CTF/fundament/lec2-Web/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/CTF/fundament/lec3-Misc/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/CTF/fundament/lec4-Rev/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/CTF/fundament/lec5-Pwn/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/CTF/fundament/lec6-Crypto/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/ComputerScience/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/ComputerScience/ADS/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/ComputerScience/ADS/lec-1/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/ComputerScience/ADS/lec-2/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
+    </url>
+    <url>
+         <loc>https://xestray.cc/ComputerScience/ADS/lec-3/</loc>
+         <lastmod>2024-09-26</lastmod>
+    </url>
+    <url>
+         <loc>https://xestray.cc/ComputerScience/ADS/lec-4/</loc>
+         <lastmod>2024-09-26</lastmod>
+    </url>
+    <url>
+         <loc>https://xestray.cc/ComputerScience/ADS/lec-5/</loc>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/ComputerScience/COD/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/ComputerScience/COD/chap-1/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/ComputerScience/COD/chap-2/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
+    </url>
+    <url>
+         <loc>https://xestray.cc/ComputerScience/COD/chap-3/</loc>
+         <lastmod>2024-09-26</lastmod>
+    </url>
+    <url>
+         <loc>https://xestray.cc/ComputerScience/COD/chap-4/</loc>
+         <lastmod>2024-09-26</lastmod>
+    </url>
+    <url>
+         <loc>https://xestray.cc/ComputerScience/COD/chap-5/</loc>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/ComputerScience/Language/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/MathematicsAndPhysics/LA/LA/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/MathematicsAndPhysics/MA/MA/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/MathematicsAndPhysics/Phy2/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/MathematicsAndPhysics/Phy2/electromagnetic/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/MathematicsAndPhysics/Probability/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/MathematicsAndPhysics/Probability/chap-1/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/MathematicsAndPhysics/Probability/chap-2/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/casual/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/others/WhatToDo/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
     <url>
          <loc>https://xestray.cc/tags/</loc>
-         <lastmod>2024-09-25</lastmod>
+         <lastmod>2024-09-26</lastmod>
     </url>
 </urlset>
