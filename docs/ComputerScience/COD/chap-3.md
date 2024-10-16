@@ -313,5 +313,3 @@ Round to nearest even 只对0.5有效，别的数都和普通的四舍五入一�
     The number of bits in error in the leas t significant bits of the significant between the actual number and the number that can be represented.
 
     - 精度损失不会超过 0.5 个 ulp
-
-
