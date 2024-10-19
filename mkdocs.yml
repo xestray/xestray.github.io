@@ -16,9 +16,10 @@ nav:
     - 高级数据结构与算法分析: 
       - ComputerScience/ADS/index.md
       - AVL树与Splay树与摊还分析: ComputerScience/ADS/lec-1.md
-      - 红黑树与B+树: ComputerScience/ADS/lec-2.md
-      - 倒排文件索引: ComputerScience/ADS/lec-3.md
-      - 左倾堆与斜堆: ComputerScience/ADS/lec-4.md
+      - 红黑树与B+树:             ComputerScience/ADS/lec-2.md
+      - 倒排文件索引:             ComputerScience/ADS/lec-3.md
+      - 左倾堆与斜堆:             ComputerScience/ADS/lec-4.md
+      - 二项堆:                   ComputerScience/ADS/lec-5.md
     - 计算机组成与设计: 
       - ComputerScience/COD/index.md
       - 计算机概要与技术: ComputerScience/COD/chap-1.md

@@ -607,7 +607,7 @@ $$ V = \dfrac{q}{4\pi \epsilon_0 r} $$
 
 由高斯定理可以直接得到
 
-- $E = \dfrac{q}{4\pi \epsilon_0 r^2}$，$(r \geq R)$
+- $E = \dfrac{q}{4\pi \epsilon_0 r^2}$，$(r \geqslant R)$
 - $E = 0$，$(r < R)$
 
 可以求得电势

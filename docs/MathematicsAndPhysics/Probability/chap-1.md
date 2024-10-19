@@ -19,7 +19,7 @@
 !!! note "频率的性质"
     从频率的定义可以看出频率有以下性质：
 
-    1. 非负性：$0\leq F_N(A)\leq 1$
+    1. 非负性：$0\leqslant F_N(A)\leqslant 1$
     2. 规范性：对必然事件 $\Omega$，$F_N(\Omega)=\frac{N}{N}=1$
     3. 可列可加性：若 $A_1,A_2,\cdots$ 两两互斥，则 $F_N(A_1\cup A_2\cup\cdots)=F_N(A_1)+F_N(A_2)+\cdots$
 
@@ -40,14 +40,14 @@ $$P(A)=\frac{m}{n}=\frac{A包含的样本点数}{样本空间中样本点总数}
 !!! note "古典概率的性质"
     从古典概型的定义可以看出概率有以下性质：
  
-    1. 非负性：$0\leq P(A)\leq 1$
+    1. 非负性：$0\leqslant P(A)\leqslant 1$
     2. 规范性：$P(\Omega)=1$
     3. 可列可加性：若 $A_1,A_2,\cdots$ 两两互斥，则 $P(A_1\cup A_2\cup\cdots)=P(A_1)+P(A_2)+\cdots$
 
     特别地，若 $A$ 与 $B$ 两事件互反（不可能同时发生且至少发生一个），则 $P(A)=1 - P(B)$
 
 ??? example 
-    设有 $n$ 个球，$N$ 个格子$(n \leq N)$，球和格子都是可以区分的。每个球落在各格子内的概率相同（设格子足够大，可以容纳任意多个球），将这 $n$ 个球随机地放入这 $N$ 个格子中，求：
+    设有 $n$ 个球，$N$ 个格子$(n \leqslant N)$，球和格子都是可以区分的。每个球落在各格子内的概率相同（设格子足够大，可以容纳任意多个球），将这 $n$ 个球随机地放入这 $N$ 个格子中，求：
 
     1. 指定的 $n$ 个格子中各有一个球的概率
     2. 有 $n$ 个格子各有一球的概率
@@ -146,7 +146,7 @@ $$\mathscr{F} = \{ \emptyset, A, \overline{A}, \Omega \}$$
 !!! note "概率的定义"
     概率 $P$是定义在事件域 $\mathscr{F}$ 上的实值集函数，满足以下三个条件：
 
-    1. 非负性：$P(A) \geq 0，A \in \mathscr{F}$
+    1. 非负性：$P(A) \geqslant 0，A \in \mathscr{F}$
     2. 规范性：$P(\Omega) = 1$
     3. 可列可加性：若 $A_1,A_2,\cdots, A_n, \cdots \in \mathscr{F}$ 两两互斥，则 
     $$ P(\sum_{n=1}^{\infty}A_n) = \sum_{n=1}^{\infty}P(A_n) $$
@@ -170,12 +170,12 @@ $$P(\sum_{i=1}^nA_i) = \sum_{i=1}^nP(A_i)$$
 
 $$\begin{aligned}
 &~~~~P(A_1 \cup A_2 \cup \cdots \cup A_n)\\\\
-&= \sum_{i=1}^nP(A_i) - \sum_{1 \leq i < j \leq n}P(A_iA_j) + \cdots + (-1)^{n-1}P(A_1A_2\cdots A_n)
+&= \sum_{i=1}^nP(A_i) - \sum_{1 \leqslant i < j \leqslant n}P(A_iA_j) + \cdots + (-1)^{n-1}P(A_1A_2\cdots A_n)
 \end{aligned}$$
 
 - （次可列可加性）
 
-$$P(\cup_{n=1}^{\infty}A_n) \leq \sum_{n=1}^{\infty}P(A_n)$$
+$$P(\cup_{n=1}^{\infty}A_n) \leqslant \sum_{n=1}^{\infty}P(A_n)$$
 
 ### 概率测度的连续性
 
@@ -268,7 +268,7 @@ $$A_1 \subset A_2 \subset \cdots$$
     且 $P(ABC) = P(A)P(B)P(C)$ 则称事件 $A, B, C$ **相互独立**。
 
 !!! note "定义1.6"
-    若对一切可能的组合 $1 \leq i < j < k < \cdots \leq n$，有
+    若对一切可能的组合 $1 \leqslant i < j < k < \cdots \leqslant n$，有
     $$ 
     \begin{cases}
     P(A_iA_j) = P(A_i)P(A_j)\\\\
@@ -299,13 +299,13 @@ $$ b(k, n, p) = \binom{n}{k} p^k q^{n-k} = \frac{n!}{k!(n-k)!} p^k q^{n-k}, k=0,
 
 ### 补充与注记
 
-从$n$个不同物件中取$k$个$(1 \leq r \leq n)$的不同排列总数为
+从$n$个不同物件中取$k$个$(1 \leqslant r \leqslant n)$的不同排列总数为
 $$ P^r_n = n(n-1)(n-2) \cdots (n-r+1) $$
 
 - 特别的，若$r=n$，有 $P^r_r = r(r-1) \cdots 1 = r!$，将其称为全排列。
 - 人们常约定把 $0!$ 作为 $1$。
 
-从$n$个不同物件中取$k$个$(1 \leq r \leq n)$的不同排列总数为
+从$n$个不同物件中取$k$个$(1 \leqslant r \leqslant n)$的不同排列总数为
 $$ \binom{n}{r} = \frac{P^r_n}{r!} = \frac{n!}{r!(n-r)!} $$
 
 组合数也常称为二项式系数
