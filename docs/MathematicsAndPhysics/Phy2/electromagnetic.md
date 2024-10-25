@@ -973,4 +973,170 @@ $$ \overrightarrow{D} \cdot d\overrightarrow{A} = \sum_{In} q_0 $$
     - $\kappa_e$ Dielectric constant（介电常数）
     - $\chi_e$ Polarization coefficient（极化率）
     
+---
+
+## Chap 31 The Steady Current（稳恒电流）
+
+### 电流强度与电流密度
+
+电流强度定义为单位之间内通过某个截面的电荷量，即
+$$ i = \lim_{\Delta t \to 0} \dfrac{\Delta q}{\Delta t} = \dfrac{dq}{dt} $$
+
+电流密度矢量 $\overrightarrow{j}$ 定义为单位时间内通过单位面积的电荷量
+$$\begin{aligned}
+di &= \overrightarrow{j} \cdot d\overrightarrow{A} \\\\
+i &= \iint_A \overrightarrow{j} \cdot d\overrightarrow{A} \\\\
+&= \iint j \cos\theta dA
+\end{aligned}$$
+
+### 电流连续性方程（current continuity equation）
+
+在电流场中，电荷不会消失，因此电流在空间中的分布是连续的，即电流的流入量等于流出量。
+$$ \oiint_A \overrightarrow{j} \cdot d\overrightarrow{A} = -\dfrac{dq}{dt} = 0 $$
+
+### 欧姆定律、电阻、电阻率
+
+- 欧姆定律：电流强度与电压成正比，电流强度与电阻成反比
+
+$\Delta V = iR$，$i = \dfrac{\Delta V}{R}$，$R = \dfrac{\Delta V}{i}$
+
+- 电导：电阻的倒数，单位为 $\Omega^{-1}$，记为 $G = \dfrac{1}{R}$
+- 单位：电阻：欧姆($\Omega$)，电导：西门子($\Omega^{-1} = S$)
+
+$$ R = \rho \dfrac{L}{A} = \int \rho \dfrac{dl}{A} $$
+其中 $\rho$ 为电阻率（resistivity），$L$ 为电阻的长度，$A$ 为电阻的横截面积
+
+电导率：$ \sigma = \dfrac{1}{\rho} $
+
+### 欧姆定律的微分形式和积分形式
+
+微分形式：
+$$ \Delta i = \dfrac{\Delta V}{R} $$
+$$ j\Delta A = \dfrac{E \Delta l}{\rho \dfrac{\Delta l}{\Delta A}}  $$                    
+$$ j = \dfrac{E}{\rho} = \sigma E $$
+
+由上式可以得到 $ \overrightarrow{j} = \dfrac{E}{\rho} = \sigma \overrightarrow{E} $
+
+积分形式：
+$$ i = \iint \overrightarrow{j} \cdot d\overrightarrow{A} $$
+$$ \Delta V = \iint \overrightarrow{E} \cdot d\overrightarrow{l}       $$
+$$ R = \int \rho \dfrac{dl}{A} $$
+
+---
+
+## Chap 32 (33) The Steady Magnetic Field（稳恒磁场）
+
+### 磁学基本现象
+
+- 磁铁吸引铁、镍、钴等磁性物质
+- 指北针指向地理北极（磁南极），指南针指向地理南极（磁北极），磁力线从磁北极指向磁南极
+- 磁极同性相斥，异性相吸
+- 奥斯特实验：电流通过导线时，导线周围会产生磁场；
+
+    电线切割磁感线时，电线会产生感应电动势，这就是电磁感应现象。
+
+- 右手定则
+- 同向电流之间相互吸引，反向电流之间相互排斥
+- 磁场由运动的电荷产生
+
+### 安培定律（Ampere's Law）
+
+根据库仑定律，我们知道两个点电荷之间的相互作用力是由它们之间的电场产生的
+$$ d\overrightarrow{F}_{12} = \dfrac{dq_1 \cdot dq_2}{4\pi \epsilon_0 r_{12}^2} \hat{r}_{12} $$
+
+![](./assets/安培定律.png){ align=right width=30% }
+
+那么我们可以类比求出磁场力，即两个电流元 $ids$（current element）之间的相互作用力
+$$ dF_{12} = k \dfrac{i_1 i_2 ds_1 \sin\theta_1 ds_2 \sin\theta_2}{r_{12}^2} $$
+其中 $k$ 是一个比例系数
+
+假如我们再将电流元本身的方向以及它们之间的位移矢量也考虑进来，就得到
+$$ d\overrightarrow{F}_{12} = k \dfrac{i_2 d\overrightarrow{s}_2 \times (i_1 d\overrightarrow{s}_1 \times \hat{r}_{12})}{r_{12}^2} $$
+
+- 其中 $k = \dfrac{\mu_0}{4\pi} = 10^{-7} \text{N/A}^2$ 称为磁场常数（magnetic constant）
+- $\mu_0$ 称为真空磁导率或磁导率（permeability constant），$\mu_0 = 4\pi \times 10^{-7} \text{N/A}^2$
+
+!!! example "两道例题"
+    === "平行同向的电流"
+        ![](./assets/平行同向电流.png){ align=right width=30% }
+        对于两个平行且同向的电流，电流元 $i_1 ds_1$ 对 $i_2 ds_2$ 的作用力为
+        $$ d\overrightarrow{F}_{12} = \dfrac{\mu_0}{4\pi} \dfrac{i_2 d\overrightarrow{s}_2 \times (i_1 d\overrightarrow{s}_1 \times \hat{r}_{12})}{r_{12}^2} $$
+        又因为 $ ds_1 \perp \hat{r}_{12} $，因此
+        $$ dF_{12} = \dfrac{\mu_0}{4\pi} \dfrac{i_1 i_2 ds_1 ds_2}{r_{12}^2} $$
+
+        类似地，电流元 $i_2 ds_2$ 对 $i_1 ds_1$ 的作用力为
+        $$ dF_{21} = \dfrac{\mu_0}{4\pi} \dfrac{i_1 i_2 ds_1 ds_2}{r_{21}^2} $$
+
+        因此我们得到 $ dF_{12} = dF_{21} $，即两个电流的相互作用力大小是相同的
+
+    === "相互垂直的电流"
+        ![](./assets/垂直电流.png){ align=right width=30% }
+        对于两段相互垂直的电流，
+        $$ d\overrightarrow{F}_{12} = \dfrac{\mu_0}{4\pi} \dfrac{i_2 d\overrightarrow{s}_2 \times (i_1 d\overrightarrow{s}_1 \times \hat{r}_{12})}{r_{12}^2} $$
+        又因为 $ ds_1 \parallel \hat{r}_{12} $，因此
+        $$ dF_{12} = 0 $$
+
+        $$ d\overrightarrow{F}_{21} = \dfrac{\mu_0}{4\pi} \dfrac{i_1 d\overrightarrow{s}_1 \times (i_2 d\overrightarrow{s}_2 \times \hat{r}_{21})}{r_{21}^2} $$
+        但是这里需要注意的是，$ ds_2 \perp \hat{r}_{21} $，因此
+        $$ dF_{21} = \dfrac{\mu_0}{4\pi} \dfrac{i_1 i_2 ds_1 ds_2}{r_{21}^2} $$
+
+        这里我们就得到一个反直觉的结论，$ dF_{12} \neq dF_{21} $，这是需要多加注意的
+
+### 磁感应强度 $\overrightarrow{B}$
+
+在上面我们反复使用了下面的公式
+$$ d\overrightarrow{F}_{12} = \dfrac{\mu_0}{4\pi} \dfrac{i_2 d\overrightarrow{s}_2 \times (i_1 d\overrightarrow{s}_2 \times \hat{r}_{12})}{r_{12}^2} $$
+
+这是对于电流元的作用力，而对于整个环流电路的作用力，我们可以将其积分得到
+$$ d\overrightarrow{F}_2 = i_2 d\overrightarrow{s}_2 \times \dfrac{\mu_0}{4\pi} \oint_{L1} \dfrac{i_1 d\overrightarrow{s}_1 \times \hat{r}_{12}}{r_{12}^2} $$
+
+因此我们可以对上式叉乘符号的右侧进行定义：
+$$ \overrightarrow{B}_1 = \dfrac{\mu_0}{4\pi} \oint_{L1} \dfrac{i_1 d\overrightarrow{s}_1 \times \hat{r}_{12}}{r_{12}^2} $$
+
+于是我们就得到
+$$ d\overrightarrow{F}_2 = i_2 d\overrightarrow{s}_2 \times \overrightarrow{B}_1 $$
+
+![](./assets/两个环路电流.png){ align=right width=30% }
+
+$ \overrightarrow{B}_1 $ 是由环路电流 $i_1$ 在电流元 $i_2 d\overrightarrow{s}_2$ 处产生的磁感应强度、
+
+- 对于 $\overrightarrow{B}_1$ 的大小，我们定义为 $F_2$ 变化最快的方向中 $F_2$ 与 $i_2 ds_2$ 的比值
+$$ B_1 = \dfrac{(F_2)_{max}}{i_2 ds_2} $$  
+
+- $\overrightarrow{B}_1$ 的方向由 $i_1 ds_1$ 与 $\hat{r}_{12}$ 的叉乘方向决定
+$$ \overrightarrow{B}_1 = \dfrac{\mu_0}{4\pi} \oint_{L1} \dfrac{i_1 d\overrightarrow{s}_1 \times \hat{r}_{12}}{r_{12}^2} $$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

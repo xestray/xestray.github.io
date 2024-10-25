@@ -40,3 +40,6 @@
 - [Red-Black Trees and B+ Trees](./lec-2.md)
 - [Inverted File Index](./lec-3.md)
 - [Leftist Heaps and Skew Heaps](./lec-4.md)
+- [Binomial Queue](./lec-5.md)
+- [Backtracking](./lec-6.md)
+- [Divide and Conquer](./lec-7.md)

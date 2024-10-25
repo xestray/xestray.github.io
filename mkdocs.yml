@@ -20,6 +20,10 @@ nav:
       - 倒排文件索引:             ComputerScience/ADS/lec-3.md
       - 左倾堆与斜堆:             ComputerScience/ADS/lec-4.md
       - 二项堆:                   ComputerScience/ADS/lec-5.md
+      - 回溯法:                   ComputerScience/ADS/lec-6.md
+      - 分治法:                   ComputerScience/ADS/lec-7.md
+      - 动态规划:                 ComputerScience/ADS/lec-8.md
+      - 贪心算法:                 ComputerScience/ADS/lec-9.md
     - 计算机组成与设计: 
       - ComputerScience/COD/index.md
       - 计算机概要与技术: ComputerScience/COD/chap-1.md
