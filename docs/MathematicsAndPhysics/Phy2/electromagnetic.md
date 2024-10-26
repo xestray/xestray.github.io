@@ -983,6 +983,7 @@ $$ \overrightarrow{D} \cdot d\overrightarrow{A} = \sum_{In} q_0 $$
 $$ i = \lim_{\Delta t \to 0} \dfrac{\Delta q}{\Delta t} = \dfrac{dq}{dt} $$
 
 电流密度矢量 $\overrightarrow{j}$ 定义为单位时间内通过单位面积的电荷量
+
 $$\begin{aligned}
 di &= \overrightarrow{j} \cdot d\overrightarrow{A} \\\\
 i &= \iint_A \overrightarrow{j} \cdot d\overrightarrow{A} \\\\
@@ -1010,9 +1011,11 @@ $$ R = \rho \dfrac{L}{A} = \int \rho \dfrac{dl}{A} $$
 
 ### 欧姆定律的微分形式和积分形式
 
+![](./assets/欧姆定律的微分形式.png){ align=right width=40% }
+
 微分形式：
 $$ \Delta i = \dfrac{\Delta V}{R} $$
-$$ j\Delta A = \dfrac{E \Delta l}{\rho \dfrac{\Delta l}{\Delta A}}  $$                    
+$$ j\Delta A = \dfrac{E \Delta l}{\rho \dfrac{\Delta l}{\Delta A}} $$                    
 $$ j = \dfrac{E}{\rho} = \sigma E $$
 
 由上式可以得到 $ \overrightarrow{j} = \dfrac{E}{\rho} = \sigma \overrightarrow{E} $
@@ -1021,6 +1024,46 @@ $$ j = \dfrac{E}{\rho} = \sigma E $$
 $$ i = \iint \overrightarrow{j} \cdot d\overrightarrow{A} $$
 $$ \Delta V = \iint \overrightarrow{E} \cdot d\overrightarrow{l}       $$
 $$ R = \int \rho \dfrac{dl}{A} $$
+
+### 欧姆定律的微观解释
+
+![](./assets/欧姆定律的微观解释.png){ align=right width=30% }
+
+电流实际上就是定向移动的电荷
+
+- 当外界电场为零时，到体内的电荷做无规则的热运动，因此电流为零。
+- 当外界电场不为零时，电场会使电荷受力，电荷会在电场中做漂移运动，从而产生电流。
+
+电荷在导体中运动时会与其他电荷发生碰撞或相互干涉，因此在这里有几个重要的概念值得强调：
+
+- 平均自由程（mean free path）：$\lambda$，电荷在导体中相互碰撞前移动的平均距离
+- 平均自由时间（mean free time）：$\tau$，电荷在导体中相互碰撞前移动的平均时间
+- 平均热运动速度（mean thermal speed）：$v_{t}$
+- 平均漂移速度（mean drift speed）：$u$
+
+首先考虑牛顿定律
+
+$$\begin{aligned}
+\overrightarrow{a} &= -\dfrac{e}{m} \overrightarrow{E} \\\\
+\overrightarrow{u_1} &= \overrightarrow{a}\tau = -\dfrac{e}{m} \overrightarrow{E} \tau \\\\
+\overrightarrow{u} &=\dfrac{\overrightarrow{u_0} + \overrightarrow{u_1}}{2} = -\dfrac{e}{2m} \overrightarrow{E} \tau = -\dfrac{e}{2m} \dfrac{\lambda}{v_{t}} \overrightarrow{E}
+\end{aligned}$$
+
+我们又有电流密度的定义，即单位时间内通过某个截面的电荷量，不妨设单位体积里有 $n$ 个电子（电子密度）
+
+$$\begin{aligned}
+\Delta q &= neu \Delta t \cdot \Delta A \\\\
+\Delta i &= \dfrac{\Delta q}{\Delta t} = neu \Delta A \\\\
+j &= \dfrac{\Delta i}{\Delta A} &= neu
+\end{aligned}$$
+
+那么我们最终就可以得到电流密度矢量的表达式
+
+$$\begin{aligned}
+\sigma &= \dfrac{ne^2}{2m} \dfrac{\lambda}{v_t} \\\\
+\overrightarrow{j} &= -ne\overrightarrow{u} = \dfrac{ne^2}{2m} \dfrac{\lambda}{v_t} \overrightarrow{E} \\\\
+&= \sigma \overrightarrow{E}
+\end{aligned}$$
 
 ---
 
@@ -1042,7 +1085,8 @@ $$ R = \int \rho \dfrac{dl}{A} $$
 ### 安培定律（Ampere's Law）
 
 根据库仑定律，我们知道两个点电荷之间的相互作用力是由它们之间的电场产生的
-$$ d\overrightarrow{F}_{12} = \dfrac{dq_1 \cdot dq_2}{4\pi \epsilon_0 r_{12}^2} \hat{r}_{12} $$
+
+$$ d\overrightarrow{F}_{12} = \dfrac{dq_1 \cdot dq_2}{4\pi \epsilon_0 r_{1 2}^2} \hat{r}_{12} $$
 
 ![](./assets/安培定律.png){ align=right width=30% }
 
@@ -1051,33 +1095,42 @@ $$ dF_{12} = k \dfrac{i_1 i_2 ds_1 \sin\theta_1 ds_2 \sin\theta_2}{r_{12}^2} $$
 其中 $k$ 是一个比例系数
 
 假如我们再将电流元本身的方向以及它们之间的位移矢量也考虑进来，就得到
-$$ d\overrightarrow{F}_{12} = k \dfrac{i_2 d\overrightarrow{s}_2 \times (i_1 d\overrightarrow{s}_1 \times \hat{r}_{12})}{r_{12}^2} $$
+
+$$ d\overrightarrow{F}_{12} = k \dfrac{i_2 d\overrightarrow{s}_2 \times (i_1 d\overrightarrow{s}_1 \times \hat{r} _ {12})}{r_{12}^2} $$
 
 - 其中 $k = \dfrac{\mu_0}{4\pi} = 10^{-7} \text{N/A}^2$ 称为磁场常数（magnetic constant）
 - $\mu_0$ 称为真空磁导率或磁导率（permeability constant），$\mu_0 = 4\pi \times 10^{-7} \text{N/A}^2$
 
-!!! example "两道例题"
+??? example "两道例题"
     === "平行同向的电流"
         ![](./assets/平行同向电流.png){ align=right width=30% }
         对于两个平行且同向的电流，电流元 $i_1 ds_1$ 对 $i_2 ds_2$ 的作用力为
-        $$ d\overrightarrow{F}_{12} = \dfrac{\mu_0}{4\pi} \dfrac{i_2 d\overrightarrow{s}_2 \times (i_1 d\overrightarrow{s}_1 \times \hat{r}_{12})}{r_{12}^2} $$
+
+        $$ d\overrightarrow{F_{12}} = \dfrac{\mu_0}{4\pi} \dfrac{i_2 d\overrightarrow{s}_2 \times (i_1 d\overrightarrow{s}_1 \times \hat{r}_{12})}{r_{12}^2} $$
+
         又因为 $ ds_1 \perp \hat{r}_{12} $，因此
+
         $$ dF_{12} = \dfrac{\mu_0}{4\pi} \dfrac{i_1 i_2 ds_1 ds_2}{r_{12}^2} $$
 
         类似地，电流元 $i_2 ds_2$ 对 $i_1 ds_1$ 的作用力为
         $$ dF_{21} = \dfrac{\mu_0}{4\pi} \dfrac{i_1 i_2 ds_1 ds_2}{r_{21}^2} $$
 
-        因此我们得到 $ dF_{12} = dF_{21} $，即两个电流的相互作用力大小是相同的
+        因此我们得到 $ dF_{12} = dF_{21} $，即两个电流的相互作用力大小是相同的，事实上我们也可以发现两个同向的电流会相互吸引
 
     === "相互垂直的电流"
         ![](./assets/垂直电流.png){ align=right width=30% }
         对于两段相互垂直的电流，
+
         $$ d\overrightarrow{F}_{12} = \dfrac{\mu_0}{4\pi} \dfrac{i_2 d\overrightarrow{s}_2 \times (i_1 d\overrightarrow{s}_1 \times \hat{r}_{12})}{r_{12}^2} $$
+
         又因为 $ ds_1 \parallel \hat{r}_{12} $，因此
+
         $$ dF_{12} = 0 $$
 
         $$ d\overrightarrow{F}_{21} = \dfrac{\mu_0}{4\pi} \dfrac{i_1 d\overrightarrow{s}_1 \times (i_2 d\overrightarrow{s}_2 \times \hat{r}_{21})}{r_{21}^2} $$
+
         但是这里需要注意的是，$ ds_2 \perp \hat{r}_{21} $，因此
+
         $$ dF_{21} = \dfrac{\mu_0}{4\pi} \dfrac{i_1 i_2 ds_1 ds_2}{r_{21}^2} $$
 
         这里我们就得到一个反直觉的结论，$ dF_{12} \neq dF_{21} $，这是需要多加注意的
@@ -1085,12 +1138,15 @@ $$ d\overrightarrow{F}_{12} = k \dfrac{i_2 d\overrightarrow{s}_2 \times (i_1 d\o
 ### 磁感应强度 $\overrightarrow{B}$
 
 在上面我们反复使用了下面的公式
+
 $$ d\overrightarrow{F}_{12} = \dfrac{\mu_0}{4\pi} \dfrac{i_2 d\overrightarrow{s}_2 \times (i_1 d\overrightarrow{s}_2 \times \hat{r}_{12})}{r_{12}^2} $$
 
 这是对于电流元的作用力，而对于整个环流电路的作用力，我们可以将其积分得到
+
 $$ d\overrightarrow{F}_2 = i_2 d\overrightarrow{s}_2 \times \dfrac{\mu_0}{4\pi} \oint_{L1} \dfrac{i_1 d\overrightarrow{s}_1 \times \hat{r}_{12}}{r_{12}^2} $$
 
 因此我们可以对上式叉乘符号的右侧进行定义：
+
 $$ \overrightarrow{B}_1 = \dfrac{\mu_0}{4\pi} \oint_{L1} \dfrac{i_1 d\overrightarrow{s}_1 \times \hat{r}_{12}}{r_{12}^2} $$
 
 于是我们就得到
@@ -1101,42 +1157,140 @@ $$ d\overrightarrow{F}_2 = i_2 d\overrightarrow{s}_2 \times \overrightarrow{B}_1
 $ \overrightarrow{B}_1 $ 是由环路电流 $i_1$ 在电流元 $i_2 d\overrightarrow{s}_2$ 处产生的磁感应强度、
 
 - 对于 $\overrightarrow{B}_1$ 的大小，我们定义为 $F_2$ 变化最快的方向中 $F_2$ 与 $i_2 ds_2$ 的比值
+
 $$ B_1 = \dfrac{(F_2)_{max}}{i_2 ds_2} $$  
 
 - $\overrightarrow{B}_1$ 的方向由 $i_1 ds_1$ 与 $\hat{r}_{12}$ 的叉乘方向决定
+
 $$ \overrightarrow{B}_1 = \dfrac{\mu_0}{4\pi} \oint_{L1} \dfrac{i_1 d\overrightarrow{s}_1 \times \hat{r}_{12}}{r_{12}^2} $$
 
+### 环路电流的磁场
 
+#### Biot-Savart Law (毕奥-萨阀尔定理)
 
+![](./assets/右手定则.png){ align=right width=30% }
 
+$$ \overrightarrow{B} = \dfrac{\mu_0}{4\pi} \oint_L \dfrac{i d\overrightarrow{s} \times \hat{r}}{r^2} $$
 
+这个定理描述的是一个直电流产生的磁场方向，实际上就是中学阶段我们已经学到了的右手定则（right hand rule）
 
+#### 长的直线电流
 
+![](./assets/长直线电流.png){ align=right width=30% }
 
+根据 $ d\overrightarrow{B} = \dfrac{\mu_0}{4\pi} \dfrac{i d\overrightarrow{s} \times \hat{r}}{r^2} $，我们知道 $ d\overrightarrow{B} = \dfrac{\mu_0}{4\pi} \dfrac{i dx \sin\theta}{r^2} $
 
+这里我们关注的是直线电流旁点 $P$ 处的磁场强度，直接进行积分
+$$ B = \int_{A_1}^{A_2} dB = \dfrac{\mu_0}{4\pi} \int_{A_1}^{A_2} \dfrac{i \sin\theta dx}{r^2} $$
+其中 $r = \dfrac{r_0}{\sin\theta}$ ， $x = -r_0 \cot\theta$， $dx = \dfrac{r_0 d\theta}{\sin^2 \theta}$
 
+于是最终就有
 
+$$\begin{aligned}
+B &= \int_{\theta_1}^{\theta_2} \dfrac{\mu_0}{4\pi} \dfrac{\sin\theta \cdot \dfrac{r_0 d\theta}{\sin^2 \theta} }{r^2_0 / \sin^2 \theta} \\\\
+&= \dfrac{\mu_0 i}{4\pi r_0} \int_{\theta_1}^{\theta_2} \sin\theta d\theta \\\\
+&= \dfrac{\mu_0 i}{4\pi r_0} (\cos\theta_1 - \cos\theta_2)
+\end{aligned}$$
 
+对于无限长的带电线，有一定夹角
 
+- $\theta_1 = 0$ ， $\cos\theta_1 = 1$
+- $\theta_2 = \pi$ ， $\cos\theta_2 = -1$  
 
+于是
+$$ B = \dfrac{\mu_0 i}{4\pi r_0} (\cos\theta_1 - \cos\theta_2) = \dfrac{\mu_0 i}{2\pi r_0} $$ 
 
+当 $ r_0 << L $ 时，就可以使用上面的结论
 
+#### 环流电路的磁场
 
+![](./assets/环流电路的磁场.png){ align=right width=30% }
 
+考虑在环流电路中轴线上的一点 $A$，显然，我们有 $ \left| d\overrightarrow{B} \right| = \left| d\overrightarrow{B}' \right| $
 
+并且根据 $ d\overrightarrow{B} = \dfrac{\mu_0}{4\pi} \dfrac{i d\overrightarrow{s} \times \hat{r}}{r^2} $ ， $ dB = \dfrac{\mu_0}{4\pi} \dfrac{i ds}{r^2} \sin\theta $ 和 $ dB_x = dB \cdot \cos\alpha $，其中 $\alpha$ 是直径与连线的夹角。
 
+又因为此时电流元方向始终和电流元与点 $A$ 的连线方向垂直，因此 $\theta = \dfrac{\pi}{2}$，同时我们还有 $r = r_0 / \sin\alpha$，于是 
 
+$$\begin{aligned}
+B_x &= \oint B_x = \oint dB \cos\alpha \\\\
+&= \dfrac{\mu_0 i}{4\pi} \oint \dfrac{ds}{r^2} \cos\alpha \\\\
+&= \dfrac{\mu_0 i}{4\pi} \oint \dfrac{\sin^2 \alpha}{r_0^2} \cos\alpha ds \\\\
+&= \dfrac{\mu_0 i}{4\pi r_0^2} \sin^2 \alpha \cos\alpha \cdot 2\pi R \\\\
+\end{aligned}$$
 
+最后我们把带有 $\alpha$ 的项消掉 
 
+$\sin \alpha = \dfrac{r_0}{\sqrt{r_0^2 + R^2}}  $ ， $ \cos\alpha = \dfrac{R}{\sqrt{r_0^2 + R^2}}$   
 
+就得到
 
+$ B = \dfrac{\mu_0}{2} \dfrac{iR^2}{(R^2 + r_0^2)^{3/2}} $
 
+!!! tip
+    实际上分母就是电流元与点 $A$ 的距离的三次方，在记忆时不必死记硬背
 
+- 在环流电路的中心时，$r_0 = 0$，$B = \dfrac{\mu_0 i}{2R}$
+- 当 $r_0 >> R$ 时，$B = \dfrac{\mu_0 i R^2}{2r_0^3}$
+- 同样的，环流电路产生的磁感应强度方向由右手定则决定
 
+!!! note "磁偶极矩"
+    对环流电路产生的的磁感应强度可以做一些形式上的变换
+    $$ B = \dfrac{\mu_0 i R^2}{2r_0^3} = \dfrac{\mu_0 i \pi R^2}{2\pi r_0^3} = \dfrac{\mu_0 i A}{2\pi r_0^3} $$
 
+    于是我们就可以定义磁偶极矩为电流大小与环流电路包裹住的圆形截面面积：
+    $$ \mu = iA = i\pi R^2 $$
+    $$ B = \dfrac{\mu_0 i R^2}{2r_0^3} = \dfrac{\mu_0}{2\pi} \dfrac{\mu}{r_0^3} $$
 
+    ![](./assets/多匝线圈的磁偶极矩.png){ align=right width=15% }
 
+    对于多匝的线圈，磁偶极矩可以定义为
+    $$ \mu = iA = Ni\pi R^2 $$
+    事实上，有
+    $$ \overrightarrow{\mu} = i\overrightarrow{A} $$
 
+#### 螺线管（solenoid）产生的磁场
 
+![](./assets/螺线管.png){ align=right width=28% }
 
+在实际实验中，我们通常使用螺线管来产生恒定不变的磁场。
 
+一根螺线管是一条在半径为 $R$，长度为 $L$ 的圆柱体上缠绕的电线，其中每单位长度绕 $n$ 匝，通过的电流大小为 $i$.
+
+当 $R<<L$ 时，螺线管内部的磁场就可以认为是大小恒定不变的，且方向沿着圆柱的轴线方向。我们可以使用安培定律来求出这个磁场的大小。
+
+![](./assets/螺线管内部的磁场大小.png){ width=75% }
+
+如上图所示，螺线管长度为 $L$，半径为 $R$，每单位长度绕 $n$ 匝线圈，点 $P$ 与螺线管中心的距离为 $x$。
+
+首先我们由环流电路的磁场公式，得到
+
+$$ dB = \dfrac{\mu_0}{2} \dfrac{R^2 in dl}{[ R^2 + (x-l)^2 ]^{3/2}} $$
+
+$$ B = \dfrac{\mu_0}{2} \int_{-L/2}^{L/2} \dfrac{R^2 in dl}{[ R^2 + (x-l)^2 ]^{3/2}}  $$
+
+同时我们还有
+
+$ r = \sqrt{R^2 + (x-l)} = \dfrac{R}{\sin\beta} $
+
+$ \dfrac{x-l}{R} = \cot\beta \Rightarrow dl = \dfrac{R}{\sin^2\beta} d \beta $
+
+于是代入进去我们就得到
+
+$$\begin{aligned}
+B &= \dfrac{\mu_0}{2} \int_{\beta_1}^{\beta_2} \dfrac{R^2 ni \dfrac{R}{\sin^2 \beta} d \beta }{\left( \dfrac{R^2}{\sin^2 \beta} \right)^{3/2}} \\\\
+&= \dfrac{\mu_0}{2} \cdot ni \int_{\beta_1}^{\beta_2} \sin\beta d\beta \\\\
+&= \dfrac{1}{2} \mu_0 ni (\cos\beta_1 - \cos\beta_2)
+\end{aligned}$$
+
+最后还有
+
+$\cos\beta_1 = \dfrac{x+L/2}{\sqrt{R^2 + (x+L/2)^2}}       $ ， $\cos\beta_2 = \dfrac{x-L/2}{\sqrt{R^2 + (x-L/2)^2}} $
+
+- 当螺线管是无限长（$L \to \infty$）时，$\beta_1 = 0, \beta_2 = \pi$
+
+    $ B = \dfrac{1}{2} \mu_0 ni(1+1) = \mu_0 ni $
+
+- 在螺线管的端头时，$\beta_1 = 0, \beta_2 = \dfrac{\pi}{2}$
+
+    $ B = \dfrac{1}{2} \mu_0 ni(1-0) = \dfrac{1}{2} \mu_0 ni $
