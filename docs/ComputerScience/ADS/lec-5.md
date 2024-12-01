@@ -8,7 +8,7 @@
 
 ## 二项堆的定义与性质
 
-对于一般的二叉堆，我们知道其插入和删除操作的时间复杂度为 $O(\log n)$，而从空堆开始，构造一个含有 $n$ 个元素的二叉堆的时间复杂度可以做到 $O(n)$（要注意此时并不是直接从零开始插入 $n$ 个元素）。
+对于一般的二叉堆，我们知道其插入和删除操作的时间复杂度为 $O(\log n)$，而从空堆开始，构造一个含有 $n$ 个元素的二叉堆的时间复杂度可以做到 $O(n)$（要注意此时并不是直接从零开始插入 $n$ 个元素，可以回顾FDS的内容）。
 
 很遗憾的是先前讨论的左倾堆与斜堆虽然保证了 merge 的时间复杂度是 $O(\log n)$，却不能在 $O(n)$ 时间内实现 $n$ 个结点的插入建堆操作，二项堆的思想就源自于此。
 
@@ -40,7 +40,7 @@
 
 从上面的证明我们可以很自然地看出二项堆与二项树这个名字的由来。
 
-我们也可以把二项堆与二进制表示结合起来。例如含有 $13 = 1101$ 个结点的二项堆由三棵二项树 $B_3, B_2, B_0$ 组成，二进制表示中`1`的个数就是这个二项堆中二项树的棵数。
+我们也可以把二项堆与二进制表示结合起来。例如含有 $13 = 1101_2$ 个结点的二项堆由三棵二项树 $B_3, B_2, B_0$ 组成，二进制表示中`1`的个数就是这个二项堆中二项树的棵数。
 
 ---
 
@@ -56,9 +56,12 @@
 
 插入是合并的一种特殊情况，只需将新插入的结点视作一个单节点的二项堆，因此我们只需要分析合并即可。
 
-二项堆的合并可以与二进制数表示相结合，例如一个有 $B_3, B_2, B_0$ 的二项堆与有 $B_3, B_1, B_0$ 的二项堆合并，我们只需要类比二进制加法 $1101 + 1011 = 11000$，就可以很自然的发现最终得到的二项堆是 $B_4, B_3$。
+二项堆的合并可以与二进制数表示相结合，例如一个有 $B_3, B_2, B_0$ 的二项堆与有 $B_3, B_1, B_0$ 的二项堆合并，我们只需要类比二进制加法 $1101_2 + 1011_2 = 11000_2$，就可以很自然的发现最终得到的二项堆是 $B_4, B_3$。
 
 时间复杂度的分析也很简单，**在保证堆的存储顺序是按高度从小到大排列的前提下**，时间复杂度为 $O(\log n)$
+
+!!! note
+    进行插入操作时，如果不存在的二项树中最小的是 $B_i$，那么我们至多需要进行 $i+1$ 次将两棵树合并的操作（类比于二进制加法的进位就可以很容易看出）。
 
 ### DeleteMin
 
@@ -96,15 +99,15 @@
     === "势能法"
         同样考虑二进制加法问题，我们发现复杂度很大的操作都对应于很多的复位（1 变 0）和一个置位（0 变 1），因此我们直接设势能函数 $\Phi$ 为二进制表示中 1 的个数（即二项堆中树的个数）。
 
-        假如一次第 $i$ 次操作除了新加入一个结点之外，还有 $k$ 次复位，那么 $c_i = k + 1$，则
+        假设第 $i$ 次操作除了新加入一个结点之外，还有 $k(k \geqslant 0)$ 次复位，那么 $c_i = k + 1$，则
 
         $$\begin{aligned}
-        \hat{c_i} &= c_i + (\Phi_i - \Phi_{i-1})  \\\\
-        &= k + 1 + (1 - k) \\\\ 
+        \hat{c_i} &= c_i + (\Phi_i - \Phi_{i-1})  \\
+        &= k + 1 + (1 - k) \\
         &= 2 
         \end{aligned}$$ 
 
-        因此对于每一步的瘫痪操作都是 $O(1)$ 的。
+        因此对于每一步操作的摊还复杂度都是 $O(1)$ 的。
 
 ---
 
@@ -112,8 +115,7 @@
 
 由于二项堆为了满足从空堆开始构造一个含有 $n$ 个元素的堆的时间复杂度可为 $O(n)$ 的目标，舍弃了二叉堆这个性质，因此不能使用简单的 LeftChild 和 RightChild，我们使用 LeftChild 和 NextSibling 的组合实现，即每个结点的左指针指向自己最大的子树，右指针指向自己的兄弟。
 
-需要注意的是这里根的子树从左到右高度依次减小，并且为了方便索引每棵二项树，我们用一个数组存储每棵二项树的根，其中数组的索引就
-对应二项树的高度。
+需要注意的是这里根的子树从左到右高度依次减小，并且为了方便索引每棵二项树，我们用一个数组存储每棵二项树的根，其中数组的索引就对应二项树的高度。
 
 ![](./assets/二项堆代码实现.png){ width=80% }
 
@@ -144,7 +146,7 @@ struct Collection
 
 我们知道 Insert 和 DeleteMin 的关键操作都是 Merge，而在 merge 中我们常常需要合并两颗大小相同的二项树，因此我们首先讨论 combine 的实现。
 
-在 combine 两棵大小相同的两棵二项树时，结合堆的序性质以及 LeftChild 和 NextSibling 的实现，我们很容易想到其实只需要直接用根结点小的根作为新的根，根结点大的整棵树作为 LeftChild，NextSibling 接上根结点小的树除去根结点的其它部分即可。
+在 combine 两棵大小相同的两棵二项树时，结合堆的序性质以及 LeftChild 和 NextSibling 的实现，我们发现只需要将根结点更小的二项树 $T_1$ 的根作为新二项树的根，根结点大的树 $T_2$ 作为新根的 LeftChild，再将 $T_2$ 的 NextSibling 指针接上原先 $T_1$ 除去根结点的剩余部分即可。
 
 这里的时间复杂度显然是常数的。
 
@@ -152,7 +154,6 @@ struct Collection
 BinTree CombineTrees( BinTree T1, BinTree T2 )
 {  /* merge equal-sized T1 and T2 */
     if ( T1->Element > T2->Element )
-        /* attach the larger one to the smaller one */
         return CombineTrees( T2, T1 );
     /* insert T2 to the front of the children list of T1 */
     T2->NextSibling = T1->LeftChild;
@@ -163,31 +164,40 @@ BinTree CombineTrees( BinTree T1, BinTree T2 )
 
 ### Merge
 
+在下面 Merge 操作的实现中，从小到大依次对二项堆中的树进行合并，`Carry`表示是否有进位，`T1`表示来自二项堆`H1`的树，`T2`表示来自二项堆`H2`的树。
+
 ```C
 BinQueue  Merge( BinQueue H1, BinQueue H2 )
 {	BinTree T1, T2, Carry = NULL; 	
     int i, j;
-    if ( H1->CurrentSize + H2-> CurrentSize > Capacity )  ErrorMessage();
-    H1->CurrentSize += H2-> CurrentSize;
+    if ( H1->CurrentSize + H2->CurrentSize > Capacity )  
+        ErrorMessage();
+    H1->CurrentSize += H2->CurrentSize;
     for ( i=0, j=1; j<= H1->CurrentSize; i++, j*=2 ) {
         T1 = H1->TheTrees[i]; T2 = H2->TheTrees[i]; /*current trees */
         switch( 4*!!Carry + 2*!!T2 + !!T1 ) { 
         case 0: /* 000 */
         case 1: /* 001 */   break;	
         case 2: /* 010 */   H1->TheTrees[i] = T2; 
-                            H2->TheTrees[i] = NULL; break;
-        case 4: /* 100 */   H1->TheTrees[i] = Carry; Carry = NULL; break;
+                            H2->TheTrees[i] = NULL; 
+                            break;
+        case 4: /* 100 */   H1->TheTrees[i] = Carry; Carry = NULL; 
+                            break;
         case 3: /* 011 */   Carry = CombineTrees( T1, T2 );
-                            H1->TheTrees[i] = H2->TheTrees[i] = NULL; break;
+                            H1->TheTrees[i] = H2->TheTrees[i] = NULL; 
+                            break;
         case 5: /* 101 */   Carry = CombineTrees( T1, Carry );
-                            H1->TheTrees[i] = NULL; break;
+                            H1->TheTrees[i] = NULL;
+                            break;
         case 6: /* 110 */   Carry = CombineTrees( T2, Carry );
-                            H2->TheTrees[i] = NULL; break;
+                            H2->TheTrees[i] = NULL;
+                            break;
         case 7: /* 111 */   H1->TheTrees[i] = Carry; 
                             Carry = CombineTrees( T1, T2 ); 
-                            H2->TheTrees[i] = NULL; break;
-        } /* end switch */
-    } /* end for-loop */
+                            H2->TheTrees[i] = NULL;
+                            break;
+        }
+    }
     return H1;
 }
 ```
@@ -210,28 +220,43 @@ BinQueue  Merge( BinQueue H1, BinQueue H2 )
 ElementType  DeleteMin( BinQueue H )
 {	BinQueue DeletedQueue; 
     Position DeletedTree, OldRoot;
-    ElementType MinItem = Infinity;  /* the minimum item to be returned */	
+    ElementType MinItem = Infinity;
     int i, j, MinTree; /* MinTree is the index of the tree with the minimum item */
 
-    if ( IsEmpty(H) ) { PrintErrorMessage();  return –Infinity; }
-
-    for ( i = 0; i < MaxTrees; i++) {  /* Step 1: find the minimum item */
+    if ( IsEmpty(H) ) {
+        PrintErrorMessage();
+        return –Infinity;
+    }
+    
+    /* Step 1: find the minimum item */
+    for ( i = 0; i < MaxTrees; i++) {  
         if( H->TheTrees[i] && H->TheTrees[i]->Element < MinItem ) { 
-        MinItem = H->TheTrees[i]->Element;  MinTree = i;    } /* end if */
-    } /* end for-i-loop */
-    DeletedTree = H->TheTrees[ MinTree ];  
-    H->TheTrees[ MinTree ] = NULL;   /* Step 2: remove the MinTree from H => H' */ 
-    OldRoot = DeletedTree;   /* Step 3.1: remove the root */ 
-    DeletedTree = DeletedTree->LeftChild;   free(OldRoot);
-    DeletedQueue = Initialize();   /* Step 3.2: create H" */ 
+            MinItem = H->TheTrees[i]->Element;
+            MinTree = i;
+        }
+    }
+    DeletedTree = H->TheTrees[MinTree];
+
+    /* Step 2: remove the MinTree from H => H' */ 
+    H->TheTrees[MinTree] = NULL; 
+
+    /* Step 3.1: remove the root */ 
+    OldRoot = DeletedTree;   
+    DeletedTree = DeletedTree->LeftChild;
+    free(OldRoot);
+
+    /* Step 3.2: create H" */ 
+    DeletedQueue = Initialize();
     DeletedQueue->CurrentSize = ( 1<<MinTree ) - 1;  /* 2^MinTree - 1 */
-    for ( j = MinTree - 1; j >= 0; j-- ) {  
+    for ( j = MinTree - 1; j >= 0; j-- ) {
         DeletedQueue->TheTrees[j] = DeletedTree;
         DeletedTree = DeletedTree->NextSibling;
         DeletedQueue->TheTrees[j]->NextSibling = NULL;
-    } /* end for-j-loop */
-    H->CurrentSize  -= DeletedQueue->CurrentSize + 1;
-    H = Merge( H, DeletedQueue ); /* Step 4: merge H' and H" */ 
+    }
+    H->CurrentSize -= DeletedQueue->CurrentSize + 1;
+
+    /* Step 4: merge H' and H" */ 
+    H = Merge( H, DeletedQueue ); 
     return MinItem;
 }
 ```

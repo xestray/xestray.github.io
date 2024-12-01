@@ -18,4 +18,14 @@ $$ \oint \vec{B}·d\vec{l} = \mu_0 I + \mu_0 \epsilon_0 \frac{d\Phi_E}{dt} $$
 
 ## Table of Contents
 
-- [第一章 电磁场的基本概念](./electromagnetic.md)
+- [电学](./electrostatics.md)
+- [磁学](./magnetostatics.md)
+- [电动力学](./electrodynamics.md)
+- [麦克斯韦方程组与电磁波](./maxwell.md)
+
+
+
+
+
+
+> 向普通物理学，投降！:fontawesome-regular-flag:

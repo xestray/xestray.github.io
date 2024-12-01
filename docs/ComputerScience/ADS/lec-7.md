@@ -53,8 +53,8 @@ $$ T(n) = aT(n/b) + f(n) $$
     $$ T(n) = \begin{cases} 8T(n/2) + 1 & n^2 > M \\\\
             M & otherwise \end{cases} $$
 
-    我们可以画出递归树，发现有 $ \log_2 n/\sqrt{M} $，每层需要 1 个单位时间，并且有 $ 8^{\log_2 n/\sqrt{M}}$ 个叶结点，每个叶结点需要 $M$ 的时间，因此总时间复杂度为
-    $$ O(M \cdot 8^{\log_2 n/\sqrt{M}} + \log_2 n/\sqrt{M}) = O(n^3/\sqrt{M}) $$
+    我们可以画出递归树，发现有 $ \log_2 (n/\sqrt{M}) $ 层，每层合并需要 1 个单位时间，并且有 $ 8^{\log_2 (n/\sqrt{M})}$ 个叶结点，每个叶结点需要 $M$ 的时间，因此总时间复杂度为
+    $$ O(M \cdot 8^{\log_2 (n/\sqrt{M})          } + \log_2 (n/\sqrt{M})) = O(n^3/\sqrt{M}) $$
 
 ### 主定理
 
@@ -84,7 +84,7 @@ $$ T(n) = aT(n/b) + f(n) $$
     2. 若 $a f(n/b) = f(n)$，则 $T(n) = \Theta(n^{\log_b a} \log n)$
     3. 若对于某个常数 $c<1$ 有 $a f(n/b) = c f(n)$，则 $T(n) = \Theta(f(n))$
 
-不难看出这里是上一形式主定理的推论，例如第一种情况 $a f(n/b) = c f(n)$ 表明 $f(n) = \dfrac{a}{c} f(n/b) $$，故可以递推得到
+不难看出这里是上一形式主定理的推论，例如第一种情况 $a f(n/b) = c f(n)$ 表明 $f(n) = \dfrac{a}{c} f(n/b) $，故可以递推得到
 $$ f(n) = \dfrac{a^{\log_b n}}{c^{\log_b n}} = \dfrac{n^{\log_b a}}{n^{\log_b c}} = O(n^{\log_b a - \epsilon}) $$
 正好对应于原始形式的第一种情况，第二、三种情况也是同样的推导
 
@@ -122,9 +122,9 @@ $$ f(n) = \dfrac{a^{\log_b n}}{c^{\log_b n}} = \dfrac{n^{\log_b a}}{n^{\log_b c}
 
 假定我们要寻找子数组 $A[low,high]$ 的最大子序列和，我们首先找到数组中央位置 mid，分治法很自然地将这个问题的解 $A[i,j]$ 变为以下三种情况之一：
 
-1. 最大子序列和完全在 $A[low,high]$ 中，即 $low \leqslant i \leqslant j \leqslant mid$；
+1. 最大子序列和完全在 $A[low,mid]$ 中，即 $low \leqslant i \leqslant j \leqslant mid$；
 2. 最大子序列和完全在 $A[mid+1,high]$ 中，即 $mid+1 \leqslant i \leqslant j \leqslant high$；
-3. 最大子序列和跨越 mid 两边，即 $low \leqslant i \leqslant mid < j \leqslant high$。
+3. 最大子序列和跨越 $mid$ 两边，即 $low \leqslant i \leqslant mid < j \leqslant high$。
 
 所以我们的想法就是：
 

@@ -13,9 +13,11 @@
 回溯法的核心思想就是在尝试解决问题的过程中，当发现在进行了一系列操作 $(a_1, a_2, \cdots, a_n)$ 后，尝试进行下一步操作 $a_{n+1}$ 时，
 
 - 假如发现操作序列 $(a_1, a_2, \cdots, a_n, a_{n+1})$ 仍然满足所有的约束条件那么就继续尝试下一步操作 $a_{n+2}$
-- 否则，如果发现无论怎么操作，题目的某种约束条件已经不再被满足了，或是已经发现无法再进行下去了，就撤销操作 $a_n$，回到 $(a_1, a_2, \cdots, a_{n-1})$ 的状态，尝试其他的操作 $a_n'$ 
+- 否则，如果发现无论 $a_{n+1}$ 怎么选择，题目的某种约束条件都无法被满足，或是发现之后的操作已经无法再进行下去了，就撤销操作 $a_n$，回到 $(a_1, a_2, \cdots, a_{n-1})$ 的状态，尝试其他的操作 $a_n'$ 
 
-这样一来，我们就可以通过不断的尝试和回溯来找到所有的解，同时排除掉了许多不可能的情况（当这种不可能的结果在操作到一半时就已经发现不可能满足条件了，就不需要再继续下去了），从而提高了搜索的效率。简单来说回溯法就是不断地尝试，假如发现不行就撤销操作，尝试其他的方法。
+这样一来，我们就可以通过不断的尝试和回溯来找到所有的解，同时排除掉了许多不可能的情况（当一种不可能成功的操作序列在进行到一半时，就已经发现后续不可能满足约束条件了，后续的操作就不需要再进行下去了），从而提高了搜索的效率。
+
+简单来说回溯法就是不断地尝试，假如发现不行就撤销操作，尝试其他的方法。
 
 ---
 
@@ -50,8 +52,7 @@ $k$ 皇后问题是八皇后问题的一般化，即在一个 $k \times k$ 的�
                 run(row + 1)
                 solution[row] = -1
 
-    n = input("Enter the number of queens: ")
-    n = int(n)
+    n = int(input("Enter the number of queens: "))
     solves = []
     solution = [-1] * n
     run()
@@ -89,38 +90,38 @@ $k$ 皇后问题是八皇后问题的一般化，即在一个 $k \times k$ 的�
         if ( Is_Empty( D ) )
             return true;                        /* solved */
         D_max = Find_Max( D );
-        /* option 1：X[right] = D_max */
+        /* option 1: X[right] = D_max */
         OK = Check( D_max, N, left, right );    /* pruning */
         if ( OK ) {                             /* add X[right] and update D */
             X[right] = D_max;
-            for ( i=1; i<left; i++ )  
-                Delete( |X[right]-X[i]|, D);
-            for ( i=right+1; i<=N; i++ )  
-                Delete( |X[right]-X[i]|, D);
-            Found = Reconstruct ( X, D, N, left, right-1 );
+            for ( i = 1; i < left; i++ )  
+                Delete( |X[right]-X[i]|, D );
+            for ( i = right+1; i <= N; i++ )  
+                Delete( |X[right]-X[i]|, D );
+            Found = Reconstruct( X, D, N, left, right-1 );
             if ( !Found ) {                     /* if does not work, undo */
-                for ( i=1; i<left; i++ )  
-                    Insert( |X[right]-X[i]|, D);
-                for ( i=right+1; i<=N; i++ )  
-                    Insert( |X[right]-X[i]|, D);
+                for ( i = 1; i < left; i++ )  
+                    Insert( |X[right]-X[i]|, D );
+                for ( i = right+1; i <= N; i++ )  
+                    Insert( |X[right]-X[i]|, D );
             }
         }
 
         if ( !Found ) {
-            /* option 2: X[left] = X[N]-D_max */
+            /* option 2: X[left] = X[N] - D_max */
             OK = Check( X[N]-D_max, N, left, right );
             if ( OK ) {
-                X[left] = X[N] – D_max;
-                for ( i=1; i<left; i++ )  
-                    Delete( |X[left]-X[i]|, D);
-                for ( i=right+1; i<=N; i++ )  
-                    Delete( |X[left]-X[i]|, D);
+                X[left] = X[N] - D_max;
+                for ( i = 1; i < left; i++ )  
+                    Delete( |X[left]-X[i]|, D );
+                for ( i = right+1; i <= N; i++ )  
+                    Delete( |X[left]-X[i]|, D );
                 Found = Reconstruct (X, D, N, left+1, right );
                 if ( !Found ) {
-                    for ( i=1; i<left; i++ ) 
-                        Insert( |X[left]-X[i]|, D);
-                    for ( i=right+1; i<=N; i++ ) 
-                        Insert( |X[left]-X[i]|, D);
+                    for ( i = 1; i < left; i++ ) 
+                        Insert( |X[left]-X[i]|, D );
+                    for ( i = right+1; i <= N; i++ ) 
+                        Insert( |X[left]-X[i]|, D );
                 }
             }
         }
@@ -161,7 +162,7 @@ bool Backtracking ( int i )
 
 1. 参与人：在 Tic-tac-toe 中就是两个玩家，计算机与人类
 2. 策略：在 Tic-tac-toe 博弈中就是每个玩家在看到当前的棋局情况做出的行动决策
-3. 效用函数：。在一般博弈中，理性人追求的是自己的效用最大化，在PPT中，我们将赢的可能用自己与对手的 “number of potential wins at position P” 之差来表达，也就是说在当前的局势下还有多少种可能的赢法。
+3. 效用函数：在一般博弈中，理性人追求的是自己的效用最大化，在PPT中，我们将效用函数用自己与对手的 “number of potential wins at position P” 之差来表达，也就是说在当前的局势下还有多少种可能的赢法。
 
 ![井字棋博弈](./assets/井字棋博弈.png){ width=80% }
 
@@ -177,8 +178,8 @@ bool Backtracking ( int i )
 
 - 所谓 $\alpha$ 剪枝就是我要使得效用函数最大化，那么我就要从可选的操作中选择效用的下限最大的一种（因为对手一定会在下一步操作中把效用变得最小），那么在寻找效用下限最大的操作的过程中，就会发现有一些操作的下限比已知的其他操作要低，那么这些操作的后续步骤实际上就不需要遍历了，这就是所谓的“剪枝”。
 
-    如右图所示，我已经知道如果选左侧路径至少能得到 44 的效用，但如果我选择右侧路径，我们发现有一个叶结点我只能得到 40 的效用，由于对手一定会最小化效用，那么无论右边这条路的效用下限就不会高于 40，这个下限已经低于左侧路径了，因此无论右侧路径的右下方叶结点是多少，我都不需要再进行搜索了，这个结点就被 $\alpha$ 剪枝剪掉了，在图中用染黑表示。
+    如右图所示，我已经知道如果选左侧路径至少能得到 44 的效用，但如果我选择右侧路径，我们发现有一个叶结点我只能得到 40 的效用，由于对手一定会最小化效用，那么无论右侧路径剩余的叶结点是多少，右侧路径的效用下限也不会高于 40，这个下限已经低于左侧路径了，因此无论右侧路径的右下方叶结点是多少，我都不需要再进行搜索了，因为我一定会选择左侧路径，这个结点就被 $\alpha$ 剪枝（pruning）剪掉了，在图中用染黑表示。
 
 ![](./assets/贝塔剪枝.png){ align=right width=27% }
 
-- $\beta$ 剪枝也是类似的情况，只不过我此时的目标是最小化效用函数，因此要寻找效用上限最低的操作。右图中我已知左侧的路径效用至多为 44，右侧路径的左下角叶结点效用为 68，那么右侧路径的效用上限不会低于 68，此时已经高于了 44，那么就不需要搜索右侧路径其他的叶结点了，直接 $\beta$ 剪枝剪掉即可。
+- $\beta$ 剪枝也是类似的情况，只不过我此时的目标是最小化效用函数，因此要寻找效用上限最低的操作。右图中我已知左侧的路径效用至多为 44，右侧路径的左下角叶结点效用为 68，那么右侧路径的效用上限不会低于 68，此时已经高于了 44，那么就不需要搜索右侧路径其他的叶结点了，我一定会选择左侧路径，未探索的结点直接 $\beta$ 剪枝剪掉即可。

@@ -43,3 +43,5 @@
 - [Binomial Queue](./lec-5.md)
 - [Backtracking](./lec-6.md)
 - [Divide and Conquer](./lec-7.md)
+- [Dynamic Programming](./lec-8.md)
+- [Greedy Algorithms](./lec-9.md)

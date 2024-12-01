@@ -94,12 +94,13 @@ $$
 $$
 \begin{aligned}
 Clock\ Cycles &= Instruction\ Count \times Cycles\ per\ Instruction(CPI)\\
-CPU\ Time &= Instruction\ Count \times CPI\times CPI\ Cycle\ Time\\
+CPU\ Time &= Instruction\ Count \times CPI\times Clock\ Cycle\ Time\\
  &= \frac{Instruction\ Count \times CPI}{Clock\ Rate}
 \end{aligned}
 $$
 
-综上，可以得到 $ CPU\ Time = \frac{Instructions}{Program} \times \frac{Clock\ Cycles}{Instruction} \times \frac{Seconds}{Clock Cycle} $
+综上，可以得到 
+$$ CPU\ Time = \frac{Instructions}{Program} \times \frac{Clock\ Cycles}{Instruction} \times \frac{Seconds}{Clock Cycle} $$
 
 ---
 

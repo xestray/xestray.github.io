@@ -175,17 +175,51 @@ $$\begin{aligned}
 
 - （次可列可加性）
 
-$$P(\cup_{n=1}^{\infty}A_n) \leqslant \sum_{n=1}^{\infty}P(A_n)$$
+$$P(\cup_{n=1}^{\infty} A_n) \leqslant \sum_{n=1}^{\infty}P(A_n)$$
 
 ### 概率测度的连续性
 
-给定概率空间 $(\Omega, \mathscr{F}, P)$，若 $A_1, A_2, \cdots$ 是一列单调增加的事件序列，即
-$$A_1 \subset A_2 \subset \cdots$$ 
-记 $A = \cup_{n=1}^{\infty}A_n$，称 $A$ 为事件序列 $A_n$ 的极限事件。从公理化定义可以看出，$A$ 仍然是一个事件。下面定理给出该事件的概率大小
+给定概率空间 $(\Omega, \mathscr{F}, P)$，若 $A_1, A_2, \cdots$ 是一列单调增加的事件序列，即 
+
+$$ A_1 \subset A_2 \subset \cdots \subset A_n \subset \cdots $$ 
+
+记 $A = \bigcup_{n=1}^{\infty} A_n$，称 $A$ 为事件序列 $A_n$ 的极限事件。从公理化定义可以看出，$A$ 仍然是一个事件。下面定理给出该事件的概率大小
 
 !!! info "定理1.1"
-    若 $A_1, A_2, \cdots$ 是一列单调增加的事件序列，则
-    $$P(A) = \lim_{n \rightarrow \infty}P(A_n)$$
+    若 $A_1, A_2, \cdots$ 是一列单调增加的事件序列，具有极限 $A$，则
+
+    $$P(A) = \lim_{n \to \infty}P(A_n)$$
+
+对一列单调增加的事件 $ A_1 \subset A_2 \subset \cdots $，记 $\lim \limits_{n \to \infty} A_n = \bigcup_{n=1}^{\infty} A_n$，则上述定理说明
+$$ P(\lim_{n \to \infty} A_n) = \lim_{n \to \infty} P(A_n) $$
+所以我们说概率具有连续性。
+
+如果 $ A_1 \subset A_2 \subset \cdots $ 是一个单调减少的事件序列，记 $\lim \limits_{n \to \infty} A_n = \bigcap_{n=1}^{\infty} A_n$，那么同样有
+$$  P(\lim_{n \to \infty} A_n) = \lim_{n \to \infty} P(A_n) $$
+为了进行区分，我们将前者称为概率的上连续性，后者称为概率的下连续性。
+
+#### 事件的上极限和下极限
+
+事件是样本点的集合，事件的上极限和下极限就是这个样本点集合的极限。
+
+对于一个事件序列，我们可以更一般地定义它的上极限和下极限
+
+!!! note "事件的上极限和下极限"
+    对于事件序列 $ \{ A_n \}_{n=1}^{\infty} = A_1 ,\enspace A_2,  \cdots $，我们定义
+    
+    $$ \limsup_{n \to \infty} A_n = \bigcap_{n=1}^{\infty} \bigcup_{k=n}^{\infty} A_k $$
+
+    为它的上极限， 
+    $$ \liminf_{n \to \infty} A_n = \bigcup_{n=1}^{\infty} \bigcap_{k=n}^{\infty} A_k $$
+
+    为它的下极限。
+
+    容易验证 $ \liminf \limits_{n \to \infty} A_n \subset \limsup \limits_{n \to \infty} A_n$
+
+    如果 $ \liminf \limits_{n \to \infty} A_n = \limsup \limits_{n \to \infty} A_n$，就称 $A_n$ 的极限存在，并记作 $\lim \limits_{n \to \infty} A_n$
+
+- 事件序列的上极限是事件的**先并后交**，可以认为是所有并集的交
+- 事件序列的下极限是事件的**先交后并**，可以认为是所有交集的并
 
 ## 条件概率与事件的独立性
 
@@ -206,7 +240,7 @@ $$A_1 \subset A_2 \subset \cdots$$
 ### 全概率公式与贝叶斯公式
 
 !!! note "定义1.3"
-    若事件列 $ \{ A_1, A_2 \cdots, A_n \cdots \} $ 满足下列两个条件
+    若事件列 $ \\{ A_1, A_2 \cdots, A_n \cdots \\} $ 满足下列两个条件
 
     1. $A_i, i=1, 2, \cdots $ 两两互不相容，且 $P(A_i) > 0$
     2. $\sum_{i=1}^{\infty}A_i = \Omega$
@@ -222,7 +256,7 @@ $$A_1 \subset A_2 \subset \cdots$$
 - 概率公式的意义在于，它把事件 $B$ 的概率 $P(B)$ 分解为若干个条件概率的乘积之和。
 
 !!! info "贝叶斯公式"
-    设 $ \{ A_1, A_2 \cdots, A_n \cdots \} $ 是 $\Omega$ 的一个完备事件组，$B$ 是任一事件，且 $P(B) > 0$，则
+    设 $ \\{ A_1, A_2 \cdots, A_n \cdots \\} $ 是 $\Omega$ 的一个完备事件组，$B$ 是任一事件，且 $P(B) > 0$，则
     $$ P(A_i|B) = \frac{P(A_i)P(B|A_i)}{\sum_{k=1}^{\infty}P(A_k)P(B|A_k)} $$
 
 - $P(A_i)$ 是没有进一步的信息（不知道 $B$ 是否发生）时，对 $A_i$ 概率的估计，称为**先验概率**
@@ -297,7 +331,7 @@ $$ P(A^{(1)}A^{(2)} \cdots A^{(n)}) = P(A^{(1)})P(A^{(2)}) \cdots P(A^{(n)})$$
 二项分布：$n$ 次伯努利试验中事件 $A$ 恰好发生 $k$ 次的概率为（设 $A$ 的概率为 $p$，$\overline{A}$ 发生的概率为 $q$ ）
 $$ b(k, n, p) = \binom{n}{k} p^k q^{n-k} = \frac{n!}{k!(n-k)!} p^k q^{n-k}, k=0, 1, \cdots, n $$
 
-### 补充与注记
+## 补充与注记
 
 从$n$个不同物件中取$k$个$(1 \leqslant r \leqslant n)$的不同排列总数为
 $$ P^r_n = n(n-1)(n-2) \cdots (n-r+1) $$

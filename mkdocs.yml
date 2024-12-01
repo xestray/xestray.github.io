@@ -16,41 +16,44 @@ nav:
     - 高级数据结构与算法分析: 
       - ComputerScience/ADS/index.md
       - AVL树与Splay树与摊还分析: ComputerScience/ADS/lec-1.md
-      - 红黑树与B+树:             ComputerScience/ADS/lec-2.md
+      - 红黑树与B+树:            ComputerScience/ADS/lec-2.md
       - 倒排文件索引:             ComputerScience/ADS/lec-3.md
       - 左倾堆与斜堆:             ComputerScience/ADS/lec-4.md
-      - 二项堆:                   ComputerScience/ADS/lec-5.md
-      - 回溯法:                   ComputerScience/ADS/lec-6.md
-      - 分治法:                   ComputerScience/ADS/lec-7.md
-      - 动态规划:                 ComputerScience/ADS/lec-8.md
-      - 贪心算法:                 ComputerScience/ADS/lec-9.md
+      - 二项堆:                  ComputerScience/ADS/lec-5.md
+      - 回溯法:                  ComputerScience/ADS/lec-6.md
+      - 分治法:                  ComputerScience/ADS/lec-7.md
+      - 动态规划:                ComputerScience/ADS/lec-8.md
+      - 贪心算法:                ComputerScience/ADS/lec-9.md
     - 计算机组成与设计: 
       - ComputerScience/COD/index.md
-      - 计算机概要与技术: ComputerScience/COD/chap-1.md
-      - 指令：计算机的语言: ComputerScience/COD/chap-2.md
-      - 计算机的算数运算: ComputerScience/COD/chap-3.md
+      - 计算机概要与技术:    ComputerScience/COD/chap-1.md
+      - 指令：计算机的语言:  ComputerScience/COD/chap-2.md
+      - 计算机的算数运算:    ComputerScience/COD/chap-3.md
   - 数理: 
     - 数学分析: MathematicsAndPhysics/MA/MA.md
     - 线性代数: MathematicsAndPhysics/LA/LA.md
     - 普通物理学Ⅱ:
       - MathematicsAndPhysics/Phy2/index.md
-      - 电磁学: MathematicsAndPhysics/Phy2/electromagnetic.md
+      - 电学:    MathematicsAndPhysics/Phy2/electrostatics.md
+      - 磁学:    MathematicsAndPhysics/Phy2/magnetostatics.md
+      - 电动力学: MathematicsAndPhysics/Phy2/electrodynamics.md
+      - 麦克斯韦方程组与电磁波: MathematicsAndPhysics/Phy2/maxwell.md
     - 概率论: 
       - MathematicsAndPhysics/Probability/index.md
-      - 事件及其概率: MathematicsAndPhysics/Probability/chap-1.md
+      - 事件及其概率:      MathematicsAndPhysics/Probability/chap-1.md
       - 随机变量与分布函数: MathematicsAndPhysics/Probability/chap-2.md
   - CTF: 
     - CTF/index.md
     - 基础周:
-      - lec1-Intro: CTF/fundament/lec1-Intro.md
-      - lec2-Web: CTF/fundament/lec2-Web.md
-      - lec3-Misc: CTF/fundament/lec3-Misc.md
+      - lec1-Intro:   CTF/fundament/lec1-Intro.md
+      - lec2-Web:     CTF/fundament/lec2-Web.md
+      - lec3-Misc:    CTF/fundament/lec3-Misc.md
       - lec4-Reverse: CTF/fundament/lec4-Rev.md
-      - lec5-Pwn: CTF/fundament/lec5-Pwn.md
-      - lec6-Crypto: CTF/fundament/lec6-Crypto.md
+      - lec5-Pwn:     CTF/fundament/lec5-Pwn.md
+      - lec6-Crypto:  CTF/fundament/lec6-Crypto.md
     - 专题周:
       - Web:
-        - Web-1: CTF/Web/Web-1.md
+        - Web-1:  CTF/Web/Web-1.md
       - Misc:
         - Misc-1: CTF/Misc/Misc-1.md
         - Misc-2: CTF/Misc/Misc-2.md
@@ -228,6 +231,8 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.highlight:
       anchor_linenums: true
+      linenums: true # 显示行号
+      # auto_title: true # 显示编程语言名称
   - pymdownx.arithmatex:
       generic: true
   - neoteroi.cards
@@ -249,9 +254,14 @@ extra_css:
   - https://unpkg.com/katex@0/dist/katex.min.css
   # - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css
   - https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css
-  - https://cdn.tonycrane.cc/lxgw/lxgwscreen.css
+  # - https://cdn.tonycrane.cc/lxgw/lxgwscreen.css
+  # - https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css
+  # - https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css
+  # - https://cdn.jsdelivr.net/npm/lxgw-wenkai-tc-webfont@1.0.0/style.css
+  - https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css
   - css/changelogs.css
   - css/newadmonitions.css
+  # - css/newfonts.css
   - css/cards.css
   - css/card.css
   - css/custom.css
