@@ -38,6 +38,7 @@ nav:
       - 磁学:    MathematicsAndPhysics/Phy2/magnetostatics.md
       - 电动力学: MathematicsAndPhysics/Phy2/electrodynamics.md
       - 麦克斯韦方程组与电磁波: MathematicsAndPhysics/Phy2/maxwell.md
+      - 光学:    MathematicsAndPhysics/Phy2/light.md
     - 概率论: 
       - MathematicsAndPhysics/Probability/index.md
       - 事件及其概率:      MathematicsAndPhysics/Probability/chap-1.md

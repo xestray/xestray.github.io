@@ -22,7 +22,7 @@ $$ \oint \vec{B}·d\vec{l} = \mu_0 I + \mu_0 \epsilon_0 \frac{d\Phi_E}{dt} $$
 - [磁学](./magnetostatics.md)
 - [电动力学](./electrodynamics.md)
 - [麦克斯韦方程组与电磁波](./maxwell.md)
-
+- [光学](./light.md)
 
 
 

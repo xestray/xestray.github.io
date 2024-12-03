@@ -218,7 +218,7 @@ $$ V_b - V_a = \varepsilon_L = -L \dfrac{\mathrm{d}i}{\mathrm{d}t} $$
         $$ L = \dfrac{N \Phi_B}{i} = \dfrac{\mu_0 N^2 h}{2 \pi} \ln \dfrac{b}{a} $$
 
     === "同轴电缆"
-        ![](../assets/同轴电缆.png){align=right width=25%}
+        ![](./assets/同轴电缆.png){align=right width=25%}
 
         所谓同轴电缆（coaxial cable）就是由两个同轴的导线组成的电缆，内导线半径为 $R_1$，外导线半径为 $R_2$，两导线上的电流大小相等、方向相反。
         $$ \oint \overrightarrow{B} \cdot d\overrightarrow{l} = \mu_0 i $$
@@ -261,7 +261,7 @@ $$ L = \kappa_m L_0 $$
 
 #### 轨道磁矩
 
-![](./assets/价电子的磁矩){align=right width=20%}
+![](./assets/价电子的磁矩.png){ align=right width=20% }
 
 材料的磁性质主要由其价电子的磁矩来决定
 $$ \mu = iA $$
