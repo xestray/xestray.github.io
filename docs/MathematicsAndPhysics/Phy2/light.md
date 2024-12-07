@@ -155,39 +155,307 @@ $$ \sin \theta_1 = \dfrac{n_2}{n_1} $$
 
 ### 费马原理
 
+![](./assets/费马原理.png){ align=right width=25% }
+
+光在介质中的运动速度小于真空中的光速，在同等的时间内，光在介质中的运动距离要更短。我们将光程定义为在相同的时间内，光在在介质中的运动距离乘以介质的折射率，也就是说，光程相当于光在真空中运动的“等效距离”
+$$ L = n_1 s_1 + n_2 s_2 $$
+其中 $s_1$ 和 $s_2$ 分别是光在两种介质中的实际运动距离，$n_1$ 和 $n_2$ 分别是两种介质的折射率
+
+对于更一般的情况，我们采用积分的形式
+$$ L = \int n ds $$
+
+!!! info "费马原理"
+    费马原理是指，若光线在传播过程中可以成像，那么光程的变分为零（对于某一个变量求偏导为零，也就是光程取极值），即
+    $$ \delta L = \delta \int n ds = 0 $$
+
+!!! example "使用费马原理证明反射和折射"
+    === "反射"
+        ![](./assets/费马原理证明反射.png){ align=right width=30% }
+
+        如图所示，光在空气中照射到介质发生反射，光程为 
+        $$ L = \sqrt{a^2 + x^2} + \sqrt{b^2 + (d-x)^2} $$
+
+        对光程求变分，令 $\delta L = 0$，即
+        $$ \dfrac{dL}{dx} = \dfrac{x}{\sqrt{a^2 + x^2}} - \dfrac{d-x}{\sqrt{b^2 + (d-x)^2}} = 0 $$
+        于是我们就得到
+        $$ \dfrac{x}{\sqrt{a^2 + x^2}} = \dfrac{d-x}{\sqrt{b^2 + (d-x)^2}} $$
+        即
+        $$ \sin \theta_1 = \sin \theta_2 \Rightarrow \theta_1 = \theta_2 $$
+        反射角等于入射角，这就是反射定律
+
+    === "折射"
+        ![](./assets/费马原理证明折射.png){ align=right width=30% }
+
+        如图所示，光在从折射率为 $n_1$ 的介质射入折射率为 $n_2$ 的介质，光程为 
+        $$ L = n_1 \sqrt{a^2 + x^2} + n_2 \sqrt{b^2 + (d-x)^2} $$
+
+        对光程求变分，令 $\delta L = 0$，即
+        $$ \dfrac{dL}{dx} = n_1 \dfrac{x}{\sqrt{a^2 + x^2}} - n_2 \dfrac{d-x}{\sqrt{b^2 + (d-x)^2}} = 0 $$
+        于是我们就得到
+        $$ n_1 \dfrac{x}{\sqrt{a^2 + x^2}} = n_2 \dfrac{d-x}{\sqrt{b^2 + (d-x)^2}} $$
+        即
+        $$ n_1 \sin \theta_1 = n_2 \sin \theta_2 $$
+        这就是折射定律
 
 ## 成像
 
+光线经过透镜折射或者镜面反射后，会在一定位置形成物体的像，像分为实像和虚像，成像的物体也可分为实物和虚物
+
+![](./assets/成像1.png){ align=left width=40% }
+![](./assets/成像2.png){ width=40% }
+
+![](./assets/成像3.png){ align=left width=40% }
+![](./assets/成像4.png){ width=40% }
+
+- 实像：经过折射或反射后的实际光线通过同一点，就称在交点处形成实像
+- 虚像：经过折射或反射后的光线不通过同一点，但它们的反向延长线交于一点，就称在交点处形成虚像
+- 实物：出发光线交汇于同一点（从同一点出发）
+- 虚物：出发光线不交汇于同一点，但出发光线的延长线交于一点
+
+根据费马原理我们知道成像时所有的光线等光程。我们讨论的问题一般是物体从透镜左边发出光线，在透镜右侧成像，因此称左侧为物方，右侧为像方
 
 ### 球面镜成像
 
+<figure>
+    <img src="../assets/球面镜成像.png" width="65%" />
+</figure>
 
+我们首先讨论球面镜折射成像的规律，在上图中，点 $C$ 为球心，$r$ 为半径，$Q$ 和 $Q'$ 分别是物体和像的位置，物和像距离球面的距离分别为 $o$ 和 $i$
+
+首先在三角形 $QCM$ 和 $Q'CM$ 中使用正弦定理
+
+$$ \begin{cases}
+\dfrac{p}{\sin \phi} = \dfrac{o+r}{\sin \theta} = \dfrac{r}{\sin u} \\\\
+\dfrac{p'}{\sin \phi} = \dfrac{i-r}{\sin \theta'} = \dfrac{r}{\sin u'}
+\end{cases} $$
+
+其中 $n \sin \theta = n' \sin \theta'$，$\theta - u = \theta' + u' = \phi$
+
+于是得到
+
+$$ \begin{cases}
+\dfrac{p}{o+r} = \dfrac{\sin \phi}{\sin \theta} \\\\
+\dfrac{p'}{i-r} = \dfrac{\sin \phi}{\sin \theta'}
+\end{cases} $$
+
+我们再使用余弦定理，并带入 $\cos \phi = 1 - 2\sin^2 \dfrac{\phi}{2}$
+
+$$ \begin{cases}
+p^2 = (o+r)^2 + r^2 - 2r(o+r) \cos \phi = o^2 + 4r(o+r) \sin^2 \dfrac{\phi}{2} \\\\
+p'^2 = (i-r)^2 + r^2 - 2r(i-r) \cos \phi = i^2 + 4r(i-r) \sin^2 \dfrac{\phi}{2}
+\end{cases} $$
+
+代会回前面的式子就得到
+
+$$ \Longrightarrow \dfrac{o^2}{n^2 (o+r)^2} - \dfrac{i^2}{n'^2 (i-r)^2} = -4r \sin^2 \dfrac{\phi}{2} \left[ \dfrac{1}{n^2 (o+r)} + \dfrac{1}{n'^2 (i-r)} \right] $$
+
+上面这个式子告诉我们，由于从同一点出发的光线的 $\phi$ 不同，成像的位置也会不同，因此球面不能成像。
+
+仅有两种情况下球面可以成像
+
+- 其中一种情况满足
+
+    $$ \begin{cases}
+    \dfrac{o^2}{n^2 (o+r)^2} - \dfrac{i^2}{n'^2 (i-r)^2} = 0 \\\\
+    \dfrac{1}{n^2 (o+r)} + \dfrac{1}{n'^2 (i-r)} = 0
+    \end{cases} $$
+
+    此时 $o$ 和 $i$ 与 $\phi$ 无关，物和像所在的这一对点我们称为齐明点。
+
+- 另一种情况是旁轴近似的情况，即 $\phi$ 很小
+
+    $$ \sin^2 \dfrac{\phi}{2} \approx \dfrac{\phi^2}{4} \to 0 $$
+
+    此时我们可以近似得到
+    $$ \dfrac{o^2}{n^2 (o+r)^2} = \dfrac{i^2}{n'^2 (i-r)^2} $$
+    即
+    $$ \dfrac{o}{n (o+r)} = \dfrac{i}{n' (i-r)} $$
+    $$ \dfrac{n'}{i} + \dfrac{n}{o} = \dfrac{n'-n}{r} $$
+
+    当 $i \to \infty$ 时，我们可以得到这个球面镜的第一焦距为 
+
+    $$ f = \dfrac{n}{n'-n} r $$
+
+    当 $o \to f$ 时，我们可以得到这个球面镜的第二焦距为
+
+    $$ f' = \dfrac{n'}{n'-n} r $$
+
+    于是
+    $$ \dfrac{f}{f'} = \dfrac{n}{n'} \Longrightarrow \dfrac{f}{o} + \dfrac{f'}{i} = 1 $$
+
+这就是球面镜的焦距公式
+
+!!! note "符号约定"
+    我们假设光线从左侧照射到右侧
+
+    - $Q$ 在左侧时为实物，$o>0$ 
+
+        $Q$ 在右侧时为虚物，$o<0$
+
+    - $Q'$ 在右侧时为实像，$i>0$
+
+        $Q'$ 在左侧时为虚像，$i<0$
+
+    - 球心 $C$ 在左侧时为凹面镜，$r<0$
+
+        球心 $C$ 在右侧时为凸面镜，$r>0$
+
+    ![](./assets/符号约定1.png){ align=left width=30% }
+    ![](./assets/符号约定2.png){ width=40% }
 
 ### 球面镜反射成像
 
+![](./assets/球面镜反射成像.png){ align=right width=30% }
 
+球面镜发生反射时，$Q$ 和 $Q'$ 都在左侧，成虚像 $i < 0$
 
+事实上反射可以看作是折射的一种特殊情况
+$$ n \sin \theta = n' \sin \theta' $$
 
+如果 $\theta > 0$，则 $\theta' < 0$，就得到
+$$ n = -n' $$
 
+于是第一和第二焦距分别为
+$$ f = \dfrac{n}{n'-n} r = -\dfrac{r}{2} $$
+$$ f' = \dfrac{n'}{n'-n} r = \dfrac{r}{2} $$
 
+带入焦距公式 $ \dfrac{f}{o} + \dfrac{f'}{i} = 1 $ 就可以得到
+$$ \dfrac{1}{o} + \dfrac{1}{i} = -\dfrac{2}{r} $$
 
+特别的，对于一个平面镜，可以认为 $r \to \infty$，此时焦距公式就变为
+
+$$ \dfrac{1}{o} + \dfrac{1}{i} = 0 $$
+
+即物体和像到镜面的距离相等
 
 ### 傍轴物点成像和横向放大率
 
+<figure>
+    <img src="../assets/傍轴物点成像.png" width="65%" />
+</figure>
 
+我们记物体和像距离透镜轴线的距离分别为 $y, y'$，我们规定在轴线上方时为正，下方时为负。
 
+当物体很靠近轴线时，$y^2, y'^2 << o^2, i^2, r^2$，并且
+$$ n\theta \approx n'\theta',\quad y \approx o \cdot \theta,\quad y' \approx i \cdot \theta' $$
 
+因此放大率为 
+$$ m = \dfrac{y'}{y} = -\dfrac{i\theta'}{o\theta} = -\dfrac{ni}{n'o} $$
 
-
-
-
+对于反射，则是
+$$ m = -\dfrac{i}{o} $$
 
 ### 薄透镜成像
 
+对于绝大多数的情况，光不止会经过一个折射面
 
+![](./assets/薄透镜1.png){ align=left width=55% }
+![](./assets/薄透镜2.png){ width=40% }
 
+对这两个面分别使用球面镜成像的公式，我们可以得到
 
+$$ \begin{cases}
+\dfrac{f_1}{o_1} + \dfrac{f'_1}{i_1} = 1 \\\\
+\dfrac{f_2}{o_2} + \dfrac{f'_2}{i_2} = 1
+\end{cases} $$
 
+$$ \begin{aligned}
+f_1 = \dfrac{n}{n_L-n} r_1, \quad f'_1 = \dfrac{n_L}{n_L-n} r_1 \\
+f_2 = \dfrac{n_L}{n'-n_L} r_2, \quad f'_2 = \dfrac{n'}{n'-n_L} r_2
+\end{aligned} $$
 
+其中我们知道 $-o_2 = i_1 - d$，即 $o_2 = d - i_1$，当透镜是一个**薄透镜**时，$d$ 很小，$i_1 \approx o_2$，因此
 
+$$ \begin{cases}
+\dfrac{f'_1 f_2}{i_1} + \dfrac{f_1 f_2}{o_1} = f_2 \\\\
+\dfrac{f'_1 f'_2}{i_2} + \dfrac{f'_1 f_2}{-i_1} = f'_1 
+\end{cases}
+\Longrightarrow
+\dfrac{f'_1 f'_2}{i_2} + \dfrac{f_1 f_2}{o_1} = f'_1 + f_2 
+$$
 
+$$ \Rightarrow \dfrac{f'_1 f'_2}{i} + \dfrac{f_1 f_2}{o} = f'_1 + f_2  $$
+
+!!! note "磨镜者公式"
+    将上面的式子与下式进行比较
+    $$ \dfrac{f}{o} + \dfrac{f'}{i} = 1 $$
+
+    可以得到下面两个式子
+
+    $$ \begin{cases}
+    f' = \cfrac{f'_1 f'_2}{f'_1 + f_2} = \cfrac{ \cfrac{n_L}{n_L-n} \cdot \cfrac{n'}{n'-n_L} r_1 r_2 }{ \cfrac{n_L}{n_L-n} r_1 + \cfrac{n_L}{n'-n_L} r_2 } = \cfrac{n'}{ \cfrac{n_L-n}{r_1} + \cfrac{n'-n_L}{r_2} } \\\\
+    f = \cfrac{f_1 f_2}{f'_1 + f_2} = \cfrac{ \cfrac{n}{n_L-n} \cdot \cfrac{n_L}{n'-n_L} r_1 r_2 }{ \cfrac{n_L}{n_L-n} r_1 + \cfrac{n_L}{n'-n_L} r_2 } = \cfrac{n}{ \cfrac{n_L-n}{r_1} + \cfrac{n'-n_L}{r_2} }
+    \end{cases} $$
+
+    所以 $\dfrac{f'}{f} = \dfrac{n'}{n}$，如果在空气中, $n=n'=1$
+
+    最终就可以得到磨镜者公式
+
+    $$ f = f' = \dfrac{1}{ (n_L - 1) (\dfrac{1}{r_1} - \dfrac{1}{r_2}) } $$
+
+!!! tip "凸透镜与凹透镜"
+    - 如果 $f>0, f'>0$ 则说明透镜是一个凸透镜（converging lens）
+    - 如果 $f<0, f'<0$ 则说明透镜是一个凹透镜（diverging lens）
+
+### 成像焦距公式
+
+对于
+$$ \dfrac{f}{o} + \dfrac{f'}{i} = 1 $$
+
+如果 $n=n', f=f'$ 就可以得到高斯形式的成像焦距公式
+$$ \dfrac{1}{o} + \dfrac{1}{i} = \dfrac{1}{f} $$
+
+<figure>
+    <img src="../assets/成像焦距公式.png" width="65%" />
+</figure>
+
+对于上图来说，如果
+
+$$ \begin{aligned}
+o = f + x \\
+i = f' + x' 
+\end{aligned} $$
+
+就有
+$$ \dfrac{1}{f + x} + \dfrac{1}{f' + x'} = \dfrac{1}{f} $$
+
+就得到牛顿形式的成像焦距公式
+$$ x x' = f^2 = f f' $$
+
+!!! tip
+    - 当物体 $Q$ 在左焦点 $F$ 左边时，$x>0$；在右边时，$x<0$
+    - 当像 $Q'$ 在右焦点 $F'$ 右边时，$x'>0$；在左边时，$x'<0$
+
+#### 横向放大倍数
+
+<figure>
+    <img src="../assets/薄透镜1.png" width="65%" />
+</figure>
+
+现在我们回过头来讨论上面这幅图的放大倍数，首先我们有
+
+$$ \begin{cases}
+o_1 = o \\
+-o_2 = i_1 \\
+i_2 = i
+\end{cases} $$
+
+两个折射面的放大倍率分别为
+$$ m_1 = -\dfrac{n i_1}{n_L o_1} \quad m_2 = -\dfrac{n_L i_2}{n' o_2} $$
+
+于是总的放大倍数为
+
+$$ \begin{aligned}
+m = m_1 m_2 &= \dfrac{n i_1}{n_L o_1} \cdot \dfrac{n_L i_2}{n' o_2} \\
+&= \dfrac{n i_1}{n_L o_1} \cdot \dfrac{n_L i}{n' (-i_1)} \\
+&= -\dfrac{ni}{n'o} = -\dfrac{f i}{f' o}
+\end{aligned}$$
+
+!!! note "屈光度"
+    屈光度（diopter）定义为焦距的倒数，
+    
+    $$ P = \dfrac{1}{f(m)} $$
+
+    其中 $m$ 是放大倍数
+
+    例如 $f = -50cm =-0.5m$，则 $P = -2.00D$ 为200度
