@@ -1,0 +1,21 @@
+/* :root {
+    --md-text-font: "LXGW WenKai Screen"; 
+    --md-code-font: "JetBrains Mono";
+  }   */
+
+body {
+    /* font-family: "LXGW WenKai", sans-serif; */
+    /* Lite version */
+    /* font-family: "LXGW WenKai Lite", sans-serif; */
+    /* TC version */
+    /* font-family: "LXGW WenKai TC", sans-serif; */
+    /* Screen version */
+    font-family: "LXGW WenKai Screen", sans-serif;
+}
+
+  div.admonition.特别鸣谢 > p a:link, div.admonition.特别鸣谢 > p a:visited, article.md-content__inner.md-typeset>h4, h1,
+.md-ellipsis,
+.md-source__repository,
+.timeline  {
+    font-family: "Gloria Hallelujah", "LXGW WenKai Screen";
+}
