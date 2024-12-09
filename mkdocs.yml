@@ -24,6 +24,11 @@ nav:
       - 分治法:                  ComputerScience/ADS/lec-7.md
       - 动态规划:                ComputerScience/ADS/lec-8.md
       - 贪心算法:                ComputerScience/ADS/lec-9.md
+      - NP完全性:                ComputerScience/ADS/lec-10.md
+      - 近似算法:                ComputerScience/ADS/lec-11.md
+      - 局部搜索:                ComputerScience/ADS/lec-12.md
+      - 随机算法:                ComputerScience/ADS/lec-13.md
+      - 并行算法:                ComputerScience/ADS/lec-14.md
     - 计算机组成与设计: 
       - ComputerScience/COD/index.md
       - 计算机概要与技术:    ComputerScience/COD/chap-1.md
@@ -38,7 +43,8 @@ nav:
       - 磁学:    MathematicsAndPhysics/Phy2/magnetostatics.md
       - 电动力学: MathematicsAndPhysics/Phy2/electrodynamics.md
       - 麦克斯韦方程组与电磁波: MathematicsAndPhysics/Phy2/maxwell.md
-      - 光学:    MathematicsAndPhysics/Phy2/light.md
+      - 几何光学:    MathematicsAndPhysics/Phy2/geometrical_optics.md
+      - 波动光学:    MathematicsAndPhysics/Phy2/wave_optics.md
     - 概率论: 
       - MathematicsAndPhysics/Probability/index.md
       - 事件及其概率:      MathematicsAndPhysics/Probability/chap-1.md
