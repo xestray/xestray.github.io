@@ -29,6 +29,7 @@ nav:
       - 局部搜索:                ComputerScience/ADS/lec-12.md
       - 随机算法:                ComputerScience/ADS/lec-13.md
       - 并行算法:                ComputerScience/ADS/lec-14.md
+      - 外部排序:                ComputerScience/ADS/lec-15.md 
     - 计算机组成与设计: 
       - ComputerScience/COD/index.md
       - 计算机概要与技术:    ComputerScience/COD/chap-1.md
