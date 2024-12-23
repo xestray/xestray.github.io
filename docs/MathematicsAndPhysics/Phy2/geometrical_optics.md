@@ -3,7 +3,7 @@
     statistics: true
 ---
 
-# 光学
+# 几何光学
 
 ## 可见光
 

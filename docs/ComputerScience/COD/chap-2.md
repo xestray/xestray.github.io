@@ -269,7 +269,7 @@ address
 | Operation     | C  | Java | RISC-V    |
 |---------------|----|------|-----------|
 | Shift left    | << | <<   | slli      |
-| Shift right   | >> | >>>  | srli      |
+| Shift right   | >> | >>   | srli      |
 | Bit-by-by AND | &  | &    | and, andi |
 | Bit-by-by OR  | \| | \|   | or, ori   |
 | Bit-by-by XOR | ^  | ^    | xor, xori |
