@@ -254,7 +254,7 @@ address
 
 !!! note "Stored Program in Computer"
     <figure>
-        <img src="../assets/程序储存在内存中.png" width="80%">
+        <img src="../assets/程序储存在内存中.png" width="50%">
     </figure>
 
     - 事实上指令和程序和数据一样，都会被表示为二进制的形式，储存在内存中
@@ -313,12 +313,12 @@ RISC-V 中的按位 NOT 指令需要通过异或来实现，如`xori x2, x2, -1`
 ??? example 
     === "判断语句"
         <figure>
-            <img src="../assets/跳转语句.png" width="70%">
+            <img src="../assets/跳转语句.png" width="80%">
         </figure>
 
     === "循环跳转"
         <figure>
-            <img src="../assets/循环跳转语句.png" width="70%">
+            <img src="../assets/循环跳转语句.png" width="80%">
         </figure>
 
 branch 类型指令的立即数是作为地址偏移量与当前指令的 PC 相加来计算需要跳转到的地址的
@@ -329,9 +329,9 @@ branch 类型指令的立即数是作为地址偏移量与当前指令的 PC 相
     `If (x20 >= x11 || x20 < 0) goto IndexOutofBounds;`
     
     上面的这条指令可以只需要一条指令就可以实现：
-    ```
-    bgeu x20, x11, IndexOutofBounds
-    ```
+    
+    `bgeu x20, x11, IndexOutofBounds`
+    
     > 需要注意的是，这里我们默认 x11 中存的值大于0，否则上面这个判断条件无论如何都是 True，这样就没有意义了
 
     如果 x20 > 0，那么两个数都是整数，用 bgeu 也不会有问题；如果 x20 < 0，那么由于 x20 用二进制补码来表示，这时候它又会被视为一个很大的正数，因此`bgeu x20, x11`也是成立的。
@@ -358,7 +358,7 @@ jalr 指令是 I 型指令，具体操作是从寄存器中取出数据，然后
 
 假如我们不需要下一条指令的地址，我们就把 rd 寄存器设置为 x0，因为 x0 寄存器的值始终是 0，不会被修改。
 
-!!! example "Compiling a switch using jump address table"
+??? example "Compiling a switch using jump address table"
     <figure>
         <img src="../assets/跳转地址表1.png" width="80%">
     </figure>
@@ -376,92 +376,405 @@ jalr 指令是 I 型指令，具体操作是从寄存器中取出数据，然后
 !!! note "Basic Blocks"
     A **basic block** is a sequence of instructions with
 
-        - No embedded branches (except at end)
-        - No branch targets (except at beginning)
+    - No embedded branches (except at end)
+    - No branch targets (except at beginning)
 
     我们把一些不含有分支跳转语句同时也不会作为跳转目标的指令的集合称为**基本块**，基本块是编译器优化的基本单位。
 
 ## Supporting Procedures in Computer Hardware
 
+Procedure/function —— be used to structure programs
 
+- 一个用于完成特定任务的子程序
+- 易于理解，可以被复用
 
+调用一个函数主要可以分为 6 步
 
+1. Place Parameters in a place where the procedure can access them （in registers `x10`~`x17`）
 
+    向子程序传递参数，通常使用寄存器
 
+2. Transfer control to the procedure
 
+    将处理器的控制权转交给子程序
 
+3. Acquire the storage resources needed for the procedure
 
+    为子程序分配所需的存储资源
 
+4. Perform the desired task
 
+    执行子程序的任务
 
+5. Place the result value in a place where the calling program can access it 
+
+    将结果传递给函数调用者（通常也是一个程序）
+
+6. Return control to the point of origin (address in x1)
+
+    将控制权返回给调用这个函数的程序
+
+### Procedure Call Instructions
+
+- **Procedure call**: jump and link
+
+    指令格式为 `jal x1, ProcedureLabel`，
+
+    会把下一条指令的地址写入 x1 寄存器中（PC+4），然后跳转到 ProcedureLabel 处执行
+
+- **Procedure return**: jump and link register
+
+    指令格式为 `jalr x0, 0(x1)`
+    
+    跳转到 x1 寄存器存储的地址去，由于`x0`寄存器的值始终是 0，因此实际上并不会把下一条指令的地址写入寄存器中
+
+### Using More Registers
+
+- Registers for procedure calling
+
+    - `x10`~`x17`：8 个用于存储参数的寄存器
+    - `x1`：用于存储返回地址的寄存器
+
+- Stack：Ideal data structure for spilling registers
+
+    - Stack pointer (`sp`): `x2`
+    - Push: `sp = sp - 8`
+    - Pop: `sp = sp + 8`
+
+!!! note "Leaf/Non-leaf Procedure"
+    - **Leaf procedure**: does not call other procedures
+
+        不会调用其他的函数的函数，因此不需要保存寄存器的值，也不需要保存此程序的返回地址
+
+    - **Non-leaf procedure**: calls other procedures
+
+        会调用其他的函数的函数，因此需要保存寄存器的值和返回地址
+
+    对于嵌套的函数调用，我们需要保存上一个函数的返回地址到栈中，然后再调用下一个函数，这样就可以保证在下一个函数执行完后，可以返回到上一个函数中。
+
+??? example "Nested Procedure"
+    <figure>
+        <img src="../assets/递归子程序1.png" width="80%">
+    </figure>
+
+    <figure>
+        <img src="../assets/递归子程序2.png" width="80%">
+    </figure>   
+
+Disadvantages of recursion：
+
+- 使用大量资源，有可能造成栈溢出
+- 需要栈反复 push 和 pop，使得内存的利用十分低效
+
+!!! info "Preserved or not"
+    <figure>
+        <img src="../assets/是否保存寄存器的值.png" width="80%">
+    </figure>
+
+    - 父函数需要保证子函数可以随便使用 temp reg（`x5`-`x7`，`x28`-`x31`），子函数返回到父函数时不需要保证这些寄存器的值不变
+    - 子函数返回到父函数时，saved reg（`x8`-`x9`，`x18`-`x27`）的值需要保持在父函数调用子函数的值之前的状态
+
+!!! info "Local Data on the Stack"
+    <figure>
+        <img src="../assets/栈中的局部数据.png" width="80%">
+    </figure>
 
 ## Communicating with People
 
+- Byte-encoded character sets
+
+    - ASCII: 7-bit encoding
+    - Unicode: 16-bit encoding
+
+- Unicode: 16-bit/32-bit character set
+
+    - UTF-8, UTF-16: variable-length encodings
+
+由于数据的编码有不同的长度，因此往内存读写数据也要有不同长度德 load 和 store
+
+- Load byte/halfword/word: Sign extend to 64 bits in rd
+
+    寄存器是 64 位的，要把取出来的数据按符号位扩充到 64 位
+
+    - lb rd, offset(rs1)
+    - lh rd, offset(rs1)
+    - lw rd, offset(rs1)
+
+- Load byte/halfword/word unsigned: Zero extend to 64 bits in rd
+
+    无符号拓展到 64 位，高位补 0
+
+    - lbu rd, offset(rs1)
+    - lhu rd, offset(rs1)
+    - lwu rd, offset(rs1)
 
 
+- Store byte/halfword/word: Store rightmost 8/16/32 bits
 
+    只把读出来的数据的低 8/16/32 位存入内存，高位写入时会被忽略（内存会按对应字节写入）
 
+    - sb rs2, offset(rs1)
+    - sh rs2, offset(rs1)
+    - sw rs2, offset(rs1)
+
+    offset 不一定是 2/4/8/16/32 的倍数，因为 RISC-V 是可以不对齐的（但实际上 sh 的 offset 通常是 2 的倍数，sw 的 offset 通常是 4 的倍数）
+
+### Strings
+ 
+通常有三种表示字符串的方式：
+
+- Place the length of the string in the first position
+- An accompanying variable has the length
+- A character in the  last position to mark the end of a string
+
+Java 采用第一种表示方法，C 采用第三种表示方法
+
+??? example "tring Copy Example"
+    <figure>
+        <img src="../assets/复制字符串例子1.png" width="80%">
+    </figure>
+
+    <figure>
+        <img src="../assets/复制字符串例子1.png" width="80%">
+    </figure>
+
+    事实上上面的例子还可以改进
+
+    - i 不应该分配给 `x19`，而应该分配给一个临时寄存器，这样就不需要用堆栈保存 `x19` 的值了
+    - 对于一个 leaf procedure，编译器应当在用完所有的临时寄存器之后，再去考虑使用其他的寄存器
+
+        - 为什么要强调是 leaf procedure？
+
+            因为对于 non-leaf procedure，临时寄存器中的值可能会被后续调用的函数所改变
 
 ## RISC-V Addressing for Wide Immediate and Addresses
 
+### Wide Bit Immediate addressing
+
+I 型指令至多只能提供范围在 12 位以内的立即数，但是有时候我们需要更大范围的立即数，这时候就需要使用 U 型指令
+
+`lui reg imm`的作用是把 20 位的寄存器写入 reg 寄存器的 [31:12] 位，低 12 位填充 0
+
+<figure>
+    <img src="../assets/lui指令.png" width="70%">
+</figure>
+
+!!! example
+    <figure>
+        <img src="../assets/载入32位常数.png" width="70%">
+    </figure>
+
+    在这个例子中我们希望寄存器最终的值是 32 位的常数 `0x003D0900`。先使用`lui`指令在寄存器的高 [31:12] 位写入`0x003D0`即`976`，然后使用`addi`指令在寄存器的低 [11:0] 位写入`0x900`即`2304`。
+
+### Branch Addressing
+
+SB-type(B-type) 指令的格式
+
+<figure>
+    <img src="../assets/SB型指令.png" width="75%">
+</figure>
+
+实际上 SB 型指令并不会把立即数的每一个 bit 都储存在机器码中，储存的是立即数舍去最后一位的结果，即`imm[12:1]`。当需要计算跳转地址时就把机器码中的立即数取出并左移一位，然后再根据这个值计算跳转地址，这样就能够实现一个 13-bit 的 offset。
+$$ Target \ Address = PC + Branch \ offset = PC + imm \times 2 $$
+
+### Jump Addressing
+
+UJ-type(J-type) 实际上只有`jal`一个指令 
+
+<figure>
+    <img src="../assets/UJ型指令.png" width="75%">
+</figure>
+
+`jal`指令有 20-bit 用来存储立即数，和 SB 型指令一样，它存储的是立即数舍去最后一位的结果，即`imm[20:1]`，这样就可以实现保存一个 21-bit 的 offset。
+
+!!! question "如何实现长距离的跳转？"
+    - 首先用`lui`指令目标地址的[31:12]位写入临时寄存器
+
+        temp_reg $\gets$ address[31:12]
+
+    - 接着再用`jalr`指令把 address[11:0] 的值加上这个寄存器的值，并跳转到目标地址
+
+        `jalr x0, address[11:0](temp_reg)`
+
+!!! example
+    <figure>
+        <img src="../assets/跳转例子1.png" width="80%">
+    </figure>
+
+    <figure>
+        <img src="../assets/跳转例子2.png" width="80%">
+    </figure>
+
+    SB 类型指令直接用 PC+offset 来计算跳转地址。这里的 offset 需要把取出来的立即数在最低位填充 0 才能得到。
+
+- All RISC-V instructions are 4 bytes long
+- PC-relative addressing refers to the number of halfwords
+
+    PC 相对地址是指相对于当前指令的地址的偏移量，这个偏移量是以 halfword 为单位的
+
+!!! question "既然每一条指令的地址都是 4 的倍数，为什么不直接省略后两位，而只省略一位？"
+    实际上 RISC-V 是允许进行指令长度为 2 字节的 extension 的，只不过我们并没有学到这部分内容。
+
+    课本原文：
+    > However, the RISC-V architects wanted to support the possibility of instructions that are only 2 bytes long, so the branch instructions represent the number of *halfwords* between the branch and the branch target. 
+
+??? example "Branching far away"
+    <figure>
+        <img src="../assets/Branching far away.png" width="80%">
+    </figure>
+
+### RISC-V Addressing Summary
+
+![](./assets/寻址方式总结.png){align=right width=70%}
 
 
+RISC-V 有 4 中寻址方式
 
+- 立即数寻址
 
+    `addi x5, x6, 4`
 
+- 寄存器寻址 
 
+    `add x5, x6, x7`
 
+- 基地址寻址 
 
+    `ld x5,100(x6)`
 
+- PC 相对寻址 
 
-## Parallelism and Instructions: Synchronization
+    `beq x5,x6,L1`
 
+<figure>
+    <img src="../assets/指令编码总结.png" width="90%">
+</figure>
 
+## Synchronization in RISC-V
 
+- Two processors sharing an area of memory
+    - P1 writes, then P2 reads
+    - Data race if P1 and P2 don’t synchronize
+        - Result depends of order of accesses
+    
+        当两条指令都需要使用同一块内存时，如果没有同步，那么就会出现数据竞争，结果取决于两条指令的执行顺序
 
+- Hardware support required
+    - Atomic read/write memory operation
+    - No other access to the location allowed between the read and write
 
+Load reserved: `lr.d rd,(rs1)`
 
+- 把`Mem[rs1]`的值存到`rd`中
 
-## Parallelism and Instructions: 
+Store conditional: `sc.d rd,(rs1),rs2`
 
+- 把`rs2`的值存到`Mem[rs1]`中，如果从上一条`lr.d`指令之后`Mem[rs1]`的值没有被改变，那么`rd` = 0，否则`rd`是一个非零值。ss
 
+!!! example
+    <figure>
+        <img src="../assets/同步指令.png" width="80%">
+    </figure>
 
+    在第二个例子中，`Mem[x20]`存档的是锁的值，如果锁的值为 0，那么说明我们现在可以存入数据，尝试存入数据；否则要等锁释放了才能保存。
 
+## Translating and Starting a Program
 
+<figure>
+    <img src="../assets/程序转换过程.png" width="80%">
+</figure>
 
+以 C 语言程序为例
 
+- 首先 C 源程序被编译器编译成汇编代码
+- 然后再由汇编器将汇编代码转换成机器码
+- 接着再由链接器将机器码和库文件链接成可执行文件
+- 最后把可执行文件加载到内存中，由操作系统执行。
 
+### Object file
 
+<figure>
+    <img src="../assets/目标文件.png" width="80%">
+</figure>
 
+目标文件可以分为以下几个部分：
 
+- object file header
 
+    包含了一些关于目标文件的基本信息，如文件大小、目标文件其他部分的位置等
 
+- text section
 
+    包括所需的指令及其地址
 
+- static data segment and dynamic data
 
+    static data 会在整个程序的生命周期中一直存在，而 dynamic data 会在程序运行时动态分配
 
+- relocation information
 
+    重定位信息，标注各个部分在内存中的绝对位置，以便链接器将各个部分正确地连接到一起
 
+- Symbol table:
 
+    global definitions and external refs
 
+- Debug information
 
+    for associating with source code
 
+### Link
 
+Object modules(including library routine) $\to$ executable program
 
+- Place code and data modules symbolically in memory
+- Determine the addresses of data and instruction labels
+- Patch both the internal and external references (Address of invoke)
 
+### Loading a Program
 
+Load from image file on disk into memory
 
+1. Read header to determine segment sizes
+2. Create virtual address space
+3. Copy text and initialized data into memory
+    
+    Or set page table entries so they can be faulted in
 
+4. Set up arguments on stack
+5. Initialize registers (including sp, fp, gp)
+6. Jump to startup routine
+    
+    Copies arguments to x10, … and calls main pWhen main returns, do exit syscall
 
+### Dynamic Linking
 
+- **静态链接**会在**生成可执行文件时**把所有需要的的库文件都链接到可执行文件中，这样会导致可执行文件的体积变得很大，但可以保证程序的独立性
 
+- **动态链接**则是在**程序运行时**才会把库文件链接到程序中，这样可以减小可执行文件的体积，并且可以使用到最新的库文件
 
+## Arrays vs. Pointers
 
+指针指向的目标地址可以被改变，但数组的基地址是固定的，因此使用指针和数组完成相同的工作时，翻译得到的汇编代码也有所不同
 
+!!! example "Clearing an Array"
+    <figure>
+        <img src="../assets/清理数组例子.png" width="80%">
+    </figure>
 
+    在这个例子中，我们使用指针和数组来清空一个数组，可以看到使用指针的方式会比使用数组的方式多出一些指针的操作，因此使用指针的方式会更加高效。
 
+## Other RISC-V Instructions
 
+- Base integer instructions (RV64I)
+    - Those previously described, plus
+    - auipc rd, immed  // rd = (imm<<12) + pc
+        - follow by jalr (adds 12-bit immed) for long jump
+    - slt, sltu, slti, sltui: set less than (like MIPS)
+    - addw, subw, addiw: 32-bit add/sub
+    - sllw, srlw, srlw, slliw, srliw, sraiw: 32-bit shift
+- 32-bit variant: RV32I
+    - registers are 32-bits wide, 32-bit operations
 
-
-
+我们在计组实验课中实现的是 RV32I 的指令集，但是考试中可能会考到的是 RV64I 的指令集，因此需要注意 RV64I 和 RV32I 的区别。
 
