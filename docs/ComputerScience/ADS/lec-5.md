@@ -8,7 +8,7 @@
 
 ## 二项堆的定义与性质
 
-对于一般的二叉堆，我们知道其插入和删除操作的时间复杂度为 $O(\log n)$，而从空堆开始，构造一个含有 $n$ 个元素的二叉堆的时间复杂度可以做到 $O(n)$（要注意此时并不是直接从零开始插入 $n$ 个元素，可以回顾FDS的内容）。
+对于一般的二叉堆，我们知道其插入和删除操作的时间复杂度为 $O(\log n)$，而从空堆开始，构造一个含有 $n$ 个元素的二叉堆的时间复杂度可以做到 $O(n)$（要注意此时并不是直接从零开始插入 $n$ 个元素，可以回顾 FDS 的内容）。
 
 很遗憾的是先前讨论的左倾堆与斜堆虽然保证了 merge 的时间复杂度是 $O(\log n)$，却不能在 $O(n)$ 时间内实现 $n$ 个结点的插入建堆操作，二项堆的思想就源自于此。
 
@@ -29,7 +29,7 @@
 - 高度为 $k$ 的二项树恰好有 $2^k$ 个结点
 - 深度为 $d$ 的节点数为二项系数 $\binom{k}{d}$
 
-!!! proof "数学归纳法证明"
+!!! proof "对第三点性质的数学归纳法证明"
     1. 对于 $k=0$ 的情况，上述结论显然成立
     2. 假设直到 $k$ 的情况结论都是成立的，则对于 $B_{k+1}$，第一层和最后一层显然只有一个结点，对于其他层，由于 $B_{k+1}$ 是由两个 $B_k$ 拼接得到的， $B_{k+1}$ 在第 $i$ 层的结点数以下两部分组成：
     
@@ -99,7 +99,7 @@
     === "势能法"
         同样考虑二进制加法问题，我们发现复杂度很大的操作都对应于很多的复位（1 变 0）和一个置位（0 变 1），因此我们直接设势能函数 $\Phi$ 为二进制表示中 1 的个数（即二项堆中树的个数）。
 
-        假设第 $i$ 次操作除了新加入一个结点之外，还有 $k(k \geqslant 0)$ 次复位，那么 $c_i = k + 1$，则
+        假设第 $i$ 次操作除了新加入一个结点之外（这会导致一个置位），还有 $k(k \geqslant 0)$ 次复位，那么一共需要改变 $k+1$ 个 bit 的状态，于是 $c_i = k + 1$，则
 
         $$\begin{aligned}
         \hat{c_i} &= c_i + (\Phi_i - \Phi_{i-1})  \\
@@ -221,7 +221,8 @@ ElementType  DeleteMin( BinQueue H )
 {	BinQueue DeletedQueue; 
     Position DeletedTree, OldRoot;
     ElementType MinItem = Infinity;
-    int i, j, MinTree; /* MinTree is the index of the tree with the minimum item */
+    /* MinTree is the index of the tree with the minimum item */
+    int i, j, MinTree; 
 
     if ( IsEmpty(H) ) {
         PrintErrorMessage();
@@ -265,7 +266,7 @@ ElementType  DeleteMin( BinQueue H )
 
 - 首先是一些错误处理和初始化
 - 接着找到最小元素以及它所在的树，将最小树存储在`DeletedTree`中，然后将其从二项堆中移除
-- 保存根节点到`OldRoot`，然后将`DeletedTree`改为指向其左子树，释放OldRoot所占的内存
+- 保存根节点到`OldRoot`，然后将`DeletedTree`改为指向其左子树，释放 OldRoot 所占的内存
 - 接着初始化一个新的二项队列`DeletedQueue`，用于存放从最小树中拆分出的二项树
 - 最后更新原二项堆`H`的大小，再将`H`与`DeletedQueue`与原二项堆合并
 - 返回刚刚找到的最小元素

@@ -41,7 +41,7 @@ Write the inverted index to disk;
     - 哈希表：检索速度较快，但是不支持模糊查询，并且需要考虑哈希冲突的问题。
 
 - **内存管理**：当需要储存的数据量非常大，一个硬盘都装不下时，就需要把数据分别装在不同的硬盘上
-    ```c
+    ```c title="多个硬盘的倒排文件索引构建"
     BlockCnt = 0; 
     while ( read a document D ) {
       while ( read a term T in D ) {
@@ -61,15 +61,21 @@ Write the inverted index to disk;
     ```
 - **Distributed indexing**：将倒排索引分布到多个服务器上，每个服务器按照文件内容或文件编号等形式分类，分别负责一部分索引
 
-![](./assets/倒排文件索引2.png){ width=70% }
+<figure>
+    <img src="../assets/倒排文件索引2.png" width="70%">
+</figure>
 
-- **Dynamic indexing**：假如在每一次文件增删之后立刻就更新索引库，这样的开销是相当大的，因此可以建立一个辅助索引库，对于索引的更改先暂存在辅助索引库中，搜索时同时使用主索引库和辅助索引库，当满足一定条件时（每隔一定时间、辅助索引库大小达到一定程度等），再将辅助索引库中的内容合并到主索引库中去。
+- **Dynamic indexing**：假如在每一次文件增删之后立刻就更新索引库，这样的开销是相当大的，因此可以建立一个辅助索引库，对于索引的更改先暂存在辅助索引库中，搜索时同时使用主索引库和辅助索引库，当满足一定条件时（每隔一定时间、辅助索引库大小达到一定程度等），再将辅助索引库中的内容合并到主索引库中去。（类似于 cache 的思想）
 
-![](./assets/倒排文件索引3.png){ width=70% }
+<figure>
+    <img src="../assets/倒排文件索引3.png" width="70%">
+</figure>
 
-- **Compression**：在储存时将stop words去掉，并且储存每个单词的长度而非该单词首字母出现的位置。
+- **Compression**：在储存时将 stop words 去掉，并且储存每个单词的长度而非该单词首字母出现的位置。这样就可以减少索引的大小，提高检索速度。
 
-![](./assets/倒排文件索引4.png){ width=70% }
+<figure>
+    <img src="../assets/倒排文件索引4.png" width="70%">
+</figure>
 
 - **Thresholding（阈值）**：
 
@@ -97,6 +103,8 @@ Write the inverted index to disk;
 - 召回率：检索到的相关文档 与 数据库中所有相关文档的比值。
     Recall = $ \dfrac{R_R}{R_R + R_N} $
 
-![](./assets/倒排文件索引6.png){ width=70% }
+<figure>
+    <img src="../assets/倒排文件索引6.png" width="70%">
+</figure>
 
-通常而言准确率越高，召回率就越低；反之相同，召回率越高，准确率就越低，在设计系统时通常要对两者进行 trade off。
+通常而言准确率越高，召回率就越低；反之，召回率越高，准确率就越低，在设计系统时通常要对两者进行 trade off。
