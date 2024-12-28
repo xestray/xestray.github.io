@@ -12,8 +12,8 @@
 ## Table of Contents
 
 - 专业课程:
-    - [计算机组成与设计](COD/index.md)
-    - [高级数据结构与算法分析](ADS/index.md)
+    - [计算机组成与设计](COD/index.md){ .md-button }
+    - [高级数据结构与算法分析](ADS/index.md){ .md-button }
 - 编程语言（暂无）:
 - 常用工具备忘（暂无）:
 
