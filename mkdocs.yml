@@ -46,6 +46,7 @@ nav:
       - 麦克斯韦方程组与电磁波: MathematicsAndPhysics/Phy2/maxwell.md
       - 几何光学:    MathematicsAndPhysics/Phy2/geometrical_optics.md
       - 波动光学:    MathematicsAndPhysics/Phy2/wave_optics.md
+      - 量子力学:    MathematicsAndPhysics/Phy2/quantum.md
     - 概率论: 
       - MathematicsAndPhysics/Probability/index.md
       - 事件及其概率:      MathematicsAndPhysics/Probability/chap-1.md
