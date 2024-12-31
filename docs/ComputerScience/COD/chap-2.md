@@ -29,7 +29,7 @@
 
 - 我们课程中使用的指令集为 RISC-V
 
-Instruction Characteristics
+**Instruction Characteristics**
 
 <figure>
     <img src="../assets/指令集.png" width="50%">
@@ -37,14 +37,15 @@ Instruction Characteristics
 
 指令集的基本结构包括：Operator（操作符）、Operands（操作数）
 
-- 对于不同指令集，指令的编码通常不同，例如可以用 000 表示加法，这也被称为指令的 Encoding（编码）
+- 不同指令集中指令的编码通常不同，例如可用 000 表示加法，这也被称为指令的 Encoding（编码）
 - 操作数的位宽可能不同，对应的来源也可能不同，可能来自寄存器、内存、立即数等
 
 冯诺依曼架构：指令被认为是一种特殊的数据，和其他数据储存在**同一个内存**中，可以进行读写操作
 
 哈佛架构：指令和数据**分开存储**，分别有自己的内存空间
 
-在实验课中我们实现的实际上是哈佛架构，但在考试中的具体题目也可能是冯诺依曼架构的。
+!!! tip
+    在实验课中我们实现的实际上是哈佛架构，但在考试中的具体题目也可能是冯诺依曼架构的。
 
 ## Operations
 
@@ -119,8 +120,8 @@ RISC-V 是 **Little Endian（小端序）** 的，也就是说低位字节存储
 
     例如，对于 32-bit 的数据 `0x01234567`，在内存中的存储方式如下：
 
-    - Little Endian：`67 45 23 01`
-    - Big Endian：`01 23 45 67`
+    - Little Endian：`01 23 45 67`
+    - Big Endian：`67 45 23 01`
 
     <figure>
         <img src="../assets/小端序与大端序.png" width="75%">
@@ -143,10 +144,10 @@ RISC-V 是 **Little Endian（小端序）** 的，也就是说低位字节存储
 !!! example "Memory Operand Example"
     - C code
     ```C
-    g = h + A[8];
+    A[12] = h + A[8];
     ```
         
-        这里我们默认数组的元素都是 doubleword 的，并且 assume g in `x20`, h in `x21`, base address of A in `x22`
+        这里我们默认数组的元素都是 doubleword 的，并且 assume h in `x21`, base address of A in `x22`
 
     - RISC-V code
     ```c
@@ -155,7 +156,7 @@ RISC-V 是 **Little Endian（小端序）** 的，也就是说低位字节存储
     sd x9, 96(x22)
     ```
 
-    因为地址以 byte 为单位，且 1 doubleword = 8 byte，那么我们在根据访问内存中相应的数据时需要偏移 $8 \times 8 = 64$ bytes.
+    因为地址以 byte 为单位，且 1 doubleword = 8 byte，那么我们在根据访问内存中相应的数据时需要分别偏移 $8 \times 8 = 64$ bytes 和 $8 \times 12 = 96$ bytes。
 
 ### Registers vs. Memory
 
@@ -173,9 +174,11 @@ RISC-V 是 **Little Endian（小端序）** 的，也就是说低位字节存储
 
 ### Constant or Immediate Operands
 
-除了使用寄存器或内存中的数据之外，我们还可能使用到常量数字或者立即数（Immediate），如 $ h = h + 5 $ ``addi x22, x22, 5``
+除了使用寄存器或内存中的数据之外，我们还可能使用到常量数字或者立即数（Immediate），如 $ h = h + 5 $ 
 
-Immediate：Other method for offering operands
+`addi x22, x22, 5`
+
+- Immediate：Other method for offering operands
 
 !!! summary
     <figure>
@@ -281,7 +284,7 @@ RISC-V 中的按位 NOT 指令需要通过异或来实现，如`xori x2, x2, -1`
 
 - 将二进制数据向左或向右移动，
 - 左移时在右侧补 0，右移时在左侧补 0 或符号位，需要根据是逻辑右移还是算术右移来决定
-- 左移 左移 i 位相当于乘 $2^i$, 右移 i 位相当于除 $2^i$
+- 左移 i 位相当于乘 $2^i$, 右移 i 位相当于除 $2^i$
 - 通常 shift 指令使用的是 I 型指令，`slli`、`srli`、`srai`
 
     <figure>
@@ -323,7 +326,7 @@ RISC-V 中的按位 NOT 指令需要通过异或来实现，如`xori x2, x2, -1`
 
 branch 类型指令的立即数是作为地址偏移量与当前指令的 PC 相加来计算需要跳转到的地址的
 
-- 由于立即数只有 12 位，跳转的范围有限，即 $-2^{11} \leq \text{offset} \leq 2^{11} - 1$=
+- 由于立即数只有 12 位，跳转的范围有限
 
 !!! note "index out of bounds 检测"
     `If (x20 >= x11 || x20 < 0) goto IndexOutofBounds;`
@@ -332,7 +335,7 @@ branch 类型指令的立即数是作为地址偏移量与当前指令的 PC 相
     
     `bgeu x20, x11, IndexOutofBounds`
     
-    > 需要注意的是，这里我们默认 x11 中存的值大于0，否则上面这个判断条件无论如何都是 True，这样就没有意义了
+    > 需要注意的是，这里我们默认 x11 中存的值大于 0，否则上面这个判断条件无论如何都是 True，这样就没有意义了
 
     如果 x20 > 0，那么两个数都是整数，用 bgeu 也不会有问题；如果 x20 < 0，那么由于 x20 用二进制补码来表示，这时候它又会被视为一个很大的正数，因此`bgeu x20, x11`也是成立的。
 
@@ -371,7 +374,7 @@ jalr 指令是 I 型指令，具体操作是从寄存器中取出数据，然后
         <img src="../assets/跳转地址表3.png" width="70%">
     </figure>
 
-    在上面的这个例子中，编译器实际上会把 switch 语句语句中不同情况的程序内容写到内存不同的位置，然后把这些地址用一个表来存储。当程序执行到 switch 语句时，会先找到这个地址表的位置，然后从表中读取所需要的地址，然后再把这个地址对应的内容从内存里读取出来。
+    在上面的这个例子中，编译器实际上会把 switch 语句中不同情况对应的的程序内容写到内存不同的位置，然后把这些地址用一个表来存储。当程序执行到 switch 语句时，会先找到这个地址表的位置，然后从表中读取所需要的地址，然后再把这个地址对应的内容从内存里读取出来。
 
 !!! note "Basic Blocks"
     A **basic block** is a sequence of instructions with
@@ -383,14 +386,14 @@ jalr 指令是 I 型指令，具体操作是从寄存器中取出数据，然后
 
 ## Supporting Procedures in Computer Hardware
 
-Procedure/function —— be used to structure programs
+Procedure/Function —— be used to structure programs
 
 - 一个用于完成特定任务的子程序
 - 易于理解，可以被复用
 
 调用一个函数主要可以分为 6 步
 
-1. Place Parameters in a place where the procedure can access them （in registers `x10`~`x17`）
+1. Place Parameters in a place where the procedure can access them（in registers `x10`~`x17`）
 
     向子程序传递参数，通常使用寄存器
 
@@ -420,13 +423,13 @@ Procedure/function —— be used to structure programs
 
     指令格式为 `jal x1, ProcedureLabel`，
 
-    会把下一条指令的地址写入 x1 寄存器中（PC+4），然后跳转到 ProcedureLabel 处执行
+    会把下一条指令的地址（PC+4）写入 x1 寄存器中，然后跳转到 ProcedureLabel 处开始执行相应进程
 
 - **Procedure return**: jump and link register
 
     指令格式为 `jalr x0, 0(x1)`
     
-    跳转到 x1 寄存器存储的地址去，由于`x0`寄存器的值始终是 0，因此实际上并不会把下一条指令的地址写入寄存器中
+    跳转到`x1`寄存器存储的地址去，由于`x0`寄存器的值始终是 0，因此实际上并不会把下一条指令的地址写入寄存器中
 
 ### Using More Registers
 
@@ -454,7 +457,7 @@ Procedure/function —— be used to structure programs
 
 ??? example "Nested Procedure"
     <figure>
-        <img src="../assets/递归子程序1.png" width="80%">
+        <img src="../assets/递归子程序1.png" width="100%">
     </figure>
 
     <figure>
@@ -472,7 +475,7 @@ Disadvantages of recursion：
     </figure>
 
     - 父函数需要保证子函数可以随便使用 temp reg（`x5`-`x7`，`x28`-`x31`），子函数返回到父函数时不需要保证这些寄存器的值不变
-    - 子函数返回到父函数时，saved reg（`x8`-`x9`，`x18`-`x27`）的值需要保持在父函数调用子函数的值之前的状态
+    - 子函数返回到父函数时，saved reg（`x8`-`x9`，`x18`-`x27`）的值需要恢复到父函数调用子函数的值之前的状态
 
 !!! info "Local Data on the Stack"
     <figure>
@@ -490,11 +493,11 @@ Disadvantages of recursion：
 
     - UTF-8, UTF-16: variable-length encodings
 
-由于数据的编码有不同的长度，因此往内存读写数据也要有不同长度德 load 和 store
+由于数据的编码有不同的长度，因此往内存读写数据也要有不同长度的 load 和 store
 
 - Load byte/halfword/word: Sign extend to 64 bits in rd
 
-    寄存器是 64 位的，要把取出来的数据按符号位扩充到 64 位
+    寄存器是 64 位的，取出来的数据可能不足 64 位，要把取出来的数据按符号位扩充到 64 位，高位补符号位
 
     - lb rd, offset(rs1)
     - lh rd, offset(rs1)
@@ -502,7 +505,7 @@ Disadvantages of recursion：
 
 - Load byte/halfword/word unsigned: Zero extend to 64 bits in rd
 
-    无符号拓展到 64 位，高位补 0
+    取出来的数据可能不足 64 位，无符号拓展到 64 位，高位补 0
 
     - lbu rd, offset(rs1)
     - lhu rd, offset(rs1)
@@ -531,11 +534,11 @@ Java 采用第一种表示方法，C 采用第三种表示方法
 
 ??? example "tring Copy Example"
     <figure>
-        <img src="../assets/复制字符串例子1.png" width="80%">
+        <img src="../assets/复制字符串例子1.png" width="70%">
     </figure>
 
     <figure>
-        <img src="../assets/复制字符串例子1.png" width="80%">
+        <img src="../assets/复制字符串例子2.png" width="70%">
     </figure>
 
     事实上上面的例子还可以改进
@@ -553,7 +556,7 @@ Java 采用第一种表示方法，C 采用第三种表示方法
 
 I 型指令至多只能提供范围在 12 位以内的立即数，但是有时候我们需要更大范围的立即数，这时候就需要使用 U 型指令
 
-`lui reg imm`的作用是把 20 位的寄存器写入 reg 寄存器的 [31:12] 位，低 12 位填充 0
+`lui rd imm`的作用是把 20 位的寄存器写入 rd 寄存器的 [31:12] 位，低 12 位填充 0
 
 <figure>
     <img src="../assets/lui指令.png" width="70%">
@@ -566,6 +569,17 @@ I 型指令至多只能提供范围在 12 位以内的立即数，但是有时�
 
     在这个例子中我们希望寄存器最终的值是 32 位的常数 `0x003D0900`。先使用`lui`指令在寄存器的高 [31:12] 位写入`0x003D0`即`976`，然后使用`addi`指令在寄存器的低 [11:0] 位写入`0x900`即`2304`。
 
+!!! warning
+    当我们使用`lui`和`addi`指令来载入一个大立即数时，如果`addi`的立即数最高位是 1，那么这个立即数会被当作负数来处理，会额外加上`0xFFFFF000`，这样就会导致结果不是我们想要的。
+
+    观察分析之后我们可以知道，额外加上`0xFFFFF000`之后相当于`lui`的立即数减小了 1，因此这时候我们应该让`lui`的立即数加 1，这样就可以把`0xFFFFF000`的影响抵消了。
+
+    例如我们要得到`0xDEADBEEF`，我们应该使用的指令是
+    ```assembly
+    lui x5, 0xDEADC     // 而不是 0xDEADB
+    addi x5, x5, 0xEEF
+    ```
+
 ### Branch Addressing
 
 SB-type(B-type) 指令的格式
@@ -574,8 +588,10 @@ SB-type(B-type) 指令的格式
     <img src="../assets/SB型指令.png" width="75%">
 </figure>
 
-实际上 SB 型指令并不会把立即数的每一个 bit 都储存在机器码中，储存的是立即数舍去最后一位的结果，即`imm[12:1]`。当需要计算跳转地址时就把机器码中的立即数取出并左移一位，然后再根据这个值计算跳转地址，这样就能够实现一个 13-bit 的 offset。
-$$ Target \ Address = PC + Branch \ offset = PC + imm \times 2 $$
+实际上 SB 型指令并不会把立即数的每一个 bit 都储存在机器码中，储存的是立即数舍去最后一位的结果，即`imm[12:1]`。因为指令的地址一定是偶数倍的，最低位一定是 0，因此我们可以把这个 bit 省略掉。
+
+当需要计算跳转地址时，我们就把机器码中的立即数部分取出并左移一位，然后再根据这个值计算跳转地址，这样就能够实现一个 13-bit 的 offset。
+$$ Target \\ Address = PC + Branch \\ offset = PC + imm \times 2 $$
 
 ### Jump Addressing
 
@@ -598,11 +614,11 @@ UJ-type(J-type) 实际上只有`jal`一个指令
 
 !!! example
     <figure>
-        <img src="../assets/跳转例子1.png" width="80%">
+        <img src="../assets/跳转例子1.png" width="70%">
     </figure>
 
     <figure>
-        <img src="../assets/跳转例子2.png" width="80%">
+        <img src="../assets/跳转例子2.png" width="70%">
     </figure>
 
     SB 类型指令直接用 PC+offset 来计算跳转地址。这里的 offset 需要把取出来的立即数在最低位填充 0 才能得到。
@@ -623,9 +639,11 @@ UJ-type(J-type) 实际上只有`jal`一个指令
         <img src="../assets/Branching far away.png" width="80%">
     </figure>
 
+    有时候我们要跳转到一个 Branch 指令够不着的地址去，但是这个地址也没有远到需要使用`lui`和`jalr`指令来实现。这时候我们可以使用`jal`指令来实现跳转（范围为 $-2^{20} \sim 2^{20}-1$）。
+
 ### RISC-V Addressing Summary
 
-![](./assets/寻址方式总结.png){align=right width=70%}
+![](./assets/寻址方式总结.png){align=right width=60%}
 
 
 RISC-V 有 4 中寻址方式
@@ -663,20 +681,24 @@ RISC-V 有 4 中寻址方式
     - Atomic read/write memory operation
     - No other access to the location allowed between the read and write
 
-Load reserved: `lr.d rd,(rs1)`
+Load Reserved: `lr.d rd,(rs1)`
 
-- 把`Mem[rs1]`的值存到`rd`中
+- 把`Mem[rs1]`的值存到`rd`中，然后在`rs1`对应地址上设置一个保留标记（reservation set）
 
-Store conditional: `sc.d rd,(rs1),rs2`
+Store Conditional: `sc.d rd,(rs1),rs2`
 
-- 把`rs2`的值存到`Mem[rs1]`中，如果从上一条`lr.d`指令之后`Mem[rs1]`的值没有被改变，那么`rd` = 0，否则`rd`是一个非零值。ss
+- 在尝试把`rs2`的值存到`Mem[rs1]`之前，会先判断`rs1`的地址上是否有保留标记
+
+    - 如果观察到了保留标记，就说明从上一条`lr.d`指令之后`Mem[rs1]`的值没有被改变，那么就把`rs2`的值存到`Mem[rs1]`中，并且把`rd`设置为 0
+    - 如果没有观察到保留标记，说明`Mem[rs1]`的值已经被改变了，那么就不会把`rs2`的值存到`Mem[rs1]`中，并且把`rd`设置为一个非零值
+    - 无论是否存储成功，`rs1`地址上的保留标记都会被清除
 
 !!! example
     <figure>
-        <img src="../assets/同步指令.png" width="80%">
+        <img src="../assets/同步指令.png" width="70%">
     </figure>
 
-    在第二个例子中，`Mem[x20]`存档的是锁的值，如果锁的值为 0，那么说明我们现在可以存入数据，尝试存入数据；否则要等锁释放了才能保存。
+    在第二个例子中，如果`sc.d`没有在`Mem[rs1]`上观察到保留标记，那么就不会把`rs2`的值存到`Mem[rs1]`中，并且会从头开始重新执行一次`lr.d`指令，直到确保`lr.d`指令和`sc.d`指令之间没有其他的指令对`Mem[rs1]`进行了修改。
 
 ## Translating and Starting a Program
 
@@ -745,13 +767,21 @@ Load from image file on disk into memory
 5. Initialize registers (including sp, fp, gp)
 6. Jump to startup routine
     
-    Copies arguments to x10, … and calls main pWhen main returns, do exit syscall
+    - Copies arguments to x10, … and calls main procedure
+    - When main returns, do exit syscall
 
 ### Dynamic Linking
 
-- **静态链接**会在**生成可执行文件时**把所有需要的的库文件都链接到可执行文件中，这样会导致可执行文件的体积变得很大，但可以保证程序的独立性
+- **静态链接**
 
-- **动态链接**则是在**程序运行时**才会把库文件链接到程序中，这样可以减小可执行文件的体积，并且可以使用到最新的库文件
+    - 在**生成可执行文件时**把所有需要的的库文件都链接到可执行文件中
+    - 导致可执行文件的体积变得很大，但可以保证程序的独立性
+
+- **动态链接**
+
+    - 在**程序运行时**才会把库文件链接到程序中
+    - 可以减小可执行文件的体积，并且可以使用到最新的库文件
+    - 但库文件的位置和版本可能会发生变化，可能会导致程序无法运行
 
 ## Arrays vs. Pointers
 
