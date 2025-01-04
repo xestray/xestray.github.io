@@ -39,7 +39,7 @@
 
 ## 对称性原则
 
-很自然的，科学家们希望所有的物理公式都具有一种对称性，这样才能更好地描述自然界的规律。观察上面磁场的高斯定律，我们显然不希望等式的右侧只有一个0；对于电场的安培环路定律，我们也希望它能与磁场的安培环路定律具有一种对称的相似性，
+很自然的，科学家们希望所有的物理公式都具有一种对称性，这样才能更好地描述自然界的规律。观察上面磁场的高斯定律，我们显然不希望等式的右侧只有一个 0；对于电场的安培环路定律，我们也希望它能与磁场的安培环路定律具有一种对称的相似性，
 
 因此我们引入了一个新的定义：磁荷 $q_m$ ，即只带有正极或负极的磁单极（类比于点电荷）。这样，我们就可以得到磁场的高斯定律和电场的环路定理做出修正：
 
@@ -54,13 +54,9 @@ $$ \begin{cases}
 借助磁场的环路定理和 stokes 公式，我们可以知道，通过一个环路的电流大小等于通过以这个环路为边界的曲面电流密度的积分
 
 如右图，电流通过蓝色的回路，以蓝色回路为边缘构造两个曲面 $S_1$ 和 $S_2$，则通过这两个曲面的电流大小相等，方向相反
-
-$$ \oint \overrightarrow{H} \cdot d\overrightarrow{l} = i_0 = \iint_{S_2} \overrightarrow{j}_0 \cdot d\overrightarrow{A} $$
-
-$$ -\iint_{S_1} \overrightarrow{j}_0 \cdot d\overrightarrow{A} = \iint_{S_2} \overrightarrow{j}_0 \cdot d\overrightarrow{A} = i_0 $$
-
-$$ \oiint_S \overrightarrow{j}_0 \cdot d\overrightarrow{A} = \iint_{S_1} \overrightarrow{j}_0 \cdot d\overrightarrow{A} + \iint_{S_2} \overrightarrow{j}_0 \cdot d\overrightarrow{A} = 0 $$
-
+\\[ \oint \overrightarrow{H} \cdot d\overrightarrow{l} = i_0 = \iint_{S_2} \overrightarrow{j} _ 0 \cdot d\overrightarrow{A} \\] 
+\\[ -\iint_{S_1} \overrightarrow{j} _ 0 \cdot d\overrightarrow{A} = \iint_{S_2} \overrightarrow{j} _ 0 \cdot d\overrightarrow{A} = i_0 \\] 
+\\[ \oiint_S \overrightarrow{j} _ 0 \cdot d\overrightarrow{A} = \iint_{S_1} \overrightarrow{j} _ 0 \cdot d\overrightarrow{A} + \iint_{S_2} \overrightarrow{j} _ 0 \cdot d\overrightarrow{A} = 0 \\]
 上面公式的物理含义是，通过一个闭合曲面的电流恒等于零（流入的电流等于流出的电流），
 
 但是这样的结论在讨论一个电容器的充电时则会出现问题。
@@ -76,18 +72,19 @@ $$ \oint \overrightarrow{H} \cdot d\overrightarrow{l} = I_{free} + I_D $$
 
 但是位移电流的概念是怎么得到的呢？我们可以从下面的推导中看到：
 
-首先考虑（1，3）构成的曲面 $S$，电流只进入不流出
-$$ \oiint_S \overrightarrow{j}_0 \cdot d\overrightarrow{A} = -\dfrac{dq_0}{dt} $$
-又根据高斯定律，
-$$ \oiint_S \overrightarrow{D} \cdot d\overrightarrow{A} = q_0 $$
-于是
-$$ \dfrac{dq_0}{dt} = \dfrac{d}{dt} \oiint_S \overrightarrow{D} \cdot d\overrightarrow{A} = \oiint_S \dfrac{\partial \overrightarrow{D}}{\partial t} \cdot d\overrightarrow{A} $$
+!!! property "位移电流的推导"
+    首先考虑（1，3）构成的曲面 $S$，电流只进入不流出
+    $$ \oiint_S \overrightarrow{j}_0 \cdot d\overrightarrow{A} = -\dfrac{dq_0}{dt} $$
+    又根据高斯定律，
+    $$ \oiint_S \overrightarrow{D} \cdot d\overrightarrow{A} = q_0 $$
+    于是
+    $$ \dfrac{dq_0}{dt} = \dfrac{d}{dt} \oiint_S \overrightarrow{D} \cdot d\overrightarrow{A} = \oiint_S \dfrac{\partial \overrightarrow{D}}{\partial t} \cdot d\overrightarrow{A} $$
 
-$$ \therefore \oiint_S \left( \overrightarrow{j}_0 + \dfrac{\partial \overrightarrow{D}}{\partial t} \right) \cdot d\overrightarrow{A} = 0 $$
+    $$ \therefore \oiint_S \left( \overrightarrow{j}_0 + \dfrac{\partial \overrightarrow{D}}{\partial t} \right) \cdot d\overrightarrow{A} = 0 $$
 
-此时在曲面1进入的量等于从曲面3流出的量，即
+    此时在曲面1进入的量等于从曲面3流出的量，即
 
-$$ -\oiint_{S_1} \left( \overrightarrow{j}_0 + \dfrac{\partial \overrightarrow{D}}{\partial t} \right) \cdot d\overrightarrow{A} = \oiint_{S_2} \left( \overrightarrow{j}_0 + \dfrac{\partial \overrightarrow{D}}{\partial t} \right) \cdot d\overrightarrow{A} $$
+    $$ -\oiint_{S_1} \left( \overrightarrow{j}_0 + \dfrac{\partial \overrightarrow{D}}{\partial t} \right) \cdot d\overrightarrow{A} = \oiint_{S_2} \left( \overrightarrow{j}_0 + \dfrac{\partial \overrightarrow{D}}{\partial t} \right) \cdot d\overrightarrow{A} $$
 
 考虑到电位移矢量与磁感应强度的对称关系，我们也可以定义一个类似于磁通量的物理量：电位移通量
 !!! info 
@@ -98,6 +95,9 @@ $$ -\oiint_{S_1} \left( \overrightarrow{j}_0 + \dfrac{\partial \overrightarrow{D
     位移电流密度
     $$ \overrightarrow{j}_D = \dfrac{\partial \overrightarrow{D}}{\partial t} $$
 
+- 磁通量的变化率等于感应电流的大小
+- 电位移通量的变化率等于位移电流的大小
+
 综合以上的内容，我们就得到了新的安培环路定理：
 $$ \oint \overrightarrow{H} \cdot d\overrightarrow{l} = i_0 + i_D = \iint \left( \overrightarrow{j}_0 + \dfrac{\partial \overrightarrow{D}}{\partial t} \right) \cdot d\overrightarrow{A} $$
 
@@ -105,7 +105,7 @@ $$ \oint \overrightarrow{H} \cdot d\overrightarrow{l} = i_0 + i_D = \iint \left(
 
 $$ \begin{aligned}
 \oint \overrightarrow{H} \cdot d\overrightarrow{l} &= \iint \left( \overrightarrow{j}_0 + \dfrac{\partial \overrightarrow{D}}{\partial t} \right) \cdot d\overrightarrow{A} \\\\
-&= \iint \nabla \times \overrightarrow{H} \cdot d\overrightarrow{A}
+&= \iint (\nabla \times \overrightarrow{H}) \cdot d\overrightarrow{A}
 \end{aligned} $$
 
 于是
@@ -120,7 +120,7 @@ $$ \nabla \times \overrightarrow{H} = \overrightarrow{j}_0 + \dfrac{\partial \ov
     & \Rightarrow i_0 = \dfrac{dq}{dt} = \epsilon_0 \dfrac{d \Phi_E}{dt} = \dfrac{d \Phi_D}{dt} = i_D 
     \end{aligned} $$
 
-    充电时，两个电极板之间的位移电流的大小等于导线中电流的大小，这样就使得整个电路中的电流是“连续”的。
+    充电时，**两个电极板之间的位移电流的大小等于导线中电流的大小**，这样就使得整个电路中的电流是“连续”的。
 
     充满电之后，$i_0 = i_D = 0$
 
@@ -143,9 +143,8 @@ $$ \begin{aligned}
     
     但磁场变化时由于楞次定律的存在，涡旋电场的方向与磁场变化的方向**相反**（有负号）；而电场变化时，涡旋磁场的方向与电场变化的方向**相同**（无负号）。
 
-    $$ \oint \overrightarrow{E} \cdot d\overrightarrow{l} = -\iint \dfrac{\partial \overrightarrow{B}}{\partial t} \cdot d\overrightarrow{A} $$
-
-    $$ \oint \overrightarrow{B} \cdot d\overrightarrow{l} = \mu_0 \epsilon_0 \int \int \frac{\partial \overrightarrow{E}}{\partial t} \cdot d\overrightarrow{A} $$
+    \\[ \oint \overrightarrow{E} \cdot d\overrightarrow{l} = -\iint \dfrac{\partial \overrightarrow{B}}{\partial t} \cdot d\overrightarrow{A} \\] 
+    \\[ \oint \overrightarrow{B} \cdot d\overrightarrow{l} = \mu_0 \epsilon_0 \int \int \frac{\partial \overrightarrow{E}}{\partial t} \cdot d\overrightarrow{A} \\]
 
 经过上面的讨论和拓展后，我们就得到了麦克斯韦方程组：
 
@@ -188,7 +187,7 @@ $$ \begin{aligned}
 - 电磁波的传播不需要介质，可以在真空中传播
 
 <figure>
-    <img src="../assets/电磁波的传播.png" width="65%" />
+    <img src="../assets/电磁波的传播.png" width="55%" />
 </figure>
 
 - 变化的磁场会产生涡旋的电场：$$ \oint \overrightarrow{E} \cdot d\overrightarrow{l} = -\iint \dfrac{\partial \overrightarrow{B}}{\partial t} \cdot d\overrightarrow{A} $$
@@ -197,7 +196,7 @@ $$ \begin{aligned}
     假如由于感应产生的电场和磁场的都在不断变化，那么就会形成”一串“不断传播的电磁场，这就是电磁波。
 
     <figure>
-        <img src="../assets/涡旋电场和涡旋磁场.png" width="75%" />
+        <img src="../assets/涡旋电场和涡旋磁场.png" width="65%" />
     </figure>
 
 !!! note 
@@ -208,14 +207,14 @@ $$ \begin{aligned}
     1. 电磁波是横波，电场和磁场均垂直于传播方向 $\overrightarrow{E} \perp \overrightarrow{k}, \quad \overrightarrow{H} \perp \overrightarrow{k}$
 
         <figure>
-            <img src="../assets/电磁波是横波.png" width="75%" />
+            <img src="../assets/电磁波是横波.png" width="40%" />
         </figure>
         
     2. 电场和磁场始终相互垂直 $\overrightarrow{E} \perp \overrightarrow{H}$
     3. $E$ 与 $H$ 同相位
 
         <figure>
-            <img src="../assets/电场与磁场同相位.png" width="75%" />
+            <img src="../assets/电场与磁场同相位.png" width="90%" />
         </figure>
 
     4. $\sqrt{\kappa_e \epsilon_0} E_0 = \sqrt{\kappa_m \mu_0} H_0$
@@ -271,13 +270,13 @@ H_x & H_y & H_z
 \end{cases}
 $$
 
-首先假设一个点波源，它发出的电磁波就是一个球面，在很远处的自由空间中，取一个较小的弧面，这个弧面的电磁波可以近似认为是一个**平面波**。以电磁波传播的方向为$z$轴，电场和磁场所在方向分别为$x$轴和$y$轴。
+首先假设一个点波源，它发出的电磁波就是一个球面，在很远处的自由空间中，取一个较小的弧面，这个弧面的电磁波可以近似认为是一个**平面波**。以电磁波传播的方向为 $z$ 轴，电场和磁场所在方向分别为 $x$ 轴和 $y$ 轴。
 
 <figure>
-    <img src="../assets/平面波.png" width="75%" />
+    <img src="../assets/平面波.png" width="40%" />
 </figure>
 
-将上面得到的式子展开，那么就可以得到以下8个方程：
+将上面得到的式子展开，那么就可以得到以下 8 个方程：
 
 $$
 \begin{align*}
@@ -292,11 +291,11 @@ $$
 \end{align*}
 $$
 
-接下来我们将使用这些方程来推导电磁波的5条性质。
+接下来我们将使用这些方程来推导电磁波的 5 条性质。
 
 ### 横波
 
-首先我们知道电场强度 $E$ 在$x$和$y$方向上的分量都与$x$和$y$无关，仅与$z$和时间$t$有关，磁场强度 $H$ 也是如此，因此
+首先我们知道电场强度 $E$ 在 $x$ 和 $y$ 方向上的分量都与 $x$ 和 $y$ 无关，仅与 $z$ 和时间 $t$ 有关，磁场强度 $H$ 也是如此，因此
 $$ \dfrac{\partial E_x}{\partial x} = \dfrac{\partial E_y}{\partial y} = \dfrac{\partial E_x}{\partial y} = \dfrac{\partial E_y}{\partial x} = 0 $$
 $$ \dfrac{\partial H_x}{\partial x} = \dfrac{\partial H_y}{\partial y} = \dfrac{\partial H_x}{\partial y} = \dfrac{\partial H_y}{\partial x} = 0 $$
 把它们带入上面的方程中，就有
@@ -308,7 +307,7 @@ $$ \begin{aligned}
 (4-3) &\Longrightarrow \dfrac{\partial E_z}{\partial t} = 0
 \end{aligned} $$
 
-因此电场强度和磁场强度在$z$方向的分量$E_z, H_z$与空间和时间都无关，是一个常数，我们不妨将它们都设为0，即$E_z = H_z = 0$。
+因此电场强度和磁场强度在 $z$ 方向的分量 $E_z, H_z$ 与空间和时间都无关，是一个常数，我们不妨将它们都设为 0，即 $E_z = H_z = 0$。
 
 于是我们就得到 $\overrightarrow{E}$ 和 $\overrightarrow{H}$ 都与传播方向垂直
 $$ \overrightarrow{E} \perp \overrightarrow{k}, \quad \overrightarrow{H} \perp \overrightarrow{k} $$
@@ -337,12 +336,12 @@ $$ \overrightarrow{E} \perp \overrightarrow{H} $$
 ### 波动方程
 
 <figure>
-    <img src="../assets/波动方程.png" width="75%" />
+    <img src="../assets/波动方程.png" width="50%" />
 </figure>
 
-下面我们来推导电磁波剩余的3条性质。
+下面我们来推导电磁波剩余的 3 条性质。
 
-对上面四个方程中（2-2）的两边对$t$求偏导，有
+对上面四个方程中（2-2）的两边对 $t$ 求偏导，有
 $$ \frac{\partial^2 E_x}{\partial z^2} = -\kappa_m \mu_0 \frac{\partial}{\partial t} \cdot \frac{\partial H_y}{\partial z} = \kappa_m \mu_0 K_e \epsilon_0 \frac{\partial^2 E_x}{\partial t^2} $$
 
 同理我们可以对（4-1）两边做相同的操作，就与就得到以下两个方程：
@@ -359,7 +358,7 @@ E_x=E_{x0} e^{i(\omega t - kz)} \\
 H_y=H_{y0} e^{i(\omega t - kz)}
 \end{cases} $$
 
-其中 $\omega=\frac{2\pi}{T}$ 是角频率，$k=\dfrac{2\pi}{\lambda}$ 是波数，$\lambda$ 是波长。
+其中 $\omega=\dfrac{2\pi}{T}$ 是角频率，$k=\dfrac{2\pi}{\lambda}$ 是波数（或称波矢，wave vector），$\lambda$ 是波长。
 
 带入上面的方程中，得到
 
@@ -374,7 +373,7 @@ $$ v=\dfrac{\omega}{k}= \dfrac{1}{\sqrt{\kappa_e \epsilon_0 \kappa_m \mu_0}} $$
 
 并且在真空中，磁导率 $\kappa_m = 1$，电导率 $\kappa_e = 1$，带入数据计算后发现 $v = \dfrac{1}{\sqrt{ \epsilon_0 \mu_0}} = 3 \times 10^8 m/s = c$。
 
-因此我们就证明了上面提到的电磁波的第5条性质，并且还推测**光也是一种电磁波**。
+因此我们就证明了上面提到的电磁波的第 5 条性质，并且还推测**光也是一种电磁波**。
 
 !!! tip
     我们在中学中已经学到过，光在非真空的介质中传播速度为 $v = \dfrac{c}{n}$，其中 $n$ 是介质的折射率，$c$ 是真空中的光速。对比上面的式子，我们发现 
@@ -388,7 +387,7 @@ $$ \begin{aligned}
 -i k E_{x_0} e^{i(\omega t - kx)} &= -\kappa_m \mu_0 i \omega H_{y_0} e^{i(\omega t - kx)} \\\\
 k E_{x_0} &= \kappa_m \mu_0 \omega H_{y_0} \\\\
 E_{x_0} &= \kappa_m \mu_0 \frac{\omega}{k} H_{y_0} = \kappa_m \mu_0 v H_{y_0} \\\\
-&= \kappa_m \mu_0 \frac{1}{\sqrt{\kappa_m \mu_0 \kappa_e \varepsilon_0}} H_{y_0} \\\\
+E_{x_0} &= \kappa_m \mu_0 \frac{1}{\sqrt{\kappa_m \mu_0 \kappa_e \varepsilon_0}} H_{y_0} \\\\
 \sqrt{\kappa_e \varepsilon_0} E_{x_0} &= \sqrt{\kappa_m \mu_0} H_{y_0} \\\\
 \sqrt{\kappa_e \varepsilon_0} E_{x_0} e^{i \phi_E} &= \sqrt{\kappa_m \mu_0} H_{y_0} e^{i \phi_H}
 \end{aligned} $$
@@ -400,7 +399,7 @@ $$ \begin{cases}
 \phi_E = \phi_H
 \end{cases} $$
 
-!!! note “真空中 $E$ 与 $B$ 的关系”
+!!! note "真空中 $E_0$ 与 $B_0$ 的关系"
     在真空中，$\kappa_e = \kappa_m = 1$，所以
     $$ \sqrt{\varepsilon_0} E_0 = \sqrt{\mu_0} H_0 $$
     $$ E_0 = \dfrac{\mu_0 H_0}{\sqrt{\varepsilon_0 \mu_0}}=cB_0 $$
@@ -526,13 +525,13 @@ $$ u = u_E + u_B = \varepsilon_0 E^2 = \dfrac{B^2}{\mu_0} $$
 
 上面提到过，在实际的实验中 $E$ 要比 $B$ 大很多，更容易测量，因此我们在这里用 $E$ 来表示电磁波总的能量密度。
 
-通常来说，我们更关注电磁波的*平均*能量密度，
+通常来说，我们更关注电磁波的**平均**能量密度，
 $$ \left< u \right> = \varepsilon_0 \left< E^2 \right> = \varepsilon_0 E_{max}^2 \left< sin^2(kz - \omega t) \right> = \dfrac{\varepsilon_0 E_{max}^2}{2} $$
 
 这时我们可以引入电场强度的均方根，$E_{rms} = \dfrac{E_{max}}{\sqrt{2}}$，那么电磁波的平均能量密度就可以表示为
 $$ \left< u \right> =  \dfrac{\varepsilon_0 E_{max}^2}{2} = \varepsilon_0 E_{rms}^2 $$
 
-回顾我们上面对**波的强度**的定义，$I$ 可以被定义 为单位面积上的平均功率 = 平均能量密度乘以波的传播速度，即
+回顾我们上面对**波的强度**的定义，$I$ 可以被定义为**单位面积上的平均功率** = **平均能量密度乘以波的传播速度**，即
 
 <figure>
     <img src="../assets/波的强度.png" width="60%" />
@@ -570,7 +569,7 @@ $$ \overrightarrow{S} = \overrightarrow{E} \times \overrightarrow{H} $$
 
 - 对于与负极相连的导线，我们可以得到类似的分析：
 
-    导线内部的 $S$ 是沿径向向内的；而导线外表面的 $S$ 除了有径向向外的分量之外，还有逆着电流方向的分量
+    导线内部的 $S$ 是沿径向向内的；而导线外表面的 $S$ 除了有径向向内的分量之外，还有逆着电流方向的分量
 
 于是最终分析得到的 $S$ 的方向就和第一张图中箭头的方向一致，即能量从电源流向电阻。
 
@@ -578,27 +577,19 @@ $$ \overrightarrow{S} = \overrightarrow{E} \times \overrightarrow{H} $$
 
 ![](./assets/电磁波的动量与辐射压强.png){ align=right width=30% }
 
-当电磁波传播到一个物体上时，根据 $\overrightarrow{j}_0 = \sigma \overrightarrow{E}$，我们可以知道产生的电流方向与电磁波的电场方向一致。这个物体中电子收到的力为
+当电磁波传播到一个物体上时，根据 $\overrightarrow{j}_0 = \sigma \overrightarrow{E}$，我们可以知道产生的电流方向与电磁波的电场方向一致。这个物体中电子受到的力为
 $$ \overrightarrow{f}_L = -e \overrightarrow{v} \times \overrightarrow{B} = -\mu_0 e \overrightarrow{v} \times \overrightarrow{H} $$
 
 因此物体会受到一个沿电磁波传播方向的力，而电磁波也会收到一个相反方向的力，所以电磁波会被反射回去
 
 力 $\Delta F$ 在面积为 $\Delta A$ 的表面上做的功等与电磁波减少的能量
-
-$$ \Delta \overrightarrow{F} \cdot c \Delta t = (\overrightarrow{S}_{in} - \overrightarrow{S}_{out}) \cdot \Delta A \Delta t $$ 
-
+$$ \Delta \overrightarrow{F} \cdot c \Delta t = (\overrightarrow{S} _ {in} - \overrightarrow{S} _ {out}) \cdot \Delta A \Delta t $$ 
 于是
-
-$$ \Delta \overrightarrow{F} = \dfrac{1}{c} (\overrightarrow{S}_{in} - \overrightarrow{S}_{out}) \Delta A $$
-
+$$ \Delta \overrightarrow{F} = \dfrac{1}{c} (\overrightarrow{S} _ {in} - \overrightarrow{S} _ {out}) \Delta A $$
 电磁波作用在物体上的压强为
-
-$$ P = \dfrac{ \left| \Delta \overrightarrow{F} \right| }{\Delta A} = \dfrac{1}{c} (\left| \overrightarrow{S}_{in} \right| - \left| \overrightarrow{S}_{out} \right|) $$
-
+$$ P = \dfrac{ \left| \Delta \overrightarrow{F} \right| }{\Delta A} = \dfrac{1}{c} (\left| \overrightarrow{S} _ {in} \right| - \left| \overrightarrow{S} _ {out} \right|) $$
 电磁波的动量变化为
-
-$$ \Delta \overrightarrow{G} = -\Delta \overrightarrow{G}_P = \Delta \overrightarrow{F} \cdot \Delta t = -\dfrac{1}{c} (\overrightarrow{S}_{out} - \overrightarrow{S}_{in}) \Delta A \Delta t $$
-
+$$ \Delta \overrightarrow{G} = -\Delta \overrightarrow{G}_P = -\Delta \overrightarrow{F} \cdot \Delta t = -\dfrac{1}{c} (\overrightarrow{S} _ {out} - \overrightarrow{S} _ {in}) \Delta A \Delta t $$
 于是单位体积内的动量变化为
 
 $$ \begin{aligned}

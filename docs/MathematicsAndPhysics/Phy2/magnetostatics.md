@@ -304,7 +304,7 @@ $$ \oint \overrightarrow{B} \cdot d\overrightarrow{l} = \mu_0 \sum_{inloop} i $$
     <img src="../assets/无限长直导线的磁场1.png" width="35%" />
 </figure>
 
-考虑一个无限长直导线，半径为 $R$，大小为 $i$的电流均匀分布在导线内部，我们考虑距离导线的中心距离为 $r$ 处的磁场。
+考虑一个无限长直导线，半径为 $R$，大小为 $i$ 的电流均匀分布在导线内部，我们考虑距离导线的中心距离为 $r$ 处的磁场。
 
 !!! solution "无限长直导线的磁场"
     === "$r > R$"
@@ -360,9 +360,7 @@ $$ B = \dfrac{1}{2} \mu_0 ni$$
     如果我们把螺线管沿着纵向切一刀，并从截面方向来看，就可以看到两个大小相等，方向相反的电流面，这与电容器的两个极板很类似：
 
     - 在电流面的两侧，两个电流面产生的磁场方向相反，相互抵消，总磁场大小为零
-    - 在电流面的中间，两个电流面产生的磁场方向相同，相互叠加，总磁场大小为
-
-    $$ B = \mu_0 ni $$
+    - 在电流面的中间，两个电流面产生的磁场方向相同，相互叠加，总磁场大小为 $$ B = \mu_0 ni $$
 
 或者我们也可以使用安培环路定理来求解
 $$ \oint \overrightarrow{B} \cdot d\overrightarrow{l} = Bw = \mu_0 nwi $$
@@ -382,7 +380,7 @@ $$ \oint \overrightarrow{B} \cdot d\overrightarrow{l} = B \cdot 2\pi r = \mu_0 N
 
 $$ B = \dfrac{\mu_0 Ni}{2\pi r} = \mu_0 ni $$
 
-!!! summary "常见的几种模型的磁场大小"
+!!! abstract "常见的几种模型的磁场大小"
     - 无限长直导线
 
         - 导线外部：$B = \dfrac{\mu_0 i}{2\pi r}$
@@ -406,7 +404,7 @@ $$ d\overrightarrow{F} = i d\overrightarrow{l} \times \overrightarrow{B} $$
     </figure>
 
     $F_1$ 和 $F_3$ 的计算很简单，对于 $F_2$，根据对称性很容易发现它在水平方向上的力为零，只有竖直方向上的力
-    $$ F_2 = F_{\vert} = \int_0^{\pi} iBR d\theta \sin\theta = iBR \int_0^{\pi} \sin\theta d\theta = 2iBR $$
+    $$ F_2 = F_{\perp} = \int_0^{\pi} iBR d\theta \sin\theta = iBR \int_0^{\pi} \sin\theta d\theta = 2iBR $$
 
 #### 矩形线圈
 
@@ -423,13 +421,13 @@ $$\begin{aligned}
 \end{aligned}$$
 
 即
-$$ \overrightarrow{tau} = iA(\overrightarrow{n} \times \overrightarrow{B}) = \overrightarrow{\mu} \times \overrightarrow{B} $$
+$$ \overrightarrow{\tau} = iA(\overrightarrow{n} \times \overrightarrow{B}) = \overrightarrow{\mu} \times \overrightarrow{B} $$
 
 
 #### 任意形状线圈
 
 <figure>
-    <img src="../assets/任意形状线圈.png" width="400px" />
+    <img src="../assets/任意形状线圈.png" width="40%" />
 </figure>
 
 我们可以把上面的结论推广到任意形状的线圈，我们可以把任意形状的线圈分解为一个个小矩形，对所有小矩形带有的电流进行累加，发现只有最外侧的电流不会相互抵消，最终得到的电流就是这个线圈的总电流。
@@ -452,20 +450,18 @@ $$ \tau = \int dL = \int iBdA = iBA $$
 
 !!! note 
     类似于电偶极矩的势能
-    $$ U = -\overrightarrow{\p} \cdot \overrightarrow{E} $$
+    $$ U = -\overrightarrow{p} \cdot \overrightarrow{E} $$
     磁偶极矩也有相同形式的势能
-    $$ U = -\overrightarrow{\mu} \cdot \overrightarrow{B} $$
+    $$ U = -\overright  arrow{\mu} \cdot \overrightarrow{B} $$
 
 ### 电荷在磁场中的运动
 
 !!! note "洛伦兹力"
     $$ \overrightarrow{F}_L = q\overrightarrow{v} \times \overrightarrow{B} $$
 
-    洛伦兹力不做功，洛伦兹力只改变速度方向，不改变速度大小
-
-    洛伦兹力的方向可用右手定则来判断
-
-    在匀强磁场中，带电粒子在垂直于磁场的平面上做圆周运动 
+    - 洛伦兹力不做功，洛伦兹力只改变速度方向，不改变速度大小
+    - 洛伦兹力的方向可用右手定则来判断
+    - 在匀强磁场中，带电粒子在垂直于磁场的平面上做圆周运动 
     $$ qvB = \dfrac{mv^2}{R} \rightarrow R = \dfrac{mv}{qB} $$
     $$ T = \dfrac{2\pi R}{v} = \dfrac{2\pi m}{qB} $$
     $$ f = \dfrac{1}{T} = \dfrac{qB}{2\pi m} $$
@@ -475,8 +471,7 @@ $$ \tau = \int dL = \int iBdA = iBA $$
         <img src="../assets/质谱仪.png" width="50%" />
     </figure>
 
-    $$ qE = qvB \rightarrow v = \dfrac{E}{B} $$
+    $$ qE = qvB \rightarrow v = \dfrac{E}{B} $$ 
+    在速度选择器后紧接着一个匀强磁场，就可以根据粒子运动半径的大小来判断粒子的质荷比
     
-    在速度选择器后紧接着一个匀强磁场，就可以根据粒子运动半径的大小来判断粒子的质荷比 
-
     $$ R = \dfrac{mv}{qB} $$

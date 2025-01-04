@@ -176,8 +176,7 @@ Any Fit 是一类 Fit 方案，满足如下性质：当物品到达时，除非�
 
 - NF 和 WF 的近似比都是 2
 - 而任意的 Almost Any Fit（AAF）算法都可以达到相同的近似比：1.7
-- 对于任意实例 $I$，有 
-    $$FF(I) \leqslant 1.7 \cdot OPT(I) + \dfrac{4}{5}$$
+- 对于任意实例 $I$，有 $$ FF(I) \leqslant 1.7 \cdot OPT(I) + \dfrac{4}{5} $$
 
 ~~具体的证明比较长，就不抄了(×)~~
 

@@ -10,17 +10,17 @@
 
     主要包括三个部分
 
-    - Interference 干涉
-    - Diffraction 衍射
-    - Polarization 偏振
+    - **Interference 干涉**
+    - **Diffraction 衍射**
+    - **Polarization 偏振**
 
 ## 干涉（Interference）
 
 ### 定态光波
 
-所谓定态波就是指波的振幅和相位都与时间无关的波，例如
+所谓定态波就是指波的振幅和相位都**与时间无关**的波，例如
 $$ U(P,t) = A(P) \cos(\omega t - \varphi(P)) $$
-中的 $A(P)$ 和$ \varphi(P)$ 都仅仅是与空间有关的函数，而与时间无关。
+中的 $A(P)$ 和 $\varphi(P)$ 都是仅仅与空间有关，而与时间无关的函数。
 
 !!! example
     - 定态平面波
@@ -29,7 +29,7 @@ $$ U(P,t) = A(P) \cos(\omega t - \varphi(P)) $$
         & \begin{cases} A(P) = A_0 ,\text{constant, independent of (x,y,z)} \\ 
         \varphi(P) = \overrightarrow{k} \cdot \overrightarrow{r} + \varphi_0 = k_x x + k_y y + k_z z + \varphi_0 
         \end{cases} \\\\
-        & k = \dfrac{2\pi}{\lambda}, \overrightarrow{r} = x \overrightarrow{i} + y \overrightarrow{j} + z \overrightarrow{k}
+        & k = \dfrac{2\pi}{\lambda}, \quad \overrightarrow{r} = x \overrightarrow{i} + y \overrightarrow{j} + z \overrightarrow{k}
         \end{aligned} $$  
 
 
@@ -46,12 +46,11 @@ $$ \overrightarrow{H}(P,t) = \overrightarrow{H}_0 (P) \cos(\omega t - \varphi(P)
 
 ### 波的负数描述
 
-$$ \begin{aligned}
+\\[ \begin{aligned}
 & U(P,t) = A(P) \cos[\omega t - \varphi(P)] \\\\
 \Longleftrightarrow \quad & \widetilde{U}(P,t) = A(P) e^{\pm i[\omega t - \varphi(P)]}
-\end{aligned} $$
-
-上面的正负符号的不同是由于欧拉公式的不同形式，但是在实际应用中，我们通常使用负号。
+\end{aligned} \\]
+上面的正负符号的不同是来自于欧拉公式的不同形式，但是在实际应用中，我们通常使用负号。
 
 对于一个定态波，我们可以把它的空间和时间分离，即
 $$ \widetilde{U}(P,t) = A(P) e^{i[\varphi(P) - \omega t]} = A(P) e^{i\varphi(P)} e^{-i\omega t} $$
@@ -62,14 +61,14 @@ $$ \widetilde{U}(P,t) = A(P) e^{i[\varphi(P) - \omega t]} = A(P) e^{i\varphi(P)}
     - 球面波 $$ \widetilde{U}(P) = \dfrac{a}{r} e^{i(kr + \varphi_0)} $$
 
     波的强度与振幅的平方成正比，即 $I \propto |A|^2$，但是一般而言我们会直接使用等号
-    $$ I(P) - [A(P)]^2 = \widetilde{U}^*(P) \cdot \widetilde{U}(P) $$
+    $$ I(P) = [A(P)]^2 = \widetilde{U}^*(P) \cdot \widetilde{U}(P) $$
 
 ### 波的干涉与相干条件
 
 两列波叠加的结果为
 $$ \widetilde{U}(P,t) = \widetilde{U}_1(P,t) + \widetilde{U}_2(P,t) = [A_1(P) e^{i\varphi_1(P)} + A_2(P) e^{i\varphi_2(P)}] e^{-i\omega t} $$ 
 
-因此波的强度为
+因此叠加得到的波的强度为
 
 $$ \begin{aligned}
 I(P) &= \widetilde{U}^*(P) \cdot \widetilde{U}(P) \\\\
@@ -78,12 +77,12 @@ I(P) &= \widetilde{U}^*(P) \cdot \widetilde{U}(P) \\\\
 &= A_1^2 + A_2^2 + 2 A_1 A_2 \cos(\varphi_1 - \varphi_2)
 \end{aligned} $$
 
-由于 $I_1(P) = A_1^2, I_2(P) = A_2^2$，因此两列波的强度之和为
+由于 $I_1(P) = A_1^2,\, I_2(P) = A_2^2$，因此两列波的强度之和为
 $$ I(P) = I_1(P) + I_2(P) + 2 \sqrt{I_1(P) I_2(P)} \cos(\varphi_1 - \varphi_2) $$
 
 !!! note "干涉现象的光强分布"
     <figure>
-        <img src="../assets/干涉现象的光强分布.png" width="70%">
+        <img src="../assets/干涉现象的光强分布.png" width="60%">
     </figure>
 
     因此一般来说 $I(P) \neq I_1(P) + I_2(P)$，只有当 $\varphi_1 - \varphi_2 = 2n\pi$ 时，两列波才是完全相干的。
@@ -95,20 +94,24 @@ $$ I(P) = I_1(P) + I_2(P) + 2 \sqrt{I_1(P) I_2(P)} \cos(\varphi_1 - \varphi_2) $
 
     两个光波之间的相位差 $\Delta \varphi = \varphi_1 - \varphi_2$ 是干涉现象的关键，当相位差不固定时，那么它在在统计意义上的平均值为零，即
     $$ \overline{\cos \Delta \varphi} = \overline{\cos(\varphi_1 - \varphi_2)} = 0 $$
-    相位差会随时间变化时，我们称两列波不相干（incoherent）。
+    当两列波的相位差会随时间变化时，我们称两列波不相干（incoherent）。
 
-除了相位差需要保持固定之外，两个波的频率还需要保持一致，即 $\omega_1 = \omega_2$，这就是两个波的相干条件。
+产生干涉的条件：
+
+- $\omega_1 = \omega_2 = \omega$
+- $\varphi_1 - \varphi_2 = \text{constant}$
+- $\overrightarrow{U}_1 \parallel \overrightarrow{U}_2$
 
 ### 介质中的光程差
 
 相位差在分析光的干涉时十分重要，为便于计算光通过不同媒质时的相位差，我们引入“光程差”的概念。
 
-根据已经学习到的知识，我们知道光程就是 $L = \int n ds$，因此光程差就是。由于光波的相位与它传播的距离，即光程相关，那么我们可以知道相位差与光程差的关系为
+根据已经学习到的知识，我们知道光程就是 $L = \int n ds$，因此光程差就是两束光运动的距离之差乘上介质的折射率。由于光波的相位与它传播的距离（光程）相关，那么我们可以知道相位差与光程差的关系为
 $$ \Delta \varphi = \dfrac{2\pi}{\lambda} \Delta L $$
 其中 $\Delta L$ 是光程差，$\lambda$ 是光的波长
 
 
-!!! summary "光的干涉" 
+!!! abstract "光的干涉" 
     光相干的条件为
 
     - 频率相同
@@ -119,12 +122,12 @@ $$ \Delta \varphi = \dfrac{2\pi}{\lambda} \Delta L $$
     $$ \begin{aligned}
     & \Delta \varphi = 
     \begin{cases} 
-    \pm 2k\pi, &k=0,1,2,\cdots \text{干涉增强} \\\\
+    \pm 2k\pi, &k=0,1,2,\cdots \text{干涉增强} \\\\\\\\
     \pm (2k+1)\pi, &k=0,1,2,\cdots \text{干涉减弱}
-    \end{cases} \\\\
+    \end{cases} \\\\\\\\
     & \Delta L =
     \begin{cases}
-    \pm k\lambda, &k=0,1,2,\cdots \text{干涉增强}\\\\
+    \pm k\lambda, &k=0,1,2,\cdots \text{干涉增强}\\\\\\\\
     \pm (2k+1)\dfrac{\lambda}{2}, &k=0,1,2,\cdots \text{干涉减弱}
     \end{cases}
     \end{aligned} $$
@@ -132,7 +135,7 @@ $$ \Delta \varphi = \dfrac{2\pi}{\lambda} \Delta L $$
 ### 杨氏双缝干涉实验
 
 <figure>
-    <img src="../assets/杨氏双缝干涉实验.png" width="65%">
+    <img src="../assets/杨氏双缝干涉实验.png" width="55%">
 </figure>
 
 杨氏双缝实验需要满足的条件是
@@ -141,10 +144,10 @@ $$ \Delta \varphi = \dfrac{2\pi}{\lambda} \Delta L $$
 - 缝到屏幕的距离 $D$ 要远大于缝之间的距离 $d$，即 $D >> d$。
 
 <figure>
-    <img src="../assets/杨氏双缝干涉实验1.png" width="65%">
+    <img src="../assets/杨氏双缝干涉实验1.png" width="55%">
 </figure>
 
-光程差 $\Delta L = r_2 - r_1 \approx d \sin \theta \approx d \tan\theta = d \cdot \dfrac{y}{D}$
+光程差 $\Delta L = r_2 - r_1 \approx d \sin \theta \approx d \tan\theta = d \cdot \dfrac{x}{D}$
 
 - 干涉相长：$d \sin\theta = m\lambda$
 - 亮纹中心：$x = \dfrac{m\lambda D}{d}$
@@ -164,14 +167,14 @@ $$ \Delta \varphi = \dfrac{2\pi}{\lambda} \Delta L $$
 !!! tip
     当两缝的间距小于光的波长时，将无法看到干涉亮条纹。
 
-    因为亮条纹要求 $d \sin\theta = m \lambda$，即 $\sin\theta = \dfrac{m \lambda}{d}$。
+    - 因为亮条纹要求 $d \sin\theta = m \lambda$，即 $\sin\theta = \dfrac{m \lambda}{d}$。
     
-    当 $d < \lambda$ 时，就有 $\sin\theta > 1$，这是不可能的，因此无法看到亮条纹。
+    - 当 $d < \lambda$ 时，就有 $\sin\theta > 1$，这是不可能的，因此无法看到亮条纹。
 
 ### 洛埃德镜实验
 
 <figure>
-    <img src="../assets/洛埃德镜实验.png" width="80%">
+    <img src="../assets/洛埃德镜实验.png" width="65%">
 </figure>
 
 - 当屏移到 $A'B'$ 位置时，在屏上的 $P$ 点会出现暗条纹。这一实验结果表明当光在镜子表面发生反射时，反射光的相位会变化一个 $\pi$。
@@ -181,10 +184,10 @@ $$ \Delta \varphi = \dfrac{2\pi}{\lambda} \Delta L $$
     - 光从光密介质反射到光疏介质，反射光的相位不变。
 
     <figure>
-        <img src="../assets/半波损失.png" width="80%">
+        <img src="../assets/半波损失.png" width="70%">
     </figure>
 
-    可以类比于更一般的波的反射，当波传播到更“难”传播，或者说更“稠密”的介质中时，反射回来的波会有一个 $\pi$ 的相位差，这就是半波损失。
+    可以类比于上面的更一般的波的反射，当波传播到更“难”传播，或者说更“稠密”的介质中时，反射回来的波会有一个 $\pi$ 的相位差，这就是半波损失。
 
     - **折射波不会出现半波损失**
 
@@ -207,7 +210,7 @@ $$ \Delta L = 2nh $$
 #### 劈尖膜
 
 <figure>
-    <img src="../assets/劈尖膜.png" width="70%">
+    <img src="../assets/劈尖膜.png" width="55%">
 </figure>
 
 由于光线在空气劈尖的下表面发生反射时会有半波损失，因此实际的光程差为
@@ -222,12 +225,10 @@ m\lambda, & m = 0,1,2,\cdots \text{亮条纹} \\
 \end{cases} $$
 
 亮、暗条纹对应的厚度为
-
-$$ h = \begin{cases}
-\dfrac{(m-\dfrac{1}{2})}{2n} \lambda, & m = 1,2,3,\cdots \quad \text{亮条纹} \\\\
+\\[ h = \begin{cases}
+\dfrac{(m-\dfrac{1}{2})}{2n} \lambda, & m = 1,2,3,\cdots \quad \text{亮条纹} \\\\\\\\
 \dfrac{m}{2n} \lambda, & m = 0,1,2,\cdots \quad \text{暗条纹}
-\end{cases} $$
-
+\end{cases} \\]
 于是相邻的两个条纹对应的厚度差为 $\Delta h = \dfrac{\lambda}{2n}$
 
 !!! example 
@@ -271,7 +272,7 @@ $$ r = \begin{cases}
 
 由于
 $$ \Delta r = r_{m+1} - r_m = \dfrac{\sqrt{R\lambda}}{\sqrt{R} + \sqrt{R+1}} $$
-因此牛顿环的条纹间距是不等的，且内疏外密。
+因此牛顿环的条纹间距是不等的，且**内疏外密**。
 
 ---
 
@@ -280,13 +281,12 @@ $$ \Delta r = r_{m+1} - r_m = \dfrac{\sqrt{R\lambda}}{\sqrt{R} + \sqrt{R+1}} $$
 光在传播过程中，会出现绕过障碍物的边缘而偏离直线传播的现象，这称为光的衍射现象。
 
 !!! note "菲涅耳衍射和弗朗和夫衍射"
-    <center>
-        <img src="../assets/菲涅耳衍射.png" width="40%"/>
-        <img src="../assets/夫琅禾费衍射.png" width="55%"/>
-    </center>
+    ![](./assets/夫琅禾费衍射.png){align=right width=45%}
+    ![](./assets/菲涅耳衍射.png){ width=40%}
+    
 
-    - 菲涅耳衍射：当光源和观察屏，或两者之一离障碍物（衍射屏）的距离为有限远时，所发生的衍射现象。（左图）
-    - 弗朗和夫衍射：光源和观察屏离障碍物的距离均为无限远时，所发生的衍射现象。（右图）
+    - 菲涅耳衍射：当光源和观察屏，或两者之一离障碍物（衍射屏）的距离为**有限远**时，所发生的衍射现象。（左图）
+    - 弗朗和夫衍射：光源和观察屏离障碍物的距离均为**无限远**时，所发生的衍射现象。（右图）
 
 !!! info "惠更斯—菲涅耳原理"
     - 惠更斯原理：媒质中波动所到达的各点都可以看作一个新的子波源，这些子波源向空间发射球面子波。在以后的任一时刻，这些子波的包络面就是波在该时刻的新的波阵面。
@@ -296,7 +296,7 @@ $$ \Delta r = r_{m+1} - r_m = \dfrac{\sqrt{R\lambda}}{\sqrt{R} + \sqrt{R+1}} $$
 
     $$ \mathrm{d}E_P = C \dfrac{\mathrm{d}S}{r} K(\theta) \cos(\dfrac{2\pi}{\lambda} r \omega t + \varphi_0) $$
     $$ E_P = \int_S C \dfrac{K(\theta)}{r} \cos(\dfrac{2\pi}{\lambda} r \omega t + \varphi_0) \mathrm{d}S $$
-    其中 $K(\theta)$ 为倾斜银子
+    其中 $K(\theta)$ 为倾斜因子
 
     - $\theta = 0$ 时，$K=K_{max}=1$，沿原波传播方向的子波振幅最大
     - $\theta$ 增大时 $K$ 减小
@@ -311,11 +311,11 @@ $$ \Delta r = r_{m+1} - r_m = \dfrac{\sqrt{R\lambda}}{\sqrt{R} + \sqrt{R+1}} $$
 实验装置图以及光路图如下
 
 <figure>
-    <img src="../assets/弗朗和夫单缝衍射实验装置图.png" width="55%"/>
+    <img src="../assets/弗朗和夫单缝衍射实验装置图.png" width="45%"/>
 </figure>
 
 <figure>
-    <img src="../assets/弗朗和夫单缝衍射光路图.png" width="55%"/>
+    <img src="../assets/弗朗和夫单缝衍射光路图.png" width="45%"/>
 </figure>
 
 由于缝中各点的光都可以看作一个新的波源，我们考虑这些波源朝着角度为 $\theta$ 的方向发射新的子波的情况，显然光程差为 $\Delta L = \delta = a \sin\theta$
@@ -330,7 +330,7 @@ $$ \Delta r = r_{m+1} - r_m = \dfrac{\sqrt{R\lambda}}{\sqrt{R} + \sqrt{R+1}} $$
 - 两相邻半波带上对应点在相同的 $P$ 点处干涉相消，形成暗条纹
 
 <figure>
-    <img src="../assets/菲涅耳半波带法.png" width="65%"/>
+    <img src="../assets/菲涅耳半波带法.png" width="60%"/>
 </figure>
 
 由半波带法可得条件：
@@ -409,19 +409,17 @@ $$ I_{\theta} = E_{\theta}^2 = E_m^2 \left( \dfrac{\sin\alpha}{\alpha} \right)^2
     我们把条纹宽度对应的衍射角宽度的一半称为半角宽度
 
     <figure>
-        <img src="../assets/半角宽度.png" width="60%"/>
+        <img src="../assets/半角宽度.png" width="50%"/>
     </figure>
 
     例如在上图中，主极大的角宽度为 $\Delta \theta_0$，半角宽度为 $\theta_1$
-    
-    $$\Delta \theta_0 = 2\theta_1 \approx 2 \dfrac{\lambda}{a}$$
-
+    $$ \Delta \theta_0 = 2\theta_1 \approx 2 \dfrac{\lambda}{a} $$
     线宽度为 $\Delta x_0 = 2 f \cdot \tan\theta_1 \approx 2f \theta_1 = 2f \dfrac{\lambda}{a}$
 
     - $a$ 越大，半角宽度越小
     - $a$ 越小，半角宽度越大
 
-!!! summary
+!!! abstract
     $$ \delta = a\sin\theta = \begin{cases}
     0 & \text{中心亮条纹} \\\\
     2m \cdot \dfrac{\lambda}{2} = m\lambda & m = \pm 1, \pm 2 \cdots \, \text{极小（暗条纹）} \\\\
@@ -431,7 +429,7 @@ $$ I_{\theta} = E_{\theta}^2 = E_m^2 \left( \dfrac{\sin\alpha}{\alpha} \right)^2
 ### 弗朗和夫园孔衍射
 
 <figure>
-    <img src="../assets/弗朗和夫园孔衍射.png" width="70%"/>
+    <img src="../assets/弗朗和夫园孔衍射.png" width="60%"/>
 </figure>
 
 试验结果表明 
@@ -441,7 +439,7 @@ $$\Delta \theta = 0.61 \dfrac{\lambda}{a} = 1.22 \dfrac{\lambda}{D} $$
 我们将中心的大亮斑称为爱里斑
 
 <figure>
-    <img src="../assets/艾里斑.png" width="60%"/>
+    <img src="../assets/艾里斑.png" width="55%"/>
 </figure>
 
 ### 瑞利判据与分辨本领
@@ -449,19 +447,19 @@ $$\Delta \theta = 0.61 \dfrac{\lambda}{a} = 1.22 \dfrac{\lambda}{D} $$
 一个理想点光源的成的像就是点光源，但由于衍射现象的存在（衍射受限，diffraction limit），一个点光源的像是一个光斑（爱里斑，Airy disk）。当两个物点很靠近时，它们的象斑有可能相互重叠，导致分辨不清。
 
 <figure>
-    <img src="../assets/分辨本领.png" width="60%"/>
+    <img src="../assets/分辨本领.png" width="55%"/>
 </figure>
 
 !!! info "瑞利判据"
-    对于两个等光强的非相干物点,若其中一点的象斑中心恰好落在另一点的象斑的边缘(第一暗纹处),则此两物点被认为是刚刚可以分辨。
+    对于两个等光强的非相干物点，若其中一点的象斑中心恰好落在另一点的象斑的边缘(第一暗纹处),则此两物点被认为是刚刚可以分辨。
 
-    此时两个爱里斑重叠部分的光强为爱里斑中心光强的80%。
+    此时两个爱里斑重叠部分的光强为爱里斑中心光强的 80%。
 
     <figure>
         <img src="../assets/瑞利判据1.png" width="70%"/>
     </figure>
 
-    - 不能分辨（not resolved）：一个爱里斑的中心在里一个爱里斑内部
+    - 不能分辨（not resolved）：一个爱里斑的中心在另一个爱里斑内部
     - 恰能分辨（just resolved）：一个爱里斑的中心在另一个爱里斑的第一暗环上，即在里一个爱里斑的边缘
     - 可分辨（resolved）：两个爱里斑完全分开
 
@@ -488,9 +486,8 @@ $$\Delta \theta = 0.61 \dfrac{\lambda}{a} = 1.22 \dfrac{\lambda}{D} $$
 光栅实际上就是多个单缝衍射结果的叠加。
 
 ??? info "单缝衍射"
-    $$ E_{\theta} = E_m \dfrac{\sin\alpha}{\alpha}, \quad \alpha = \dfrac{\pi a \sin\theta}{\lambda} $$
-
-    $$ I = I_{\theta} = I_m \left( \dfrac{\sin\alpha}{\alpha} \right)^2 $$
+    \\[ E_{\theta} = E_m \dfrac{\sin\alpha}{\alpha}, \quad \alpha = \dfrac{\pi a \sin\theta}{\lambda} \\]
+    \\[ I = I_{\theta} = I_m \left( \dfrac{\sin\alpha}{\alpha} \right)^2 \\]
 
 ![](./assets/光栅振幅叠加1.png){align=right width=30%}
 
@@ -528,9 +525,8 @@ E_{\theta} &= \overline{OB_N} = 2 \overline{OC} \sin N\beta \\\\
 $$ I_{\theta} = I_m \left( \dfrac{\sin\alpha}{\alpha} \right)^2 \left( \dfrac{\sin N\beta}{\sin \beta} \right)^2 $$
 
 !!! tip
-    $$ \alpha = \dfrac{\pi a \sin\theta}{\lambda} $$
-
-    $$ \beta = \dfrac{\pi d \sin\theta}{\lambda} $$
+    \\[ \alpha = \dfrac{\pi a \sin\theta}{\lambda} \\]
+    \\[ \beta = \dfrac{\pi d \sin\theta}{\lambda} \\]
     其中 $a$ 为每一个狭缝的宽度，$d$ 为相邻狭缝之间的距离（一个狭缝中心到另一个狭缝中心）
 
     $$ I_{\theta} = I_m \left( \dfrac{\sin\alpha}{\alpha} \right)^2 \left( \dfrac{\sin N\beta}{\sin \beta} \right)^2 $$
@@ -601,11 +597,10 @@ $$ \lim\limits_{\sin\beta \to 0} \dfrac{\sin N\beta}{\sin \beta} = N \quad \Long
 !!! note "光栅的色散本领和分辨本领"
     - 色散本领：定义为光栅中变化的角度 $\Delta \theta$ 与变化的波长 $\Delta \lambda$ 的比值
 
-        $$ D = \dfrac{\Delta \theta}{\Delta \lambda}
-
+        $$ D = \dfrac{\Delta \theta}{\Delta \lambda} $$
         根据之前得到的 $ d\cos\theta \Delta \theta = \dfrac{1}{N} \lambda $，可以知道
-        $$ D = D = \dfrac{\Delta \theta}{\Delta \lambda} = \dfrac{m}{d\cos\theta} $$
-        因此光栅的色散本领仅与光栅常数 $d$ 和 级数 $m$ 有关，而与狭缝数目 $N$ 无关
+        $$ D = \dfrac{\Delta \theta}{\Delta \lambda} = \dfrac{m}{d\cos\theta} $$
+        因此光栅的色散本领仅与光栅常数 $d$ 和级数 $m$ 有关，而与狭缝数目 $N$ 无关
 
     ![](./assets/光栅的分辨本领.png){align=right width=35%}
 
@@ -628,7 +623,7 @@ $$ \lim\limits_{\sin\beta \to 0} \dfrac{\sin N\beta}{\sin \beta} = N \quad \Long
     因此分辨本领为
     $$ R = \dfrac{\lambda}{\Delta \lambda} = mN $$
     
-    - 光栅的分辨本领与光栅的狭缝数目 $N$ 和 相应的级数 $m$ 有关，而与光栅常数 $d$ 无关
+    - 光栅的分辨本领与光栅的狭缝数目 $N$ 和相应的级数 $m$ 有关，而与光栅常数 $d$ 无关
 
 ### X 光衍射
 
@@ -640,25 +635,25 @@ $$ \lim\limits_{\sin\beta \to 0} \dfrac{\sin N\beta}{\sin \beta} = N \quad \Long
 
 发生干涉加强时（**Bragg 公式**）
 $$ 2d\sin\theta = m\lambda $$
-其中 $d$ 是晶面间距（晶格常数），$\Phi$ 是掠射角
+其中 $d$ 是晶面间距（晶格常数），$\theta$ 是掠射角
 
 ## 偏振（Polarization）
 
 <figure>
-    <img src="../assets/线偏振光.png" width="70%"/>
+    <img src="../assets/线偏振光.png" width="60%"/>
 </figure>
 
 线偏振光指的是光波中的电矢量在一个平面内振动的光波，从光的传播方向来看，电场矢量只在一条线内运动
 
 <figure>
-    <img src="../assets/线偏振光1.png" width="70%"/>
+    <img src="../assets/线偏振光1.png" width="60%"/>
 </figure>
 
 一束非偏振光（自然光）通过偏振片后，只有与偏振片的透光轴（transmission axis，TA）平行的电矢量才能通过，这时候光就变成了线偏振光
 
-- 当自然光通过偏振片后，光的强度会变为原来的一半 $I_1 = I_0$
+- 当自然光通过偏振片后，光的强度会变为原来的一半 $I_1 = \dfrac{1}{2} I_0$
 
-假如线偏振光再通过一个偏振片，两个偏振片的透光轴夹角为 $\theta$，那么透过第二个偏振片的光强为 $I_2 = I_1 \cos^2\theta$，这就是**马吕斯定律**（Malus's Law）S
+假如线偏振光再通过一个偏振片，两个偏振片的透光轴夹角为 $\theta$，那么透过第二个偏振片的光强为 $I_2 = I_1 \cos^2\theta$，这就是**马吕斯定律**（Malus's Law） 
 
 ### 偏振光的分解
 
@@ -681,11 +676,11 @@ $$ E_y = E_{y0} \sin(kz - \omega t + \varphi_y) $$
 
     - 右旋圆偏振光 (RCP)：沿光传播方向看，电场矢量顺时针旋转
 
-        $ E_x = E_{x0} \sin(kz - \omega t + \dfrac{\pi}{2}) \quad E_y = E_{x0} \sin(kz - \omega t) $
+        $ E_x = E_{0} \sin(kz - \omega t + \dfrac{\pi}{2}) \quad E_y = E_{0} \sin(kz - \omega t) $
 
     - 左旋圆偏振光 (LCP)：沿光传播方向看，电场矢量逆时针旋转
 
-        $ E_x = E_{x0} \sin(kz - \omega t - \dfrac{\pi}{2}) \quad E_y = E_{x0} \sin(kz - \omega t) $
+        $ E_x = E_{0} \sin(kz - \omega t - \dfrac{\pi}{2}) \quad E_y = E_{0} \sin(kz - \omega t) $
 
     !!! tip
         关于旋转方向的判断，我们可以简记为相位靠前的朝着相位靠后的方向旋转。
@@ -811,7 +806,11 @@ $$ \Delta \varphi = \dfrac{2\pi}{\lambda} (n_e - n_o)d $$
 
 值得特别一提的是，当一束线偏振光以与光轴成 $45^\circ$ 的角度经过一个四分之一波片后，o 光和 e 光之间的相位差为 $\pm \dfrac{\pi}{2}$，并且光在快轴和慢轴上的分量相等，因此这束光就变成了圆偏振光。回顾之前的内容，我们知道这就是圆偏振光的特点，因此四分之一波片可以将线偏振光转化为圆偏振光。
 
-一束圆偏振光可以被看做任意两个相互垂直、等振幅的线偏振光的叠加，因此当一束圆偏振光经过一个四分之一波片后，可以得到一个方向和波片的光轴平行的线偏振光。
+<center>
+    <img src="../assets/线偏振光经过四分之一波片.png" width="65%"/>
+</center>
+
+从另一个方向来理解，就是因为沿快轴方向的光走的更快，因此要达到和沿慢轴的光相同的相位，就需要少走一些时间，这样才能抵消掉它们之间的光程差，于是快轴上的相位就要减去 $\dfrac{\pi}{2}$。
 
 !!! example "线偏振光经过四分之一波片"
     <center>
@@ -819,7 +818,7 @@ $$ \Delta \varphi = \dfrac{2\pi}{\lambda} (n_e - n_o)d $$
         <img src="../assets/线偏振光经过四分之一波片2.png" width="35%"/>
     </center>
 
-    在上图中，一束自然光经过线偏振片后得到了一束和快、慢轴成 $45^\circ$ 的线偏振光。这束光经过四分之一波片后，快轴方向上的光要比慢轴方向上的光多走了 $\dfrac{\lambda}{4}$，因此这束光就变成了圆偏振光。
+    在上图中，一束自然光经过线偏振片后得到了一束和快、慢轴成 $45^\circ$ 的线偏振光。这束光经过四分之一波片后，快轴方向上的光由于折射率小于慢轴方向上的光，因此光程要比慢轴方向上的光少走了 $\dfrac{\lambda}{4}$，因此这束光就变成了圆偏振光。
 
 !!! example "两道简单的例题"
     <figure>
@@ -830,7 +829,7 @@ $$ \Delta \varphi = \dfrac{2\pi}{\lambda} (n_e - n_o)d $$
 
     第二问中，线偏振光与波片的快、慢轴成 $45^\circ$，因此会被分解为两束垂直的光
     $$ E_f = E_s = \dfrac{E_0}{\sqrt{2}} $$
-    快轴和慢轴两个份量上的光经过下一个偏振片后，可以通过马吕斯定律求出两个分量偏振后的光强，把它们相加就是最终的光强。
+    快轴和慢轴两个分量上的光经过下一个偏振片后，可以通过马吕斯定律求出两个分量偏振后的光强，把它们相加就是最终的光强。
     $$ I_2 = \dfrac{E_f^2}{2} \cos^2 45^\circ + \dfrac{E_s^2}{2} \cos^2 45^\circ = \dfrac{E_0^2}{2} = \dfrac{1}{2} I_0 $$
 
 !!! info "散射产生的偏振"

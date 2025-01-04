@@ -15,14 +15,13 @@
     - 可见光波长范围：$400nm - 700nm$ 
     - 可见光频率范围：$7 \times 10^{14} Hz - 4 \times 10^{14} Hz $
     - 波长与频率对应的关系：$\lambda f = c$
-    - 人眼最敏感的可见光波长为$550nm$左右，为黄绿光
+    - 人眼最敏感的可见光波长为 $550nm$ 左右，为黄绿光
     - 波长越长，则频率越低、能量越低，因此红光能量最低，紫光能量最高
 
 ### 波的多普勒效应
 
 !!! note "多普勒效应"
     $$ f = f_0 \dfrac{v \pm v_0}{v \pm v_s} $$ 
-
     其中 $v_0$ 表示观测者的运动速度，$v_s$ 表示波源的运动速度
 
 对于光波来说，需要使用相对论多普勒效应
@@ -30,19 +29,13 @@ $$ f = f_0 \dfrac{ \sqrt{1 - \dfrac{u^2}{v^2} } }{ 1+\dfrac{u}{v} \cos\theta } $
 
 其中 $f_0$ 是在波源保持静止的参考系中测得的频率，$\theta$ 是相对运动方向与光波传播方向的夹角
 
-- 横向（transverse）多普勒效应：$\theta = \dfrac{\pi}{2}$
-    
-    $$ f = f_0 \sqrt{1 - \dfrac{u^2}{v^2} }  $$
+- 横向（transverse）多普勒效应：$\theta = \dfrac{\pi}{2}$ $$ f = f_0 \sqrt{1 - \dfrac{u^2}{v^2} }  $$
 
 - 纵向（longitudinal）多普勒效应：
 
-    - 波源靠近 $\theta = \pi$:
-        $$ f = f_0 \sqrt{\dfrac{1+\frac{u}{c}}{1-\frac{u}{c}}} $$
+    - 波源靠近 $\theta = \pi$: $$ f = f_0 \sqrt{\dfrac{1+\frac{u}{c}}{1-\frac{u}{c}}} $$
 
-    - 波源远离 $\theta = 0$
-
-        $$ f = f_0 \sqrt{\dfrac{1-\frac{u}{c}}{1+\frac{u}{c}}} $$
-
+    - 波源远离 $\theta = 0$： $$ f = f_0 \sqrt{\dfrac{1-\frac{u}{c}}{1+\frac{u}{c}}} $$
 
 对于光波，会出现红移和蓝移现象
 
@@ -67,7 +60,6 @@ $$ f = f_0 \sqrt{\dfrac{1+\frac{u}{c}}{1-\frac{u}{c}}} $$
     1. 光沿直线传播：光在均匀介质中沿直线传播
     2. 光的反射定律：反射角等于入射角
     3. 光的折射定律：折射角、入射角和折射率之间存在如下关系
-
         $$ n_1 \sin \theta_1 = n_2 \sin \theta_2 $$
 
         其中 $n_1$ 和 $n_2$ 分别是两种介质的折射率，$\theta_1$ 和 $\theta_2$ 分别是入射角和折射角
@@ -89,7 +81,7 @@ $$ n_{blue} = 1.53, \quad n_{red} = 1.52 $$
 $$ \sin \theta_1 = \dfrac{n_2}{n_1} $$
 
 !!! tip
-    空气中的折射率为1，因此我们可以以下公式求解某介质的折射率
+    空气中的折射率为 1，因此我们可以以下公式求解某介质的折射率
     $$ n = \dfrac{\sin \theta_1}{\sin \theta_2} $$
     其中 $\theta_1$ 为空气中的入射角，$\theta_2$ 为折射角
 
@@ -112,17 +104,14 @@ $$ \sin \theta_1 = \dfrac{n_2}{n_1} $$
     原光线与经过棱镜折射后的光线夹角为 $\delta$，棱镜的顶角为 $\alpha = i_2 - i'_2$
 
     $$ \begin{aligned}
-    \delta &= (i_1 - i_2) + (i'_1 - i'_2) = (i_1 + i'_1) - (i_2 - i'_2) \\
+    \delta &= (i_1 - i_2) + (i'_1 - i'_2) = (i_1 + i'_1) - (i_2 + i'_2) \\
     &= (i_1 + i'_1) - \alpha 
     \end{aligned} $$
 
-    要求出棱镜的折射率，我们需要知道偏移角 $\delta$ 的最小值，对 $\delta$ 关于入射角 $i_1$ 求导，令导数为0，即可求得最小值
-
-    $$ \dfrac{d\delta}{di_1} = 1 + \dfrac{di'_1}{di_1} = 0 $$
-
-    因此我们知道此时 $i_1 = i'_1$，带入求得 $\delta_{min} = 2i_1 - \alpha$ 后，再带入折射定律，即可求得折射率
-
-    $$ n = \dfrac{\sin \left( \dfrac{\delta_{min} + \alpha}{2} \right) }{\sin \dfrac{\alpha}{2}} $$
+    要求出棱镜的折射率，我们需要知道偏移角 $\delta$ 的最小值。对 $\delta$ 关于入射角 $i_1$ 求导，令导数为 0，即可求得最小值
+    $$ \dfrac{d\delta}{di _ 1} = 1 + \dfrac{di' _ 1}{di _ 1} = 0 $$
+    因此我们知道此时 $i_1 = i'_1$，带入求得 $\delta_{min} = 2i _ 1 - \alpha$ 后，再带入折射定律，即可求得折射率
+    $$ n = \dfrac{\sin \left( \dfrac{\delta _ {min} + \alpha}{2} \right) }{\sin \dfrac{\alpha}{2}} $$
 
 ### 惠更斯原理
 
@@ -130,7 +119,7 @@ $$ \sin \theta_1 = \dfrac{n_2}{n_1} $$
     波前（例如球面波或平面波的最边缘）上的每一点都可以被看作是一个新的次波源，这些次波源会以相同的速度向外发出次级波前。通过将所有这些次级波前叠加起来，可以得到新的总波前。这意味着，任何时刻的总波前都是由之前所有点产生的次级波前组合而成的。
 
     ![](./assets/惠更斯原理1.png){ align=left width=30% }
-    ![](./assets/惠更斯原理2.png){ align=right width=30% }
+    ![](./assets/惠更斯原理2.png){ width=30% }
 
 !!! example "惠更斯原理解释光的反射和折射"
     <figure>
@@ -150,14 +139,13 @@ $$ \sin \theta_1 = \dfrac{n_2}{n_1} $$
     $$ \therefore \frac{\sin i_1}{\sin i_2} = \frac{A_n B_n}{A_1 D_1} = \frac{v_1 t}{v_2 t} = \frac{v_1}{v_2} $$
     
     这时我们把 $v=\dfrac{c}{n}$ 带入上式，就可以得到折射定律
-
     $$ \dfrac{\sin i_1}{\sin i_2} = \dfrac{n_2}{n_1} $$
 
 ### 费马原理
 
 ![](./assets/费马原理.png){ align=right width=25% }
 
-光在介质中的运动速度小于真空中的光速，在同等的时间内，光在介质中的运动距离要更短。我们将光程定义为在相同的时间内，光在在介质中的运动距离乘以介质的折射率，也就是说，光程相当于光在真空中运动的“等效距离”
+光在介质中的运动速度小于真空中的光速，在同等的时间内，光在介质中的运动距离要更短。我们将光程定义为在相同的时间内，光在介质中的运动距离乘以介质的折射率，也就是说，光程相当于光在真空中运动的“等效距离”
 $$ L = n_1 s_1 + n_2 s_2 $$
 其中 $s_1$ 和 $s_2$ 分别是光在两种介质中的实际运动距离，$n_1$ 和 $n_2$ 分别是两种介质的折射率
 
@@ -202,7 +190,7 @@ $$ L = \int n ds $$
 光线经过透镜折射或者镜面反射后，会在一定位置形成物体的像，像分为实像和虚像，成像的物体也可分为实物和虚物
 
 ![](./assets/成像1.png){ align=left width=40% }
-![](./assets/成像2.png){ width=40% }
+![](./assets/成像2.png){ width=43% }
 
 ![](./assets/成像3.png){ align=left width=40% }
 ![](./assets/成像4.png){ width=40% }
@@ -212,12 +200,14 @@ $$ L = \int n ds $$
 - 实物：出发光线交汇于同一点（从同一点出发）
 - 虚物：出发光线不交汇于同一点，但出发光线的延长线交于一点
 
-根据费马原理我们知道成像时所有的光线等光程。我们讨论的问题一般是物体从透镜左边发出光线，在透镜右侧成像，因此称左侧为物方，右侧为像方
+根据费马原理我们知道成像时所有的光线等光程。
+
+我们讨论的问题一般是物体从透镜左边发出光线，在透镜右侧成像，因此称左侧为物方，右侧为像方。
 
 ### 球面镜成像
 
 <figure>
-    <img src="../assets/球面镜成像.png" width="65%" />
+    <img src="../assets/球面镜成像.png" width="50%" />
 </figure>
 
 我们首先讨论球面镜折射成像的规律，在上图中，点 $C$ 为球心，$r$ 为半径，$Q$ 和 $Q'$ 分别是物体和像的位置，物和像距离球面的距离分别为 $o$ 和 $i$
@@ -245,8 +235,7 @@ p^2 = (o+r)^2 + r^2 - 2r(o+r) \cos \phi = o^2 + 4r(o+r) \sin^2 \dfrac{\phi}{2} \
 p'^2 = (i-r)^2 + r^2 - 2r(i-r) \cos \phi = i^2 + 4r(i-r) \sin^2 \dfrac{\phi}{2}
 \end{cases} $$
 
-代会回前面的式子就得到
-
+代回前面的式子就得到
 $$ \Longrightarrow \dfrac{o^2}{n^2 (o+r)^2} - \dfrac{i^2}{n'^2 (i-r)^2} = -4r \sin^2 \dfrac{\phi}{2} \left[ \dfrac{1}{n^2 (o+r)} + \dfrac{1}{n'^2 (i-r)} \right] $$
 
 上面这个式子告诉我们，由于从同一点出发的光线的 $\phi$ 不同，成像的位置也会不同，因此球面不能成像。
@@ -260,10 +249,9 @@ $$ \Longrightarrow \dfrac{o^2}{n^2 (o+r)^2} - \dfrac{i^2}{n'^2 (i-r)^2} = -4r \s
     \dfrac{1}{n^2 (o+r)} + \dfrac{1}{n'^2 (i-r)} = 0
     \end{cases} $$
 
-    此时 $o$ 和 $i$ 与 $\phi$ 无关，物和像所在的这一对点我们称为齐明点。
+    此时 $o$ 和 $i$ 与 $\phi$ 无关，物和像所在的这一对点我们称为**齐明点**。
 
-- 另一种情况是旁轴近似的情况，即 $\phi$ 很小
-
+- 另一种情况是傍轴近似的情况，即 $\phi$ 很小
     $$ \sin^2 \dfrac{\phi}{2} \approx \dfrac{\phi^2}{4} \to 0 $$
 
     此时我们可以近似得到
@@ -273,13 +261,9 @@ $$ \Longrightarrow \dfrac{o^2}{n^2 (o+r)^2} - \dfrac{i^2}{n'^2 (i-r)^2} = -4r \s
     $$ \dfrac{n'}{i} + \dfrac{n}{o} = \dfrac{n'-n}{r} $$
 
     当 $i \to \infty$ 时，我们可以得到这个球面镜的第一焦距为 
-
     $$ f = \dfrac{n}{n'-n} r $$
-
     当 $o \to f$ 时，我们可以得到这个球面镜的第二焦距为
-
     $$ f' = \dfrac{n'}{n'-n} r $$
-
     于是
     $$ \dfrac{f}{f'} = \dfrac{n}{n'} \Longrightarrow \dfrac{f}{o} + \dfrac{f'}{i} = 1 $$
 
@@ -323,7 +307,6 @@ $$ f' = \dfrac{n'}{n'-n} r = \dfrac{r}{2} $$
 $$ \dfrac{1}{o} + \dfrac{1}{i} = -\dfrac{2}{r} $$
 
 特别的，对于一个平面镜，可以认为 $r \to \infty$，此时焦距公式就变为
-
 $$ \dfrac{1}{o} + \dfrac{1}{i} = 0 $$
 
 即物体和像到镜面的距离相等
@@ -331,7 +314,7 @@ $$ \dfrac{1}{o} + \dfrac{1}{i} = 0 $$
 ### 傍轴物点成像和横向放大率
 
 <figure>
-    <img src="../assets/傍轴物点成像.png" width="65%" />
+    <img src="../assets/傍轴物点成像.png" width="50%" />
 </figure>
 
 我们记物体和像距离透镜轴线的距离分别为 $y, y'$，我们规定在轴线上方时为正，下方时为负。
@@ -349,20 +332,21 @@ $$ m = -\dfrac{i}{o} $$
 
 对于绝大多数的情况，光不止会经过一个折射面
 
-![](./assets/薄透镜1.png){ align=left width=55% }
-![](./assets/薄透镜2.png){ width=40% }
+<center>
+    <img src="../assets/薄透镜1.png" width="50%" />
+    <img src="../assets/薄透镜2.png" width="40%" />
+</center>
 
 对这两个面分别使用球面镜成像的公式，我们可以得到
 
-$$ \begin{cases}
-\dfrac{f_1}{o_1} + \dfrac{f'_1}{i_1} = 1 \\\\
+\\[ \begin{cases}
+\dfrac{f_1}{o_1} + \dfrac{f'_1}{i_1} = 1 \\\\\\\\
 \dfrac{f_2}{o_2} + \dfrac{f'_2}{i_2} = 1
-\end{cases} $$
-
-$$ \begin{aligned}
-f_1 = \dfrac{n}{n_L-n} r_1, \quad f'_1 = \dfrac{n_L}{n_L-n} r_1 \\
+\end{cases} \\]
+\\[ \begin{aligned}
+f_1 = \dfrac{n}{n_L-n} r_1, \quad f'_1 = \dfrac{n_L}{n_L-n} r_1 \\\\
 f_2 = \dfrac{n_L}{n'-n_L} r_2, \quad f'_2 = \dfrac{n'}{n'-n_L} r_2
-\end{aligned} $$
+\end{aligned} \\]
 
 其中我们知道 $-o_2 = i_1 - d$，即 $o_2 = d - i_1$，当透镜是一个**薄透镜**时，$d$ 很小，$i_1 \approx o_2$，因此
 
@@ -390,7 +374,6 @@ $$ \Rightarrow \dfrac{f'_1 f'_2}{i} + \dfrac{f_1 f_2}{o} = f'_1 + f_2  $$
     所以 $\dfrac{f'}{f} = \dfrac{n'}{n}$，如果在空气中, $n=n'=1$
 
     最终就可以得到磨镜者公式
-
     $$ f = f' = \dfrac{1}{ (n_L - 1) (\dfrac{1}{r_1} - \dfrac{1}{r_2}) } $$
 
 !!! tip "凸透镜与凹透镜"
@@ -406,16 +389,12 @@ $$ \dfrac{f}{o} + \dfrac{f'}{i} = 1 $$
 $$ \dfrac{1}{o} + \dfrac{1}{i} = \dfrac{1}{f} $$
 
 <figure>
-    <img src="../assets/成像焦距公式.png" width="65%" />
+    <img src="../assets/成像焦距公式.png" width="50%" />
 </figure>
 
 对于上图来说，如果
-
-$$ \begin{aligned}
-o = f + x \\
-i = f' + x' 
-\end{aligned} $$
-
+$$ o = f + x $$
+$$ i = f' + x' $$
 就有
 $$ \dfrac{1}{f + x} + \dfrac{1}{f' + x'} = \dfrac{1}{f} $$
 
@@ -429,7 +408,7 @@ $$ x x' = f^2 = f f' $$
 #### 横向放大倍数
 
 <figure>
-    <img src="../assets/薄透镜1.png" width="65%" />
+    <img src="../assets/薄透镜1.png" width="55%" />
 </figure>
 
 现在我们回过头来讨论上面这幅图的放大倍数，首先我们有
@@ -453,9 +432,7 @@ m = m_1 m_2 &= \dfrac{n i_1}{n_L o_1} \cdot \dfrac{n_L i_2}{n' o_2} \\
 
 !!! note "屈光度"
     屈光度（diopter）定义为焦距的倒数，
-    
     $$ P = \dfrac{1}{f(m)} $$
-
     其中 $m$ 是放大倍数
 
-    例如 $f = -50cm =-0.5m$，则 $P = -2.00D$ 为200度
+    例如 $f = -50cm =-0.5m$，则 $P = -2.00D$ 为 200 度

@@ -21,9 +21,9 @@ $$ F_{elec} = \dfrac{1}{4 \pi \epsilon_0} \dfrac{q_1q_2}{r^2} $$
 !!! note "电荷密度"
     一般而言，电荷有三种这样的密度：
 
-    1. Linear Charge density(线电荷密度) $\lambda = \dfrac{q}{L}$
-    2. Surface Charge Density(面电荷密度) $\sigma = \dfrac{q}{A}$
-    3. Volume Charge Density(体电荷密度) $\rho = \dfrac{q}{V}$
+    1. Linear Charge density(线电荷密度) $\lambda = \dfrac{dq}{dL}$
+    2. Surface Charge Density(面电荷密度) $\sigma = \dfrac{dq}{dA}$
+    3. Volume Charge Density(体电荷密度) $\rho = \dfrac{dq}{dV}$
 
 ### A Ring of Charge
 
@@ -138,7 +138,7 @@ $$ dE_y = dE \cos\theta = \dfrac{1}{4\pi\epsilon_0} \dfrac{\lambda d\theta}{r} \
 $$ E_x = \int dE_x = -\dfrac{1}{4\pi\epsilon_0} \dfrac{\lambda}{r} \int_{-\pi /2}^{{+\pi /2}} \sin\theta d\theta = 0 $$
 $$ E_y = \int dE_y = \dfrac{1}{4\pi\epsilon_0} \dfrac{\lambda}{r} \int_{-\pi /2}^{{+\pi /2}} \cos\theta d\theta = \dfrac{\lambda}{2\pi\epsilon_0 r} $$
 
-!!! summary "电场强度的变化"
+!!! abstract "电场强度的变化"
     - Dipole: $E \propto \dfrac{1}{r^3}$
     - Point Charge: $E \propto \dfrac{1}{r^2}$
     - Infinite Line of Charge: $E \propto \dfrac{1}{r} $
@@ -162,9 +162,8 @@ E_z &= \int dE_z = \int \dfrac{z\lambda ds}{4\pi\epsilon_0(z^2+R^2)^{3/2}} \\\\
 &= \dfrac{zq}{4\pi\epsilon_0(z^2+R^2)^{3/2}} \\\\
 \end{aligned}$$
 
-if $z >> R$, then $E_z \approx \dfrac{q}{4\pi\epsilon_0z^2}$
-
-if $z \rightarrow 0$, then $E_z \approx 0$
+- if $z >> R$, then $E_z \approx \dfrac{q}{4\pi\epsilon_0z^2}$
+- if $z \rightarrow 0$, then $E_z \approx 0$
 
 ### 均匀圆盘电荷
 
@@ -183,13 +182,13 @@ E &= \int dE = \dfrac{\sigma z}{2\epsilon} \int_0^R \dfrac{\omega d\omega}{(z^2+
 
 - if $z >> R$， $\dfrac{1}{\sqrt{1+\dfrac{R^2}{z^2}}} = 1 - \dfrac{1}{2} \dfrac{R^2}{z^2} + \dfrac{3}{8} \dfrac{R^4}{z^4} - \cdots$
 
-- so $E = \dfrac{\sigma}{2\epsilon} \left( 1- \dfrac{1}{2} \dfrac{R^2}{z^2} + \dfrac{3}{8} \dfrac{R^4}{z^4} - \cdots \right) \propto \dfrac{\sigma}{2\epsilon} \dfrac{1}{2} \dfrac{R^2}{z^2} = \dfrac{q}{4\pi\epsilon_0 z^2} $
+    so $E = \dfrac{\sigma}{2\epsilon} \left( 1- \dfrac{1}{2} \dfrac{R^2}{z^2} + \dfrac{3}{8} \dfrac{R^4}{z^4} - \cdots \right) \approx \dfrac{\sigma}{2\epsilon} \dfrac{1}{2} \dfrac{R^2}{z^2} = \dfrac{q}{4\pi\epsilon_0 z^2} $
 
 ### Dipole(电偶极矩)
 
-![dipole in an electric field](./assets/电偶极矩矢量.png){ align=left width=270px }
+![dipole in an electric field](./assets/电偶极矩矢量.png){ align=left width=35% }
 
-![dipole moment vector](./assets/电偶极矩力矩.png){ width=320px }
+![dipole moment vector](./assets/电偶极矩力矩.png){ width=35% }
 
 电偶极矩矢量：$ \overrightarrow{p} = q \overrightarrow{d} $
 $$ \overrightarrow{\tau} = \overrightarrow{p} \times \overrightarrow{E} $$
@@ -203,15 +202,15 @@ $$ \overrightarrow{\tau} = \overrightarrow{p} \times \overrightarrow{E} $$
 Flux，流量，通量: $\Phi = \vec{E} \cdot \overrightarrow{A} = EA\cos\theta$
 
 ??? example "速度场的通量"
-    ![velocity field1](./assets/速度场的通量1.png)
+    ![velocity field1](./assets/速度场的通量1.png){ width=90% }
     
     $$\Phi = \overrightarrow{v} \cdot \overrightarrow{A} = vA\cos\theta$$
 
-    ![velocity field2](./assets/速度场的通量2.png){ width=700px }
+    ![velocity field2](./assets/速度场的通量2.png){ width=90% }
 
     $$ \Phi = \sum\overrightarrow{v} \cdot \overrightarrow{A} $$
 
-    ![velocity field3](./assets/速度场的通量3.png){ width=300px }
+    ![velocity field3](./assets/速度场的通量3.png){ align=right width=30% }
     对于任意的一个闭合曲面，有
 
     $$\begin{aligned}
@@ -249,8 +248,8 @@ $$ \Phi = \sum \overrightarrow{E} \cdot \overrightarrow{A} = \oiint \overrightar
         Which of the following statements about the net electric flux $\Phi_E$ through the surface of this cube is true?
 
         - [x] A. $\Phi_E = 0$ 
-        - B. $Phi_E \propto 2a^2$ 
-        - C. $\Phi_E \propto 6a^2$
+        - [ ] B. $\Phi_E \propto 2a^2$ 
+        - [ ] C. $\Phi_E \propto 6a^2$
 
         $$ \Phi = \sum \overrightarrow{E} \cdot \overrightarrow{A} = \oiint \overrightarrow{E} \cdot d\overrightarrow{A} $$
 
@@ -260,9 +259,9 @@ $$ \Phi = \sum \overrightarrow{E} \cdot \overrightarrow{A} = \oiint \overrightar
 
         Which of the following statements about the net electric flux through the 2 surfaces ($\Phi_{2R}$ and $\Phi_R$) is true?
         
-        - $\Phi_R < \Phi_{2R}$
-        - [x] $\Phi_R = \Phi_{2R}$
-        - $\Phi_R > \Phi_{2R}$
+        - [ ] A. $\Phi_R < \Phi_{2R}$
+        - [x] B. $\Phi_R = \Phi_{2R}$
+        - [ ] C. $\Phi_R > \Phi_{2R}$
 
         **解析**：首先观察图片可以知道通过两个球面的电力线总数是相等的，因此电通量也是相等的。
 
@@ -283,7 +282,7 @@ $$ \Phi = \oiint \overrightarrow{E} \cdot d\overrightarrow{A} = \Phi_E = \dfrac{
     &c: \epsilon \oiint \overrightarrow{E} \cdot d\overrightarrow{A} = q-q = 0 
     \end{aligned}$$
 
-在利用高斯公式求解$E$时，我们需要选择一个恰当的闭合曲面，使得积分的处理较为简单，即尽可能地寻找一个足够“对称”的曲面。
+在利用高斯公式求解 $E$ 时，我们需要选择一个恰当的闭合曲面，使得积分的处理较为简单，即尽可能地寻找一个足够“对称”的曲面。
 
 - 方向：我们可以使得闭合曲面与电场的方向垂直或平行
 
@@ -295,7 +294,7 @@ $$ \Phi = \oiint \overrightarrow{E} \cdot d\overrightarrow{A} = \Phi_E = \dfrac{
 这样一来就可以得到
 $$ \oiint \overrightarrow{E} \cdot d\overrightarrow{A} = \oiint EdA = E \oiint dA = \dfrac{q_{enclosed}}{\epsilon_0} $$
 
-这样一来就可以通过$q_{enclosed}$来求解$E$，或反之通过$E$来求解$q_{enclosed}$
+这样一来就可以通过 $q_{enclosed}$ 来求解 $E$，或反之通过 $E$ 来求解 $q_{enclosed}$
 
 我们也可以通过高斯公式来推导出库仑定律：
 $$ \begin{aligned}
@@ -310,7 +309,7 @@ E &= \dfrac{1}{4\pi\epsilon_0} \dfrac{Q}{r^2}
 #### 均匀带电球体
 
 ![uniform charged sphere](./assets/均匀带电球体.png){ align=right width=250px }
-求由一个半径为$a$，电荷密度为 $\rho (C/m^3)$ 的均匀带电球体所产生的电场强度
+求由一个半径为 $a$，电荷密度为 $\rho (C/m^3)$ 的均匀带电球体所产生的电场强度
 
 - **在球体外$(r > a)$**，由高斯定理可知
     $$ \oiint \overrightarrow{E} \cdot d\overrightarrow{A} = 4\pi r^2 E = \dfrac{q}{\epsilon_0} $$
@@ -335,22 +334,22 @@ E &= \dfrac{1}{4\pi\epsilon_0} \dfrac{Q}{r^2}
 
 #### 导体中的高斯定理
 
-我们知道**导体内部的电场大小始终为零**，再根据高斯定理可以推出其内部的电荷大小为零，说明导体的电荷只分布在它的表面上。
+我们知道**导体内部的电场大小始终为零**，再根据高斯定理可以推出其内部的电荷大小为零（在导体内部取一个很小的圆球作为高斯面即可），说明导体的电荷只分布在它的表面上。
 
-![带电导体1](./assets/带电导体1.png){ align=left width=300 }
-![带电导体2](./assets/带电导体2.png){ width=200 }
+![带电导体1](./assets/带电导体1.png){ align=left width=30% }
+![带电导体2](./assets/带电导体2.png){ width=20% }
 
 想要求一个带电导体产生的电场，我们可以在其外表面处取一个极小的高斯面，这样可以认为被高斯面包裹的导体表面上的电荷是均匀分布的（取足够小的高斯面后可以就认为高斯面内的导体表面是平的，从而忽略尖端带电效应）。
 
-并且因为导体内部电场强度为0，由对称性也可以知道沿高斯面的侧面方向的电场强度之和也为0。
+并且因为导体内部电场强度为 0，由对称性也可以知道沿高斯面的侧面方向的电场强度之和也为 0。
 $$ \epsilon_0 \oiint \overrightarrow{E} \cdot d\overrightarrow{A} = \sigma \cdot \Delta A $$
 $$ \epsilon_0 E \Delta A + 0 + 0 = \sigma \cdot \Delta A $$
 
-$$ E = \dfrac{\sigma}{\epsilon_0} $$
+$$ \Longrightarrow E = \dfrac{\sigma}{\epsilon_0} $$
 
 #### 无限线电荷
 
-由对称性可知只有在垂直于线电荷的方向上有电场强度，因此我们可以取一个半径为$r$，长度为$h$的圆柱形高斯面，这样可以得到
+由对称性可知只有在垂直于线电荷的方向上有电场强度，因此我们可以取一个半径为 $r$，长度为 $h$ 的圆柱形高斯面，这样可以得到
 
 ![无限线电荷](./assets/线电荷高斯定理.png){ align=right width=300 }
 应用高斯定理
@@ -366,7 +365,7 @@ $$ E = \dfrac{\sigma}{\epsilon_0} $$
 
 ??? example
     ![无限线电荷例题](./assets/线电荷高斯定理例题.png){ align=right width=250 }
-    密度为$\lambda$的无限长线电荷被放在空心圆柱的中轴线上，空心圆柱的内径为$r_i = a$, 外径为$r_o = b$，求空心圆柱外表面的电荷密度 $\sigma _o(C/m^2)$ 是多少？
+    密度为 $\lambda$ 的无限长线电荷被放在空心圆柱的中轴线上，空心圆柱的内径为 $r_i = a$, 外径为 $r_o = b$，求空心圆柱外表面的电荷密度 $\sigma _o(C/m^2)$ 是多少？
 
     - A. $\sigma_o = -\dfrac{\lambda}{2\pi b}$
     - B. $\sigma_o = 0$
@@ -412,7 +411,7 @@ $$ E = \dfrac{\sigma}{2\epsilon_0} $$
     得到
     $$ E = \dfrac{\sigma}{\epsilon_0} $$
 
-!!! note "如何在作业题中运用高斯定理"
+!!! important "如何在作业题中运用高斯定理"
     牢记高斯公式在有关题目中一定是有效的
     $$ \epsilon_0 \oiint \overrightarrow{E} \cdot d\overrightarrow{A} = q_{enclosed} $$
 
@@ -421,77 +420,77 @@ $$ E = \dfrac{\sigma}{2\epsilon_0} $$
     - 我们可以利用**球面**、**圆柱体**、**平面**的对称性来解决许多问题
     - 如果我们知道了电荷量，就可以计算电场大小；如果我们知道了电场大小，就可以计算电荷量
 
-    半径为$r$的球面对称：
+    半径为 $r$ 的球面对称：
     $$ \epsilon_0 \oiint \overrightarrow{E} \cdot d\overrightarrow{A} = 4\pi \epsilon_0 r^2 E = q $$
     $$ E = \dfrac{1}{4\pi \epsilon_0} \dfrac{q}{r^2} $$
 
-    半径为$r$的圆柱面对称：
+    半径为 $r$ 的圆柱面对称：
     $$ \epsilon_0 \oiint \overrightarrow{E} \cdot d\overrightarrow{A} = \epsilon_0 2\pi rLE = q $$
     $$ E = \dfrac{q}{2\pi \epsilon_0 r} $$
 
-    面积为$A$的平面对称：
+    面积为 $A$ 的平面对称：
     $$ \epsilon_0 \oiint \overrightarrow{E} \cdot d\overrightarrow{A} = \epsilon_0 2AE = q $$
     $$ E = \dfrac{\sigma}{2 \epsilon_0} $$
 
 !!! example "两道例题"
     === "Example 1:  spheres"
-        ![1](./assets/例题球面.png){ align=right width=200 }
-        如图，一个实心导体球被一个薄导体球面包裹，球携带的电荷为$Q_1$，球壳携带的电荷为$Q_2$，其中$Q_2 = -3Q_1$
+        ![1](./assets/例题球面.png){ align=right width=20% }
+        如图，一个实心导体球被一个薄导体球面包裹，球携带的电荷为 $Q_1$，球壳携带的电荷为 $Q_2$，其中 $Q_2 = -3Q_1$
 
         - A. 电荷在球上如何分布？
         - B. 电荷在球壳上如何分布？
-        - C. 当$r < R_1$, 在$R_1$和$R_2$之间，$r > R_2$时，电场大小分别是多少？
+        - C. 当 $r < R_1$, 在 $R_1$ 和 $R_2$ 之间，$r > R_2$ 时，电场大小分别是多少？
         - D. 使用导线将两者连接之后，电荷将会如何变化？
 
         ---
 
         **A**. 电荷分布在球的外表面上 $ \sigma = \dfrac{Q_1}{4\pi R_1^2} $
 
-        **B**. 将球壳和球视为一个大的导体，由于导体内部的总电荷为0，那么球壳内表面上的电荷一定为$-Q_1$，外表面上的电荷为$-2Q_1$
+        **B**. 将球壳和球视为一个大的导体，由于导体内部的总电荷为 0，那么球壳内表面上的电荷一定为 $-Q_1$，外表面上的电荷为 $-2Q_1$
         $$ \sigma_{inner} = \dfrac{Q_1}{4\pi R_2^2} $$
         $$ \sigma_{outer} = \dfrac{Q_1 + Q_2}{4\pi R_2^2} = \dfrac{-2Q_1}{4\pi R_2^2}$$
 
-        **C**. $r < R_1$时：$\overrightarrow{E} = 0$
+        **C**. $r < R_1$ 时：$\overrightarrow{E} = 0$
 
-        在$R_1$和$R_2$之间：被包裹的电荷量为$Q_1$
+        在 $R_1$ 和 $R_2$ 之间：被包裹的电荷量为$Q_1$
         $$ \overrightarrow{E} = \dfrac{1}{4\pi \epsilon_0} \dfrac{Q_1}{r^2} \hat{r} $$
 
         $r > R_2$时：包裹的电荷量为 $Q_1 + Q_2 = -2Q_1$
-        $$ \overrightarrow{E} = \dfrac{1}{4\pi \epsilon_0} \dfrac{Q_1 + Q_2}{r^2} \hat{r} = \overrightarrow{E} = -\dfrac{1}{4\pi \epsilon_0} \dfrac{2Q_1}{r^2} \hat{r}   $$
+        $$ \overrightarrow{E} = \dfrac{1}{4\pi \epsilon_0} \dfrac{Q_1 + Q_2}{r^2} \hat{r} = \overrightarrow{E} = -\dfrac{1}{4\pi \epsilon_0} \dfrac{2Q_1}{r^2} \hat{r} $$
 
         **D**：达到电荷平衡后，球壳内表面以及实心球上不再有电荷，所有电荷都在球壳外表面上
 
-        对于$r < R_2$，$\overrightarrow{E} = 0$
+        对于 $r < R_2$，$\overrightarrow{E} = 0$
 
-        对于$r > R_2$，$\overrightarrow{E} = -\dfrac{1}{4\pi \epsilon_0} \dfrac{2Q_1}{r^2} \hat{r} $
+        对于 $r > R_2$，$\overrightarrow{E} = -\dfrac{1}{4\pi \epsilon_0} \dfrac{2Q_1}{r^2} \hat{r} $
 
     === "Example 2: Cylinders"
-        ![](./assets/例题圆柱面1.png)
+        ![](./assets/例题圆柱面1.png){ width=90% }
 
-        一条无限长的线电荷从半径为$R$的带电圆柱面的中心穿过，仅考虑长度为$h$的部分，线电荷密度为$\lambda$，圆柱面具有的的总面电荷密度为$\sigma_{total}$。
+        一条无限长的线电荷从半径为 $R$ 的带电圆柱面的中心穿过，仅考虑长度为 $h$ 的部分，线电荷密度为 $\lambda$，圆柱面具有的的总面电荷密度为 $\sigma_{total}$。
 
-        - A. 电荷在圆柱面上如何分布？考虑$\sigma_{inner}$与$\sigma_{outer}$
-        - B. $r < R$时电场强度是多少？
-        - C. $r > R$时电场强度是多少？
+        - A. 电荷在圆柱面上如何分布？考虑 $\sigma_{inner}$ 与 $\sigma_{outer}$
+        - B. $r < R$ 时电场强度是多少？
+        - C. $r > R$ 时电场强度是多少？
 
         ---
 
-        ![](./assets/例题圆柱面2.png){ align=right width=300 }
-        **A**. 将整个圆柱面以及线电荷视为一个导体，则圆柱面内表面和线电荷的总电荷为0.
+        ![](./assets/例题圆柱面2.png){ align=right width=40% }
+        **A**. 将整个圆柱面以及线电荷视为一个导体，则圆柱面内表面和线电荷的总电荷为 0.
 
-        长度为$h$的这部分线电荷为$\lambda h$，故内表面产生的感应电荷为$Q_{inner} = -\lambda h$，于是
+        长度为 $h$ 的这部分线电荷为 $\lambda h$，故内表面产生的感应电荷为 $Q_{inner} = -\lambda h$，于是
         $$ \sigma_{inner} = \dfrac{Q_{inner}}{2\pi Rh} = -\dfrac{\lambda}{2\pi R}  $$
 
         所以外表面电荷密度为
         $$ \sigma_{outer} = \sigma_{total} - \sigma_{inner} = \sigma_{total} + \dfrac{\lambda}{2\pi R} $$
 
-        ![](./assets/例题圆柱面3.png){ align=right width=230 }
+        ![](./assets/例题圆柱面3.png){ align=right width=35% }
         **B**. 直接利用高斯定理即可得到
         $$ 2\pi rhE_r = \dfrac{q_{enclosed}}{\epsilon_0} = \dfrac{\lambda h}{\epsilon_0} $$
         $$ E_r = \dfrac{\lambda}{2\pi \epsilon_0 r}  $$
 
-        **C**. 也是运用高斯定理，只不过还要加上$\sigma_{total}$的部分
-        ![](./assets/例题圆柱面4.png){ align=right width=310 }
+        **C**. 也是运用高斯定理，只不过还要加上 $\sigma_{total}$ 的部分
+        ![](./assets/例题圆柱面4.png){ align=right width=43% }
 
         $$ 2\pi rhE_r = \dfrac{Q + \lambda h}{\epsilon_0} = \dfrac{2\pi Rh \sigma_{total} + \lambda h}{\epsilon_0} $$
 
@@ -525,7 +524,7 @@ $$ \oint \overrightarrow{E} \cdot d\overrightarrow{l} = \iint (\nabla \times \ov
 $$ \nabla \times \overrightarrow{E} = 0 $$
 
 !!! note 
-    事实上，利用数分2中学到的 Guass 公式，我们可以得到
+    事实上，利用数分 2 中学到的 Guass 公式，我们可以得到
 
     $$\begin{aligned}
     \oiint \overrightarrow{E} \cdot d\overrightarrow{A} &= \dfrac{q}{\epsilon_0} = \iiint \dfrac{\rho}{\epsilon_0} dv \\\\
@@ -554,7 +553,7 @@ $$ V_B - V_A \equiv \dfrac{W_{AB}}{q_0} = -\int_A^B \overrightarrow{E} \cdot d\o
     $$ V = \int_a^{\infty} \overrightarrow{E} \cdot d\overrightarrow{l} $$
     因为无穷远处电势为零，这一点的电势相当于从无穷远处到该点电场所做的功的相反数。
 
-根据上述公式，我们可以在点电荷产生的电场求出电势差
+根据上述公式，我们可以在点电荷产生的电场中求电势差。
 
 ![](./assets/点电荷的电势差.png){ align=left width=260 }
 $\begin{aligned}
@@ -562,7 +561,7 @@ V_b - V_a &= -\int_A^B \overrightarrow{E} \cdot d\overrightarrow{l} = -\int_{r_a
 &= \dfrac{q}{4\pi \epsilon_0}\left( \dfrac{1}{r_b} - \dfrac{1}{r_a} \right)
 \end{aligned}$
 
-此时我们令 $r_a = \infty$，$V_a = 0$，可以得到**点电荷在空间中产生的电势**
+此时我们令 $r_a = \infty$，$V_a = 0$，可以得到**点电荷在空间中产生的电势**：
 $$ V = \dfrac{q}{4\pi \epsilon_0 r} $$
 
 !!! example "两个典型的例子"
@@ -582,12 +581,13 @@ $$ V = \dfrac{q}{4\pi \epsilon_0 r} $$
 
     === "电四偶极矩产生的电势"
         ![](./assets/电四偶极矩的电势例题.png){ align=right width=230 }
-        $\begin{aligned}
+        
+        $$\begin{aligned}
         V( r ) &= \sum_i V_i(r_i) \\\\
                 &= \dfrac{1}{4\pi \epsilon_0} \left( \dfrac{q}{r-d} + \dfrac{-2q}{r} \dfrac{q}{r+d} \right) \\\\
                 &= \dfrac{1}{4\pi \epsilon_0} \dfrac{2qd^2}{r (r^2 - d^2)} \\\\
                 &= \dfrac{1}{4\pi \epsilon_0} \dfrac{2qd^2}{r^3 (1 - d^2 / r^2)}
-        \end{aligned}$
+        \end{aligned}$$
 
         对于 $d << r$，即 $d^2 / r^2 << 1$，有
         $$  V( r ) = \dfrac{2qd^2}{4\pi \epsilon_0 r^3} = \dfrac{Q}{4\pi \epsilon_0 r^3}$$
@@ -615,7 +615,7 @@ $$ V = \dfrac{q}{4\pi \epsilon_0 r} $$
 $$ r_P > R, V(P) = \int_P^{infty} \overrightarrow{E} \cdot d\overrightarrow{l} = \dfrac{q}{4\pi \epsilon_0 r_P} $$
 
 $$\begin{aligned}   
-r_P > R, V(P) &= \int_P^R \overrightarrow{E} \cdot d\overrightarrow{l} + \int_R^{infty} \overrightarrow{E} \cdot d\overrightarrow{l} \\\\
+r_P \leqslant R, V(P) &= \int_P^R \overrightarrow{E} \cdot d\overrightarrow{l} + \int_R^{infty} \overrightarrow{E} \cdot d\overrightarrow{l} \\\\
                 &= 0 + \dfrac{q}{4\pi \epsilon_0 R} = \dfrac{q}{4\pi \epsilon_0 R}
 \end{aligned}$$
 
@@ -642,7 +642,7 @@ U &= \sum_{i,j=1, j \neq i}^n \dfrac{q_i q_j}{4\pi \epsilon_0 r_{ij}} = \dfrac{1
 
 - 导体内表面产生的感应电荷分布不均匀，距离电荷越近的地方感应电荷越密集
 - 导体外表面的电荷在球壳上均匀分布
-- 导体内、外表面的电荷大小都与点电荷的大小相同，但是符号一个相同、一个不同
+- 导体内、外表面的总电荷大小都与点电荷的大小相同，但是外表面符号相同、内表面符号不同
 
 !!! note "尖端放电"
     ![](./assets/尖端放电.png){ width=80% }
@@ -658,7 +658,7 @@ $$ \Delta V = V_b - V_A = -\int_A^B \overrightarrow{E} \cdot d\overrightarrow{l}
 
 就有 $ dV = -\overrightarrow{E} \cdot d\overrightarrow{l} $
 
-从而 $ E = -(\dfrac{dV}{dl})_{max} $
+从而 $ E = -\left( \dfrac{dV}{dl} \right)_{max} $
 
 我们用电势梯度描述电场中电势沿某一方向的变化率，而 $\overrightarrow{E}$ 沿着电势下降最快的方向，即电场沿着电势梯度最大的方向，或者说，电场是电势的负梯度。
 $$ \overrightarrow{E} = -\overrightarrow{\nabla} V $$
@@ -673,8 +673,8 @@ $$ \overrightarrow{E} = -\overrightarrow{\nabla} V $$
     
     这样我们就构造出一个电偶极矩，再通过电偶极矩求电势的方法就可以求出某一点处的电势或电场大小了。
 
-!!! summary "电势与电场的关系"
-    如果我们知道了任意位置的电场$E$，我们就可以求出任意位置的电势$V$
+!!! abstract "电势与电场的关系"
+    如果我们知道了任意位置的电场 $E$，我们就可以求出任意位置的电势 $V$
     $$ V_B - V_A = -\int_A^B \overrightarrow{E} \cdot d\overrightarrow{l} $$
     $$ V_P = -\int_P^{\infty} \overrightarrow{E} \cdot d\overrightarrow{l} = \int_{\infty}^P \overrightarrow{E} \cdot d\overrightarrow{l} $$
 
@@ -721,7 +721,7 @@ $$\begin{aligned} \Delta V &= -\int_b^a \overrightarrow{E} \cdot d\overrightarro
 
 $$ C = \dfrac{Q}{V} = \dfrac{2 \pi \epsilon_0 L}{\ln \dfrac{b}{a}} $$
 
-因此，对于单位长度的圆柱形电容器，其电容为
+因此，对于圆柱形电容器，其单位长度的电容为
 $$ C' = \dfrac{C}{L} = \dfrac{2 \pi \epsilon_0}{\ln \dfrac{b}{a}} $$
 
 #### 球形电容器
@@ -767,7 +767,7 @@ $$ C = \dfrac{q}{\Delta V} = 4\pi \epsilon_0 \dfrac{ab}{b-a} $$
 
 考虑两个不带电的平行板导体，我们不断地将其中一个平行板上的电子移到另个平行板上，最终就得到了一个平行板电容器，这过程中所做的功就等于让电荷克服电场力所做的功，也即电容器所具有的能量。
 
-设平行板电容器的电容为 $C$，电势差为 $V$，那么它具有的能量为
+设**平行板电容器**的电容为 $C$，电势差为 $V$，那么它具有的能量为
 $$ U = \int_0^Q V dq = \int_0^Q \dfrac{q}{C} dq = \dfrac{Q^2}{2C} = \dfrac{1}{2} CV^2 $$
 电容器的能量储存在它的电场当中。
 
@@ -778,7 +778,7 @@ $$ U = \dfrac{1}{2} E^2 \epsilon_0 Ad $$
 $$ u = \dfrac{1}{2} E^2 \epsilon_0 $$
 
 !!! tip
-    虽然上面的这几个公式我们是由平行板电容器推导出来的，但实际上电容器的能量公式以及能量密度公式对于任何电容器都是成立的。
+    虽然上面的这几个公式我们是由平行板电容器推导出来的，但实际上电容器的能量公式 $U=\dfrac{1}{2} CV^2$ 以及能量密度公式 $u = \dfrac{1}{2} E^2 \epsilon_0$ 对于任何电容器都是成立的。
 
 ### 电介质(Dielectrics)
 
@@ -787,44 +787,44 @@ $$ u = \dfrac{1}{2} E^2 \epsilon_0 $$
 介电常数 $\kappa_e$ 是电介质的一个特性参数，它表示填充电介质后电容器的电容与真空中的电容之比，具体来说
 $$ C = \kappa_e C_0 $$
 
-- 介电常数 $\kappa_e$ 始终大于1
+- 介电常数 $\kappa_e$ 始终大于 1
 - 电介质的插入使得电容器能够储存更多的能量
 
 我们也可以得到插入电介质后其他物理量的变化
 
 - 当电荷总量 $Q$ 不变时
 
-$$ V = \dfrac{Q}{C} = \dfrac{Q}{\kappa_e C_0} = \dfrac{V_0}{\kappa_e} $$
+    $$ V = \dfrac{Q}{C} = \dfrac{Q}{\kappa_e C_0} = \dfrac{V_0}{\kappa_e} $$
 
-$$ E = \dfrac{V}{d} = \dfrac{V_0}{\kappa_e d} = \dfrac{E_0}{\kappa_e} $$
+    $$ E = \dfrac{V}{d} = \dfrac{V_0}{\kappa_e d} = \dfrac{E_0}{\kappa_e} $$
 
 - 当电势差 $V$ 不变时
 
-$$ Q = \kappa_e C_0 V = \kappa_e Q_0 $$
+    $$ Q = \kappa_e C_0 V = \kappa_e Q_0 $$
 
 #### 宏观理解
 
 - 若在平行板电容器间插入一个**导体**，导体的上下表面都会产生**感应电荷**，相当于将一个电容器变成了两个电容器的串联
 
-![](./assets/导体插入电容器.png){ width=80% }
+    ![](./assets/导体插入电容器.png){ align=right width=35% }
 
-$$ C_1 = \epsilon_0 \dfrac{A}{d_1} $$
-$$ C_2 = \epsilon_0 \dfrac{A}{d_2} $$
-$$ C = \dfrac{C_1 C_2}{C_1 + C_2} = \epsilon_0 \dfrac{A}{d_1 + d_2} > \epsilon_0 \dfrac{A}{d} $$
-因为显然 $d_1 + d_2 < d$
+    $$ C_1 = \epsilon_0 \dfrac{A}{d_1} $$
+    $$ C_2 = \epsilon_0 \dfrac{A}{d_2} $$
+    $$ C = \dfrac{C_1 C_2}{C_1 + C_2} = \epsilon_0 \dfrac{A}{d_1 + d_2} > \epsilon_0 \dfrac{A}{d} $$
+    因为显然 $d_1 + d_2 < d$
 
 - 若在平行板电容器间插入一个**电介质**，电介质与电容器之间几乎没有缝隙。此时电介质的表面会产生**束缚电荷**，由于电介质内部会产生感应电场，将原电场的一部分抵消从而使电势差减小，在带电量不变的情况下，由 $C = \dfrac{Q}{V}$ 可知电容增大。此时我们就称这个电介质被极化（Polarization）了。
 
-![](./assets/电介质插入电容器.png){ width=80% }
+    ![](./assets/电介质插入电容器.png){ align=right width=40% }
 
-$$ V = Ed = (E_0 - E')d < E_0 d $$ 
+    $$ V = Ed = (E_0 - E')d < E_0 d $$ 
 
-$$ C = \dfrac{q}{Ed} = \dfrac{q}{(E_0 - E')d} > \dfrac{q}{E_0 d} = C_0 $$
+    $$ C = \dfrac{q}{Ed} = \dfrac{q}{(E_0 - E')d} > \dfrac{q}{E_0 d} = C_0 $$
 
-从以上两种情况可以看出，无论插入导体还是电介质都可以使电容增大.但插入导体后将会使得两个小电容器的 $d$ 变得很小，这样就容易导致电容器被击穿，因此通常采取插入电介质的方法来提高电容。
+从以上两种情况可以看出，无论插入导体还是电介质都可以使电容增大。但插入导体后将会使得两个小电容器的 $d$ 变得很小，这样就容易导致电容器被击穿，因此通常采取插入电介质的方法来提高电容。
 
 !!! tip
-    虽然导体和电介质在外部电场中产生的电荷在英文中都称为“induced charge”，但在中文中我们通常将导体上的电荷称为感应电荷，而电介质上的电荷称为束缚电荷，这样我们就可以区分开它们。
+    虽然导体和电介质在外部电场中产生的电荷在英文中都称为“induced charge”，但在中文中我们通常将导体上的电荷称为**感应电荷**，而电介质上的电荷称为**束缚电荷**，这样我们就可以区分开它们。
 
 #### 极化的微观解释
 
@@ -858,8 +858,10 @@ $$ C = \dfrac{q}{Ed} = \dfrac{q}{(E_0 - E')d} > \dfrac{q}{E_0 d} = C_0 $$
 
     通常来说，极化强度矢量是一个空间的函数 $\overrightarrow{P}(x, y, z)$，它可能是均匀的，也可能是非均匀的。
 
-![](./assets/均匀电介质的极化强度矢量.png){ align=left width=45% }
-![](./assets/不均匀电介质的极化强度矢量.png){ width=50% }
+<center>
+    <img src="../assets/均匀电介质的极化强度矢量.png" width="30%">
+    <img src="../assets/不均匀电介质的极化强度矢量.png" width="35%">
+</center>
 
 对于均匀的电介质，束缚电荷仅分布在电介质的表面。
 
@@ -947,11 +949,11 @@ $$
 \begin{pmatrix} \epsilon_0 E_x \\\\ \epsilon_0 E_y \\\\ \epsilon_0 E_z \\\\ \end{pmatrix}
 $$
 
-$$ P_x = \chi_{xx} \epsilon_0 E_x + \chi_{xy} \epsilon_0 E_y +\chi_{xz} \epsilon_0 E_z $$
-
-$$ P_y = \chi_{yx} \epsilon_0 E_x + \chi_{yy} \epsilon_0 E_y +\chi_{yz} \epsilon_0 E_z $$
-
-$$ P_z = \chi_{zx} \epsilon_0 E_x + \chi_{zy} \epsilon_0 E_y +\chi_{zz} \epsilon_0 E_z $$
+$$\begin{aligned}
+P_x &= \chi_{xx} \epsilon_0 E_x + \chi_{xy} \epsilon_0 E_y +\chi_{xz} \epsilon_0 E_z \\\\
+P_y &= \chi_{yx} \epsilon_0 E_x + \chi_{yy} \epsilon_0 E_y +\chi_{yz} \epsilon_0 E_z \\\\
+P_z &= \chi_{zx} \epsilon_0 E_x + \chi_{zy} \epsilon_0 E_y +\chi_{zz} \epsilon_0 E_z \\\\
+\end{aligned}$$
 
 ### 电位移矢量
 
@@ -1003,7 +1005,7 @@ $$ \overrightarrow{D} \cdot d\overrightarrow{A} = \sum_{In} q_0 $$
 **电流强度** $i$ 定义为单位时间内通过某个截面的电荷量，即
 $$ i = \lim_{\Delta t \to 0} \dfrac{\Delta q}{\Delta t} = \dfrac{dq}{dt} $$
 
-&& $\overrightarrow{j}$ 定义为单位时间内通过单位面积的电荷量
+**电流密度** $\overrightarrow{j}$ 定义为单位时间内通过单位面积的电荷量
 
 $$\begin{aligned}
 di &= \overrightarrow{j} \cdot d\overrightarrow{A} \\\\

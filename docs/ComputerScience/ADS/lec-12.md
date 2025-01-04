@@ -273,9 +273,7 @@ ConfigType State_flipping()
     &= (2+\varepsilon) w(A,B) 
     \end{aligned} $$
 
-    即 
-    
-    $$ \dfrac{w(A,B)}{w(A^*, B^*)} \geqslant \dfrac{1}{2+\varepsilon} $$
+    即 $$ \dfrac{w(A,B)}{w(A ^ *, B ^ * )} \geqslant \dfrac{1}{2+\varepsilon} $$
 
     ---
 

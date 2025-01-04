@@ -14,7 +14,7 @@ $$ \Phi_B = \iint \overrightarrow{B} \cdot d\overrightarrow{A} $$
 $$ \varepsilon = -\dfrac{ \mathrm{d}\Phi_B }{ \mathrm{d}t } $$
 
 !!! tip "感生电动势的方向"
-    上式中的负号表示感生电动势的方向总是使得感生电流的磁场方向抵消原磁场的变化，即”阻碍“磁场的变化，具体的方向可由右手定则确定，这就是楞次定律。
+    上式中的负号表示感生电动势的方向总是倾向于使感生电流的磁场方向抵消原磁场的变化，即“阻碍”磁场的变化，具体的方向可由右手定则确定，这就是楞次定律。
 
     楞次定律是能量守恒定律在电磁感应现象中的具体表现。
 
@@ -33,19 +33,19 @@ $$ \overrightarrow{f} = -e(\overrightarrow{v} \times \overrightarrow{B}) $$
 
 $$ \overrightarrow{K} = \dfrac{\overrightarrow{f}}{-e} = \overrightarrow{v} \times \overrightarrow{B} $$
 
-$$ \int_-^+ \overrightarrow{K} \cdot d\overrightarrow{l} = \int_C^D (\overrightarrow{v} \times \overrightarrow{B}) \cdot d\overrightarrow{l} = $$
+$$ \int_-^+ \overrightarrow{K} \cdot d\overrightarrow{l} = \int_C^D (\overrightarrow{v} \times \overrightarrow{B}) \cdot d\overrightarrow{l} $$
 
 !!! question
     我们都说洛伦兹力并不做功，但为什么我们又说洛伦兹力产生了动生电动势？
 
-    因为实际上是外力克服了洛伦兹力的分量在做功，因此洛伦兹力有的分量做正功，有的分量做负功，总功为零。
+    因为实际上这个过程中外力克服洛伦兹力的分量做功，因此洛伦兹力有的分量做正功，有的分量做负功，总功为零。
 
 !!! example "发电机"
     ![发电机](./assets/发电机.jpg){align=right width=33%}
 
     $$ \Phi_B = \overrightarrow{B} \cdot \overrightarrow{A} = BA \cos \theta = BA \cos \omega t $$
 
-    $$ \varepsilon = -\dfrac{ \mathrm{d}\Phi_B }{ \mathrm{d}t } = -BA \dfrac{\cos \omega t}{ mathrm{d}t } = BA \omega \sin \omega t $$
+    $$ \varepsilon = -\dfrac{ \mathrm{d}\Phi_B }{ \mathrm{d}t } = -BA \dfrac{\cos \omega t}{ \mathrm{d}t } = BA \omega \sin \omega t $$
 
 ### 感生电动势
 
@@ -53,24 +53,20 @@ $$ \int_-^+ \overrightarrow{K} \cdot d\overrightarrow{l} = \int_C^D (\overrighta
 $$ \varepsilon = \oint \overrightarrow{E} \cdot d\overrightarrow{l} $$
 
 空间中的电场实际上包括静电场和磁场变化产生的感生电动势 
-
-$$ \overrightarrow{E} = \overrightarrow{E}_{sta} + \overrightarrow{E}_{ind} $$
+$$ \overrightarrow{E} = \overrightarrow{E} _ {sta} + \overrightarrow{E} _ {ind} $$
 
 我们可以对空间中的电场环路定理进行推广
 
 !!! info "电场环路定理的推广"
     感应电动势做的功相当于感生电场对电荷做的功，即
-    $$ \varepsilon q_0 = q_0 E_{ind} 2 \pi r $$
+    $$ \varepsilon q_0 = q_0 E_{ind} \cdot 2 \pi r $$
     
     从而根据法拉第电磁感应定律
-
-    $$ \varepsilon = E_{ind} 2 \pi r = -\dfrac{ \mathrm{d}\Phi_B }{ \mathrm{d}t } $$
-    
+    $$ \varepsilon = E_{ind} \cdot 2 \pi r = -\dfrac{ \mathrm{d}\Phi_B }{ \mathrm{d}t } $$
     于是
+    $$ \oint \overrightarrow{E} \cdot d\overrightarrow{l} = \oint (\overrightarrow{E} _ {sta} + \overrightarrow{E} _ {ind}) \cdot d\overrightarrow{l} = 0 + (-\dfrac{ \mathrm{d}\Phi_B }{ \mathrm{d}t }) = -\dfrac{ \mathrm{d}\Phi_B }{ \mathrm{d}t } $$
 
-    $$ \oint \overrightarrow{E} \cdot d\overrightarrow{l} = \oint (\overrightarrow{E}_{sta} + \overrightarrow{E}_{ind}) \cdot d\overrightarrow{l} = 0 + (-\dfrac{ \mathrm{d}\Phi_B }{ \mathrm{d}t }) = -\dfrac{ \mathrm{d}\Phi_B }{ \mathrm{d}t } $$
-
-    又根据磁通量的定义，$ \Phi_B = \iint \overrightarrow{B} \cdot d\overrightarrow{A} $，所以
+    又根据磁通量的定义，$ \Phi_B = \displaystyle\iint \overrightarrow{B} \cdot d\overrightarrow{A} $，所以
     $$ \oint \overrightarrow{E} \cdot d\overrightarrow{l} = -\iint \dfrac{ \partial \overrightarrow{B} }{ \partial t } \cdot d\overrightarrow{A} $$
 
     又根据 stokes 公式
@@ -139,46 +135,42 @@ $$ \begin{aligned}
 \end{aligned}$$
 
 于是我们可以通过互感系数 $M$ 来求出感生电动势的大小
-$$ M_{12} = \frac{\Psi_{12}}{i_1} = \frac{N_2 \Phi_{12}}{i_1}; \quad \varepsilon_2 = -\frac{ \mathrm{d}\Psi_{12} }{\mathrm{d}t} = -M_{12} \frac{\mathrm{d}i_1}{\mathrm{d}t}, \quad (i_1 \text{change} ) $$
+$$ M_{12} = \frac{\Psi_{12}}{i_1} = \frac{N_2 \Phi_{12}}{i_1}; \quad \varepsilon_2 = -\frac{ \mathrm{d}\Psi_{12} }{\mathrm{d}t} = -M_{12} \frac{\mathrm{d}i_1}{\mathrm{d}t}, \quad (i_1 \text{ change} ) $$
 
-$$ M_{21} = \frac{\Psi_{21}}{i_2} = \frac{N_1 \Phi_{21}}{i_2}; \quad \varepsilon_1 = -\frac{ \mathrm{d}\Psi_{21} }{\mathrm{d}t} = -M_{21} \frac{\mathrm{d}i_2}{\mathrm{d}t}, \quad (i_2 \text{change} ) $$
+$$ M_{21} = \frac{\Psi_{21}}{i_2} = \frac{N_1 \Phi_{21}}{i_2}; \quad \varepsilon_1 = -\frac{ \mathrm{d}\Psi_{21} }{\mathrm{d}t} = -M_{21} \frac{\mathrm{d}i_2}{\mathrm{d}t}, \quad (i_2 \text{ change} ) $$
 
 !!! note "互感系数"
     上面的 $M_{12}$ 和 $M_{21}$ 就是互感系数，一般而言，它们两者相等，即
-    $$M_{12} = M_{21} = M$$
-    互感系数的单位为亨利（hery），$ 1H = 1 \dfrac{Wb}{A} $，常用的单位有$mH$、$\mu H$等。
+    $$ M_{12} = M_{21} = M$$
+    互感系数的单位为亨利（hery），$1H = 1 \dfrac{Wb}{A}$，常用的单位有 $mH$、$\mu H$ 等。
 
 ### 自感
 
 <figure>
-    <img src="../assets/自感.png" width="50%" />
+    <img src="../assets/自感.png" width="40%" />
 </figure>
 
 当通电线圈的电流发生变化时，线圈本身也会产生感生电动势，这种现象称为自感。
 
 根据楞次定律，我们可以很显然地知道感生电动势所产生的磁场，会倾向于阻碍原磁场的变化。同时我们也可以注意到感应电动势会使得线圈两端出现电势差，并且这个电势差的大小就等于感生电动势的大小。
 
-$$ \Psi = NBA = Li $$
-
-$$ \varepsilon_L = -\dfrac{\mathrm{d} \Psi}{\mathrm{d}t} = -L \dfrac{\mathrm{d}i}{\mathrm{d}t} $$
-
-$$ V_b - V_a = \varepsilon_L = -L \dfrac{\mathrm{d}i}{\mathrm{d}t} $$
+\\[ \Psi = NBA = Li \\]
+\\[ \varepsilon_L = -\dfrac{\mathrm{d} \Psi}{\mathrm{d}t} = -L \dfrac{\mathrm{d}i}{\mathrm{d}t} \\]
+\\[ V_b - V_a = \varepsilon_L = -L \dfrac{\mathrm{d}i}{\mathrm{d}t} \\]
 
 其中，$L$ 被称为线圈的自感系数，单位也为亨利。
 
 !!! note "如何计算自感系数"
     1. 假设电流大小为 $i$
     2. 利用 $i$ 计算电流产生的磁感应强度 $\overrightarrow{B}$
-    3. 计算磁通匝链数 
-
-        $$ \Psi = N\Phi_B = NBA = Li $$
+    3. 计算磁通匝链数$$ \Psi = N\Phi_B = NBA = Li $$
 
     4. 计算自感系数
 
         $$ \begin{aligned} 
-        L &= \dfrac{\Psi}{i} = \dfrac{N\Phi_B}{i} \\\\
-        \varepsilon_L &= -\dfrac{\mathrm{d}\Psi}{\mathrm{d}t} \\\\
-        &= -L \dfrac{\mathrm{d}i}{\mathrm{d}t} \\\\
+        L = \dfrac{\Psi}{i} & = \dfrac{N\Phi_B}{i} \\
+        \varepsilon_L &= -\dfrac{\mathrm{d}\Psi}{\mathrm{d}t} \\
+        &= -L \dfrac{\mathrm{d}i}{\mathrm{d}t} \\
         &= -N \dfrac{\mathrm{d}\Phi_B}{\mathrm{d}t}
         \end{aligned} $$
 
@@ -186,20 +178,20 @@ $$ V_b - V_a = \varepsilon_L = -L \dfrac{\mathrm{d}i}{\mathrm{d}t} $$
     === "螺线管的自感系数"
 
         <figure>
-            <img src="../assets/螺线管的自感系数.png" width="50%" />
+            <img src="../assets/螺线管的自感系数.png" width="45%" />
         </figure>
 
-        计算一段长度为 $l$，横截面积为 $A$ 的通电螺线管的自感系数 $L$，我们可以按照上面提到的方法进行计算。
+        给定一段长度为 $l$，横截面积为 $A$ 的通电螺线管，求它的自感系数 $L$，我们可以按照上面提到的方法进行计算。
         $$ B = \mu_0 n i $$
         $$ \Psi = N \Phi_B = nlBA = \mu_0 n^2 ilA $$
         $$ L = \dfrac{\Psi}{i} = \mu_0 n^2 lA = \mu_0 n^2 V $$
 
-        其中，$V$ 是这一段螺线管的体积。因此我们可以得到单位体积和单位长度螺线管的自感系数：
+        其中，$V$ 是这一段螺线管的体积，$n$ 是单位长度线圈的匝数。因此我们可以得到单位体积和单位长度螺线管的自感系数：
         $$ L_v = \dfrac{L}{V} = \mu_0 n^2, \quad L_l = \dfrac{L}{l} = \mu_0 n^2 A $$  
 
     === "长方形螺绕环的自感系数"
         <figure>
-            <img src="../assets/长方形螺绕环的自感系数.jpg" width="60%" />
+            <img src="../assets/长方形螺绕环的自感系数.jpg" width="50%" />
         </figure>
         
         如上图所示，长方形螺绕环共有 $N$ 匝，内径为 $a$，外径为 $b$，宽度为 $h$，通电电流为 $i$。
@@ -211,11 +203,10 @@ $$ V_b - V_a = \varepsilon_L = -L \dfrac{\mathrm{d}i}{\mathrm{d}t} $$
         接着就可以求出磁通量 $\Phi_B$，进而求出自感系数 $L$
 
         $$ \begin{aligned}
-        \Phi_B &= \iint \overrightarrow{B} \cdot d\overrightarrow{A} = \int_a^b \dfrac{\mu_0 N i}{2 \pi r} h dr \\
-        &= \dfrac{\mu_0 N i h}{2 \pi} \ln \dfrac{b}{a} 
+        \Phi_B &= \iint \overrightarrow{B} \cdot d\overrightarrow{A} = \int_a^b \dfrac{\mu_0 N i}{2 \pi r} \cdot h dr \\\\
+        &= \dfrac{\mu_0 N i h}{2 \pi} \ln \dfrac{b}{a} \\\\
+        L &= \dfrac{N \Phi_B}{i} = \dfrac{\mu_0 N^2 h}{2 \pi} \ln \dfrac{b}{a} 
         \end{aligned} $$
-
-        $$ L = \dfrac{N \Phi_B}{i} = \dfrac{\mu_0 N^2 h}{2 \pi} \ln \dfrac{b}{a} $$
 
     === "同轴电缆"
         ![](./assets/同轴电缆.png){align=right width=25%}
@@ -225,12 +216,12 @@ $$ V_b - V_a = \varepsilon_L = -L \dfrac{\mathrm{d}i}{\mathrm{d}t} $$
         $$ B = \dfrac{\mu_0 i}{2 \pi r} $$
 
         $$ \begin{aligned}
-        \Phi_B &= \iint \overrightarrow{B} \cdot d\overrightarrow{A} = \int_{R_1}^{R_2} Bl dr \\
-        &= \dfrac{\mu_0 il}{2 \pi} \int_{R_1}^{R_2} \dfrac{dr}{r} \\
-        &= \dfrac{\mu_0 il}{2 \pi} \ln \dfrac{R_2}{R_1}
+        \Phi_B &= \iint \overrightarrow{B} \cdot d\overrightarrow{A} = \int_{R_1}^{R_2} Bl dr \\\\
+        &= \dfrac{\mu_0 il}{2 \pi} \int_{R_1}^{R_2} \dfrac{dr}{r} \\\\
+        &= \dfrac{\mu_0 il}{2 \pi} \ln \dfrac{R_2}{R_1}\\\\
+        L &= \dfrac{\Phi_B}{i} = \dfrac{\mu_0 l}{2 \pi} \ln \dfrac{R_2}{R_1} 
         \end{aligned} $$
 
-        $$ L = \dfrac{\Phi_B}{i} = \dfrac{\mu_0 l}{2 \pi} \ln \dfrac{R_2}{R_1} $$
         其中，$l$ 是电缆的长度。
 
 ### 线圈的拼接
@@ -255,7 +246,7 @@ $$ M = \sqrt{L_1 L_2} $$
 $$ C = \kappa_e C_0 $$
 在磁场中插入磁性材料同样也可以让自感系数增大 
 $$ L = \kappa_m L_0 $$
-其中，$\kappa_m$ 是磁导率，对于顺磁材料，$\kappa_m \approx 1$；对于铁磁材料，$\kappa_m \gg 1 (10^3 \sim 10^4)$。
+其中，$\kappa_m$ 是磁导率，对于顺磁材料，$\kappa_m \approx 1$；对于铁磁材料，$\kappa_m >> 1 \, (10^3 \sim 10^4)$。
 
 ### 原子与原子核磁性
 
@@ -299,7 +290,7 @@ $$ \overrightarrow{\mu}_S = - \dfrac{e}{m} \overrightarrow{S} $$
 
 ### 磁化强度
 
-在电学部分，我们引入了极化强度 $P$ 来描述电介质的极化程度，而在磁学部分，我们也引入了磁化强度 $M$ 的概念来描述磁性材料的磁性质。
+在电学部分，我们引入了极化强度 $P$ 来描述电介质的极化程度，而在磁学部分，我们也引入磁化强度 $M$ 的概念来描述磁性材料的磁性质。
 
 ![](./assets/磁化强度1.png){align=left width=40%}
 ![](./assets/磁化强度2.png){width=30%}
@@ -321,7 +312,7 @@ $$ \overrightarrow{M} = \dfrac{\sum \overrightarrow{\mu_m}}{\Delta V} $$
     $$ \overrightarrow{P} \cdot \overrightarrow{n} = \sigma'_e $$
 
 很自然地，我们希望磁化强度矢量也具有类似于极化强度矢量的性质，即
-$$ \oiint \overrightarrow{M} \cdot d\overrightarrow{l} = \sum i_{in} $$
+$$ \oiint \overrightarrow{M} \cdot d\overrightarrow{l} = \sum i'_{in} $$
 $$ \overrightarrow{M} \times \overrightarrow{n} = \overrightarrow{j}' $$
 
 ![](./assets/磁化强度矢量.png){ align=right width=27% }
@@ -330,11 +321,11 @@ $$ \overrightarrow{M} \times \overrightarrow{n} = \overrightarrow{j}' $$
 $$ j' = \dfrac{i'}{\Delta z} $$
 在这里我们只需要除以 $\Delta z$ 是因为在我们用虚线框住的范围内，$y$ 方向上是没有电流的。
 
-$$ \Delta m = i' \cdot \Delta A = j' \Delta x \Delta y \Delta z $$
-
-$$ M = \frac{\Delta m}{\Delta V} = j' $$
-
-$$ M \cdot \Delta z = i' $$
+$$ \begin{aligned}
+& \Delta m = i' \cdot \Delta A = j' \Delta x \Delta y \Delta z \\\\
+&M = \frac{\Delta m}{\Delta V} = j'\\\\
+&M \cdot \Delta z = i' 
+\end{aligned} $$
 
 !!! tip "非均匀磁化"
     对于非均匀磁化，可以将其分割成许多小块，这样每一小块都可以认为是均匀磁化的，从而可以得到整体的磁化强度。
@@ -343,17 +334,15 @@ $$ M \cdot \Delta z = i' $$
         <img src="../assets/非均匀磁化.png" width="60%" />
     </figure>
 
-    $$ i'_1 = i_2 - i_1 = (M_2 - M_1) \cdot \Delta z $$ 
+    $$ \begin{aligned}
+    & i'_1 = i_2 - i_1 = (M_2 - M_1) \cdot \Delta z \\ 
+    & i'_2 = i_3 - i_2 = (M_3 - M_2) \cdot \Delta z \\
+    & i'_3 = i_4 - i_3 = (M_4 - M_3) \cdot \Delta z \\\\
+    & \therefore i'_1 + i'_2 + i'_3 = (M_4 - M_1) \cdot \Delta z = \sum_{inloop} i' \\\\
+    & \oint \overrightarrow{M} \cdot d\overrightarrow{l} = (M_4 - M_1) \cdot \Delta z = \sum_{inloop} i'
+    \end{aligned} $$
 
-    $$ i'_2 = i_3 - i_2 = (M_3 - M_2) \cdot \Delta z $$
-
-    $$ i'_3 = i_4 - i_3 = (M_4 - M_3) \cdot \Delta z $$
-
-    $$ \therefore i'_1 + i'_2 + i'_3 = (M_4 - M_1) \cdot \Delta z = \sum_{inloop} i' $$
-
-    $$ \oint \overrightarrow{M} \cdot d\overrightarrow{l} = (M_4 - M_1) \cdot \Delta z = \sum_{inloop} i' $$
-
-    $$ \oint \overrightarrow{M} \cdot d\overrightarrow{l} = \sum_{inloop} i' $$
+    因此我们知道对于任意情况，磁化强度矢量 $\overrightarrow{M}$ 都满足上面的环路定理。
 
 ### 磁场强度
 
@@ -366,7 +355,7 @@ $$ \oint_L (\dfrac{\overrightarrow{B}}{\mu_0} - \overrightarrow{M}) \cdot d\over
 $$ \overrightarrow{H} = \dfrac{\overrightarrow{B}}{\mu_0} - \overrightarrow{M} $$
 $$ \oint_L \overrightarrow{H} \cdot d\overrightarrow{l} = \sum_{inL} i_0 $$
 
-磁场强度 $\overrightarrow{H}$ 的单位是奥斯特 Os,安培每米（A/m）。
+磁场强度 $\overrightarrow{H}$ 的单位是奥斯特 Os，安培每米（A/m）。
 
 !!! note
     在真空中，有
@@ -375,9 +364,7 @@ $$ \oint_L \overrightarrow{H} \cdot d\overrightarrow{l} = \sum_{inL} i_0 $$
 ### 磁化强度、磁场强度与磁感应强度的关系
 
 $$ \overrightarrow{M} = \chi_m \overrightarrow{H} $$
-
 $$ \overrightarrow{B} = \kappa_m \mu_0 \overrightarrow{H} $$
-
 由于
 $$ \overrightarrow{B} = \mu_0 (\overrightarrow{H} + \overrightarrow{M}) = \mu_0 (1 + \chi_m) \overrightarrow{H} = \kappa_m \mu_0 \overrightarrow{H} $$
 $$ \therefore \kappa_m = 1 + \chi_m $$
@@ -392,8 +379,9 @@ $$ \therefore \kappa_m = 1 + \chi_m $$
         <img src="../assets/螺线管插入铁磁材料.png" width="60%" />
     </figure>
 
-    $$ \oint_L \overrightarrow{H} \cdot d\overrightarrow{l} = \sum_{inL} i_0 $$
-    $$ \overrightarrow{H} \cdot \Delta \overrightarrow{l} = N i_0 \ \Rightarrow \ H = n i_0 $$
+    $$ \oint_L \overrightarrow{H} \cdot d\overrightarrow{l} = \sum_{inL} i_0 $$ 
+
+    $$ \overrightarrow{H} \cdot \Delta \overrightarrow{l} = N i_0 \, \Rightarrow \, H = n i_0 $$
 
     于是磁感应强度的比值为
     $$ B = \mu_0 \kappa_m H = \mu_0 \kappa_m n i_0 = \kappa_m B_0 $$
@@ -405,9 +393,10 @@ $$ \therefore \kappa_m = 1 + \chi_m $$
 !!! idea
     从这样的角度看来，磁场强度 $H$ 与电场强度 $E$，磁感应强度 $B$ 与电感应强度 $D$ 之间的关系又是比较相似的。
 
-    $$ D = \epsilon_0 E + P = \epsilon_0 \kappa_e E $$
-
-    $$ B = \mu_0 (H + M) = \mu_0 \kappa_m H $$
+    $$ \begin{aligned}
+    D &= \epsilon_0 E + P = \epsilon_0 \kappa_e E \\
+    B &= \mu_0 (H + M) = \mu_0 \kappa_m H 
+    \end{aligned} $$
 
 #### 磁化率与磁导率
 
@@ -415,75 +404,69 @@ $$ \therefore \kappa_m = 1 + \chi_m $$
 
 |   |顺磁|抗磁|铁磁|
 |---|---|---|---|
-|$\chi_m$ | 大于0但很小 ($10^{-6}$) | 小于0但绝对值远小于1 | 与磁场强度有关 |
-|$\kappa_m$ | 大于1但是接近1 | 小于1但是接近1 | 与磁场强度有关($10^2 \sim 10^3$) |
+|$\chi_m$ | 大于 0 但很小 ($10^{-6}$) | 小于 0 但绝对值远小于 1 | 与磁场强度有关 |
+|$\kappa_m$ | 大于 1 但是接近 1 | 小于 1 但是接近 1 | 与磁场强度有关（$10^2 \sim 10^3$） |
 
 #### 磁化的微观解释
 
-- 顺磁材料（paramagnetic materials）
+!!! abstract "各种材料的磁性质"
 
-<figure>
-    <img src="../assets/顺磁材料.png" width="60%" />
-</figure>
+    === "顺磁材料（paramagnetic materials）"
 
-材料内部原本杂乱无章的磁矩会在外部磁场的作用下，材料内部的磁矩会朝向磁场方向，磁化的程度与温度有关
+        <figure>
+            <img src="../assets/顺磁材料.png" width="60%" />
+        </figure>
 
-居里定律：
-$$ \overrightarrow{M} = \chi_m \overrightarrow{H} = \dfrac{C}{T} \overrightarrow{H}, \quad \chi_m(T) = \dfrac{C}{T} $$
-其中 $C$ 为居里常数，$T$为温度
+        材料内部原本杂乱无章的磁矩会在外部磁场的作用下，材料内部的磁矩会朝向磁场方向，磁化的程度与温度有关
 
-因为顺磁性的磁化率很小，磁化强度也很小，所以它对总磁场的影响很小
+        居里定律：
+        $$ \overrightarrow{M} = \chi_m \overrightarrow{H} = \dfrac{C}{T} \overrightarrow{H}, \quad \chi_m(T) = \dfrac{C}{T} $$
+        其中 $C$ 为居里常数，$T$为温度
 
-- 抗磁材料（diamagnetic materials）
+        因为顺磁性的磁化率很小，磁化强度也很小，所以它对总磁场的影响很小
 
-抗磁材料在没有外磁场的情况下，各电子之间的磁矩相互抵消，内部总磁矩为0
+    === "抗磁材料（diamagnetic materials）"
 
-$$ \overrightarrow{\mu}_m = 0, \quad \overrightarrow{J} = 0 $$ 
+        抗磁材料在没有外磁场的情况下，各电子之间的磁矩相互抵消，内部总磁矩为0
+        $$ \overrightarrow{\mu}_m = 0, \quad \overrightarrow{J} = 0 $$ 
+        $$ \frac{Ze^2}{4\pi \varepsilon_0 r^2} = m \omega_0^2 r $$
+        $$ \omega_0 = \left( \frac{Ze^2}{4\pi \varepsilon_0 m r^3} \right)^{1/2} $$
+        由于磁场对电子的洛伦兹力相比于库仑力非常小，因此它对电子的轨道半径几乎没有影响
 
-$$ \frac{Ze^2}{4\pi \varepsilon_0 r^2} = m \omega_0^2 r $$
+        === " $\overrightarrow{\omega} \parallel \overrightarrow{B} $"
 
-$$ \omega_0 = \left( \frac{Ze^2}{4\pi \varepsilon_0 m r^3} \right)^{1/2} $$
+            \\[ \frac{Ze^2}{4\pi \varepsilon_0 r^2} + e \omega rB = m \omega^2 r \\]
+            \\[ \omega = \omega_0 + \Delta \omega \\]
+            \\[ \Delta \omega = \frac{eB}{2m} \\]
 
-由于磁场对电子的洛伦兹力相比于库仑力非常小，因此它对电子的轨道半径几乎没有影响
+        === " $\overrightarrow{\omega} \parallel -\overrightarrow{B} $"
 
-=== " $\overrightarrow{\omega} \parallel \overrightarrow{B} $"
+            \\[ \frac{Ze^2}{4\pi \varepsilon_0 r^2} - e \omega rB = m \omega^2 r \\]
+            \\[ \omega = \omega_0 - \Delta \omega \\]
+            \\[ \Delta \omega = \frac{eB}{2m} \\]
 
-    $$ \frac{Ze^2}{4\pi \varepsilon_0 r^2} + e \omega rB = m \omega^2 r $$
+        加上外磁场后，电子会受到洛伦兹力，无论最开始时电子磁矩的方向与外磁场的方向相同还是相反，即无论电子会被加速还是减速，经过分析可以发现 $\Delta \omega$ 都会产生一个与外磁场方向相反的磁矩（**抗磁**）
 
-    $$ \omega = \omega_0 + \Delta \omega $$
+        我们可以分析出磁矩的变化量为：
+        $$ \mu = iA = \frac{ev}{2\pi r} \left( \pi r^2 \right) = \frac{1}{2} evr = \frac{e r^2}{2} \omega, \quad \overrightarrow{\mu_0} = -\frac{e r^2}{2} \overrightarrow{\omega_0} $$
 
-    $$ \Delta \omega = \frac{eB}{2m} $$
+        $$ \Delta \overrightarrow{\mu} = -\frac{e r^2}{2} \Delta \overrightarrow{\omega} = -\frac{e^2 r^2}{4m} \overrightarrow{B} $$
 
-=== " $\overrightarrow{\omega} \parallel -\overrightarrow{B} $"
+    === "铁磁材料（ferromagnetic materials）"
 
-    $$ \frac{Ze^2}{4\pi \varepsilon_0 r^2} - e \omega rB = m \omega^2 r $$
+        铁磁材料初始的磁矩 $\mu_0 \neq 0$，且近邻原子磁矩间存在强相互作用
 
-    $$ \omega = \omega_0 - \Delta \omega $$
+        磁化强度矢量与温度的关系为
 
-    $$ \Delta \omega = \frac{eB}{2m} $$
-
-加上外磁场后，电子会受到洛伦兹力，无论最开始时电子磁矩的方向与外磁场的方向相同还是相反，即无论电子会被加速还是减速，经过分析可以发现 $\Delta \omega$ 都会产生一个与外磁场方向相反的磁矩（**抗磁**）
-
-我们可以分析出磁矩的变化量为：
-$$ \mu = iA = \frac{ev}{2\pi r} \left( \pi r^2 \right) = \frac{1}{2} evr = \frac{e r^2}{2} \omega, \quad \overrightarrow{\mu_0} = -\frac{e r^2}{2} \overrightarrow{\omega_0} $$
-
-$$ \Delta \overrightarrow{\mu} = -\frac{e r^2}{2} \Delta \overrightarrow{\omega} = -\frac{e^2 r^2}{4m} \overrightarrow{B} $$
-
-- 铁磁材料（ferromagnetic materials）
-
-铁磁材料初始的磁矩 $\mu_0 \neq 0$，且近邻原子磁矩间存在强相互作用
-
-磁化强度矢量与温度的关系为
-
-![](./assets/铁磁材料1.png){align=left width=40%}
-![](./assets/铁磁材料2.png){width=45%}
+        ![](./assets/铁磁材料1.png){align=left width=40%}
+        ![](./assets/铁磁材料2.png){width=45%}
 
 !!! example "磁畴"
     <figure>
         <img src="../assets/磁畴.png" width="70%" />
     </figure>
 
-    即使在没有外加磁场B的情况下，磁性材料中的磁偶极子（磁性小区域）也会倾向于在小范围内强烈地排列成特定的方向，形成所谓的“磁畴”。当施加外部磁场时，这些磁畴会重新排列，使得它们的方向一致，从而产生大的总磁化强度
+    即使在没有外加磁场 $B$ 的情况下，磁性材料中的磁偶极子（磁性小区域）也会倾向于在小范围内强烈地排列成特定的方向，形成所谓的“磁畴”。当施加外部磁场时，这些磁畴会重新排列，使得它们的方向一致，从而产生大的总磁化强度
 
     - 软铁磁体：指的是容易被磁化和退磁的磁性材料。它们在外部磁场作用下磁畴会有序排列，但磁场移除后磁畴会很快随机化。
 
@@ -504,7 +487,7 @@ $$ \Delta \overrightarrow{\mu} = -\frac{e r^2}{2} \Delta \overrightarrow{\omega}
 
 ### 螺线管中的能量
 
-![](./assets/螺线管的磁场能量.png){align=right width=30%}
+![](./assets/螺线管的磁场能量.png){align=right width=35%}
 
 对于一个自感系数为 $L$ 的螺线管，假设其连接电源后最大的电流为 $i_{max}$，那么
 $$ dW = - \varepsilon_L dq = -\varepsilon_L i dt, \quad \varepsilon_L = -L \dfrac{di}{dt} $$
@@ -553,26 +536,23 @@ u_B &= \dfrac{U}{V} = \dfrac{\dfrac{1}{2} LI^2}{lA} = \dfrac{\dfrac{1}{2} \mu_0 
 \end{aligned} $$
 
 !!! info "电场和磁场的能量密度"
-    $$ u_B = \dfrac{B^2}{2\mu_0} = \dfrac{1}{2} \overrightarrow{B} \cdot \overrightarrow{H} $$
-
-    $$ u_E= \dfrac{1}{2} \epsilon_0 E^2 = \dfrac{1}{2} \overrightarrow{D} \cdot \overrightarrow{E} $$
+    \\[ u_B = \dfrac{B^2}{2\mu_0} = \dfrac{1}{2} \overrightarrow{B} \cdot \overrightarrow{H} \\]
+    \\[ u_E= \dfrac{1}{2} \epsilon_0 E^2 = \dfrac{1}{2} \overrightarrow{D} \cdot \overrightarrow{E} \\]
 
     两者具有相当程度的对称性。
 
 !!! example 
     ![](./assets/磁场能量密度例1.png){align=right width=25%}
 
-    $$ \oint \overrightarrow{B} \cdot d\overrightarrow{l} = \mu_0 i $$
-
-    $$ B = \dfrac{\mu_0 i}{2\pi r} $$
-
-    $$ u_B = \dfrac{B^2}{2\mu_0} = \dfrac{1}{2\mu_0} \dfrac{\mu_0^2 i^2}{4 \pi^2 r^2} = \dfrac{\mu_0 i^2}{8 \pi^2 r^2} $$
-
-    ![](./assets/磁场能量密度例2.png){align=right width=25%}
+    \\[ \oint \overrightarrow{B} \cdot d\overrightarrow{l} = \mu_0 i \\]
+    \\[ B = \dfrac{\mu_0 i}{2\pi r} \\]
+    \\[ u_B = \dfrac{B^2}{2\mu_0} = \dfrac{1}{2\mu_0} \dfrac{\mu_0^2 i^2}{4 \pi^2 r^2} = \dfrac{\mu_0 i^2}{8 \pi^2 r^2} \\]
     
     于是
     $$ dU_B = u_B \cdot 2 \pi rl \cdot dr = \dfrac{\mu_0 i^2}{8 \pi^2 r^2} \cdot 2 \pi rl \cdot dr = \dfrac{\mu_0 i^2 l}{4\pi} \dfrac{dr}{r} $$
     $$ U_B = \int_{R_1}^{R_2} dU_B = \dfrac{\mu_0 i^2 l}{4\pi} \ln \dfrac{R_2}{R_1} $$
+
+    ![](./assets/磁场能量密度例2.png){align=right width=25%}
 
     又因为
     $$ U_B = \dfrac{1}{2} Li^2 $$
@@ -590,20 +570,16 @@ u_B &= \dfrac{U}{V} = \dfrac{\dfrac{1}{2} LI^2}{lA} = \dfrac{\dfrac{1}{2} \mu_0 
     $$ q = C\varepsilon\left(1 - e^{-t/RC}\right) $$ 
 
 <figure>
-    <img src="../assets/RL电路.png" width="60%" />
+    <img src="../assets/RL电路.png" width="50%" />
 </figure>
 
 ### 开关打向 a（接通电源）
 
-当开关打向a时，RL电路中的电流逐渐增大
+当开关打向 a 时，RL 电路中的电流逐渐增大
 
 $$ iR + L \frac{di}{dt} = \varepsilon $$
-
-
 $$ \frac{di}{dt} = \frac{1}{L} \left( \varepsilon - iR \right) = -\frac{R}{L} \left( i - \frac{\varepsilon}{R} \right) $$
-
 $$ i - \frac{\varepsilon}{R} = C'e^{-\frac{R}{L}t} $$
-
 当 $t = 0$ 时，有 $i = 0$，$ \therefore C' = -\frac{\varepsilon}{R} $
 
 所以
@@ -622,28 +598,24 @@ $$
 
         最大电流为 $\frac{\varepsilon}{R}$
         
-        当 $t=\frac{L}{R}$ 时，电流约为最大电流的63%
+        当 $t=\frac{L}{R}$ 时，电流约为最大电流的 63%
 
     - 电势差：$ V_L = -L \frac{di}{dt} = -\varepsilon e^{-\frac{t}{\tau_L}} $
 
         最大电势差为 $\varepsilon$
 
-        当 $t=\frac{L}{R}$ 时，电势差约为最大电势差的37%
+        当 $t=\frac{L}{R}$ 时，电势差约为最大电势差的 37%
 
 ### 开关打向 b（不接通电源）
 
 当不接通电源时，螺线管中会产生一个阻碍电流减小的自感电动势，作用相当于一个不断衰弱的电源
 
-$$ iR + L \frac{di}{dt} = 0 $$
-
-$$ \frac{di}{dt} = -\frac{R}{L}i $$
-
-$$ \Rightarrow i = i_0 e^{-\frac{R}{L}t} $$
-
+\\[ iR + L \frac{di}{dt} = 0 \\] 
+\\[ \frac{di}{dt} = -\frac{R}{L}i \\] 
+\\[ \Rightarrow i = i_0 e^{-\frac{R}{L}t} \\] 
 其中 $c$ 是一个常数。再将 $t=0$, $i=\frac{\varepsilon}{R}$ 代入，得到 
-$$ i = \dfrac{\varepsilon}{R}e^{-\frac{R}{L}t} $$
-
-$$ V = L\dfrac{di}{dt} = -\varepsilon e^{-\frac{R}{L}t} $$
+\\[ i = \dfrac{\varepsilon}{R}e^{-\frac{R}{L}t} \\] 
+\\[ V = L\dfrac{di}{dt} = -\varepsilon e^{-\frac{R}{L}t} \\]
 
 !!! info "电流与螺线管两端的电势差随时间的变化"
     ![](./assets/电流与电势差随时间的变化2.png){align=right width=25%}    
@@ -652,13 +624,13 @@ $$ V = L\dfrac{di}{dt} = -\varepsilon e^{-\frac{R}{L}t} $$
 
         最大电流为 $\frac{\varepsilon}{R}$
         
-        当 $t=\frac{L}{R}$ 时，电流约为最大电流的37%
+        当 $t=\frac{L}{R}$ 时，电流约为最大电流的 37%
 
     - 电势差：$ V_L = -L \frac{di}{dt} = -\varepsilon e^{-\frac{t}{\tau_L}} $
 
         最大电势差为 $-\varepsilon$
 
-        当 $t=\frac{L}{R}$ 时，电势差约为最大电势差的37%
+        当 $t=\frac{L}{R}$ 时，电势差约为最大电势差的 37%
 
 ## 电磁振荡
 
@@ -666,7 +638,7 @@ $$ V = L\dfrac{di}{dt} = -\varepsilon e^{-\frac{R}{L}t} $$
     <img src="../assets/电磁振荡.jpg" width="80%" />
 </figure>
 
-在LC电路中，电容器和线圈的能量不断地相互转换，即电场能与磁场能不断地相互转换，这种现象被称为电磁振荡。
+在 LC 电路中，电容器和线圈的能量不断地相互转换，即电场能与磁场能不断地相互转换，这种现象被称为电磁振荡。
 
 !!! tip "与简谐振动的类比"
     ![](./assets/电磁振荡能量相互转换.png){align=center width=50%}
@@ -674,9 +646,9 @@ $$ V = L\dfrac{di}{dt} = -\varepsilon e^{-\frac{R}{L}t} $$
     电磁振荡可以与简谐振动中的动能和势能相互转换进行类比。
 
     我们知道简谐振动的频率为 
-    $$\omega = \sqrt{\dfrac{k}{m}}$$
+    $$ \omega = \sqrt{\dfrac{k}{m}} $$ 
     因此电磁振荡的频率为 
-    $$\omega = \dfrac{1}{\sqrt{LC}}$$
+    $$ \omega = \dfrac{1}{\sqrt{LC}} $$
 
 ??? proof
     $$ U = U_B + U_E = \frac{1}{2} Li^2 + \frac{1}{2} \frac{q^2}{C} $$
@@ -702,7 +674,7 @@ $$ L \frac{di}{dt} + iR + \frac{q}{C} =
 0 & \text{K} \to b 
 \end{cases} $$
 
-再带入 $i=\frac{dq}{dt}$，有
+再带入 $i=\dfrac{dq}{dt}$，有
 $$ L \frac{d^2 q}{dt^2} + R \frac{dq}{dt} + \frac{q}{C} =
 \begin{cases}
 \varepsilon & \text{K} \to a \\
@@ -754,9 +726,6 @@ $$ L \frac{d^2 q}{dt^2} + R \frac{dq}{dt} + \frac{q}{C} =
 </figure>
 
 类似于简谐振动中的受迫振动，当 RLC 电路中有交流电源时，电路中的电流和电荷会受到周期性的外力作用，从而产生受迫振动。
-
-$$ \text{IF} \varepsilon = \varepsilon_m \cos \omega'' t $$
-
+$$ \text{if  } \varepsilon = \varepsilon_m \cos \omega'' t $$
 $$ q = q_m e^{- \frac{R}{2L} t} \cos (\omega t + \varphi) + C\varepsilon $$
-
 当 $ \omega'' = \omega $ 时，即外加的交流电源频率与 RLC 电路的固有频率相同时，电路中的电流和电荷会达到最大值（共振）。

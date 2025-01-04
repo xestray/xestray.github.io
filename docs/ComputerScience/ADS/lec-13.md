@@ -194,10 +194,10 @@ int OnlineHiring ( EventType C[ ], int N, int k )
 
 - Type $j$：the subproblem $S$ is of type $j$ if $ N \left( \dfrac{3}{4} \right)^{j+1} \leqslant |S| \leqslant N \left( \dfrac{3}{4} \right)^j $
 
-我们可以推出至多有 $\left( \dfrac{3}{4} \right)^{j+1}$ 个属于 type $j$ 的子问题。
+我们可以推出至多有 $\left( \dfrac{4}{3} \right)^{j+1}$ 个属于 type $j$ 的子问题。
 
 对于一个属于特定的 type $j$ 的子问题，我们可以计算其时间复杂度的期望值
-$$ E [T_{\text{type } j}] = O(N \left( \dfrac{3}{4} \right)^j) \times \left( \dfrac{3}{4} \right)^{j+1} = O(N) $$
+$$ E [T_{\text{type } j}] = O(N \left( \dfrac{3}{4} \right)^j) \times \left( \dfrac{4}{3} \right)^{j+1} = O(N) $$
 而不同的 type 的总个数为
 
 - Number of different types = $ \log_{4/3} N = O(\log N) $
