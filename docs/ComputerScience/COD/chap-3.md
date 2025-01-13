@@ -119,7 +119,7 @@ Booth's Algorithm 的主要思想在于减少乘数中`1`的数量，也即减�
 - 01 - **add** multiplicand to left half
 - 00 - no arithmetic operation - just **shift**
 
-要注意右移时可能会改变$Bit_{-1}$，并且右移时不能改变符号位，左侧填充的数字应当与符号位相同。
+要注意右移时可能会改变 $Bit_{-1}$，并且右移时不能改变符号位，左侧填充的数字应当与符号位相同。
 
 !!! example
     === "例1"

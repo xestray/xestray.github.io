@@ -35,6 +35,9 @@ nav:
       - 计算机概要与技术:    ComputerScience/COD/chap-1.md
       - 指令：计算机的语言:  ComputerScience/COD/chap-2.md
       - 计算机的算数运算:    ComputerScience/COD/chap-3.md
+      - 处理器:            ComputerScience/COD/chap-4.md
+      - 内存层次架构:       ComputerScience/COD/chap-5.md
+      - 储存和 IO:         ComputerScience/COD/chap-6.md
   - 数理: 
     - 数学分析: MathematicsAndPhysics/MA/MA.md
     - 线性代数: MathematicsAndPhysics/LA/LA.md

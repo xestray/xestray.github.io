@@ -37,7 +37,7 @@ D--->H
 - Use Abstraction to Simplify Design (采用抽象简化设计)
     - 采用层次化、模块化的设计
 - Make the Common Case Fast (加速常见事件)
-- Performance via Pipelining (通过并行提高性能)
+- Performance via Parallelism (通过并行提高性能)
 - Performance via Pipelining (通过流水线提高性能)
     - 所有流程同时进行，每个流程工作的对象是相邻流程的产品
 - Performance via Prediction (通过预测提高性能)

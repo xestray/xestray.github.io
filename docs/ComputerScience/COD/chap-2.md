@@ -681,17 +681,17 @@ RISC-V 有 4 中寻址方式
     - Atomic read/write memory operation
     - No other access to the location allowed between the read and write
 
-Load Reserved: `lr.d rd,(rs1)`
+Load Reserved: `lr.d rd, (rs1)`
 
-- 把`Mem[rs1]`的值存到`rd`中，然后在`rs1`对应地址上设置一个保留标记（reservation set）
+- 把`Mem[rs1]`的值存到`rd`中，然后在`Mem[rs1]`上设置一个保留标记（reservation set）
 
-Store Conditional: `sc.d rd,(rs1),rs2`
+Store Conditional: `sc.d rd, (rs1), rs2`
 
-- 在尝试把`rs2`的值存到`Mem[rs1]`之前，会先判断`rs1`的地址上是否有保留标记
+- 在尝试把`rs2`的值存到`Mem[rs1]`之前，会先判断`Mem[rs1]`上是否有保留标记
 
     - 如果观察到了保留标记，就说明从上一条`lr.d`指令之后`Mem[rs1]`的值没有被改变，那么就把`rs2`的值存到`Mem[rs1]`中，并且把`rd`设置为 0
     - 如果没有观察到保留标记，说明`Mem[rs1]`的值已经被改变了，那么就不会把`rs2`的值存到`Mem[rs1]`中，并且把`rd`设置为一个非零值
-    - 无论是否存储成功，`rs1`地址上的保留标记都会被清除
+    - 无论是否存储成功，`Mem[rs1]`上的保留标记都会被清除
 
 !!! example
     <figure>

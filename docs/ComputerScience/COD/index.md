@@ -9,7 +9,7 @@
 
 > 任课教师：刘海风
 
-> TA：[郭家豪](https://github.com/Guahao31)
+> TA：[郭家豪](https://github.com/Guahao31){:target="_blank"}
 
 !!! abstract "成绩组成"
     - 实验 30%
