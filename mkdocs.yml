@@ -11,8 +11,12 @@ nav:
   - Home: index.md
   - Computer Science:
     - ComputerScience/index.md
-    # - 数据结构基础: notes/ComputerScience/FDS.md
-    # - 计算机逻辑设计基础: notes/ComputerScience/CLDF.md
+    - 编程语言:
+      - ComputerScience/PL/index.md
+      - C++: ComputerScience/PL/cpp.md
+      # - Python: ComputerScience/PL/python.md
+      # - Java: ComputerScience/PL/java.md
+      # - Shell: ComputerScience/PL/shell.md 
     - 高级数据结构与算法分析: 
       - ComputerScience/ADS/index.md
       - AVL树与Splay树与摊还分析: ComputerScience/ADS/lec-1.md
@@ -54,6 +58,8 @@ nav:
       - MathematicsAndPhysics/Probability/index.md
       - 事件及其概率:      MathematicsAndPhysics/Probability/chap-1.md
       - 随机变量与分布函数: MathematicsAndPhysics/Probability/chap-2.md
+      - 数字特征与特征函数: MathematicsAndPhysics/Probability/chap-3.md
+      - 极限定理:         MathematicsAndPhysics/Probability/chap-4.md
   - CTF: 
     - CTF/index.md
     - 基础周:
