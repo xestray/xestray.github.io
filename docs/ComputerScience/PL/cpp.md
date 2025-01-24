@@ -10,7 +10,8 @@
 
     笔记主要来自于我在学习 [www.learncpp.com](https://www.learncpp.com/) 和《C++ primer》过程中的一些总结，同时也会参考一些其他来自互联网的资料。
 
-    [learncpp](https://www.learncpp.com/) 上讲了不少 modern c++ 的内容，还包括诸如如何书写风格良好的代码等程序员应当掌握的基本技能，很适合初学者学习。事实上它的作者还在不断更新这个网站并回答学习者的疑问（截止 2025 年 1 月），因此我认为这是相当不错的学习资源。
+    - 笔记的初衷是在我本人遗忘某个知识点时可以快速地查阅，因此可能会有一些我认为是常识的内容没有记录在这里。
+    - 写笔记的过程就是不停往里加新东西，因此显得比较杂乱无章，也许将来某一天会把这些知识点系统性地整理一遍（会，会吗？）。
 
 ## 变量
 
@@ -482,8 +483,11 @@ std::cout << sv << '\n';   // undefined behavior
         - 由于 C 风格字符串在整个程序的生命周期中都是有效的，因此总可以使用 C 风格字符串来初始化 `std::string_view`
         - 使用一个已经无效了的（dangling） `std::string_view` 会导致未定义行为
 
+---
 
-## 类型转换
+## 类型
+
+### 类型转换
 
 C++ 标准定义了将不同的基本类型（以及某些情况下的复合类型）转换为其他类型的规则，称为标准类型转换（standard type conversions）。标准转换可大致分为 4 类，
 
@@ -492,7 +496,7 @@ C++ 标准定义了将不同的基本类型（以及某些情况下的复合类�
 - Arithmetic conversions
 - Other conversions
 
-### Numeric promotions
+#### Numeric promotions
 
 numeric promotion 指的是将*较小（或称较窄）*的整数类型转换为*较大（或称较宽）*的整数类型，在转换的过程中不会出现数据的丢失。
 
@@ -513,7 +517,7 @@ numeric promotion 包括两大类：
 !!! tip
     一些类型转换并不被认为是 numeric promotion，而被认为是 numeric conversion，例如 `char` 到 `short`，因为 `int` 到 `long` 在大多数系统中都是相同大小的。
 
-### Numeric conversions
+#### Numeric conversions
 
 数值转换（numeric conversion）有五种基本类型
 
@@ -552,7 +556,7 @@ numeric promotion 包括两大类：
     bool b2 = 3.14; // convert double to bool
     ```
 
-### Arithmetic conversions
+#### Arithmetic conversions
 
 以下运算符要求它的操作数具有相同的类型，当操作数的类型不同时，会发生隐式类型转换，称为算术转换（arithmetic conversion）。
 
@@ -595,7 +599,7 @@ numeric promotion 包括两大类：
     - 如果有符号操作数的类型可以表示无符号操作数类型中的所有值，则无符号操作数将会被转换为有符号操作数的类型。
     - 否则，两个操作数都转换为有符号操作数相应的无符号类型。
 
-## 类型别名
+### 类型别名
 
 在 C 中，我们使用 `typedef` 来为一个类型定义一个别名，而在 C++ 中，我们可以使用 `using` 关键字来定义类型别名。
 
@@ -613,7 +617,7 @@ typedef int (*FcnType)(double, char); // FcnType hard to find
 using FcnType = int(*)(double, char); // FcnType easier to find
 ```
 
-## 类型推导
+### 类型推导
 
 类型推导（type deduction，type inference）是指编译器根据变量的初始化表达式来推导变量的类型。我们可以是同 `auto` 关键字进行类型推导。
 
@@ -636,7 +640,7 @@ int main() {
 }
 ```
 
-### 类型推导会删除 const
+#### 类型推导会删除 const
 
 在大多数情况下，类型推导会删除（drop）推导类型中的 `const` 。例如：
 
@@ -661,6 +665,7 @@ const auto c { a };          // c has type const double (const dropped but reapp
 constexpr auto d { a };      // d has type const double (const dropped but implicitly reapplied by constexpr)
 ```
 
+---
 
 ## 函数
 
@@ -1417,12 +1422,219 @@ consteval int doSomething(int x, int y) // function is consteval
     - `constexpr` 是函数接口的一部分。一旦函数被设为 constexpr，它就可以被其他 constexpr 函数调用或在需要常量表达式的上下文中使用。稍后删除 `constexpr` 将破坏此类代码
     - constexpr 使函数更难调试，因为我们无法在运行时检查它们
 
+---
+
+## 引用
+
+在 C++ 中，**引用（reference）**相当于现有对象的一个别名（这里的“对象”不特指 OOP 中的 object，而是泛指变量、常量、函数等）。定义了一个引用之后（明确了它所引用的对象之后），对引用的任何操作都相当于对原对象的操作。
+
+### 左值引用
+
+我们通常所说的引用一般指的都是左值引用（lvalue reference），它是通过 `&` 符号来定义的。
+
+```cpp
+int        // a normal int type (not an reference)
+int&       // an lvalue reference to an int object
+double&    // an lvalue reference to a double object
+const int& // an lvalue reference to a const int object
+```
+
+- 通常所说的左值引用是对一个非 const 变量的引用，即**非 const 左值引用**（**lvalue reference to non-const** or **non-const lvalue reference**）
+- 对一个 const 变量的引用称为**const 左值引用**（**lvalue reference to const** or **const lvalue reference**）
+
+引用在初始化时必须明确它所绑定的对象，这意味着引用必须在定义时初始化，且一旦初始化后，它将一直绑定到同一个对象。
+
+- 绑定引用的过程称为**引用绑定**（reference binding）。
+- 非常量左值引用只能绑定到可修改的左值上
+
+```cpp
+int& invalidRef;   // error: references must be initialized
+
+int x { 5 };
+int& ref { x };         // okay
+
+const int y { 5 };
+// invalid: non-const lvalue reference can't bind to a non-modifiable lvalue
+int& invalidRef { y }; 
+// invalid: non-const lvalue reference can't bind to an rvalue 
+int& invalidRef2 { 0 }; 
+```
+
+如果我们尝试把引用绑定到另一种类型的变量上，编译器会尝试先对这个变量进行隐式类型转换，然后把引用绑定到转换的结果上。但由于隐式类型转换的结果是一个右值，而非 const 左值引用不能绑定到右值上，这就会导致编译错误。
+
+```cpp
+int x { 5 };
+int& ref { x };            // okay: referenced type (int) matches type of initializer
+
+double d { 6.0 };
+int& invalidRef { d };     
+double& invalidRef2 { x };
+```
+
+引用也可以使用另一个引用来初始化，这样会创建一个新的引用，它绑定到原引用所绑定的对象上。
+
+```cpp
+int var{};
+int& ref1{ var };  // an lvalue reference bound to var
+int& ref2{ ref1 }; // an lvalue reference bound to var
+```
+
+!!! info 
+    可能会有人会把`int&&`和`int**`（指向指针的指针）进行类比，认为`int&&`是对引用的引用，但实际上这表示对右值的引用（C++11）。
+
+### 引用的生命周期
+
+引用的生命周期和普通的变量类似：引用在定义时创建，在超出作用域时被销毁。
+
+引用和被引用者具有相互独立的生命周期，这意味着
+
+- 引用可以在被引用者之前被销毁
+- 被引用者也可以在引用之前被销毁
+
+当引用先被销毁时，被引用对象并不会受到任何印象，但当被引用对象先被销毁时，引用就会变成**悬空引用**（dangling reference），对悬空引用的访问会导致未定义行为。
+
+!!! info "引用不是对象"
+    在 C++ 中，引用并不是一个对象。如果可能的话，编译器会试图使用被引用对象来替代所有出现的引用，以此来优化程序，此时引用就不需要占据任何内存空间，甚至不需要实际存在；但有时候这种替代无法做到的，这时候引用就会占据实际的内存空间。
+
+    因为引用不是一个对象，所以我们不能创建引用的引用（左值引用必须指向一个可识别的对象）。
+
+### const 左值引用
+
+刚刚我们提到过，一个非 const 的左值引用不能绑定到 const 变量上，因为如果允许这么做，我们将可以通过引用来修改这个变量，这违背了 const 变量的定义。如果我们希望引用一个 const 变量，我们可以使用 const 左值引用。
+
+```cpp
+const int x { 5 };
+const int& ref { x };
+```
+
+我们也可以对一个非 const 变量使用一个 const 引用，此时通过引用来访问的对象将被视为常量，这表示我们不能通过这个引用来修改这个对象。
+
+```cpp
+int x { 5 };
+const int& ref { x };
+```
+
+!!! note "使用右值初始化 const 左值引用"
+    const 左值引用可以绑定到右值上
+
+    ```cpp
+    const int& ref { 5 }; // okay: 5 is an rvalue
+    ```
+
+    此时将会创建一个临时对象，这个临时对象被右值 5 初始化，然后 const 引用绑定到这个临时对象上。
+
+    之前我们提到过，隐式类型转换的结果是一个右值，这意味着我们可以使用一个类型的 const 引用绑定到另一种类型的对象上去，但此时引用实际上绑定的是临时变量而非原对象，对原对象的任何修改都不会影响到引用。
+
+    ```cpp
+    short x { 1 };
+    const int& ref { x };
+
+    x--;
+    std::cout << ref; // output 1
+    ```
+
+为了上述情况中避免临时变量被销毁而导致的悬空引用，C++ 有一个特殊的规则：当 const 左值引用被绑定到一个临时变量上时，临时变量的生命周期将会被延长，直到这个引用的生命周期结束，这个临时变量才会被销毁。
+
+!!! extra "constexpr 左值引用"
+    constexpr 允许被应用到引用上时，这个引用将会被允许出现在常量表达式中，但此时这个引用只能绑定到具有静态存储期的对象上（全局变量或静态局部变量）。
+
+    当 constexpr 引用绑定到一个 const 变量上时，我们需要同时使用 constexpr（引用） 和 const（所引用的对象）
+
+    ```cpp
+    static const int s_x { 6 };        // a const int
+    constexpr const int& ref2 { s_x }; // needs both constexpr and const
+    ```
+
+    介于以上的限制，constexpr 引用通常很少出现。
+
+### 按引用传递参数
+
+在函数调用中按值传递参数时，参数会被复制出一个副本以供函数使用，这样会导致一定的开销，尤其是当参数是一个较大的对象时。为了避免这种开销，我们可以使用引用来传递参数。
+
+按引用传递参数时，我们可以在函数内部通过引用来对原对象进行修改，其作用和按地址传递参数类似，但是引用的语法更加简洁。
+
+```cpp
+void addOne_ref(int& x) // reference version
+{
+    x++;
+}
 
 
+void addOne_ptr(int* x) // pointer version
+{
+    (*x)++;
+}
+```
+
+- 如果我们不希望函数修改传入的参数，我们可以使用 const 引用来传递参数，这样函数就无法修改传入的参数了。
+
+    ```cpp
+    void print(const int& x) // reference version
+    {
+        std::cout << x << '\n';
+    }
+    ```
+
+!!! note "把不同类型的参数传递给 const 引用参数"
+    之前我们提到过，const 引用可以绑定到不同类型的对象上，但此时引用实际上绑定的是临时变量而非原对象，对原对象的任何修改都不会影响到引用。
+
+    当我们把不同类型的参数传递给 const 引用参数时，也会发生同样的事情。
+
+    ```cpp
+    #include <iostream>
+
+    void printAddr_ref(const int& y) {
+        std::cout << &y << '\n';
+    }
+
+    int main()
+    {
+        double x { 2.0 };
+        std::cout << &x << '\n';
+
+        printAddr_ref(x);
+
+        return 0;
+    }
+    ```
+
+    在我的一次本地运行中，这个程序的输出是
+
+    ```
+    0x7ffcc45a1080
+    0x7ffcc45a107c
+    ```
+
+    函数中 `y` 的地址和 main 函数中的 `x` 的地址不同，这表明函数内引用绑定的是一个临时变量而非原对象。
+
+!!! question "该用 `std::string_view` 还是 `const std::string&`？"
+    在 C++ 中，被作为参数传递的字符串通常是 `std::string`、`std::string_view` 或 C 风格字符串（`const char*`）。     
+
+    | Argument Type            | `std::string_view` parameter | `const std::string&` parameter               |
+    |--------------------------|------------------------------|----------------------------------------------|
+    | `std::string`              | Inexpensive conversion       | Inexpensive reference binding                |
+    | `std::string_view`         | Inexpensive copy             | Expensive explicit conversion to std::string |
+    | C-style string / literal | Inexpensive conversion       | Expensive conversion                         |
+
+    1. 函数中的形参是 `std::string_view`，
+    
+        - 如果传入的是 `std::string` 或 C 风格字符串，那么这个字符串会被转换为 `std::string_view`，但这个转换并不会带来太大的开销
+        - 如果传入的是 `std::string_view`，那么这个字符串会被直接按值传递给函数，发生一次开销不大的复制
+
+    2. 函数中的形参是 `const std::string&`，
+
+        - 如果传入的是 `std::string`，引用会直接绑定到传递过来的 `std::string` 上
+        - 如果传入的是 `std::string_view` 或 C 风格字符串，那么这个字符串会先被隐式转换为 `std::string`，然后引用才会绑定到这个 `std::string` 上
+
+    从上面的分析可以看出，`std::string_view` 作为参数通常要比 `const std::string&` 更好，因为它可以接受更多类型的参数，而且转换开销更小。
+
+    但这并不是绝对的，在某些情况下，`const std::string&` 可能更适合，例如
+
+    - 使用的 C++ 版本低于 C++14，此时就无法使用 `std::string_view`
+    - 如果函数需要使用到字符串一些其他的属性或功能，例如需要字符串以 null 结尾（`std::string_view` 不保证它以 null 结尾）、需要调用 `std::string` 的成员函数等
 
 
-
-
+---
 
 
 ## 命名空间
@@ -1621,37 +1833,12 @@ int main()
 当我们有大量内容仅允许当前的翻译单元使用时，使用匿名命名空间显然要比给所有的标识符都加上 `static` 更加方便。
 
 
+---
 
 
+## 其他
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 头文件
+### 头文件
 
 使用头文件的目的是为了将函数声明和定义分离，使得代码更加清晰易读。
 
@@ -1696,10 +1883,7 @@ int add(int x, int y);
 !!! note 
     由于 `#pragma once` 不是由 C++ 标准定义的，因此某些编译器可能不会实现它，使用 `#ifndef`、`#define`、`#endif` 是更加通用的做法。但对于 modern C++ 编译器来说，`#pragma once` 是一个更加简洁的选择。
 
-
-
-
-## 输入输出
+### 输入输出
 
 !!! tip "`std::endl` vs `'\n'`"
     - `std::endl` 实际上会完成两件事：输出一个换行符并刷新输出缓冲区
@@ -1799,22 +1983,6 @@ int add(int x, int y);
     You entered:  
     ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 其他
-
 ### 逻辑异或
 
 在 C++ 中并没有提供逻辑异或的运算符（`^` 是按位异或），但我们可以使用 `!=` 来实现逻辑异或，比如 `a` 逻辑异或 `b` 可以写成 `a != b`。
@@ -1884,6 +2052,7 @@ static_assert(sizeof(int) >= 4, "int must be at least 4 bytes");
 - `static_assert` 可以放置在代码文件中的任何位置（甚至在全局命名空间中）
 - 在 C++17 之前，diagnostic_message 必须作为第二个参数提供；从 C++17 开始，如果省略了 diagnostic_message，编译器会自动生成一个默认的错误消息
 
+---
 
 ## 代码风格相关
 
