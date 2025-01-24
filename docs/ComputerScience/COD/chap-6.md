@@ -64,17 +64,17 @@ Two major types of magnetic disks
 
 ### The organization of hard disk
 
--  platters: disk consists of a collection of platters, each of which has two recordable disk surfaces
+-  *platters*: disk consists of a collection of platters, each of which has two recordable disk surfaces
 
-    一个硬盘实际上是由多个盘片堆叠起来的，每个盘片都有两个可记录的表面
+    一个硬盘实际上是由多个**盘片**堆叠起来的，每个盘片都有两个可记录的表面
 
-- tracks: each disk surface is divided into concentric circles
+- *tracks*: each disk surface is divided into concentric circles
 
-    每一个盘上都有许多个同心圆轨道，称为磁道
+    每一个盘上都有许多个同心圆轨道，称为**磁道**
 
-- sectors: each track is in turn divided into sectors, which is the smallest unit that can be read or written
+- *sectors*: each track is in turn divided into sectors, which is the smallest unit that can be read or written
 
-    每一个磁道又被分成了许多个扇区，扇区是硬盘上最小的可读写单元
+    每一个磁道又被分成了许多个扇区，**扇区**是硬盘上最小的可读写单元
 
 <figure>
     <img src="../assets/硬盘.png" width="65%">
@@ -273,7 +273,8 @@ Types of buses:
 
 ### Synchronous vs. Asynchronous 
 
-- Synchronous bus use a clock and a synchronous protocol, fast and small but every device must operate at same rate and clock skew requires the bus to be short
+- Synchronous bus use a clock and a synchronous protocol, fast and small but every device must 
+operate at same rate and clock skew requires the bus to be short
 
     所有的设备都有相同的时钟频率，但由于数据传输有延迟，clock skew 无法避免，所以信号线的长度必须尽可能短
 
@@ -355,7 +356,7 @@ OS 和 I/O 设备之间的通信
 
 - memory-mapped I/O
 
-    把内存地址中的一部分分出来给 I/O 设备用，使用 ld sd 来访问时，会自动转化为访问 I/O 设备
+    把内存地址中的一部分分出来给 I/O 设备用，使用 ld/sd 来访问时，会自动转化为访问 I/O 设备
 
 - special I/O instructions
 

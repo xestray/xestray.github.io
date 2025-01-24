@@ -9,15 +9,15 @@
 
 ### Locality
 
-我们直到指令和数据都储存在 memory 中，程序运行时需要访问 memory，这是比较耗时的。我们注意到程序对 memory 的访问有以下两个特点：
+我们知道指令和数据都储存在 memory 中，程序运行时需要访问 memory，这是比较耗时的。我们注意到程序对 memory 的访问有以下两个特点：
 
 1. Temporal Locality（时间局部性）: 如果 memory 中的一个元素被访问，那么它很可能在不久后被再次访问
 
-    例如循环体中的指令等
+    - 例如循环体中的指令等
 
 2. Spatial Locality（空间局部性）: 如果 memory 中的一个元素被访问，那么它附近的元素也很可能被访问
 
-    例如数组中的元素、连续执行的指令等
+    - 例如数组中的元素、连续执行的指令等
 
 根据上面两个特点，我们可以在常规的 memory 之上增加一层访问速度更快，但容量更小的存储，称为 cache。cache 会存储最近被访问的 memory 中的数据，利用数据的局部性加快程序访问数据的效率。
 
@@ -68,7 +68,7 @@
 
 所谓 direct mapped 就是内存中的每一个 block 都只能对应于 cache 中的一个位置，并且 cache 可以容纳的 block 数量通常都是 2 的幂次，因此我们可以用这个这些数据的内存地址模上 cache 的大小来得到它在 cache 中的位置，得到的结果其实就是内存地址的低位，我们用 **index** 来表示。
 
-但是因为 cache 的大小是一定小于内存大小的，这样就会导致不同的 block 会映射到同一个位置，因此我们为了判断一个 block 中的数据是哪一个地址的，我们还需要额外保存的信息，这个信息我们称为 **tag**。
+但是因为 cache 的大小是一定小于内存大小的，这样就会导致不同的 block 有可能会映射到同一个位置，因此我们为了判断一个 block 中的数据是哪一个地址的，我们还需要额外保存的信息，这个信息我们称为 **tag**。
 
 - 由于 block 中的低位是 index，因此我们只需要把地址的高位作为 tag 就可以了
 
@@ -96,7 +96,7 @@
 !!! note "block size"
     一般而言 block size 越大，miss rate 会更低
 
-    - 根据空间局部性的特点可以知道
+    - 根据空间局部性的特点可以知道这一点
 
     但在一个大小固定的 cache 中
 
@@ -104,6 +104,8 @@
     - 更大的 block 也会造成空间的浪费，因为有时候我们只需要 block 中的一小部分数据
 
     同时更大的 block size 也会带来更大的 miss penalty
+
+    因此实际上 block 的大小是一个 trade-off
 
 ### Handling Cache hit and Misses
 
@@ -137,7 +139,8 @@
 
 - **write-allocate**：类似于 read miss，先把 block 从 memory 中取到 cache 中，然后再写入
 - **write-around**（or **write-no-allocate**）：直接写入 memory，不把 block 从 memory 中取到 cache 中
-- write back 只能和 write allocate 配合使用；write through 通常和 write around 配合使用
+
+write back 只能和 write allocate 配合使用；write through 通常和 write around 配合使用
 
 ### Deep concept in Cache
 
@@ -176,7 +179,10 @@
     通常 set associative 的 cache 会比 direct mapped 的 cache 有更低的 miss rate，但是 hit time 会比 direct mapped 的 cache 高
 
 !!! tip
-    事实上，Direct mapped 相当于 1-way set associative, Fully associative 相当于 m-way set-associative（其中 m 是 cache 中 block 的数量）
+    事实上
+    
+    - Direct mapped 相当于 1-way set associative
+    - Fully associative 相当于 m-way set-associative（其中 m 是 cache 中 block 的数量）
 
 <figure>
     <img src="../assets/block替换.png" width="80%">
@@ -243,7 +249,7 @@ Main Memory act as a “Cache” for the secondary storage.
 考虑到内存的层次架构，我们可以把主存当成磁盘的一个缓存
 
 - 所有的进程都共享同一个内存，但是实际上每一个进程都只关心自己的内存空间，并不关系其他程序在内存的哪里。也就是说，每一个进程都认为自己独享了一片地址空间，并且上面的内容是“连续的”，我们把这种地址空间称为**虚拟内存空间（virtual memory）**
-- 但实际上我们不可能保证每一个进程所使用的内存都是连续的，因此我们需要采取一种措施来把“连续”的**虚拟地址（virtual addresses）**映射到内存中的**真实地址（physical addresses）**，它称为**address translation**
+- 但实际上我们不可能保证每一个进程所使用的内存都是连续的，因此我们需要采取一种措施来把“连续”的**虚拟地址（virtual addresses）**映射到内存中的**真实地址（physical addresses）**，它称为 **address translation**
 
 <figure>
     <img src="../assets/虚拟地址.png" width="100%">
@@ -261,7 +267,7 @@ page 是虚拟地址到物理地址映射的最小单位
 
 - reducing page faults is important
 
-    因为每一次出现 page fault 我们都需要访问一次 disk，这是非常耗时的（访问时间可以达到 memory 的十万倍），因此我们需要尽可能减少 page fault，例
+    因为每一次出现 page fault 我们都需要访问一次 disk，这是非常耗时的（访问时间可以达到访问 memory 的十万倍），因此我们需要尽可能减少 page fault，例
 
 - can handle the faults in software instead of hardware
 

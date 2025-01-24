@@ -268,7 +268,7 @@ ALU used for
 
 ## Pipline Hazards
 
-Hazard 的意思冲突/竞争/冒险，指的是在流水线中由于各种原因导致的指令执行结果不符合预期的情况。
+Hazard 的意思是冲突/竞争/冒险，指的是在流水线中由于各种原因导致的指令执行结果不符合预期的情况。
 
 - **Structural Hazards**
 
@@ -280,18 +280,18 @@ Hazard 的意思冲突/竞争/冒险，指的是在流水线中由于各种原�
     - Need to wait for previous instruction to complete its data read/write.
     - 由于数据的依赖关系导致的冲突。
     
-        例如一条指令需要用到上一条指令的结果，但是上一条指令还没有运行到 WB 阶段把数据写回寄存器/内存中，下一条指令就把对应寄存器的值取出来了，这样就会导致取出错误的数据。
+        例如一条指令需要用到上一条指令的结果，但是上一条指令还没有运行到 WB 阶段把数据写回寄存器/内存中，下一条指令就把对应寄存器/内存地址的值取出来了，这样就会导致取出错误的数据。
 
 - **Control Hazards**
 
     - Deciding on control action depends on previous instruction.
     - 由于控制流的冲突导致的冲突。
     
-        例如一条分支指令的还没有判断出是否需要跳转，但是下一条指令已经被取出来了，这样就会导致错误执行本不应该执行的指令。
+        例如一条分支指令的还没有判断出是否需要跳转，但是下一条指令已经被取出来并执行了，这样就会导致错误执行本不应该执行的指令。
 
 ## Structural Hazards
 
-在计组中我们会遇到的结构冒险只有内存上的结构冒险，例如如果只有一块内存，但 IF 和 MEM 阶段都需要使用这块内存，那么 IF 就会被 stall 暂停，产生一个 bubble，等到 MEM 阶段完成后再继续执行。
+在计组中我们会遇到的结构冒险只有内存上的结构冒险（因为寄存器堆是允许同时进行读写操作的），例如如果只有一块内存，但 IF 和 MEM 阶段都需要使用这块内存，那么 IF 就会被 stall 暂停，产生一个 bubble，等到 MEM 阶段完成后再继续执行。
 
 但是我们可以把指令内存和数据内存分开（冯诺依曼架构），这样两者就不会出现冲突了。
 
@@ -347,8 +347,8 @@ An instruction depends on completion of data access by a previous instruction.
 
 由于我们的`Rd`实际上就是`inst[11:7]`，但是在许多指令中并没有`Rd`的存在，或者`Rd`是不可能被改写的`x0`，因此我们还需要添加一些判断条件：
 
-- EX/MEM.RegWrite, MEM/WB.RegWrite 不为 0
-- EX/MEM.RegisterRd, MEM/WB.RegisterRd 也不能为 0
+- EX/MEM.RegWrite 或 MEM/WB.RegWrite 不为 0
+- EX/MEM.RegisterRd 或 MEM/WB.RegisterRd 也不能为 0
 
     即目的寄存器是`x0`的话，就不需要前递了。
 
@@ -377,10 +377,10 @@ add x1, x1, x4
         <img src="../assets/数据冒险3.png" width="60%">
     </figure>
 
-对于 Load-Use Data Hazard 而言，stall 是不可避免的，因此我们也可以的值流水线 CPU 的 CPI 由于这一部分 stall 的存在不可能达到 1。
+对于 Load-Use Data Hazard 而言，stall 是不可避免的，因此我们也可以得知流水线 CPU 的 CPI 由于这一部分 stall 的存在不可能达到 1。
 
 !!! note "Load-Use Hazard Detection"
-    我们在后一条指令在 ID 阶段时就可以检测出来是否会出现 Load-Use Data Hazard
+    load 指令的后一条指令在 ID 阶段时就可以检测出来是否会出现 Load-Use Data Hazard
 
     - `ID/EX.MemRead and ((ID/EX.RegisterRd = IF/ID.RegisterRs1) or (ID/EX.RegisterRd = IF/ID.RegisterRs2))`
 
@@ -388,7 +388,7 @@ add x1, x1, x4
     <img src="../assets/数据冒险4.png" width="65%">
 </figure>
 
-当我们在后一条指令的 ID 阶段检测到 Load-Use Data Hazard 时，我们就需要进行 stall，具体的操作是：（此时 load 指令正处于 EX 阶段）
+当我们在 load 的后一条指令的 ID 阶段检测到 Load-Use Data Hazard 时，我们就需要进行 stall，具体的操作是：（此时 load 指令正处于 EX 阶段）
 
 - 保持 PC 寄存器和 IF/ID 寄存器中的值不变
 - 将 ID/EX 寄存器中的值清零，这样在下一个时钟周期里 EX 阶段中就会出现一个 bubble
