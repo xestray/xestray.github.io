@@ -1417,7 +1417,7 @@ consteval int doSomething(int x, int y) // function is consteval
 }
 ```
 
-!!! shortcoming "不使用 constexpr 函数的原因"
+!!! warning "不使用 constexpr 函数的原因"
     - 如果某个函数无法作为常量表达式的一部分进行计算，则不应将其标记为 `constexpr`
     - `constexpr` 是函数接口的一部分。一旦函数被设为 constexpr，它就可以被其他 constexpr 函数调用或在需要常量表达式的上下文中使用。稍后删除 `constexpr` 将破坏此类代码
     - constexpr 使函数更难调试，因为我们无法在运行时检查它们
@@ -1632,6 +1632,256 @@ void addOne_ptr(int* x) // pointer version
 
     - 使用的 C++ 版本低于 C++14，此时就无法使用 `std::string_view`
     - 如果函数需要使用到字符串一些其他的属性或功能，例如需要字符串以 null 结尾（`std::string_view` 不保证它以 null 结尾）、需要调用 `std::string` 的成员函数等
+
+### 按引用返回
+
+当函数按值返回时，会制作一个函数返回值的副本，然后传递给调用者，这样会导致一定的开销，尤其是当返回值是一个较大的对象时。
+
+为了避免这种开销，我们可以使用引用来返回函数的结果。**按引用返回**（return by reference）的函数返回的是一个绑定到需要返回的对象的引用。
+
+```cpp
+const std::string& getProgramName() // returns a const reference
+{
+    static const std::string s_programName { "Calculator" };
+
+    return s_programName;
+}
+
+int main()
+{
+    std::cout << "This program is named " << getProgramName();
+
+    return 0;
+}
+```
+
+!!! warning "通过引用返回的对象必须在函数返回后仍存在"
+    为了避免出现悬空引用，我们必须确保被引用的对象的生命周期要比调用的这个函数更长。例如上面的例子中我们让 `s_programName` 成为了一个具有 static 生命周期的变量。
+
+!!! example
+    在实际的程序中，我们应当避免对非 const 的静态变量的按引用返回，例如
+
+    ```cpp
+    #include <iostream>
+
+    const int& getNextId()
+    {
+        static int s_x{ 0 };
+        ++s_x;
+        return s_x;
+    }
+
+    int main()
+    {
+        const int& id1 { getNextId() }; // id1 is a reference
+        const int& id2 { getNextId() }; // id2 is a reference
+
+        std::cout << id1 << id2 << '\n';
+
+        return 0;
+    }
+    ```
+
+    程序的输出结果为
+
+    ```cpp
+    22
+    ```
+
+    发生这种情况是因为`id1`和`id2`引用了相同的对象（静态变量`s_x`），因此当修改`s_x`被修改时，所有引用都会访问修改后的值。
+    
+    对于上面的这个例子，我们可以把`id1`和`id2`改为普通的常量变量 `const int` 而非 `const int&`，这样它们就可以保存返回值的副本，而非保存对`s_x`的引用。
+
+关于按引用返回有一个很有趣的事情是，我们可以借助函数调用返回的引用来修改一个变量：
+
+```cpp
+#include <iostream>
+
+int& max(int& x, int& y)
+{
+    return (x > y) ? x : y;
+}
+
+int main()
+{
+    int a{ 5 };
+    int b{ 6 };
+
+    max(a, b) = 7; // sets the greater of a or b to 7
+
+    std::cout << a << b << '\n';
+
+    return 0;
+}
+```
+
+上述程序中 b 的值更大，因此 `max()` 函数将会返回一个绑定到 b 的引用，我们可以直接利用这个引用来修改 b 的值为 7。因此这段程序的输出结果为
+
+```cpp
+57
+```
+
+### 关于引用的类型推导
+
+我们知道，使用 `auto` 进行类型推导时，const 标识符会被删除，实际上除了删除 const 之外，auto 还会删除引用标识符。
+
+!!! example
+    ```cpp
+    std::string& getRef();
+
+    int main()
+    {
+        auto ref { getRef() }; // type deduced as std::string (not std::string&)
+
+        return 0;
+    }
+    ```
+
+    在这个例子中，尽管函数`getRef()`返回一个`std::string&`，但`ref`的类型被推导为`std::string`。
+
+就像 const 一样，如果我们希望类型被推导为引用，我们可以在定义处重新把它变为参考
+
+```cpp
+std::string& getRef();
+
+auto ref1 { getRef() };  
+auto& ref2 { getRef() }; 
+```
+
+!!! definition "Top-level const and low-level const"
+    - **顶级 const（top-level const）**：const 修饰的是**对象本身**，或者**指针或引用本身**，而非指针或引用所指向的对象。例如 
+    
+    ```cpp
+    const int x;
+    int* const ptr;
+    int& const ref;
+    ```
+
+    - **低级 const（low-level const）**：const 修饰的是**指针所指向的对象**或**引用所绑定的对象**，而非指针或引用本身。例如
+
+    ```cpp
+    const int& ref; 
+    const int* ptr;
+    ```
+
+    指针也可以同时拥有两种 const，例如
+
+    ```cpp
+    const int* const ptr;
+    ```
+
+- 当我们说类型推导会删去 const 限定符时，我们指的是**顶层 const**，而**底层 const**则会被保留。
+
+!!! key-point
+    删除引用时可能会把一个低级 const 变为顶级 const： 
+
+    - `const std::string&` 是低级 const，但删除引用后会得到 `const std::string` ，它现在变成顶级 const了，可以在类型推导中被删去。
+
+    因此，如果初始化器是一个对 const 变量的引用，那么在类型推导时会首先删除引用，然后再删除 const 限定符。
+
+    ```cpp
+    const std::string& getConstRef();
+
+    int main()
+    {
+        auto ref1{ getConstRef() }; // std::string
+
+        return 0;
+    }
+    ```
+
+如果我们希望得到的是引用和/或 const 限定符，可以手动添加它们：
+
+```cpp
+const std::string& getConstRef();
+
+int main()
+{
+    auto ref1{ getConstRef() };        // std::string 
+    const auto ref2{ getConstRef() };  // const std::string
+
+    auto& ref3{ getConstRef() };       // const std::string& 
+    const auto& ref4{ getConstRef() }; // const std::string& 
+
+    return 0;
+}
+```
+
+上例的前两种情况前面已经介绍过了，就不多解释了。值得解释的是 `ref3`：
+
+- 通常，引用会首先被删除，此时 const 就是顶层的了，然后 const 也会被删除。但是由于我们这时候重新把引用应用到了 `auto` 上，相当于重新添加了引用，此时 const 仍然是底层的，不会被删去，因此 `ref3` 的类型是 `const std::string&`。
+
+`ref4` 的情况和 `ref3` 类似，只是我们也重新应用了 const 限定符。由于类型已经被推导为对 const 的引用，重复的 const 实际上是多余的，但这并不会导致编译错误。事实上这也有助于代码编写者/阅读者明确地知道这个引用是一个对 const 的引用。
+
+!!! question "推导为 constexpr 引用"
+    !!! tip 
+        当我们希望定义一个绑定到 const 变量的 constexpr 引用时，我们需要同时使用 `constexpr`（修饰引用）和 `const`（修饰被绑定对象）限定符。例如`constexpr const int&`。
+
+    constexpr 不是类型系统的一部分，因此永远不会被推导出来（但它是隐式的 const），我们需要将其显式地把它加到类型推导中。
+
+    ```cpp
+
+    constexpr std::string_view hello { "Hello" };   // implicitly const
+
+    constexpr const std::string_view& getConstRef() // function is constexpr, returns a const std::string_view&
+    {
+        return hello;
+    }
+
+    int main()
+    {
+        // std::string_view (reference dropped and top-level const dropped)
+        auto ref1{ getConstRef() }; 
+
+        // constexpr const std::string_view (reference dropped and top-level const dropped, constexpr applied, implicitly const)                 
+        constexpr auto ref2{ getConstRef() };        
+
+        // const std::string_view& (reference reapplied, low-level const not dropped)
+        auto& ref3{ getConstRef() };  
+
+        // constexpr const std::string_view& (reference reapplied, low-level const not dropped, constexpr applied)              
+        constexpr const auto& ref4{ getConstRef() }; 
+
+        return 0;
+    }
+    ```
+
+!!! note "指针的类型推导"
+    与引用不同，指针的类型推导不会去掉指针标识符，因此 `auto` 推导出来的类型会是指针（还记得吗，引用不是一个对象，而指针是），我们还可以使用 `auto*` 来明确指出推到的结果一定是一个指针。
+
+    ```cpp
+    std::string* getPtr(); // some function that returns a pointer
+
+    int main()
+    {
+        auto ptr1{ getPtr() };  // std::string*
+        auto* ptr2{ getPtr() }; // std::string*
+
+        return 0;
+    }
+    ```
+
+!!! abstract
+    顶层 const 和底层 const 
+
+    - 顶层 const 修饰的是对象本身，如 `const int x`和`int* const ptr`
+    - 低层 const 修饰的是指针所指向的对象，如 `const int& ref` 和 `const int* ptr`
+
+    推导的过程
+
+    - 类型推导首先删除所有引用（除非推导的类型被定义为引用 `auto&`）
+    - 然后类型推导会删除所有顶层 const 限定符（除非推导的类型被定义为 const 或 constexpr）
+    - constexpr 不是类型系统的一部分，不会被推导出来，需要将其显式添加到类型推导中
+    - 类型推导不会删除指针标识符
+    - 在进行类型推导时，始终显式地使用引用标识符、指针标识符、const 限定符和 constexpr 限定符，即使这些限定符是多余的。这有助于我们明晰自己想得到的类型，防止出现错误。
+
+    关于指针的类型推导
+
+    - 使用 `auto` 时，仅当初始化器是指针时，类型推导的结果才是指针。使用`auto*`时，即使初始化器不是指针，推论类型也始终是指针。
+    - auto const 和 const auto 都会使推导得到的的指针成为 const 指针。
+    - auto* const 的结果是 const 指针，而 const auto* 的结果是指向 const 对象的指针。
+    - 对指针类型进行推导时，尽可能考虑使用 `auto*` 而非 `auto`，这样允许我们显式地重新应用顶级和低层 const，并且能保证推导的结果是一个指针。
+
 
 
 ---
