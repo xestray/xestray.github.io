@@ -5,7 +5,7 @@ site_description: >-
   个人网站...
 repo_name: xestray # 仓库名称
 repo_url: https://github.com/xestray/xestray.github.io/ # 仓库地址
-copyright: Copyright &copy; 2024 <a href="https://github.com/xestray" target="_blank">xestray</a>
+copyright: Copyright &copy; 2025 <a href="https://github.com/xestray" target="_blank">xestray</a>
 
 nav: 
   - Home: index.md
@@ -270,7 +270,7 @@ extra_javascript:
   # - https://polyfill.io/v3/polyfill.min.js?features=es6
   # - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   - javascripts/toc.js
-  - javascripts/scheme.js
+  # - javascripts/scheme.js
 
 extra_css:
   - https://fonts.font.im/css2?family=Noto+Serif+SC
