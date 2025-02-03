@@ -665,6 +665,206 @@ const auto c { a };          // c has type const double (const dropped but reapp
 constexpr auto d { a };      // d has type const double (const dropped but implicitly reapplied by constexpr)
 ```
 
+
+---
+
+
+## 命名空间
+
+我们可以通过 `namespace` 关键字来创建命名空间，命名空间可以包含变量、函数、类等。通常来说，**命名空间的名称以大写字母为开头**
+
+```cpp
+namespace NamespaceIdentifier
+{
+    // content of namespace here
+}
+```
+
+- 只有声明和定义可以出现在命名空间中，而不能包含赋值语句、函数调用等
+- 命名空间里的函数定义可以包含函数所执行的语句
+- 命名空间可以嵌套
+
+### 作用域解析运算符
+
+`::` 被称为作用域解析运算符（scope resolution operator），它可以用于访问命名空间中的变量、函数等。
+
+- `::` 的左侧是命名空间的名称，右侧是命名空间中的变量或函数
+- 假如 `::` 左侧为空，则假定解析的是全局命名空间
+
+!!! warning "不要使用 `using namespace std` 😡👊"
+    使用 `using namespace std` 可能会导致命名空间 `std` 中定义的变量和函数与我们自己定义的变量和函数发生冲突，因此不推荐使用。
+
+### 命名空间的标识符解析
+
+如果我们在一个命名空间中使用标识符（变量或函数的名称）时没有提供解析范围，编译器会先尝试在本地命名空间中寻找匹配的标识符，如果没有找到则逐一向上查找直到找到匹配的标识符，或到达全局命名空间。
+
+我们知道，在 `::` 左侧为空时，假定解析的是全局命名空间，虽然这在多数情况下是多余的，因为全局命名空间是默认的，但在某些情况下，我们可能需要使用 `::` 来明确指出我们要访问的是全局命名空间中的变量或函数。
+
+```cpp
+#include <iostream>
+
+void print() // this print() lives in the global namespace
+{
+	std::cout << " there\n";
+}
+
+namespace Foo
+{
+	void print() // this print() lives in the Foo namespace
+	{
+		std::cout << "Hello";
+	}
+
+	void printHelloThere()
+	{
+		print();   // calls print() in Foo namespace
+		::print(); // calls print() in global namespace
+	}
+}
+
+int main()
+{
+	Foo::printHelloThere();
+
+	return 0;
+}
+```
+
+### 命名空间中的前向声明
+
+当我们使用一个命名空间中的函数时，也需要进行前向声明，通常而言我们可以直接 `#include` 命名空间所在的 `.h` 文件
+
+
+```cpp title="add.h"
+#ifndef ADD_H
+#define ADD_H
+
+namespace BasicMath
+{
+    // function add() is part of namespace BasicMath
+    int add(int x, int y);
+}
+
+#endif
+```
+
+```cpp title="add.cpp"
+#include "add.h"
+
+namespace BasicMath
+{
+    // define the function add() inside namespace BasicMath
+    int add(int x, int y)
+    {
+        return x + y;
+    }
+}
+```
+
+```cpp title="main.cpp"
+#include "add.h" // for BasicMath::add()
+
+#include <iostream>
+
+int main()
+{
+    std::cout << BasicMath::add(4, 3) << '\n';
+
+    return 0;
+}
+```
+
+编译时使用 `g++/clang main.cpp add.cpp -o main`
+
+### 嵌套命名空间
+
+命名空间可以在另一个命名空间中定义，例如
+
+```cpp title="C++17 之前"
+namespace Foo
+{
+    namespace Goo // Goo is a namespace inside the Foo namespace
+    {
+        int add(int x, int y)
+        {
+            return x + y;
+        }
+    }
+}
+```
+
+从 C++17 开始，我们也可以这样定义：
+
+``` cpp title="C++17 及之后"
+namespace Foo::Goo // Goo is a namespace inside the Foo namespace (C++17 style)
+{
+    int add(int x, int y)
+    {
+        return x + y;
+    }
+}
+```
+
+### 命名空间别名（namespace alias）
+
+由于使用嵌套命名空间中的变量或者函数会很冗长，因此我们可以选择创建一个命名空间别名来简化代码。
+
+```cpp
+#include <iostream>
+
+namespace Foo::Goo
+{
+    int add(int x, int y)
+    {
+        return x + y;
+    }
+}
+
+int main()
+{
+    namespace Active = Foo::Goo; // active now refers to Foo::Goo
+
+    std::cout << Active::add(1, 2) << '\n'; // This is really Foo::Goo::add()
+
+    return 0;
+} // The Active alias ends here
+```
+
+!!! info "命名空间的使用"
+    向大众分发的代码应该使用命名空间，以避免其与其他代码发生冲突，通常一个顶级命名空间就足够了（例如 `MyProject`）。
+    
+    这么做还有一个优点：在绝大多数代码编辑器中键入命名空间的名称之后，再输入 `::` 编辑器就会自动显示该命名空间中的所有函数和变量作为补全的候选项。
+
+### 未命名（匿名）命名空间
+
+**未命名命名空间**（也称为**匿名命名空间**）是没有名称定义的命名空间，如下所示：
+
+```cpp
+#include <iostream>
+
+namespace // unnamed namespace
+{
+    void doSomething() // can only be accessed in this file
+    {
+        std::cout << "v1\n";
+    }
+}
+
+int main()
+{
+    doSomething(); // we can call doSomething() without a namespace prefix
+
+    return 0;
+}
+```
+
+在未命名命名空间中声明的所有内容都被视为父命名空间的一部分，因此函数或变量即使是在未命名命名空间中声明的，也可以在父命名空间（上例时全局命名空间）中访问。
+
+这看起来似乎没什么用处，但未命名命名空间中的所有标识符都不可以被其他文件访问（或者说具有*内部链接*），效果相当于 `static` 关键字。
+
+当我们有大量内容仅允许当前的翻译单元使用时，使用匿名命名空间显然要比给所有的标识符都加上 `static` 更加方便。
+
+
 ---
 
 ## 函数
@@ -1882,205 +2082,2253 @@ int main()
     - auto* const 的结果是 const 指针，而 const auto* 的结果是指向 const 对象的指针。
     - 对指针类型进行推导时，尽可能考虑使用 `auto*` 而非 `auto`，这样允许我们显式地重新应用顶级和低层 const，并且能保证推导的结果是一个指针。
 
-
-
 ---
 
+## 类模板
 
-## 命名空间
+类似于函数模板是用于实例化函数的一模板定义，**类模板**（class template）是用于实例化类类型的一种模板定义。
 
-我们可以通过 `namespace` 关键字来创建命名空间，命名空间可以包含变量、函数、类等。通常来说，**命名空间的名称以大写字母为开头**
+!!! tip "类类型（class type）"
+    类类型包括结构体、类和联合体（struct, class, and union type），为简单起见，下面我们仅在结构体上演示类模板的用法，但它们同样适用于类和联合体。
+
+对于一个简单的结构体 Pair
 
 ```cpp
-namespace NamespaceIdentifier
+struct Pair
 {
-    // content of namespace here
+    int first{};
+    int second{};
+};
+```
+
+我们可以用类模板把它重写为
+
+```cpp
+
+template <typename T>
+struct Pair
+{
+    T first{};
+    T second{};
+};
+
+int main()
+{
+    Pair<int> p1{ 5, 6 };        
+    Pair<double> p2{ 1.2, 3.4 }; 
+
+    return 0;
 }
 ```
 
-- 只有声明和定义可以出现在命名空间中，而不能包含赋值语句、函数调用等
-- 命名空间里的函数定义可以包含函数所执行的语句
-- 命名空间可以嵌套
+当我们想要实例化一个结构体时，只需要像函数模板一样在结构体名称后面加上尖括号，然后在尖括号中指定类型即可，例如 `Pair<int>` 和 `Pair<double>`。
 
-### 作用域解析运算符
+### 函数中的类模板
 
-`::` 被称为作用域解析运算符（scope resolution operator），它可以用于访问命名空间中的变量、函数等。
+我们还可以对这个类模板创建一个函数模板
 
-- `::` 的左侧是命名空间的名称，右侧是命名空间中的变量或函数
-- 假如 `::` 左侧为空，则假定解析的是全局命名空间
+```
+template <typename T>
+constexpr T max(Pair<T> p)
+{
+    return (p.first < p.second ? p.second : p.first);
+}
+```
 
-!!! warning "不要使用 `using namespace std` 😡👊"
-    使用 `using namespace std` 可能会导致命名空间 `std` 中定义的变量和函数与我们自己定义的变量和函数发生冲突，因此不推荐使用。
+在调用函数时，可以显示地传入 `Pair` 的模板参数，也可以让编译器自动推导
 
-### 命名空间的标识符解析
+```cpp
+Pair<int> p1{ 5, 6 };
+std::cout << max<int>(p1) << " is larger\n"; // explicit call to max<int>
 
-如果我们在一个命名空间中使用标识符（变量或函数的名称）时没有提供解析范围，编译器会先尝试在本地命名空间中寻找匹配的标识符，如果没有找到则逐一向上查找直到找到匹配的标识符，或到达全局命名空间。
+Pair<double> p2{ 1.2, 3.4 };
+std::cout << max(p2) << " is larger\n";
+```
 
-我们知道，在 `::` 左侧为空时，假定解析的是全局命名空间，虽然这在多数情况下是多余的，因为全局命名空间是默认的，但在某些情况下，我们可能需要使用 `::` 来明确指出我们要访问的是全局命名空间中的变量或函数。
+如果我们试图调用 `max<double>(p1)` 则会出现编译错误
+
+!!! note
+    类模板可以使用模板类型和普通的类型（非模板类型）混合使用
+
+    ```cpp
+    template <typename T>
+    struct Foo
+    {
+        T first{};    // first will have whatever type T is replaced with
+        int second{}; // second will always have type int, regardless of what type T is
+    };
+    ```
+
+    类模板也可以使用多种模板类型
+
+    ```cpp
+    template <typename T, typename U>
+    struct Pair
+    {
+        T first{};
+        U second{};
+    };
+
+    template <typename T, typename U>
+    void print(Pair<T, U> p)
+    {
+        std::cout << '[' << p.first << ", " << p.second << ']';
+    }
+    ```
+
+    如果我们希望编写一个用于各种类型的 `print()` 函数（只要能通过编译就可以），可以写为
+
+    ```cpp
+    template <typename T>
+    void print(T p) // type template parameter will match anything
+    {
+        std::cout << '[' << p.first << ", " << p.second << ']'; 
+        // will only compile if type has first and second members
+    }
+    ```
+
+!!! info
+    由于处理数据对的情况很常见，因此 C++ 标准库包含一个名为 `std::pair` 的类模板（在 `<utility>` 头文件中），它是一个类似于我们定义的 `Pair` 的类模板。
+
+    ```cpp
+    #include <iostream>
+    #include <utility>
+
+    template <typename T, typename U>
+    void print(std::pair<T, U> p)
+    {
+        // the members of std::pair have predefined names `first` and `second`
+        std::cout << '[' << p.first << ", " << p.second << ']';
+    }
+
+    int main()
+    {
+        std::pair<int, double> p1{ 1, 2.3 }; // a pair holding an int and a double
+        std::pair<double, int> p2{ 4.5, 6 }; // a pair holding a double and an int
+        std::pair<int, int> p3{ 7, 8 };      // a pair holding two ints
+
+        print(p2);
+
+        return 0;
+    }
+    ```
+
+    我们刚刚实现了自己的 `Pair` 类，但在实际的代码中使用 `std::pair` 是个更好的选择
+
+和函数模板一样，类模板通常也在头文件中定义，通过 `#include` 指令包含到需要使用的文件中。
+
+### 类模板参数推导（CTAD）
+
+从 C++17 开始，从类模板实例化对象时，编译器可以从初始化器的类型中推导出模板类型，这称之为**类模板参数推导**（Class Template Argument Deduction，CTAD）。
+
+```cpp
+#include <utility> // for std::pair
+
+int main()
+{
+    // explicitly specify class template std::pair<int, int> (C++11 onward)
+    std::pair<int, int> p1{ 1, 2 }; 
+
+    // CTAD used to deduce std::pair<int, int> from the initializers (C++17)
+    std::pair p2{ 1, 2 };           
+
+    return 0;
+}
+```
+
+仅在没有模板参数列表时，编译器才会执行 CTAD，因此以下两种情况都是错误的
+
+```cpp
+std::pair<> p1 { 1, 2 };
+std::pair<int> p2 { 3, 4 };
+```
+
+由于 CTAD 是一种类型推导的形式，因此我们可以使用字面量后缀来更改推导得到的类型：
+
+```cpp
+std::pair p1 { 3.4f, 5.6f }; // pair<float, float>
+std::pair p2 { 1u, 2u };     // pair<unsigned int, unsigned int>
+```
+
+#### 模板参数推导指南（C++17）
+
+在多数情况下，CTAD 可以直接使用；但在某些情况下，编译器可能需要一些额外的帮助才能知道如何正确地推断模板参数。
+
+例如在下面的程序在 C++17 中无法编译
+
+```cpp
+template <typename T, typename U>
+struct Pair
+{
+    T first{};
+    U second{};
+};
+
+int main()
+{
+    Pair<int, int> p1{ 1, 2 }; // ok: we're explicitly specifying the template arguments
+    Pair p2{ 1, 2 };           // compile error in C++17 (okay in C++20)
+
+    return 0;
+}
+```
+
+在 C++17 中编译上面这段代码，可能会遇到“class template argument deduction failed”或“cannot deduce template arguments”或“No viable constructor or deduction guide”的报错信息。这是因为在 C++17 中，编译器不知道如何推导聚合类模板的模板参数，因此我们需要提供一个**模板参数推导指南**（deduction guide）来帮助编译器推导模板参数。
+
+这是添加推导指南之后的同一段程序：
+
+```cpp
+template <typename T, typename U>
+struct Pair
+{
+    T first{};
+    U second{};
+};
+
+// Pair objects initialized with arguments of type T and U should deduce to Pair<T, U>
+template <typename T, typename U>
+Pair(T, U) -> Pair<T, U>;
+
+int main()
+{
+    // explicitly specify class template Pair<int, int> (C++11 onward)
+    Pair<int, int> p1{ 1, 2 }; 
+    // CTAD used to deduce Pair<int, int> from the initializers (C++17)
+    Pair p2{ 1, 2 };           
+
+    return 0;
+}
+```
+
+```cpp title="deduction guide"
+template <typename T, typename U>
+Pair(T, U) -> Pair<T, U>;
+```
+
+上面这段的推导指南的作用是，告诉编译器当它看到一个名为 `Pair` 的对象带有类型分别为 `T` 和 `U` 的参数时，应该把最终的类型推导为 `Pair<T, U>`。
+
+!!! tip
+    - C++20 中添加了编译器自动生成推导指南的功能，因此我们只需要在 C++17 中手动编写推导指南
+    - `std::pair`（和其他标准库中的模板类型）附带预定义的推导指南，无需我们自己提供推导指南
+
+#### 模板参数的默认值
+
+就像函数参数可以有默认参数一样，模板参数也可以有默认值。当模板参数未明确指定且无法推断时，将使用这些参数。
+
+```cpp
+template <typename T=int, typename U=int> // default T and U to type int
+struct Pair
+{
+    T first{};
+    U second{};
+};
+
+template <typename T, typename U>
+Pair(T, U) -> Pair<T, U>;
+
+int main()
+{
+    // explicitly specify class template Pair<int, int> (C++11 onward)
+    Pair<int, int> p1{ 1, 2 }; 
+
+    // CTAD used to deduce Pair<int, int> (C++17)
+    Pair p2{ 1, 2 };           
+
+    // uses default Pair<int, int>
+    Pair p3;                   
+
+    return 0;
+}
+```
+
+这里我们对 `p3` 的定义并未明确指定类型模板参数的类型，也没有能够从中推导这些类型的初始化器。
+
+??? warning "CTAD 不适用于函数参数"
+    CTAD 表示的是 class template *argument* deduction，而非 class template *parameter* deduction，因此它不能用于函数的形参（parameter）。例如下面的代码是错误的：
+
+    ```cpp
+    #include <iostream>
+    #include <utility>
+
+    void print(std::pair p) // compile error, CTAD can't be used here
+    {
+        std::cout << p.first << ' ' << p.second << '\n';
+    }
+
+    int main()
+    {
+        std::pair p { 1, 2 }; // p deduced to std::pair<int, int>
+        print(p);
+
+        return 0;
+    }
+    ```
+
+    这种情况下，我们需要显式地使用模板：
+
+    ```
+    #include <iostream>
+    #include <utility>
+
+    template <typename T, typename U>
+    void print(std::pair<T, U> p)
+    {
+        std::cout << p.first << ' ' << p.second << '\n';
+    }
+
+    int main()
+    {
+        std::pair p { 1, 2 }; // p deduced to std::pair<int, int>
+        print(p);
+
+        return 0;
+    }
+    ```
+
+#### 别名模板
+
+我们可以像为普通的类型创建别名一样，为类模板创建一个类型别名，这个类型别名的作用范围是它被定义的那个作用域。
 
 ```cpp
 #include <iostream>
 
-void print() // this print() lives in the global namespace
+template <typename T>
+struct Pair
 {
-	std::cout << " there\n";
-}
+    T first{};
+    T second{};
+};
 
-namespace Foo
+template <typename T>
+void print(const Pair<T>& p)
 {
-	void print() // this print() lives in the Foo namespace
-	{
-		std::cout << "Hello";
-	}
-
-	void printHelloThere()
-	{
-		print();   // calls print() in Foo namespace
-		::print(); // calls print() in global namespace
-	}
+    std::cout << p.first << ' ' << p.second << '\n';
 }
 
 int main()
 {
-	Foo::printHelloThere();
+    using Point = Pair<int>; // create normal type alias
+    Point p { 1, 2 };        // compiler replaces this with Pair<int>
+
+    print(p);
+
+    return 0;
+}
+```
+
+有时候，我们可能需要一个模板类的类型别名，但是并非所有的模板参数都被定义到这个别名的一部分（这部分参数被别名的使用者提供）。为此我们可以定义一个**别名模板**（alias template），它可以用于实例化一个类型别名。
+
+```cpp
+#include <iostream>
+
+template <typename T>
+struct Pair
+{
+    T first{};
+    T second{};
+};
+
+// Here's our alias template
+// Alias templates must be defined in global scope
+template <typename T>
+using Coord = Pair<T>; // Coord is an alias for Pair<T>
+
+// Our print function template needs to know that Coord's template parameter T is a type template parameter
+template <typename T>
+void print(const Coord<T>& c)
+{
+    std::cout << c.first << ' ' << c.second << '\n';
+}
+
+int main()
+{
+    Coord<int> p1 { 1, 2 }; // Pre C++-20: We must explicitly specify all type template argument
+    Coord p2 { 1, 2 };      // In C++20, we can use alias template deduction to deduce the template arguments in cases where CTAD works
+
+    std::cout << p1.first << ' ' << p1.second << '\n';
+    print(p2);
+
+    return 0;
+}
+```
+
+这里，我们将一个名为`Coord`的别名模板定义为`Pair<T>`的别名，其中类型模板参数`T`将由坐标别名的使用者提供。`Coord`是别名模板，`Coord<T>`是`Pair<T>`的实例化类型别名，定义后，`Coord`相当于`Pair`，`Coord<int>`相当于`Pair<int>`。
+
+关于别名模板我们有几点需要注意
+
+- 与普通类型的别名（可以在块内定义）不同，别名模板必须在全局定义域中定义
+- 在 C++20 之前，当我们使用别名模板实例化对象时，必须显式指定模板参数。从 C++20 开始，我们可以使用别名模板推导（alias template deduction），在别名类型可与 CTAD 配合使用的情况下，它将从初始化器推导模板参数的类型。
+- 由于 CTAD 不适用于函数参数（parameter），因此当我们使用别名模板作为函数参数时，必须显式定义别名模板使用的模板实参。
+
+    换句话说，我们只能这么写
+
+    ```cpp
+    template <typename T>
+    void print(const Coord<T>& c)
+    {
+        std::cout << c.first << ' ' << c.second << '\n';
+    }
+    ```
+
+    而不能这么写
+
+    ```cpp
+    void print(const Coord& c)
+    {
+        std::cout << c.first << ' ' << c.second << '\n';
+    }
+    ```
+
+    实际上和我们使用 `Pair` 和 `Pair<T>` 时是一样的。
+
+### 具有成员函数的类模板
+
+定义为类模板参数声明的一部分的类型模板参数既可以用作类的成员变量的类型，也可以用作类的成员函数的返回类型或参数类型。
+
+例如对于我们已经定义过的 `Pair` 类模板，我们可以把它从结构体转换为类
+
+```cpp
+#include <ios>       // for std::boolalpha
+#include <iostream>
+
+template <typename T>
+class Pair
+{
+private:
+    T m_first{};
+    T m_second{};
+
+public:
+    // When we define a member function inside the class definition,
+    // the template parameter declaration belonging to the class applies
+    Pair(const T& first, const T& second)
+        : m_first{ first }
+        , m_second{ second }
+    {
+    }
+
+    bool isEqual(const Pair<T>& pair);
+};
+
+// When we define a member function outside the class definition,
+// we need to resupply a template parameter declaration
+template <typename T>
+bool Pair<T>::isEqual(const Pair<T>& pair)
+{
+    return m_first == pair.m_first && m_second == pair.m_second;
+}
+
+int main()
+{
+    Pair p1{ 5, 6 }; // uses CTAD to infer type Pair<int>
+    std::cout << std::boolalpha << "isEqual(5, 6): " << p1.isEqual( Pair{5, 6} ) << '\n';
+    std::cout << std::boolalpha << "isEqual(5, 7): " << p1.isEqual( Pair{5, 7} ) << '\n';
+
+    return 0;
+}
+```
+
+- 由于类不是一个聚合类型，因此我们不能像结构体那样使用聚合初始化，因此我们必须使用构造函数来初始化类的成员变量。
+
+    - 由于 T 类型在复制时的开销可能较大，因此我们通过 const 引用来传递参数，而非直接按值传递，以避免不必要的复制。
+
+    - 当我们在类模板定义中对成员函数进行定义时，我们不需要为成员函数提供模板参数声明，它们会默认使用类模板的模板参数声明。
+
+- 对于非聚合的类，我们不需要为 CTAD 提供推导指南。与传入的参数匹配的构造函数为编译器提供了从初始化器推导模板参数所需的信息。
+- 对于在类定义外部定义的成员函数，我们需要重新提供模板参数声明。
+
+    ```cpp
+    template <typename T>
+    bool Pair<T>::isEqual(const Pair<T>& pair)
+    {
+        return m_first == pair.m_first && m_second == pair.m_second;
+    }
+    ```
+
+    - 除此之外，我们在类外部定义成员变量时，我们需要使用类模板的完整名称（`Pair<T>::isEqual`，而非`Pair<T>::isEqual`）来限定成员函数名称。
+
+#### 注入类名
+
+我们可以注意到我们在类模板中定义的构造函数的名称是 `Pair`，而不是 `Pair<T>`。在类的范围内，没有被限定的类名被称为**注入类名**（injected class name）。在类模板中，注入类名相当于完整模板名的一个速记。
+
+在上面的例子中，`Pair`是`Pair<T>`的注入类名，因此我们在`Pair<T>`的作用域内使用的任何`Pair`都被视为`Pair<T>`。
+
+这意味着我们还可以把 `isEqual()` 成员函数定义为
+
+```cpp
+template <typename T>
+bool Pair<T>::isEqual(const Pair& pair) // Pair, not Pair<T>
+{
+    return m_first == pair.m_first && m_second == pair.m_second;
+}
+```
+
+!!! key-point
+    我们前面提到过 CTAD 不适用于函数参数（因为是 argument deduction，而不是 parameter deduction），但是我们使用注入类名作为函数参数是完全可以的，因为它是完全模板名称的速记，并没有使用 CTAD。
+
+???+ question "在何处定义类模板之外的成员函数？"
+    对于类模板的成员函数，编译器需要同时查看类的定义（以确保将成员函数模板被声明为类的一部分）和模板成员函数的定义（以了解如何实例化模板）。因此我们同城希望在相同（或至少相近）的位置定义类模板及其模板成员函数。
+
+    - 当我们*在类定义中*对成员函数模板进行定义时，由于模板成员函数的定义是类定义的一部分，任何可以看到类定义的地方，都可以看到模板成员函数定义。
+    - 当我们*在类定义外部*对成员函数模板进行定义时，通常我们需要在类定义的下方紧接着就定义模板成员函数，这样可以确保编译器在看到类定义时就能看到模板成员函数的定义。
+
+    从上面的讨论中我们可以知道，当我们在 .h 文件中定义类模板时，成员函数模板也应在该 .h 文件中定义。
+
+
+---
+
+## 类
+
+定义一个类的语法与定义一个结构体相当类似
+
+```cpp
+class MyClass
+{
+public:
+    int myInt{ 0 };
+    double myDouble{ 0.0 };
+    void print()
+    {
+        std::cout << myInt << ' ' << myDouble << '\n';
+    }
+};
+```
+
+
+
+### 类不变式（class invariant）
+
+[C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) 将不变式定义为“程序某一时刻或某一段时间里必须得到满足的条件”。
+
+对于类类型（包括结构体、类和联合体），**类不变式**是指在类的生命周期中，类的成员变量必须满足的条件，违反类不变量的对象被认为处于**无效状态**。
+
+!!! key-point
+    使用违反类不变式的对象可能导致意外或未定义的行为。
+
+例如考虑下面的结构体：
+
+```cpp
+struct Fraction
+{
+    int numerator { 0 };
+    int denominator { 1 };
+};
+```
+
+我们知道在数学中，分数的分母不能为 0，因此我们要确保 Fraction 的 denominator 成员变量永远不会设置为 0，否则该 Fraction 对象处于无效状态，使用这个对象可能会导致未定义的行为。
+
+例如一个简单的函数
+
+```cpp
+void printFractionValue(const Fraction& f)
+{
+     std::cout << f.numerator / f.denominator << '\n';
+}
+```
+
+调用 `printFractionValue({ 5, 0 })` 时会出现除零错误，虽然我们可以通过在函数内添加一个 assert 语句检查分母是否为 0 来避免除零错误，但这并不能解决问题的根本。
+
+依赖于用户来维护类不变量是不可靠的，尤其是在比分数这个例子复杂得多的情况下。理想情况下，我们希望对我们的类类型进行保护，使得对象不能被置于无效状态，或者如果处于无效状态，可以立即发出信号（而不是在将来某个时刻出现未定义行为时才知道）。
+
+!!! property "类与结构体"
+    从技术角度来看，结构和类几乎相同——能用结构体实现的内容都可以通过类实现，反之亦然。`class` 和 `struct` 在语法上几乎没有区别，仅有一些微小的差别：
+
+    - class 默认访问说明符为 private, 这其实隐含了它应该将数据设为私用, 即拥有不变式.
+    - struct 默认访问说明符为 public, 这其实隐含了它应该将数据设为公用, 即没有不变式.
+
+    如果某个类类型具有不变式，则使用 class；如果数据成员之间相互独立，则使用 struct。
+
+### 成员函数
+
+除了成员变量之外，类类型还可以拥有自己的函数，称之为**成员函数**（member function）。
+
+不是成员函数的函数称为**非成员函数**（non-member function），有时也称为**自由函数**（free function）。
+
+!!! info
+    在其他面向对象语言（例如 Java 和 C#）中，成员函数也称为**方法**（method）。我们只需要知道这两个术语在表示一个东西即可。
+
+为简单起见，我们用结构体来介绍成员函数：
+
+```cpp
+struct Date
+{
+    int year {};
+    int month {};
+    int day {};
+
+    void print() 
+    {
+        std::cout << year << '/' << month << '/' << day;
+    }
+};
+
+int main()
+{
+    Date today { 2020, 10, 14 };
+
+    today.day = 16;
+    today.print();
+
+    return 0;
+}
+```
+
+在这个例子中我们可以看到，成员函数 `print()` 是在结构体 `Date` 内部定义的，它可以访问结构体的成员变量 `year`、`month` 和 `day`。在使用成员函数时，我们不需要把 today 作为参数传递给成员函数。当某个对象的成员函数被调用时，它本身会被**隐式传递**给成员函数，因此我们不需要使用成员选择运算符`.` ，这个对象被称为**隐式对象**（the implicit object）。
+
+!!! info "成员变量和函数可以按任意顺序定义"
+    非成员函数在使用之前必须进行声明，否则在编译时会报错。但类类型的成员函数并没有这个限制，我们可以在声明成员变量和成员函数之前访问它们。
+
+    ```cpp
+    struct Foo
+    {
+        int z() { return m_data; } // We can access data members before they are defined
+        int x() { return y(); }    // We can can access member functions before they are defined
+
+        int m_data { y() };        // This even works in default member initializers (see warning below)
+        int y() { return 5; }
+    };
+    ```
+
+    但是数据成员将按照声明的顺序进行初始化，如果一个成员在初始化时需要使用到一个稍后才声明的另一个成员，那么初始化将会导致未定义的行为。
+
+    ```cpp
+    struct Bad
+    {
+        int m_bad1 { m_data }; // undefined behavior: m_bad1 initialized before m_data
+        int m_bad2 { fcn() };  // undefined behavior: m_bad2 initialized before m_data (accessed through fcn())
+
+        int m_data { 5 };
+        int fcn() { return m_data; }
+    };
+    ```
+
+    因此，最好避免在成员变量初始化时使用其他成员。
+
+!!! extra "成员函数也可以进行重载"
+    ```cpp
+    #include <iostream>
+    #include <string_view>
+
+    struct Date
+    {
+        int year {};
+        int month {};
+        int day {};
+
+        void print()
+        {
+            std::cout << year << '/' << month << '/' << day;
+        }
+
+        void print(std::string_view prefix)
+        {
+            std::cout << prefix << year << '/' << month << '/' << day;
+        }
+    };
+
+    int main()
+    {
+        Date today { 2020, 10, 14 };
+
+        today.print(); // calls Date::print()
+        std::cout << '\n';
+
+        today.print("The date is: "); // calls Date::print(std::string_view)
+        std::cout << '\n';
+
+        return 0;
+    }
+    ```
+
+    输出结果为
+
+    ```
+    2020/10/14
+    The date is: 2020/10/14
+    ```
+
+### const 对象和 const 成员函数
+
+我们可以向普通的变量一样，用 const 关键字来声明一个类类型对象。一旦初始化了 const 类类型对象，就不允许对对象的成员数据进行修改，这既包括直接修改成员变量（如果是 public 的），也包括通过成员函数修改成员变量。
+
+实际上我们还会发现，如果我们尝试在 const 对象上调用非 const 成员函数，编译器会报错，即使这个非 const 函数并不会修改成员变量。
+
+```cpp
+#include <iostream>
+
+struct Date
+{
+    int year {};
+    int month {};
+    int day {};
+
+    void print()
+    {
+        std::cout << year << '/' << month << '/' << day;
+    }
+};
+
+int main()
+{
+    const Date today { 2020, 10, 14 }; // const
+
+    today.print();  // compile error: can't call non-const member function
+
+    return 0;
+}
+```
+
+我们可以通过把 const 关键字附加到函数原型后来使得这个函数变为 const 成员函数
+
+```cpp
+struct Date
+{
+    int year {};
+    int month {};
+    int day {};
+
+    void print() const // now a const member function
+    {
+        std::cout << year << '/' << month << '/' << day;
+    }
+};
+```
+
+!!! tip
+    - 尝试更改成员变量或调用非 const 成员函数的 const 成员函数将导致编译错误
+    - 构造函数不能设为 const，因为它们需要初始化对象的成员，这需要修改它们
+    - const 成员函数可以也被非 const 对象调用，因此我们最好把不会改变对象状态的成员函数设置为 const
+
+虽然很少会这么做，但是成员函数可以被重载为 const 和非 const 两个版本，因为 const 限定符也被认为是函数签名的一部分。
+
+```cpp
+#include <iostream>
+
+struct Something
+{
+    void print()
+    {
+        std::cout << "non-const\n";
+    }
+
+    void print() const
+    {
+        std::cout << "const\n";
+    }
+};
+
+int main()
+{
+    Something s1{};
+    s1.print(); // calls print()
+
+    const Something s2{};
+    s2.print(); // calls print() const
+
+    return 0;
+}
+``` 
+
+输出结果为
+
+```
+non-const
+const
+```
+
+### 访问说明符
+
+C++ 具有三种不同的访问级别：public、private 和 protected，我们暂时先介绍前两者。
+
+每当对对象的成员进行访问时，编译器都会检查这个成员的访问级别，如果访问级别不允许访问者访问该成员，编译器将报错。
+
+- **public**：公共成员可以被任何人访问，包括同一个类的其他成员、其他类的成员和非成员函数。
+- **private**：私有成员只能被类自己的成员访问，无法被其他类的成员或非成员函数访问。
+
+前面提到过，类的默认访问说明符是 private，而结构体的默认访问说明符是 public。
+
+- 默认情况下，结构体的所有成员都是公共成员
+- 默认情况下，类的所有成员都是私有成员，这表示我们不能直接对类进行聚合初始化
+
+    ```cpp
+    #include <iostream>
+
+    class Date
+    {
+        // class members are private by default, can only be accessed by other members
+        int m_year {};     // private by default
+        int m_month {};    // private by default
+        int m_day {};      // private by default
+
+        void print() const // private by default
+        {
+            // private members can be accessed in member functions
+            std::cout << m_year << '/' << m_month << '/' << m_day;
+        }
+    };
+
+    int main()
+    {
+        Date today { 2020, 10, 14 }; // compile error: can no longer use aggregate initialization
+
+        // private members can not be accessed by the public
+        today.m_day = 16; // compile error: the m_day member is private
+        today.print();    // compile error: the print() member function is private
+
+        return 0;
+    }
+    ```
+
+!!! property "给 private 变量命名"
+    在 C++ 中，我们经常能见到给 private 的变量加上前缀 `m_`，这是一种常见的命名约定，它有助于区分成员变量和局部变量。例如一个成员函数
+
+    ```cpp
+    void setName(std::string_view name)
+    {
+        m_name = name;
+    }
+    ```
+
+    这样我们就能很容易地知道 `m_name` 是一个成员变量，而 `name` 是一个局部变量。
+
+    - 如果有需要，class 的 public 成员也可以使用这种命名方式，但是结构体的 public 成员通常不会使用这个前缀。
+
+我们可以使用访问说明符来明确成员的访问级别，包括 `public:`、`private:` 和 `protected:`。
+
+```cpp
+class Date
+{
+public:
+
+    void print() const
+    {
+        // members can access other private members
+        std::cout << m_year << '/' << m_month << '/' << m_day;
+    }
+
+private:
+
+    int m_year { 2020 };
+    int m_month { 14 };
+    int m_day { 10 };
+};
+```
+
+| Access level | Access specifier | Member access | Derived class access | Public access |
+|---|---|---|---|---|
+| Public | public: | yes | yes | yes |
+| Protected | protected: | yes | yes | no |
+| Private | private: | yes | no | no |
+
+有一个很容易被误解的点是：C++ 的访问级别是以每个类（per-class）为基准的，而非每个对象（per-object）。这意味着一个对象的成员函数**可以访问同类的其他对象的私有成员**。
+
+```cpp
+#include <iostream>
+#include <string>
+#include <string_view>
+
+class Person
+{
+private:
+    std::string m_name{};
+
+public:
+    void shakeHands(const Person& p) const
+    {
+        std::cout << m_name << " shake hands with " << p.m_name << '\n';
+    }
+
+    void setName(std::string_view name)
+    {
+        m_name = name;
+    }
+};
+
+int main()
+{
+    Person joe;
+    joe.setName("Joe");
+
+    Person kate;
+    kate.setName("Kate");
+
+    joe.shakeHands(kate);
+
+    return 0;
+}
+```
+
+这段程序运行后得到输出结果为
+
+```
+Joe shake hands with Kate
+```
+
+在这里 `m_name` 是 private 的变量，因此它只能被同为 `Person` 这个类的其他对象访问，因此我们在成员函数 `shakeHands()` 中可以直接使用另一个对象的 private 变量 `p.m_name`。
+
+### 访问函数
+
+访问函数（access function）指的是用于检索或更改一个类的私有成员的函数。访问函数有两种：**getter** 和 **setter**。访问函数的存在也为我们提供了一定程度的数据封装。
+
+- **getter**：用于检索私有成员的值，有时也称为**访问器**（accessor）
+- **setter**：用于更改私有成员的值，有时也称为**修改器**（mutator）
+
+getter 通常被设置为 const 成员函数，因为它们不会修改对象的状态；setter 则不是 const 成员函数，因为它们会修改对象的状态。
+
+```cpp
+class Date
+{
+private:
+    int m_year { 2020 };
+    int m_month { 10 };
+    int m_day { 14 };
+
+public:
+    void print()
+    {
+        std::cout << m_year << '/' << m_month << '/' << m_day << '\n';
+    }
+
+    int getYear() const { return m_year; }        // getter for year
+    void setYear(int year) { m_year = year; }     // setter for year
+
+    int getMonth() const  { return m_month; }     // getter for month
+    void setMonth(int month) { m_month = month; } // setter for month
+
+    int getDay() const { return m_day; }          // getter for day
+    void setDay(int day) { m_day = day; }         // setter for day
+};
+```
+
+我们通常会给访问函数加上前缀 `get` 和 `set`，这是一种常见的命名约定，它有助于我们识别 getter 和 setter。
+
+### 类成员的声明顺序
+
+由于类的中的成员变量和成员函数不需要在使用之前声明，因此我们不必像在类之外书写代码那样先声明再使用。那么我们该如何安排这些成员的顺序呢？目前主要有两种主张：
+
+1. 首先列出 private 成员，然后再列出 public 的成员函数。
+
+    这是一种较为传统的风格，任何查看我们的类代码的人都会在使用数据成员之间就了解它们的定义，这符合阅读的习惯，并让阅读者更容易了解实现的细节。
+
+2. 首先列出 public 成员，然后再列出 private 的成员函数。
+
+    这种风格将类的接口放在了首位，这样用户可以更容易地找到他们可能需要的函数和使用方法，而不必关注具体的实现细节（很多时候用户并不关心这些细节）。
+
+!!! info "Google C++ style guide 的建议"
+    [Google C++ style guide](https://google.github.io/styleguide/cppguide.html#Declaration_Order) 推荐按照以下的顺序安排类的成员：
+
+    - Types and type aliases (typedef, using, enum, nested structs and classes, and friend types)
+    - Static constants
+    - Factory functions
+    - Constructors and assignment operators
+    - Destructor
+    - All other functions (static and non-static member functions, and friend functions)
+    - Data members (static and non-static)
+
+### 构造函数
+
+#### 构造函数引入
+
+当类类型是一个聚合体时，我们可以使用聚合初始化来初始化对象，例如
+
+```cpp
+struct Foo // Foo is an aggregate
+{
+    int x {};
+    int y {};
+};
+
+int main()
+{
+    Foo foo { 6, 7 }; // uses aggregate initialization
+
+    return 0;
+}
+```
+
+聚合初始化会按照成员定义的顺序对成员进行初始化，上面这个例子中，`foo.x` 被初始化为 `6`，`foo.y` 被初始化为 `7`。但是一旦我们把任意一个成员变量变为 private 的，这个类类型就不再是聚合体了（因为聚合体不能拥有私有成员），这时我们就不能再使用聚合初始化了。
+
+```cpp
+class Foo // Foo is not an aggregate (has private members)
+{
+    int m_x {};
+    int m_y {};
+};
+
+int main()
+{
+    Foo foo { 6, 7 }; // compile error: can not use aggregate initialization
+
+    return 0;
+}
+```
+
+不允许带有私有成员的类类型使用聚合初始化的原因是
+
+- 聚合初始化需要了解类的具体实现（必须知道成员是什么，以及它们是按照什么顺序声明的），这和我们把变量设为私有的是相悖的
+- 如果我们的类具有某种不变性，那么在初始化时我们就需要依靠用户来确保这种不变性，这是不可靠的
+
+既然我们不能使用聚合初始化来对 class 进行初始化，我们就要使用别的方法——**构造函数**（constructor）。
+
+构造函数是一种特殊的成员函数，它会在创建一个非聚合类的对象后被自动调用。编译器会查看是否可以找到和调用者提供的初始化值（如果有的话）相匹配的构造函数
+
+- 如果找到了可访问的匹配的构造函数，编译器将为这个对象分配内存，然后调用这个构造函数
+- 如果没有找到匹配的构造函数，将会出现编译错误
+
+构造函数不仅决定如何创建一个对象，通常还执行以下两个工作
+
+1. 对成员变量进行初始化（通过初始化列表或构造函数体）
+2. 执行一些其他的设置函数（setup functions），可能包括检查初始化值、打开文件等
+
+!!! note "构造函数的命名"
+    构造函数的命名与普通的成员函数不同，它有一些特殊的规则：
+
+    - 构造函数的名称必须与类名相同。对于模板类，构造函数的名称将不包括模板参数。
+    - 构造函数没有任何返回类型（也没有 void），因为它们不返回任何值。
+
+由于构造函数需要对正在构造的对象进行初始化，因此它不能是 const 的。
+
+> 通常，非 const 成员函数不能被一个 const 对象调用，但 C++ 标准明确指出 const 标识符不适用于正在构建的对象，并且 const 在构造函数结束之后才生效。
+
+```cpp
+#include <iostream>
+
+class Foo
+{
+private:
+    int m_x {};
+    int m_y {};
+
+public:
+    Foo(int x, int y)
+    {
+        std::cout << "Foo(" << x << ", " << y << ") constructed\n";
+    }
+
+    void print() const
+    {
+        std::cout << "Foo(" << m_x << ", " << m_y << ")\n";
+    }
+};
+
+int main()
+{
+    Foo foo{ 6, 7 };
+    foo.print();
+
+    return 0;
+}
+```
+
+由于这个构造函数并没有对成员变量进行初始化，因此这段程序的输出为
+
+```
+Foo(6, 7) constructed
+Foo(0, 0)
+```
+
+!!! extra "构造函数的参数会进行隐式转换"
+    对于上面的构造函数，我们可以使用任何可以隐式转换为 `int` 的类型来调用它，例如 `Foo foo{ 'a', true };` 或 `Foo foo{ 3.14, 2.71 };` 等。
+
+#### 成员初始化列表
+
+为了让构造函数初始化成员，我们可以使用**成员初始化列表**（member initializer list, or member initialization list）。
+
+对于我们上面的构造函数，我们只需要略作修改就可以让它初始化 `m_x` 和 `m_y`。
+
+```cpp hl_lines="3"
+public:
+    Foo(int x, int y)
+        : m_x { x }, m_y { y }
+    {
+        std::cout << "Foo(" << x << ", " << y << ") constructed\n";
+    }
+```
+
+成员初始化列表应紧接在在构造函数的参数列表之后，它以一个冒号 `:` 开始，后面列出要初始化的每个成员及其初始化值，每个成员初始化之间用逗号 `,` 分隔。
+
+修改后的程序输出结果为
+
+```
+Foo(6, 7) constructed
+Foo(6, 7)
+```
+
+!!! info "成员初始化列表的格式"
+    C++ 并不在意我们把成员初始化列表的冒号、逗号和空格是怎么写的，因此下面几种格式也都是有效的（并且都可能遇见）
+
+    ```cpp title="style 1"
+    Foo(int x, int y) : m_x { x }, m_y { y }
+    {
+    }
+    ```
+
+    ```cpp title="style 2"
+    Foo(int x, int y) :
+        m_x { x },
+        m_y { y }
+    {
+    }
+    ```
+
+    ```cpp title="style 3"
+    Foo(int x, int y)
+        : m_x { x }
+        , m_y { y }
+    {
+    }
+    ```
+
+C++ 标准要求成员初始化列表的成员初始化顺序必须与它们在类中声明的顺序一致，而我们在直觉上可能会认为成员变量将按照初始化列表中的顺序进行初始化，这就可能导致一些错误。
+
+假如我们的类定义如下
+
+```cpp
+class Foo
+{
+private:
+    int m_x{};
+    int m_y{};
+
+public:
+    Foo(int x, int y)
+        : m_y { std::max(x, y) }, m_x { m_y } // issue on this line
+    {
+    }
+
+    void print() const
+    {
+        std::cout << "Foo(" << m_x << ", " << m_y << ")\n";
+    }
+};
+```
+
+尽管 `m_y` 在初始化列表中出现在 `m_x` 之前，但是 `m_x` 会比 `m_y` 先初始化，但由于 `m_x` 的初始化依赖于 `m_y` 的值，这就会产生未定义行为。例如在我的机器上，这段程序的输出结果是`Foo(32731, 7)`。
+
+!!! warning "成员初始化列表的顺序"
+    为了避免这种问题，我们应该按照成员变量在类中的声明顺序来编写成员初始化列表。
+
+成员变量可以被以下几种方法初始化
+
+- 如果成员初始化列表中有对成员变量的初始化，那么这个成员变量将被初始化为成员初始化列表中的值
+- 如果成员初始化列表中没有对成员变量的初始化，那么这个成员变量将被初始化为它的默认值（如果有的话）
+- 否则，这个成员将被默认初始化（通常是未定义的值）
+
+#### 默认构造函数
+
+我们把不接受任何参数的构造函数称为**默认构造函数**（default constructor）。
+
+如果一个类类型具有默认构造函数，则值初始化和默认初始化都将调用默认构造函数
+
+??? example "默认构造函数"
+    ```cpp
+    #include <iostream>
+
+    class Foo
+    {
+    public:
+        Foo() // default constructor
+        {
+            std::cout << "Foo default constructed\n";
+        }
+    };
+
+    int main()
+    {
+        Foo foo1 {}; // value initialization
+        Foo foo2;    // default initialization
+        return 0;
+    }
+    ```
+
+    这里的两种初始化都将调用默认构造函数，它们本质上是等价的。但我们知道对于聚合体而言，值初始化更加安全；而有时候我们难以区分一个类类型是聚合体还是非聚合体，因此最好使用值初始化来初始化对象。
+
+与其他函数一样，构造函数的最右边参数可以具有默认参数。如果构造函数中的所有参数都有默认参数，那么这个构造函数就被认为是默认构造函数（因为它可以在没有参数的情况下调用。
+
+因为构造函数也是函数，因此它们也可以重载。也就是说，对于一个类类型，我们可以拥有多种构造函数，以便于以不同的方式构造对象。
+
+??? example
+    ```cpp
+    #include <iostream>
+
+    class Foo
+    {
+    private:
+        int m_x {};
+        int m_y {};
+
+    public:
+        Foo() // default constructor
+        {
+            std::cout << "Foo constructed\n";
+        }
+
+        Foo(int x=1, int y=2) // default constructor
+            : m_x { x }, m_y { y }
+        {
+            std::cout << "Foo(" << m_x << ", " << m_y << ") constructed\n";
+        }
+    };
+
+    int main()
+    {
+        Foo foo1 {1, 2}; // calls Foo(int, int)
+        Foo foo2; // compile error: ambiguous constructor function call
+        return 0;
+    }
+    ```
+
+    当我们试图实例化 `foo2` 时，编译器将寻找默认构造函数，但是由于有两个默认构造函数，编译器无法确定调用哪一个，因此会报错。
+
+**隐式默认构造函数**
+
+如果一个非聚合的类类型没有定义任何构造函数，那么编译器将为它生成一个默认构造函数，称为隐式默认构造函数。隐式默认构造函数等同于没有参数，没有成员初始化器列表，也没有函数体的构造函数。
+
+??? example "隐式默认构造函数"
+    ```cpp
+    #include <iostream>
+
+    class Foo
+    {
+    private:
+        int m_x{1};
+        int m_y{2};
+
+        // Note: no constructors declared
+    };
+
+    int main()
+    {
+        Foo foo{};
+
+        return 0;
+    }
+    ```
+
+    编译会为我们生成如下的构造函数：
+
+    ```cpp
+    public:
+        Foo() // implicitly generated default constructor
+        {
+        }
+    ```
+    
+    这段程序中，`Foo foo{}` 将调用隐式默认构造函数，`m_x` 和 `m_y` 分别将被初始化为 `1` 和 `2`。
+
+    我们也可以通过 `= default` 来显式声明一个默认构造函数
+
+    ```cpp
+    public:
+        Foo() = default; // explicitly defaulted default constructor
+    ```
+
+#### 委托构造函数
+
+**委托构造函数**（delegating constructors）是一种特殊的构造函数，它允许一个构造函数调用另一个构造函数来初始化对象，这个过程有时称为**构造函数链**。
+
+```cpp
+#include <iostream>
+#include <string>
+#include <string_view>
+
+class Employee
+{
+private:
+    std::string m_name { "???" };
+    int m_id { 0 };
+
+public:
+    Employee(std::string_view name)
+        : Employee{ name, 0 } 
+        // delegate initialization to Employee(std::string_view, int) constructor
+    {
+    }
+
+    Employee(std::string_view name, int id)
+        : m_name{ name }, m_id { id } 
+        // actually initializes the members
+    {
+        std::cout << "Employee " << m_name << " created\n";
+    }
+
+};
+
+int main()
+{
+    Employee e1{ "James" };
+    Employee e2{ "Dave", 42 };
+}
+```
+
+- 当 `e1{ "James" }` 被初始化时，与之匹配的构造函数 `Employee(std::string_view name)` 被调用，这个构造函数在成员初始化列表中把初始化的人物委托给另一个构造函数 `Employee(std::string_view name, int id)` 来初始化对象。
+- 被委托的构造函数 `Employee(std::string_view name, int id)` 把 `m_name` 初始化为 `name`，把 `m_id` 初始化为 `id`，然后执行它的函数体。
+- 被委托的构造函数体被执行后，控制权返回给委托的构造函数，它的函数体也被执行。
+- 最后，控制权返回给函数调用者。
+
+!!! note "关于委托构造函数的一些其他细节"
+    - 把初始化任务委托给其他构造函数的构造函数本身不能进行任何初始化。也就是说，一个构造函数要么自己初始化对象，要么委托给其他构造函数来初始化对象，不能两者兼有。
+    - 通常而言，我们会让参数较少的构造函数委托给参数较多的构造函数，这样我们就可以避免重复代码。
+    - 被委托的构造函数也可以把初始化任务委托给另一个构造函数，这样就形成了构造函数链。但是这有可能造成一个无限循环，因此我们应该避免这种情况。
+
+有时候我们也可以用默认值来将多个构造函数合并为一个，这样我们就不需要使用委托构造函数了。
+
+```cpp
+public:
+    Employee(std::string_view name, int id = 0) // default argument for id
+        : m_name{ name }, m_id{ id }
+    {
+        std::cout << "Employee " << m_name << " created\n";
+    }
+```
+
+由于默认值只能从函数调用的最右边参数开始设置，因此我们应该在定义成员变量时先定义不带默认值的成员变量（使用者必须提供的参数），然后再定义带默认值的成员变量（使用者可选的参数）。
+
+#### 复制构造函数
+
+**复制构造函数**（copy constructor）是一种特殊的构造函数，它用一个现有的对象来初始化一个新对象。复制构造函数执行后，新创建的对象将是原对象的一个副本。
+
+如果我们没有定义复制构造函数，编译器将为我们生成一个 public 的隐式复制构造函数，这个复制构造函数将依次复制每个成员变量。
+
+```cpp
+class Foo
+{
+private:
+    int m_x {1};
+    int m_y {2};
+
+public:
+    Foo() = default; // default constructor
+
+    Foo(const Foo& foo) // copy constructor
+        : m_x{foo.m_x}, m_y{foo.m_y}
+    {
+        std::cout << "Foo copied\n";
+    }
+};
+```
+
+!!! tip
+    在前面我们提到过，C++ 中的 private 和 public 是以类为单位的，而不是以对象为单位的。因此，复制构造函数可以访问同类的其他对象的私有成员，以便于我们进行复制。
+
+一般而言，除了复制之外，复制构造函数不应该有任何其他的副作用，因为在某些情况下，编译器可以优化复制构造函数，如果我们加上了额外的副作用，就可能无法进行优化。
+
+- 一般而言，我们不需要自己去定义一个复制构造函数，使用隐式复制构造函数就足够了
+- 如果我们需要自己定义一个复制构造函数，需要注意复制构造函数的参数是一个 const 引用
+- 如果我们乐意，可以用 `= default` 来显式声明一个默认复制构造函数
+
+    ```cpp
+    public:
+        // Explicitly request default copy constructor
+        Foo(const Foo& foo) = default;
+    ```
+
+- 如果我们不希望一个类对象被复制，我们可以将复制构造函数声明为 `delete`
+
+    ```cpp
+    public:
+        // Prevent copying
+        Foo(const Foo& foo) = delete;
+    ```
+
+!!! property "类的初始化"
+    我们知道对于基本类型而言，有 6 种基本的初始化方式：
+
+    ```cpp
+    int a;         // default initialization
+    int b = 5;     // copy initialization
+    int c( 6 );    // irect initialization
+
+    // List initialization methods (C++11)
+    int d { 7 };   // direct list initialization
+    int e = { 8 }; // copy list initialization
+    int f {};      // value initialization
+    ```
+
+    而上面这些初始化方式对于类类型也是有效的：
+
+    ```cpp
+    #include <iostream>
+
+    class Foo
+    {
+    public:
+        // Default constructor
+        Foo() {
+            std::cout << "Foo()\n";
+        }
+
+        // Normal constructor
+        Foo(int x) {
+            std::cout << "Foo(int) " << x << '\n';
+        }
+
+        // Copy constructor
+        Foo(const Foo&) {
+            std::cout << "Foo(const Foo&)\n";
+        }
+    };
+
+    int main()
+    {
+        // Calls Foo() default constructor
+        Foo f1;           // default initialization
+        Foo f2{};         // value initialization (preferred)
+
+        // Calls foo(int) normal constructor
+        Foo f3 = 3;       // copy initialization
+        Foo f4(4);        // direct initialization
+        Foo f5{ 5 };      // direct list initialization (preferred)
+        Foo f6 = { 6 };   // copy list initialization 
+
+        // Calls foo(const Foo&) copy constructor
+        Foo f7 = f3;      // copy initialization
+        Foo f8(f3);       // direct initialization
+        Foo f9{ f3 };     // direct list initialization (preferred)
+        Foo f10 = { f3 }; // copy list initialization
+
+        return 0;
+    }
+    ```
+
+??? extra "复制省略"
+    考虑一个简单的程序
+
+    ```cpp
+    #include <iostream>
+
+    class Something
+    {
+        int m_x{};
+
+    public:
+        Something(int x)
+            : m_x{ x }
+        {
+            std::cout << "Normal constructor\n";
+        }
+
+        Something(const Something& s)
+            : m_x { s.m_x }
+        {
+            std::cout << "Copy constructor\n";
+        }
+
+        void print() const { std::cout << "Something(" << m_x << ")\n"; }
+    };
+
+    int main()
+    {
+        Something s { Something { 5 } }; // focus on this line
+        s.print();
+    }
+    ```
+
+    在上面变量 `s` 的初始化中，我们首先构建了一个用 `5` 来初始化的临时的 `Something` 对象，然后用这个临时对象来初始化 `s`，最后调用 `s.print()`。
+
+    在没有任何优化的情况下，上述程序的输出结果应该是
+
+    ```
+    Normal constructor
+    Copy constructor
+    Something(5)
+    ```
+
+    但由于编译器可以对重写代码以进行优化，我们可以很自然地猜想编译器是否可以优化掉不必要的对象副本，答案是肯定的。在本人的测试中，输出结果是
+
+    ```
+    Normal constructor
+    Something(5)
+    ```
+
+    上面的优化称为**复制省略**（copy elision），它是 C++ 标准的一部分，允许编译器在某些情况下省略复制构造函数的调用。
+
+    这也是我们在编写复制构造函数时应该避免引入副作用的原因之一：当编译器把复制构造函数优化掉时，它的副作用将不会被执行。
+
+    !!! info "强制复制省略（C++17）"
+        在 C++17 之前，复制省略是编译器可选的一个优化；但在 C++17 中，在某些情况下即使我们已经明确告知编译器不要执行复制省略，复制省略也会被强制执行。
+
+#### 转换构造函数
+
+我们知道，当调用函数时传入函数的参数类型和函数声明中的参数类型不匹配时，编译器会尝试进行隐式类型转换。考虑下面这个例子
+
+???+ example
+    ```cpp
+    #include <iostream>
+
+    class Foo
+    {
+    private:
+        int m_x{};
+    public:
+        Foo(int x)
+            : m_x{ x }
+        {
+        }
+
+        int getX() const { return m_x; }
+    };
+
+    void printFoo(Foo f) // has a Foo parameter
+    {
+        std::cout << f.getX();
+    }
+
+    int main()
+    {
+        printFoo(5); // we're supplying an int argument
+
+        return 0;
+    }
+    ```
+
+在这里我们给 `printFoo` 传入的参数是 `int`，但函数需要的是一个 `Foo` 对象，编译器将尝试把 `int` 转换为 `Foo` 对象。这种转换是通过 `Foo` 的构造函数 `Foo(int x)` 来完成的，它相当于把一个 `int` 参数转换为了一个 `Foo` 对象。这种可用于执行隐式转换的构造函数称为**转换构造函数**（converting constructor）。
+
+有时候我们不希望一个函数只能调用一个类对象而不能发生隐式类型转换，这时我们可以在构造函数前面加上 `explicit` 关键字，这样这个构造函数就不能用于隐式类型转换了。
+
+???+ example
+    ```cpp
+    #include <iostream>
+
+    class Dollars
+    {
+    private:
+        int m_dollars{};
+
+    public:
+        Dollars(int d)
+            : m_dollars{ d }
+        {
+        }
+
+        int getDollars() const { return m_dollars; }
+    };
+
+    void print(Dollars d)
+    {
+        std::cout << "$" << d.getDollars();
+    }
+
+    int main()
+    {
+        print(5);
+
+        return 0;
+    }
+    ```
+
+    在这里我们调用`print(5)`时，`Dollars(int)`转换构造函数将会把 `5` 转换为一个 `Dollars` 对象，然后传递给 `print` 函数。这段程序的输出结果是 `$5`。
+
+给这个例子中的构造函数加上 `explicit` 关键字后，编译器将不再允许隐式类型转换，这时我们必须显式地给函数传入一个 `Dollars` 对象。
+
+```cpp
+public:
+    explicit Dollars(int d) // now explicit
+        : m_dollars{ d }
+    {
+    }
+```
+
+- explicit 构造函数不能用于复制初始化或复制列表初始化
+- explicit 构造函数不能用于进行隐式转换（因为这实际上会使用复制初始化或复制列表初始化）
+
+!!! note "何时使用 explicit 关键字"
+    - 一般情况下，任何接受单个参数的构造函数都应该是 `explicit` 的，包括参数列表只有一个参数的构造函数和有多个参数但其他参数都有默认值的构造函数。
+    - 不需要使复制构造函数和移动构造函数 explicit，因为它们通常不会执行类型转换。
+
+### this 关键字
+
+在每一个成员函数内部，都隐含着一个关键字 `this`，它是一个 const 指针，隐式地保存着当前正在被操作的对象的地址。
+
+#### this 是被如何设置的
+
+考虑一个简单的类
+
+```cpp
+#include <iostream>
+
+class Simple
+{
+private:
+    int m_id{};
+
+public:
+    Simple(int id)
+        : m_id{ id }
+    {
+    }
+
+    int getID() const { return m_id; }
+    void setID(int id) { m_id = id; }
+
+    void print() const { std::cout << m_id; }
+};
+
+int main()
+{
+    Simple simple{1};
+    simple.setID(2);
+
+    simple.print();
+
+    return 0;
+}
+```
+
+在这里我们并没有使用 `this` 关键字，但对于 `print()` 函数而言，下面两种写法是完全相同的，区别仅在于一个显式地使用了 `this` 关键字，而另一个没有。
+
+```cpp
+void print() const { std::cout << m_id; } 
+void print() const { std::cout << this->m_id; }
+```
+
+当我们进行函数调用 `simple.setID(2);` 时，看起来我们只传入了一个参数，但实际上编译器会把这个函数重写为
+
+```cpp
+Simple::setID(&simple, 2);
+```
+
+除此之外，编译器还会把函数的实现重写为
+
+```cpp
+static void setID(Simple* const this, int id) { this->m_id = id; }
+```
+
+!!! tip
+    在我的笔记中，你会发现大部分时候我都没有使用 this 指针，一般而言，在函数参数和成员变量具有相同的名称时，`this->` 可以用于区分两者。但因为我通常会使用 `m_` 前缀来区分成员变量，因此我很少使用 `this->`。
+
+    ```cpp
+    struct Something
+    {
+        int data{}; // not using m_ prefix because this is a struct
+
+        void setData(int data)
+        {
+            this->data = data; // this->data is the member, data is the local parameter
+        }
+    };
+    ```
+
+#### 函数返回 `*this`
+
+有时，让成员函数把正在调用的对象作为返回值返回相当有用，因为这允许我们把多个成员函数“链接”在一起，这样我们就可以在一个表达式中调用多个成员函数。这被称为**函数链**（function chaining），或**方法链**（method chaining）。
+
+考虑下面这个类 `Calc` 的定义
+
+```cpp
+class Calc
+{
+private:
+    int m_value{};
+
+public:
+
+    void add(int value) { m_value += value; }
+    void sub(int value) { m_value -= value; }
+    void mult(int value) { m_value *= value; }
+
+    int getValue() const { return m_value; }
+};
+```
+
+如果我们想要先加 5，再减 3，然后乘以 4，就必须
+
+```cpp
+Calc calc{};
+calc.add(5);
+calc.sub(3);
+calc.mult(4);
+```
+
+但如果我们让每个成员函数都按引用返回 `*this`，就可以把这三个操作链接起来
+
+```cpp
+class Calc
+{
+private:
+    int m_value{};
+
+public:
+    Calc& add(int value) { m_value += value; return *this; }
+    Calc& sub(int value) { m_value -= value; return *this; }
+    Calc& mult(int value) { m_value *= value; return *this; }
+
+    int getValue() const { return m_value; }
+};
+```
+
+只需要一个表达式就可以完成这三个操作
+
+```cpp
+calc.add(5).sub(3).mult(4);
+```
+
+!!! note "把类重置回默认状态"
+    如果我们定义的类有一个默认构造函数，那么有时候我们有把类变成默认状态的需要，这时候就可以定义一个 `reset` 成员函数，
+
+    ```cpp
+    public:
+        void reset()
+        {
+            *this = {};
+        }
+    ```
+
+    这样我们就可以在链式调用中插入 `reset` 函数
+
+!!! info
+    - 对于非 const 成员函数而言，`this` 是一个指向非 const 对象的 const 指针：`this` 不能指向其他对象，但可以通过 `this` 来修改对象的值。
+    - 对于 const 成员函数而言，`this` 是一个指向 const 对象的 const 指针：`this` 不能指向其他对象，也不能通过 `this` 来修改对象的值。
+
+### 析构函数
+
+构造函数是在创建一个非聚合的类类型对象时用于初始化成员变量，并执行一些其他设置任务的特殊的成员函数。与之相对的是**析构函数**（destructor），它是在对象被销毁时执行的特殊成员函数。
+
+当一个非聚合的类类型对象将要被销毁时，析构函数将会被自动调用，它的任务是在对象被销毁前执行一些必要的清理工作。
+
+!!! note "析构函数的命名规则"
+    析构函数也有自己特定的命名规则
+
+    - 析构函数的名称必须是波浪号（tilde）`~` 后面跟着类名（也可以理解为构造函数名的前面加上一个波浪号）
+    - 析构函数没有参数，也没有返回值
+
+- 一个类只能有一个析构函数
+- 通常而言，我们不应该显式地调用析构函数，因为这可能会导致清理工作被多次执行，从而导致未定义行为
+- 析构函数可以安全地调用其他成员函数，因为直到析构函数执行完毕后对象才会被销毁
+
+??? example "一个析构函数的简单例子"
+
+    ```cpp
+    #include <iostream>
+
+    class Simple
+    {
+    private:
+        int m_id {};
+
+    public:
+        Simple(int id)
+            : m_id { id }
+        {
+            std::cout << "Constructing Simple " << m_id << '\n';
+        }
+
+        ~Simple() // here's our destructor
+        {
+            std::cout << "Destructing Simple " << m_id << '\n';
+        }
+
+        int getID() const { return m_id; }
+    };
+
+    int main()
+    {
+        // Allocate a Simple
+        Simple simple1{ 1 };
+        {
+            Simple simple2{ 2 };
+        } // simple2 dies here
+
+        return 0;
+    } // simple1 dies here
+    ```
+
+    这段程序的输出结果是
+
+    ```
+    Constructing Simple 1
+    Constructing Simple 2
+    Destructing Simple 2
+    Destructing Simple 1
+    ```
+
+!!! tip
+    如果一个类没有定义析构函数，编译器将为它生成一个隐式析构函数，这个析构函数的函数体是空的，也就是说，它不会执行任何清理工作，相当于一个占位符。
+
+    如果一个类不需要在被销毁时进行任何清理工作，我们可以不定义析构函数，让编译器为我们生成一个隐式析构函数。
+
+
+
+
+
+### 友元函数和友元类
+
+在类的定义中，我们可以使用 `friend` 关键字来告诉编译器现在其他的类或函数是当前这个类的友元。在 C++ 中，**友元**（friend）是一种访问控制机制，它授予一个类或函数访问另一个类的私有（private）或受保护（protected）成员的权限。
+
+- 友元声明不受访问控制权限的限制，因此可以出现在类的任何一个位置。
+
+??? example "友谊是魔法"
+    考虑我们已经拥有了一个由于管理某些数据的储存类，现在我们希望也能够展示这些数据，我们可以直接在现有的储存类上添加一些展示数据的函数，但这样会让类的接口变得相当复杂；我们也可以额外创建一个展示类来展示数据，但显示类无法访问储存类的私有成员。
+
+    结合上面的分析，我们希望的是展示类能够在特定情况下无视储存类的访问控制权限，这时我们就可以让展示类成为储存类的友元，这样它就能无阻地直接访问储存类的所有成员，以便于展示数据。
+
+#### 友元非成员函数
+
+友元函数是可以访问特定类的私有和受保护成员的函数（可能是成员函数或非成员函数）。我们可以在类的定义中使用 `friend` 关键字来声明一个友元函数，以告知编译器这个函数是当前类的友元。
+
+???+ example
+
+    === "在类外定义友元非成员函数"
+
+        ```cpp
+        #include <iostream>
+
+        class Accumulator
+        {
+        private:
+            int m_value { 0 };
+
+        public:
+            void add(int value) { m_value += value; }
+
+            friend void print(const Accumulator& accumulator);
+        };
+
+        void print(const Accumulator& accumulator)
+        {
+            std::cout << accumulator.m_value;
+        }
+
+        int main()
+        {
+            Accumulator acc{};
+            acc.add(5); // add 5 to the accumulator
+
+            print(acc); // call the print() non-member function
+
+            return 0;
+        }
+        ```
+
+        由于 `print()` 是一个非成员函数（没有隐式对象），因此我们必须显式地传入一个 `Accumulator` 对象。
+
+    === "在类内定义友元非成员函数"
+
+        ```cpp
+        class Accumulator
+        {
+        private:
+            int m_value { 0 };
+
+        public:
+            void add(int value) { m_value += value; }
+
+            friend void print(const Accumulator& accumulator)
+            {
+                std::cout << accumulator.m_value;
+            }
+        };
+        ```
+
+        虽然这里的 `print()` 函数定义在类内，但它被 `friend` 关键字定义为友元，因此它被视为一个非成员函数，就好像是在`Accumulator`外部定义的一样。
+
+???+ property "多重友元"
+    一个函数可以同时成为多个类的友元，例如下面这个例子
+
+    ```cpp
+    #include <iostream>
+
+    class Humidity; // forward declaration of Humidity
+
+    class Temperature
+    {
+    private:
+        int m_temp { 0 };
+    public:
+        explicit Temperature(int temp) : m_temp { temp } { }
+
+        // forward declaration needed for this line
+        friend void printWeather(const Temperature& temperature, const Humidity& humidity); 
+    };
+
+    class Humidity
+    {
+    private:
+        int m_humidity { 0 };
+    public:
+        explicit Humidity(int humidity) : m_humidity { humidity } {  }
+
+        friend void printWeather(const Temperature& temperature, const Humidity& humidity);
+    };
+
+    void printWeather(const Temperature& temperature, const Humidity& humidity)
+    {
+        std::cout << "The temperature is " << temperature.m_temp <<
+        " and the humidity is " << humidity.m_humidity << '\n';  
+    }
+
+    int main()
+    {
+        Humidity hum { 10 };
+        Temperature temp { 12 };
+
+        printWeather(temp, hum);
+
+        return 0;
+    }
+    ```
+
+    - 这里的 `printWeather()` 函数同时是 `Temperature` 和 `Humidity` 的友元，因此它可以访问这两个类的私有成员。
+    - 注意到在这个例子的顶部有一个类 `Humidity` 的前向声明，这是因为  `printWeather()` 出现在 `Humidity` 的完整定义之前，如果我们没有前向声明会使编译器在 `Temperature` 类中对函数进行解析时找不到 `Humidity` 类。
+
+从可维护性的角度来看，友元函数在可能的情况下最好使用类接口来访问类的私有成员，而非直接访问。这是因为一个类可能有多个友元函数，如果它们全都是直接访问类的私有成员，那么当类的私有成员发生变化时，我们就需要修改所有的友元函数，这会增加代码的维护成本。
+
+#### 友元类
+
+**友元类**（friend class）是一个可以任意访问其他类的任何成员的类。
+
+??? example
+
+    ```cpp
+    #include <iostream>
+
+    class Storage
+    {
+    private:
+        int m_nValue {};
+        double m_dValue {};
+    public:
+        Storage(int nValue, double dValue)
+        : m_nValue { nValue }, m_dValue { dValue }
+        { }
+
+        // Make the Display class a friend of Storage
+        friend class Display;
+    };
+
+    class Display
+    {
+    private:
+        bool m_displayIntFirst {};
+
+    public:
+        Display(bool displayIntFirst)
+            : m_displayIntFirst { displayIntFirst }
+        {
+        }
+
+        void displayStorage(const Storage& storage)
+        {
+            if (m_displayIntFirst)
+                std::cout << storage.m_nValue << ' ' << storage.m_dValue << '\n';
+            else // display double first
+                std::cout << storage.m_dValue << ' ' << storage.m_nValue << '\n';
+        }
+
+        void setDisplayIntFirst(bool b)
+        {
+            m_displayIntFirst = b;
+        }
+    };
+
+    int main()
+    {
+        Storage storage { 5, 6.7 };
+        Display display { false };
+
+        display.displayStorage(storage);
+
+        display.setDisplayIntFirst(true);
+        display.displayStorage(storage);
+
+        return 0;
+    }
+    ```
+
+    这段程序的输出结果是
+
+    ```
+    6.7 5
+    5 6.7
+    ```
+
+- 友元**不是互反的**：如果类 A 是类 B 的友元，那么类 B 不一定是类 A 的友元。
+
+    - 如果我们希望类 B 也是类 A 的友元，我们需要在类 B 的定义中再次使用 `friend` 关键字来声明类 A 是类 B 的友元。
+
+- 友元关系**不具有传递性**：即使类 A 是类 B 的友元，类 B 是类 C 的友元，但是这不代表类 A 不一定是类 C 的友元。
+
+    - 如果我们希望类 A 也是类 C 的友元，我们需要在类 C 的定义中再次使用 `friend` 关键字来声明类 A 是类 C 的友元。
+
+- 把一个类声明为友元类实际上也相当于“被友元”的类的一个前向声明，因此我们可以在友元类的定义之前直接把其声明为友元类。
+
+    - 比如在上面的例子中  ，在 `Storage` 类中进行友元类声明时，我们并没有对 `Display` 类进行前向声明。
+
+#### 友元成员函数
+
+我们也可以仅让单个成员函数成为友元，而不是让整个类成为友元。但是我们并不能直接把上面的代码修改为：
+
+```cpp
+class Storage
+{
+private:
+	int m_nValue {};
+	double m_dValue {};
+public:
+	Storage(int nValue, double dValue)
+		: m_nValue { nValue }, m_dValue { dValue }
+	{
+	}
+
+	friend void Display::displayStorage(const Storage& storage); 
+    // error: Storage hasn't seen the full definition of class Display
+};
+```
+
+这是因为在使单个成员函数成为友元时，编译器必须看到完整的友元成员函数的定义，而不仅仅是声明。这里，我们将在试图让 `Display::displayStorage()` 成为 `Storage` 的友元时发生编译错误。
+
+对上面这个问题的一个解决办法是把 `Display` 类的定义放在 `Storage` 类的定义之前。但是这么做我们又会遇到一个问题：成员函数 `Display::displayStorage()` 使用 `Storage` 类的引用作为参数，这时编译器还不知道 `Storage` 类的完整定义。为了解决这个新的问题，我们需要在 `Display` 类的定义之前对 `Storage` 类进行前向声明。
+
+最终修改后的程序变为
+
+!!! example
+
+    ```cpp
+    #include <iostream>
+
+    class Storage; // forward declaration for class Storage
+
+    class Display
+    {
+    private:
+        bool m_displayIntFirst {};
+
+    public:
+        Display(bool displayIntFirst)
+            : m_displayIntFirst { displayIntFirst }
+        {
+        }
+        // forward declaration for Storage needed for reference here
+        void displayStorage(const Storage& storage); 
+    };
+
+    class Storage // full definition of Storage class
+    {
+    private:
+        int m_nValue {};
+        double m_dValue {};
+    public:
+        Storage(int nValue, double dValue)
+            : m_nValue { nValue }, m_dValue { dValue }
+        {
+        }
+
+        // Make the Display::displayStorage member function a friend of the Storage class
+        // Requires seeing the full definition of class Display (as displayStorage is a member)
+        friend void Display::displayStorage(const Storage& storage);
+    };
+
+    // Now we can define Display::displayStorage
+    // Requires seeing the full definition of class Storage (as we access Storage members)
+    void Display::displayStorage(const Storage& storage)
+    {
+        if (m_displayIntFirst)
+            std::cout << storage.m_nValue << ' ' << storage.m_dValue << '\n';
+        else // display double first
+            std::cout << storage.m_dValue << ' ' << storage.m_nValue << '\n';
+    }
+
+    int main()
+    {
+        Storage storage { 5, 6.7 };
+        Display display { false };
+        display.displayStorage(storage);
+
+        return 0;
+    }
+    ```
+
+- `Storage` 的前向声明满足了 `Display` 类的友元成员函数 `displayStorage()` 的要求
+- `Display` 类的完整定义满足了 `Storage` 把 `Display::displayStorage()` 声明为友元的要求
+- `Storage` 类的完整定义满足了 `Display::displayStorage()` 在进行完整定义时的要求
+
+这看起来很复杂，但一般而言仅在把所有内容都写到同一个文件中时我们才会这么做。如果我们把每个类的定义放到不同的头文件中，把成员函数的完整定义都写到 `.cpp` 文件中，并且通过 `#include` 来包含头文件，我们就不需要考虑类和成员函数的定义顺序问题了
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+## 运算符重载
+
+### 简单的运算符重载
+
+最基础的运算符重载非常简单
+
+- 使用运算符名称作为函数名称来定义一个函数
+- 从左到右为每个操作数添加适当的类型定义，这些参数至少有一个是用户定义的类型（包括枚举类型、类类型等）
+- 将返回类型设置为相应的有意义的类型
+- 使用 return 语句返回操作的结果
+
+我们首先回顾一下运算符 `<<` 用于输出时的工作原理：考虑一个简单的表达式 `std::cout << 5`，`std::cout` 具有类型`std::ostream`，而 `5` 是 `int` 类型的字面量。计算这个表达式时，编译器首先查找可以处理`std::ostream`和`int`类型的重载函数并调用它。在这个函数内部，`std::cout` 用于将右操作数`x`输出到控制台，然后`operator<<`函数返回其左操作数（在本例中为`std::cout`），以便可以对`operator<<`进行后续的调用。
+
+下面我们考虑一个自定义的枚举类型 `Color`
+
+```cpp
+enum Color
+{
+	black,
+	red,
+	blue,
+};
+```
+
+如果我们直接使用 `std::cout << black`，得到的输出结果将是 `0`，因为这时候编译器会把枚举值隐式转换为整数。如果我们希望输出结果是 `black` 而非 `0`，就需要重载运算符 `<<`。
+
+```cpp
+#include <iostream>
+#include <string_view>
+
+enum Color
+{
+	black,
+	red,
+	blue,
+};
+
+constexpr std::string_view getColorName(Color color)
+{
+    switch (color)
+    {
+    case black: return "black";
+    case red:   return "red";
+    case blue:  return "blue";
+    default:    return "???";
+    }
+}
+
+std::ostream& operator<<(std::ostream& out, Color color)
+{
+    out << getColorName(color); 
+    return out;                 
+
+    // 也可简写为一行代码：
+    // return out << getColorName(color)
+}
+
+int main()
+{
+	Color shirt{ blue };
+	std::cout << "Your shirt is " << shirt << '\n';
 
 	return 0;
 }
 ```
 
-### 命名空间中的前向声明
+这段程序的输出结果是
 
-当我们使用一个命名空间中的函数时，也需要进行前向声明，通常而言我们可以直接 `#include` 命名空间所在的 `.h` 文件
-
-
-```cpp title="add.h"
-#ifndef ADD_H
-#define ADD_H
-
-namespace BasicMath
-{
-    // function add() is part of namespace BasicMath
-    int add(int x, int y);
-}
-
-#endif
+```cpp
+Your shirt is blue
 ```
 
-```cpp title="add.cpp"
-#include "add.h"
+??? example "重载 `operator>>` 以输入枚举类型"
+    ```cpp
+    #include <iostream>
+    #include <limits>
+    #include <optional>
+    #include <string>
+    #include <string_view>
 
-namespace BasicMath
-{
-    // define the function add() inside namespace BasicMath
-    int add(int x, int y)
+    enum Pet
     {
-        return x + y;
-    }
-}
-```
+        cat,   // 0
+        dog,   // 1
+        pig,   // 2
+        whale, // 3
+    };
 
-```cpp title="main.cpp"
-#include "add.h" // for BasicMath::add()
-
-#include <iostream>
-
-int main()
-{
-    std::cout << BasicMath::add(4, 3) << '\n';
-
-    return 0;
-}
-```
-
-编译时使用 `g++/clang main.cpp add.cpp -o main`
-
-### 嵌套命名空间
-
-命名空间可以在另一个命名空间中定义，例如
-
-```cpp title="C++17 之前"
-namespace Foo
-{
-    namespace Goo // Goo is a namespace inside the Foo namespace
+    constexpr std::string_view getPetName(Pet pet)
     {
-        int add(int x, int y)
+        switch (pet)
         {
-            return x + y;
+        case cat:   return "cat";
+        case dog:   return "dog";
+        case pig:   return "pig";
+        case whale: return "whale";
+        default:    return "???";
         }
     }
-}
-```
 
-从 C++17 开始，我们也可以这样定义：
-
-``` cpp title="C++17 及之后"
-namespace Foo::Goo // Goo is a namespace inside the Foo namespace (C++17 style)
-{
-    int add(int x, int y)
+    constexpr std::optional<Pet> getPetFromString(std::string_view sv)
     {
-        return x + y;
+        if (sv == "cat")   return cat;
+        if (sv == "dog")   return dog;
+        if (sv == "pig")   return pig;
+        if (sv == "whale") return whale;
+
+        return {};
     }
-}
-```
 
-### 命名空间别名（namespace alias）
-
-由于使用嵌套命名空间中的变量或者函数会很冗长，因此我们可以选择创建一个命名空间别名来简化代码。
-
-```cpp
-#include <iostream>
-
-namespace Foo::Goo
-{
-    int add(int x, int y)
+    // pet is an in/out parameter
+    std::istream& operator>>(std::istream& in, Pet& pet)
     {
-        return x + y;
+        std::string s{};
+        in >> s; // get input string from user
+
+        std::optional<Pet> match { getPetFromString(s) };
+        if (match) // if we found a match
+        {
+            pet = *match; // dereference std::optional to get matching enumerator
+            return in;
+        }
+
+        // We didn't find a match, so input must have been invalid
+        // so we will set input stream to fail state
+        in.setstate(std::ios_base::failbit);
+
+        // On an extraction failure, operator>> zero-initializes fundamental types
+        // Uncomment the following line to make this operator do the same thing
+        // pet = {};
+
+        return in;
     }
-}
 
-int main()
-{
-    namespace Active = Foo::Goo; // active now refers to Foo::Goo
-
-    std::cout << Active::add(1, 2) << '\n'; // This is really Foo::Goo::add()
-
-    return 0;
-} // The Active alias ends here
-```
-
-!!! info "命名空间的使用"
-    向大众分发的代码应该使用命名空间，以避免其与其他代码发生冲突，通常一个顶级命名空间就足够了（例如 `MyProject`）。
-    
-    这么做还有一个优点：在绝大多数代码编辑器中键入命名空间的名称之后，再输入 `::` 编辑器就会自动显示该命名空间中的所有函数和变量作为补全的候选项。
-
-### 未命名（匿名）命名空间
-
-**未命名命名空间**（也称为**匿名命名空间**）是没有名称定义的命名空间，如下所示：
-
-```cpp
-#include <iostream>
-
-namespace // unnamed namespace
-{
-    void doSomething() // can only be accessed in this file
+    int main()
     {
-        std::cout << "v1\n";
+        std::cout << "Enter a pet: cat, dog, pig, or whale: ";
+        Pet pet{};
+        std::cin >> pet;
+
+        if (std::cin) // if we found a match
+            std::cout << "You chose: " << getPetName(pet) << '\n';
+        else
+        {
+            std::cin.clear(); // reset the input stream to good
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Your pet was not valid\n";
+        }
+
+        return 0;
     }
-}
+    ```
 
-int main()
-{
-    doSomething(); // we can call doSomething() without a namespace prefix
+    - `std::cin`具有类型的`std::istream`，因此我们使用`std::istream&`作为左参数的类型和返回值，而不是`std::ostream&`。
+    - pet 参数是一个非 const 引用，这允许我们在提取结果匹配的情况下用`operator>>` 给 pet 赋值。
+    - 在函数内部，我们使用`operator>>`输入`std::string`，如果用户输入的值与我们预先设置好的宠物种类匹配，那么我们就可以为 pet 分配适当的值并返回左操作数 in。
+    - 如果用户没有输入有效的宠物种类，那么我们就通过将`std::cin`置于“失败模式”来处理这种情况。
 
-    return 0;
-}
-```
+###
 
-在未命名命名空间中声明的所有内容都被视为父命名空间的一部分，因此函数或变量即使是在未命名命名空间中声明的，也可以在父命名空间（上例时全局命名空间）中访问。
 
-这看起来似乎没什么用处，但未命名命名空间中的所有标识符都不可以被其他文件访问（或者说具有*内部链接*），效果相当于 `static` 关键字。
 
-当我们有大量内容仅允许当前的翻译单元使用时，使用匿名命名空间显然要比给所有的标识符都加上 `static` 更加方便。
+
+
+
+
+
+
 
 
 ---
@@ -2302,9 +4550,107 @@ static_assert(sizeof(int) >= 4, "int must be at least 4 bytes");
 - `static_assert` 可以放置在代码文件中的任何位置（甚至在全局命名空间中）
 - 在 C++17 之前，diagnostic_message 必须作为第二个参数提供；从 C++17 开始，如果省略了 diagnostic_message，编译器会自动生成一个默认的错误消息
 
----
+### for-each loop
 
-## 代码风格相关
+在 C++ 中，除了我们常用的 for 循环之外，还有一种基于范围的 for 循环（range-based for loop），也称为 for-each 循环，它可以用来遍历容器中的元素。
+
+基于范围的 for 循环的语法结构如下
+
+```cpp
+for (element_declaration : array_object)
+   statement;
+```
+
+在这里，`element_declaration` 是一个新的变量，用于存储数组中的每个元素，`array_object` 是一个数组或容器，`statement` 是要执行的语句。在这个循环体中 `array_object` 的每一个元素都将被迭代，每一次迭代，当前元素的值都会被赋给 `element_declaration`，然后执行 `statement`。
+
+???+ example
+
+    ```cpp
+    #include <iostream>
+    #include <vector>
+
+    int main()
+    {
+        std::vector fibonacci { 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 };
+
+        for (int num : fibonacci) 
+            std::cout << num << ' '; 
+
+        std::cout << '\n';
+
+        return 0;
+    }
+    ```
+
+- 从上面这个例子我们可以注意到，我们不需要知道容器的大小，也不需要使用下标来访问容器中的元素
+- 如果需要遍历的容器没有元素，那么 for-each 循环体将不会执行
+
+因为一般而言 `element_declaration` 应当具有与数组元素相同的类型（以防止出现奇怪的类型转换），我们可以在这里使用 `auto` 关键字来自动推导它的类型，比如
+
+```cpp
+for (auto num : fibonacci)
+    std::cout << num << ' ';
+```
+
+而当容器中的元素在复制时的开销比较大时，我们可以改为使用 `const auto&` 来避免复制
+
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+
+int main()
+{
+    std::vector<std::string> words{ "peter", "likes", "frozen", "yogurt" };
+
+    for (const auto& word : words) // word is now a const reference
+        std::cout << word << ' ';
+
+    std::cout << '\n';
+
+    return 0;
+}
+```
+
+!!! info
+    如果这里的引用不是 const 的，那么我们也可以在这个循环体中修改容器中的元素。
+
+    - 当我们希望得到一个可修改的副本时，使用 `auto`。
+    - 当我们希望修改容器中的元素时，使用 `auto&`。
+    - 当我们希望避免复制时（只查看元素而不修改），使用 `const auto&`。
+
+!!! tip
+    由于 for-each 循环是基于范围的，因此它只能用于支持迭代器的容器，比如`std::vector`、`std::list`、`std::set`、`std::map` 等，而不能用于 C 风格的数组等情况。
+
+!!! extra
+    上面我们使用的 for-each 循环只能进行正序迭代，从 C++20 开始，我们可以使用 `std::views::reverse` 来得到到一个逆序的视图，从而实现逆序迭代。
+
+    ```cpp
+    #include <iostream>
+    #include <ranges> // C++20
+    #include <string_view>
+    #include <vector>
+
+    int main()
+    {
+        std::vector<std::string_view> words{ "Alex", "Bobby", "Chad", "Dave" };
+
+        for (const auto& word : std::views::reverse(words))
+            std::cout << word << ' ';
+
+        std::cout << '\n';
+
+        return 0;
+    }
+    ```
+    
+    输出结果为
+
+    ```
+    Dave Chad Bobby Alex
+    ```
+
+
 
 ### 注释
 

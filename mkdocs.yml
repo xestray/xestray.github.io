@@ -90,28 +90,31 @@ theme:
     # - content.action.view 
     - content.code.annotate 
     - content.code.copy # 复制代码按钮
-    # - content.code.select # 选择代码按钮
-    # - content.tabs.link # 链接标签
+    - content.code.select # 选择代码按钮
+    - content.tabs.link # 链接标签
     - content.tooltips 
     # - header.autohide # 自动隐藏header
+
     - navigation.expand # 默认展开导航栏
     - navigation.footer # 底部导航栏
     - navigation.indexes 
     # - navigation.instant # 瞬间加载
-    - navigation.instant.prefetch # 预加载
-    - navigation.instant.progress # 进度条
+    # - navigation.instant.prefetch # 预加载
+    # - navigation.instant.progress # 进度条
     - navigation.path # 导航路径
-    # - navigation.prune # 只构建可见的页面
-    - navigation.sections # 导航栏的section
+    - navigation.prune # 只构建可见的页面
+    # - navigation.sections # 导航栏的section
     - navigation.tabs # 顶级索引被作为tab
     # - navigation.tabs.sticky # tab始终可见
     - navigation.top # 开启顶部导航栏
     - navigation.tracking # 导航栏跟踪
+
     - search.highlight # 搜索高亮
     - search.share # 搜索分享
     - search.suggest # 搜索建议
     - toc.follow # 目录跟踪-页面右侧的小目录
     # - toc.integrate # 目录跟踪集成到左侧大目录中
+
   palette:
     - media: "(prefers-color-scheme: light)" # 浅色
       scheme: default
@@ -162,6 +165,8 @@ plugins:
   - statistics:
       words_per_minute: 250
   - search
+  # - social
+  - toc
   - git-revision-date-localized:
       enable_creation_date: true
       locale: zh
@@ -170,8 +175,7 @@ plugins:
       exclude: 
         - casual/*
         - index.md
-  - tags:
-      tags_file: tags.md
+  - tags
   - mermaid2
   - print-site
 
@@ -265,6 +269,8 @@ extra_javascript:
   # - javascripts/mathjax.js
   # - https://polyfill.io/v3/polyfill.min.js?features=es6
   # - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - javascripts/toc.js
+  - javascripts/scheme.js
 
 extra_css:
   - https://fonts.font.im/css2?family=Noto+Serif+SC
@@ -272,8 +278,6 @@ extra_css:
   - https://unpkg.com/katex@0/dist/katex.min.css
   # - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css
   - https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.css
-  # - https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css
-  # - https://cdn.tonycrane.cc/lxgw/lxgwscreen.css
   # - https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css
   # - https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css
   # - https://cdn.jsdelivr.net/npm/lxgw-wenkai-tc-webfont@1.0.0/style.css
@@ -286,3 +290,4 @@ extra_css:
   - css/custom.css
   - css/changelog_extra.css
   - css/counter.css
+  - css/fold_toc.css
