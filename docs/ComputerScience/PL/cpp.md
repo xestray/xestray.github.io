@@ -2082,6 +2082,92 @@ int main()
     - auto* const 的结果是 const 指针，而 const auto* 的结果是指向 const 对象的指针。
     - 对指针类型进行推导时，尽可能考虑使用 `auto*` 而非 `auto`，这样允许我们显式地重新应用顶级和低层 const，并且能保证推导的结果是一个指针。
 
+### 右值引用
+
+C++11 添加了一种新型的参考——右值参考（rvalue reference），它被设计为仅可被右值初始化，我们使用 `&&` 符号来定义右值引用。
+
+```cpp
+int x{ 5 };
+int& lref{ x };  // l-value reference initialized with l-value x
+int&& rref{ 5 }; // r-value reference initialized with r-value 5
+```
+
+右值引用有两个有用的属性：
+
+- 右值引用将使得被用于初始化的右值的生命周期延长至于这个右值引用的生命周期相同，而不是像普通的右值一样在它出现的的完整表达式结束后就被销毁。
+- 非 const 的右值引用甚至允许我们修改这个右值。
+
+!!! example 
+
+    ```cpp
+    int main()
+    {
+        int&& rref{ 5 }; 
+
+        std::cout << rref << ' '; // prints 5
+
+        rref = 10; // okay: modifies the r-value
+
+        std::cout << rref; // prints 10
+
+        return 0;
+    }
+    ```
+
+    上述程序将输出
+
+    ```
+    5 10
+    ```
+
+虽然先用字面量初始化一个右值引用，然后修改这个值看起来很奇怪，但当我们初始化一个右值引用时，实际上会用这个字面量初始化一个临时变量，然后这个右值引用绑定到这个临时变量上，因此我们实际上是在修改这个临时变量。
+
+右值引用常用作函数的参数，尤其是当我们在希望重载函数能区分左值和右值，并作出不同的行为时
+
+```cpp
+#include <iostream>
+
+void fun(const int& lref) // l-value arguments
+{
+	std::cout << "l-value reference to const: " << lref << '\n';
+}
+
+void fun(int&& rref) // r-value arguments
+{
+	std::cout << "r-value reference: " << rref << '\n';
+}
+
+int main()
+{
+	int x{ 5 };
+	fun(x); // l-value argument calls l-value version of function
+	fun(5); // r-value argument calls r-value version of function
+
+	return 0;
+}
+```
+
+这段程序的输出为
+
+```
+l-value reference to const: 5
+r-value reference: 5
+```
+
+右值作为函数参数常常用于[移动语义](#移动语义)
+
+!!! tip
+
+    ```cpp
+    int&& ref{ 5 };
+    fun(ref);
+    ```
+
+    上面的代码片段实际上调用的是 `fun(const int&)` 而非 `fun(int&&)`，因为 `ref` 虽然具有类型 `int&&`，但在表达式中使用时它是一个左值，因此实际上会调用 `fun(const int&)`。
+
+
+
+
 ---
 
 ## 类模板
@@ -3847,8 +3933,63 @@ calc.add(5).sub(3).mult(4);
 
     如果一个类不需要在被销毁时进行任何清理工作，我们可以不定义析构函数，让编译器为我们生成一个隐式析构函数。
 
+??? example "使用析构函数释放资源"
 
+    ```cpp
+    #include <iostream>
+    #include <cassert>
+    #include <cstddef>
 
+    class IntArray
+    {
+    private:
+        int* m_array{};
+        int m_length{};
+
+    public:
+        IntArray(int length) // constructor
+        {
+            assert(length > 0);
+
+            m_array = new int[static_cast<std::size_t>(length)]{};
+            m_length = length;
+        }
+
+        ~IntArray() // destructor
+        {
+            // Dynamically delete the array we allocated earlier
+            delete[] m_array;
+        }
+
+        void setValue(int index, int value) { m_array[index] = value; }
+        int getValue(int index) { return m_array[index]; }
+
+        int getLength() { return m_length; }
+    };
+
+    int main()
+    {
+        IntArray ar ( 10 ); // allocate 10 integers
+        for (int count{ 0 }; count < ar.getLength(); ++count)
+            ar.setValue(count, count+1);
+
+        std::cout << "The value of element 5 is: " << ar.getValue(5) << '\n';
+
+        return 0;
+    } // the ~IntArray() destructor function is called here
+    ```
+
+    这段程序的输出结果是
+
+    ```
+    The value of element 5 is: 6
+    ```
+
+    这个例子中我们在构造函数中使用 `new` 关键字为 `m_array` 动态分配了一块内存，假如我们没有使用 `delete[]` 来手动释放这块内存的话，当对象被销毁时，这块内存将永远无法被释放，将产生内存泄漏。
+
+    而我们通过在析构函数中使用 `delete[]` 来释放这块内存，解决了这个隐患。
+
+    - 如果我们的类对象持有资源（如内存、文件句柄、数据库句柄等），我们通常需要手动释放这些资源，在析构函数中释放资源是一个很好的选择。
 
 
 ### 友元函数和友元类
@@ -4144,18 +4285,296 @@ public:
 
 这看起来很复杂，但一般而言仅在把所有内容都写到同一个文件中时我们才会这么做。如果我们把每个类的定义放到不同的头文件中，把成员函数的完整定义都写到 `.cpp` 文件中，并且通过 `#include` 来包含头文件，我们就不需要考虑类和成员函数的定义顺序问题了
 
+---
 
+## lambda 表达式
 
+在 C++ 中，**lambda 表达式**（lambda expression，也称 lambda 或 closure）是一种可以在一个函数内中定义匿名函数的方法，它通常用于在函数内部定义一个简单的函数，而不必专门在全局作用域中定义一个可能只会用到一次的函数。
 
+lambda 表达式的语法相对而言比较奇怪：
 
+```cpp
+[ captureClause ] ( parameters ) -> returnType
+{
+    statements;
+}
+```
 
+- 如果不需要捕获字句，那么捕获子句可以留空，直接使用 `[]`。
+- 如果不需要参数，那么参数列表可以留空，直接使用 `()`，甚至连 `()` 都可以省略。
+- 返回类型可以省略，如果省略了，那么就相当于使用 `auto` 关键字来推断返回类型。
 
+!!! tip
+    lambda 可被视作一个匿名函数对象，我们不需要为它命名。
 
+### 简单引入
 
+一个最最简单的 lambda 定义是
 
+```cpp
+#include <iostream>
 
+int main()
+{
+    // 省略了返回类型、没有捕获子句、不接受任何参数，同时函数体为空的 lambda
+    [] {};
 
+    return 0;
+}
+```
 
+虽然 lambda 函数很方便，但在同一行中书写 lambda 表达式和调用它的代码可能会让代码变得难以阅读。因此，我们用 lambda 定义去初始化一个 lambda 变量，然后使用这个变量来调用 lambda 函数。
+
+??? example "使用 lambda 变量"
+
+    在下面这个代码片段中，我们使用 `std::all_of` 来检查数组中的元素是否都是偶数
+
+    ```cpp
+    return std::all_of(array.begin(), array.end(), [](int i){ return ((i % 2) == 0); });
+    ```
+
+    我们可以把它重写为可读性更好的形式
+
+    ```cpp
+    auto isEven {
+    [](int i)
+    {
+        return (i % 2) == 0;
+    }
+    };
+
+    return std::all_of(array.begin(), array.end(), isEven);
+    ```
+
+!!! question "上例中 lambda 变量 isEven 的类型是什么？"
+    事实上，lambda 并没有我们可以明确使用的类型。当我们编写 lambda 时，编译器将会为这个 lambda 生成一个特定的不暴露于我们的类型。我们可以使用 `auto` 关键字来推断这个类型，但我们不能显式地指定这个类型。
+
+    lambda 实质上并不是函数，它们是一种被称为**函子**（functor）的特殊对象，函子拥有被重载过的函数调用运算符 `operator()`，这使得 lambda 可以像函数那样被调用。
+
+尽管我们无法知道 lambda 的类型，但有几种方法可以用于存储定义后的 lambda：
+
+- 如果 lambda 的捕获子句为空，那么我们可以直接使用常规的函数指针来存储 lambda
+- 无论 lambda 是否具有非空的捕获子句，我们都可以使用 auto 关键字或 std::function 来存储 lambda
+
+??? example 
+
+    ```cpp
+    #include <functional>
+
+    int main()
+    {
+    // A regular function pointer. Only works with an empty capture clause (empty []).
+    double (*addNumbers1)(double, double){
+        [](double a, double b) {
+        return a + b;
+        }
+    };
+
+    addNumbers1(1, 2);
+
+    // Using std::function. The lambda could have a non-empty capture clause (discussed next lesson).
+    // note: pre-C++17, use std::function<double(double, double)> instead
+    std::function addNumbers2{ 
+        [](double a, double b) {
+        return a + b;
+        }
+    };
+
+    addNumbers2(3, 4);
+
+    // Using auto. Stores the lambda with its real type.
+    auto addNumbers3{
+        [](double a, double b) {
+        return a + b;
+        }
+    };
+
+    addNumbers3(5, 6);
+
+    return 0;
+    }
+    ```
+
+!!! note "将 lambda 作为参数传递给函数"
+    lambda 表达式可以作为函数的参数传递，通常有 4 中方法
+
+    ```cpp
+    #include <functional>
+    #include <iostream>
+
+    // Case 1: use a `std::function` parameter
+    void repeat1(int repetitions, const std::function<void(int)>& fn)
+    {
+        for (int i{ 0 }; i < repetitions; ++i)
+            fn(i);
+    }
+
+    // Case 2: use a function template with a type template parameter
+    template <typename T>
+    void repeat2(int repetitions, const T& fn)
+    {
+        for (int i{ 0 }; i < repetitions; ++i)
+            fn(i);
+    }
+
+    // Case 3: use the abbreviated function template syntax (C++20)
+    void repeat3(int repetitions, const auto& fn)
+    {
+        for (int i{ 0 }; i < repetitions; ++i)
+            fn(i);
+    }
+
+    // Case 4: use function pointer (only for lambda with no captures)
+    void repeat4(int repetitions, void (*fn)(int))
+    {
+        for (int i{ 0 }; i < repetitions; ++i)
+            fn(i);
+    }
+
+    int main()
+    {
+        auto lambda = [](int i)
+        {
+            std::cout << i << '\n';
+        };
+
+        repeat1(3, lambda);
+        repeat2(3, lambda);
+        repeat3(3, lambda);
+        repeat4(3, lambda);
+
+        return 0;
+    }
+    ```
+
+    - case 1 中，函数 `repeat1` 接受一个 `std::function` 参数，这个参数可以接受任何可调用对象，包括函数指针、函数对象、成员函数指针、lambda 表达式等。但当我们向它传递一个 lambda 表达式时，会发生隐式类型转换，有一定额外开销。
+    - case 2 中，我们使用类型模板参数为 `T` 的函数模板，这样做的缺点在于 `T` 的参数和返回类型并不明显。
+    - case 3 是在 C++20 中引入的简化函数模板语法，它可以自动推断模板参数类型。
+    - case 4 使用函数指针，但这种方法只适用于没有捕获子句的 lambda 表达式。 
+
+!!! abstract
+    - 使用 auto 来把 lambda 表达式存储在变量中
+    - 当我们把 lambda 作为参数传递给函数时
+
+        - 如果支持 C++20，就使用 auto 来推导函数参数类型
+        - 否则，就使用类型模板参数或 `std::function` 参数，仅在捕获子句为空时才考虑使用函数指针
+
+!!! info "constexpr lambda"
+    从 C++17 开始，如果下面的要求的都得到了满足，那么 lambda 就是隐式的 constexpr：
+
+    - lambda 表达式没有捕获子句，或者所有的捕获都是 constexpr 的
+    - lambda 函数体内调用的所有函数都是 constexpr 的
+
+### 捕获子句
+
+捕获子句可以使 lambda 表达式访问函数外部的变量。捕获子句有两种形式：
+
+- **值捕获**（value capture）：捕获的变量的值在 lambda 表达式创建时被复制，然后在 lambda 表达式内部使用这个复制的值创建一个同名的内部变量。lambda 表达式内部的变量不会影响外部的变量。
+- **引用捕获**（reference capture）：捕获的变量的引用在 lambda 表达式创建时被保存，然后在 lambda 表达式内部使用这个引用来访问外部变量。lambda 表达式可以通过这个引用来修改外部变量。
+
+!!! tip 
+    传递进 lambda 表达式的捕获变量在某种程度上类似于函数参数，但是它们不是函数参数，而是 lambda 表达式的一部分。
+
+在默认情况下，lambda 表达式不能修改值捕获的变量，下面这段程序就无法通过编译，因为`value` 在 lambda1 内部会被视为 const 的对象。与通过值捕获得到的变量不同，通过引用捕获得到的变量可以被修改，除非它捕获的变量是 const 的。
+
+```cpp
+#include <iostream>
+
+int main()
+{
+    int value{ 5 };
+
+    auto lambda1{ 
+        [value] () { 
+            --value; 
+        } 
+    };
+
+    auto lambda2{ 
+        [&value] () { 
+            --value; 
+        } 
+    };
+
+    lambda1();
+    lambda2();
+
+    std::cout << value << '\n';
+
+    return 0;
+}
+```
+
+如果我们希望修改被捕获的变量，我们可以把 lambda 标记为 `mutable`
+
+```cpp
+auto lambda1 { 
+        [value] () mutable { 
+            --value; 
+        } 
+    };
+```
+
+如果我们想要捕获多个变量，用逗号分隔即可
+
+```cpp
+[x, &y, z](){};
+```
+
+#### 默认捕获
+
+手动把所有需要使用的变量都完整地写进捕获子句中很容易出错，尤其是 lambda 被修改时，我们可能会忘记添加或删除捕获的变量。为此，我们可以使用**默认捕获**（default capture，or capture-default）来让编译器为我们自动生成需要捕获变量列表。
+
+- `[=]`：以值捕获的方式捕获所有 lambda 中使用到的外部变量
+- `[&]`：以引用捕获的方式捕获所有 lambda 中使用到的外部变量
+
+默认捕获可以和普通的手动捕获一起使用，但是需要注意的是，如果一个变量不能被多次捕获，并且默认捕获必须作为捕获列表的第一个元素。
+
+```cpp
+int health{ 33 };
+int armor{ 100 };
+std::vector<CEnemy> enemies{};
+
+// Capture health and armor by value, and enemies by reference.
+[health, armor, &enemies](){};
+
+// Capture enemies by reference and everything else by value.
+[=, &enemies](){};
+
+// Capture armor by value and everything else by reference.
+[&, armor](){};
+
+// Illegal, we already said we want to capture everything by reference.
+[&, &armor](){};
+
+// Illegal, we already said we want to capture everything by value.
+[=, armor](){};
+
+// Illegal, armor appears twice.
+[armor, &health, &armor](){};
+
+// Illegal, the default capture has to be the first element in the capture group.
+[armor, &](){};
+```
+
+!!! extra "在捕获子句中定义新变量"
+    如果我们希望捕获到一个被轻微修改后的外部变量，或声明一个仅在 lambda 内可见的新变量，我们可以在捕获子句中不指定其类型地定义一个新变量。
+
+    ```cpp
+
+    int x{ 5 };
+    int y{ 7 };
+    int z{ 9 };
+
+    auto equal { 
+        // w 的类型将被推断为 int
+            [ w { x + y } ] (int z) {
+                return z == w;
+            } 
+        };
+    ```
+
+    我们最好仅在变量的类型很明显并且它的定义很简短时才考虑在捕获子句中定义新变量，否则最好在 lambda 之外定义一个变量，然后捕获它。
 
 
 
@@ -4229,7 +4648,7 @@ int main()
 
 这段程序的输出结果是
 
-```cpp
+```
 Your shirt is blue
 ```
 
@@ -4319,15 +4738,1075 @@ Your shirt is blue
     - 在函数内部，我们使用`operator>>`输入`std::string`，如果用户输入的值与我们预先设置好的宠物种类匹配，那么我们就可以为 pet 分配适当的值并返回左操作数 in。
     - 如果用户没有输入有效的宠物种类，那么我们就通过将`std::cin`置于“失败模式”来处理这种情况。
 
-###
+!!! warning "运算符重载的限制"
+    1. 少部分运算符不允许重载：条件选择运算符（`?:`）、作用域解析运算符（`::`）、成员选择运算符（`.` 和 `.*`）、sizeof 运算符、typeid、类型转换运算符（`static_cast`、`dynamic_cast`、`const_cast`、`reinterpret_cast`）。
+    2. 只能重载现有的运算符，不能创建新的运算符或重命名现有的运算符。
+    3. 重载的运算符必须至少有一个用户定义的类型作为操作数。
+    4. 操作符的操作数数量不可被改变
+    5. 不能改变操作符的优先级或结合性
+
+!!! note 
+    - 不修改其操作数的运算符（例如算术运算符）通常按值返回结果
+    - 修改其最左侧操作数的运算符（例如赋值运算符）通常返回最左侧操作数的引用
 
 
+### 使用友元函数重载操作符
+
+考虑一个简单的类，我们可以使用友元函数来重载操作符`+`
+
+```cpp hl_lines="9"
+class Cents
+{
+private:
+	int m_cents {};
+
+public:
+	Cents(int cents) : m_cents{ cents } { }
+
+    friend Cents operator+(const Cents& c1, const Cents& c2);
+
+	int getCents() const { return m_cents; }
+};
+```
+
+=== "类定义之外声明友元函数"
+
+    ```cpp
+    Cents operator+(const Cents& c1, const Cents& c2)
+    {
+        return c1.m_cents + c2.m_cents;
+    }
+    ```
+
+=== "类定义内声明友元函数"
+
+    ```cpp
+    public:
+        friend Cents operator+(const Cents& c1, const Cents& c2)
+        {
+            return Cents { c1.m_cents + c2.m_cents };
+        }
+    ```
+
+如果我们希望 Cent 类的对象可以与整数相加，我们也可以用类似的方式重载 `+` 运算符。但是需要注意的是 `Cents(4) + 6` 和 `6 + Cents(4)` 是不同的，前者调用 operate+(Cents, int)，后者调用 operate+(int, Cents)，我们需要对这两种情况分别进行重载。
+
+```cpp
+Cents operator+(const Cents& c1, int value)
+{
+    return Cents { c1.m_cents + value };
+}
+
+Cents operator+(int value, const Cents& c1)
+{
+    return Cents { c1.m_cents + value };
+}
+```
+
+值得一提的是，我们可以用其他经过重载后运算符来重载运算符，例如上面第二个形式我们可以写成
+
+```cpp
+Cents operator+(int value, const Cents& c1)
+{
+    // 调用 operator+(const Cents&, int)
+    return c1 + value;
+}
+```
+
+### 使用普通函数重载运算符
+
+使用普通函数对我们的类进行运算符重载实际上和友元函数没有太大区别，唯一的区别在于普通函数不能直接访问类的 private 和 protected 成员，需要通过 public 的访问函数来访问。
+
+```cpp
+class Cents
+{
+private:
+  int m_cents{};
+
+public:
+  Cents(int cents)
+    : m_cents{ cents }
+  {}
+
+  int getCents() const { return m_cents; }
+};
+
+// not a member function, nor a friend function!
+Cents operator+(const Cents& c1, const Cents& c2)
+{
+  // 需要通过访问函数来访问 private 成员  
+  return Cents{ c1.getCents() + c2.getCents() };
+}
+```
+
+!!! note "Best practice"
+    在不添加其他额外的函数的情况下，最好通过普通函数对运算符进行重载，而非友元函数。
+
+### 使用成员函数重载运算符
+
+使用成员函数重载运算符和使用友元函数也很类似，但区别在于：
+
+- 被重载的运算符必须作为左操作数的成员函数
+- 左操作数是调用运算符的对象，是隐式的 `*this` 指针
+- 其他操作数作为参数传递给成员函数
 
 
+```cpp
+class Cents
+{
+private:
+    int m_cents {};
+
+public:
+    Cents(int cents)
+        : m_cents { cents } { }
+
+    // Overload Cents + int
+    Cents operator+(int value) const;
+
+    int getCents() const { return m_cents; }
+};
+
+Cents Cents::operator+ (int value) const
+{
+    return Cents { m_cents + value };
+}
+```
+
+- 在友元函数的版本中，表达式 `cents1 + 2` 调用的是 `operator+(cents1, 2)`
+- 而在成员函数的版本中，表达式 `cents1 + 2` 调用的是 `cents1.operator+(2)`，考虑到成员函数隐式地传入了 `this` 指针，这个调用实际上是 `operator+(&​cents1, 2)`
+
+!!! warning
+    - 并非所有运算符都可以作为友元函数重载
+    
+        - 例如赋值运算符 `=`、下标运算符 `[]`、函数调用运算符 `()` 和成员访问运算符 `->` 等必须作为成员函数重载。
+
+    - 并非所有运算符都可以作为成员函数重载
+
+        - 例如运算符 `<<` 和 `>>` 不能作为成员函数重载，因为它们的左操作数分别是 `std::ostream` 和 `std::istream`，而成员函数重载的运算符要求左操作数一定是我们自定义的类。
+
+!!! question "何时用何种形式重载运算符？"
+    - 如果需要重载 `=`、`[]`、`()` 或 `->` 等运算符，必须使用成员函数重载
+    - 如果需要重载一元运算符（例如 `+`、`-`、`++`、`--` 等），通常使用成员函数重载
+    - 如果要重载一个不会修改其左操作数的运算符（例如 `+` 等），使用普通函数（首选）或友元函数重载。
+    - 如果要重载一个修改其左操作数的运算符，但我们无法把它添加为左操作数的成员函数时（例如 `<<` 等），使用普通函数（首选）或友元函数重载。
+    - 如果要重载一个修改其左操作数的运算符，并且我们可以把它添加为左操作数的成员函数时（例如 `+=` 等），使用成员函数重载。
+
+### 重载 ++ 和 -- 运算符
+
+由于递增和递减运算符 `++` 和 `--` 有前缀和后缀两种形式，因此我们需要重载两个版本的运算符。因为它们都是一元运算符，并且会修改操作数，所以我们最好将其作为成员函数重载。
+
+#### 前缀递增和递减
+
+我们实现一个简单的类，用于存储一位的十进制数字，然后重载前缀递增和递减运算符。
+
+??? example "code"
+
+    ```cpp
+    #include <iostream>
+
+    class Digit
+    {
+    private:
+        int m_digit{};
+    public:
+        Digit(int digit=0)
+            : m_digit{digit}
+        {
+        }
+
+        Digit& operator++();
+        Digit& operator--();
+
+        friend std::ostream& operator<< (std::ostream& out, const Digit& d);
+    };
+
+    Digit& Digit::operator++()
+    {
+        // If our number is already at 9, wrap around to 0
+        if (m_digit == 9)
+            m_digit = 0;
+        // otherwise just increment to next number
+        else
+            ++m_digit;
+
+        return *this;
+    }
+
+    Digit& Digit::operator--()
+    {
+        // If our number is already at 0, wrap around to 9
+        if (m_digit == 0)
+            m_digit = 9;
+        // otherwise just decrement to next number
+        else
+            --m_digit;
+
+        return *this;
+    }
+
+    std::ostream& operator<< (std::ostream& out, const Digit& d)
+    {
+        out << d.m_digit;
+        return out;
+    }
+
+    int main()
+    {
+        Digit digit { 8 };
+
+        std::cout << digit;
+        std::cout << ++digit;
+        std::cout << ++digit;
+        std::cout << --digit;
+        std::cout << --digit;
+
+        return 0;
+    }
+    ```
+
+需要注意的是我们对前缀递增和递减运算符的重载函数不需要任何参数（隐式传入了 `*this`），并且返回的是当前隐式对象的引用，这是因为我们希望能够把多个操作*链接*在一起
+
+#### 后缀递增和递减
+
+当我们对后缀递增和递减运算符进行重载时，我们需要添加一个额外的 int 参数，以便告诉编译器我们是在重载后缀运算符。
+
+??? example "code"
+
+    ```cpp
+    Digit Digit::operator++(int)
+    {
+        Digit temp{*this};
+
+        ++(*this); // apply operator
+
+        return temp; // return saved state
+    }
+
+    Digit Digit::operator--(int)
+    {
+        Digit temp{*this};
+
+        --(*this); // apply operator
+
+        return temp; // return saved state
+    }
+    ```
+
+由于后缀递增和递减运算符返回的是操作数的旧值，我们需要在函数内部先用一个临时变量保存当前对象的状态，再对当前对象进行操作，最后返回临时变量。
+
+### 重载括号运算符 ()
+
+括号运算符的特殊之处在于它可以重载多种不同的参数类型，也可以重载不同的参数数量。
+
+- 括号运算符必须作为成员函数重载
+- 在非面对对象的 C++ 中，`()` 用于调用一个函数；但是在面向对象的语境中，`()` 只是一个普通的运算符，就和其他运算符一样会调用类的一个成员函数（名为 `operator()`）。
+
+现在我们考虑一个简单的类 `Matrix`，我们希望能够通过 `()` 运算符来访问矩阵的元素，例如 `matrix(1, 2)`。
+
+??? examle "code"
+
+    ```cpp title="Matrix.h"
+    #include <cassert> // for assert()
+    class Matrix
+    {
+    private:
+        double m_data[4][4]{};
+
+    public:
+        double& operator()(int row, int col);
+        double operator()(int row, int col) const;
+        void operator()();
+    };
+
+    double& Matrix::operator()(int row, int col)
+    {
+        assert(row >= 0 && row < 4);
+        assert(col >= 0 && col < 4);
+
+        return m_data[row][col];
+    }
+
+    double Matrix::operator()(int row, int col) const
+    {
+        assert(row >= 0 && row < 4);
+        assert(col >= 0 && col < 4);
+
+        return m_data[row][col];
+    }
+
+    void Matrix::operator()()
+    {
+        // reset all elements of the matrix to 0.0
+        for (int row{ 0 }; row < 4; ++row)
+        {
+            for (int col{ 0 }; col < 4; ++col)
+            {
+                m_data[row][col] = 0.0;
+            }
+        }
+    }
+    ```
+
+这里我们重载了三种不同的括号运算符：
+
+- 第一个是非 const 的版本，返回一个引用，用于修改矩阵的元素
+- 第二个是 const 的版本，返回一个常量，仅可用于访问矩阵的元素
+- 第三个是不带参数的版本，用于重置矩阵的所有元素为 0.0
+
+```cpp
+#include <iostream>
+#include "Matrix.h"
+
+int main()
+{
+    Matrix matrix{};
+    matrix(1, 2) = 4.5;
+    matrix(); // erase matrix
+    std::cout << matrix(1, 2) << '\n';
+
+    return 0;
+}
+```
+
+这段程序的输出结果是 `0`。
+
+因为括号运算符非常灵活，有时候我们并不能确定在某些参数列表的情况下它会做出什么样的操作，因此在使用括号运算符时需要格外小心。例如上面的例子中，参数列表为空时括号运算符的行为是清空矩阵，我们最好用一个名称更为明确的函数来实现这个功能，例如 `clear()` 或 `reset()`。
 
 
+---
 
 
+## 智能指针和移动语义
+
+### 简单概念和引入
+
+#### 智能指针
+
+当我们给一个指针动态分配内存时，我们需要在不再使用这个指针时释放这块内存，但在实际的代码中，常常会因为各种原因导致忘记释放内存，从而造成内存泄漏。例如
+
+```cpp
+void someFunction()
+{
+    Resource* ptr = new Resource();
+
+    int x;
+    std::cin >> x;
+
+    if (x == 0)
+        return;
+
+    delete ptr;
+}
+```
+
+出现上述问题的本质原因是指针变量没有一个能自我清理的固有机制。为了解决这个问题，我们可以考虑使用一个类来负责管理这个指针，让这个类“持有”这个指针，当这个类的生命周期结束时，利用析构函数来释放这个指针。
+
+??? examle "Auto_ptr1"
+
+    ```cpp
+    #include <iostream>
+
+    template <typename T>
+    class Auto_ptr1
+    {
+        T* m_ptr {};
+    public:
+        // Pass in a pointer to "own" via the constructor
+        Auto_ptr1(T* ptr=nullptr)
+            :m_ptr(ptr)
+        {
+        }
+
+        // The destructor will make sure it gets deallocated
+        ~Auto_ptr1()
+        {
+            delete m_ptr;
+        }
+
+        // Overload dereference and operator-> so we can use Auto_ptr1 like m_ptr.
+        T& operator*() const { return *m_ptr; }
+        T* operator->() const { return m_ptr; }
+    };
+
+    // A sample class to prove the above works
+    class Resource
+    {
+    public:
+        Resource() { std::cout << "Resource acquired\n"; }
+        ~Resource() { std::cout << "Resource destroyed\n"; }
+    };
+
+    int main()
+    {
+        // Note that we use <Resource>, not <Resource*>
+        // This is because we've defined m_ptr to have type T* (not T)
+        Auto_ptr1<Resource> res(new Resource());        
+
+        return 0;
+    } // res goes out of scope here, and destroys the allocated Resource for us
+    ```
+
+    这个程序将会输出
+
+    ```
+    Resource acquired
+    Resource destroyed
+    ```
+
+    由于 `res` 对象在 `main` 函数结束时被销毁，`Auto_ptr1` 类的析构函数会被调用，从而释放 `Resource` 指针所指向的内存。
+
+像我们上面实现的类被称为**智能指针**（smart pointer），它是一个复合类，旨在管理动态分配的内存，使得指针的生命周期和指向的资源的生命周期保持一致。
+
+!!! info "dumb pointer"
+    与智能指针相对应的是，我们通常使用的指针有时会被称为 dump pointer（愚蠢指针），因为它们没有自我清理的能力。
+
+但是我们刚刚实现的 `Auto_ptr1` 存在一个巨大的问题：当它被作为复制初始化的初始化器时，会使得复制出来的 `Auto_ptr1` 也指向同一块内存，这样当其中一个 `Auto_ptr1` 被销毁时，会导致另一个 `Auto_ptr1` 指向的内存被释放，从而导致内存泄漏。
+
+??? example
+    下面两种情况都会导致两个指针指向同一块内存，当其中一个对象被销毁时，另一个对象指向的内存也会被释放。如果我们通过未被销毁的 `Auto_ptr1` 对象来使用这块内存，就会导致未定义行为
+
+    === "case 1"
+
+        ```cpp
+        int main()
+        {
+            Auto_ptr1<Resource> res1(new Resource());
+            Auto_ptr1<Resource> res2(res1); // Alternatively, don't initialize res2 and then assign res2 = res1;
+
+            return 0;
+        } // res1 and res2 go out of scope here
+        ```
+
+        当我们使用 res1 去初始化 res2 时，res1 和 res2 指向同一块内存。当 res1 和 res2 被销毁时，这块内存会被释放两次，这会导致未定义行为。
+
+    === "case 2"
+
+        ```cpp
+        void passByValue(Auto_ptr1<Resource> res)
+        {
+        }
+
+        int main()
+        {
+            Auto_ptr1<Resource> res1(new Resource());
+            passByValue(res1);
+
+            return 0;
+        }
+        ```
+
+        这段程序中，res1 将按值复制到参数 res 中，因此 `res1.m_ptr` 和 `res.m_ptr` 将保存相同的地址。当 passByValue 函数返回时，res 被销毁，从而导致 `res.m_ptr` 指向的内存被释放。但是 res1 仍然持有这块内存的指针，当 res1 被销毁时，这块内存会被释放第二次，这也会导致未定义行为。
+
+为了解决这个问题，我们可以很快联想到一种方法：重载赋值运算符和复制构造函数，使得当一个 `Auto_ptr1` 对象被复制时，会创建一个深度拷贝的对象，而不是简单地复制指针。但是这么做的开销将是很大的，因为我们希望避免仅为了复制一个对象而动态分配内存。
+
+那么我们该怎么办呢？这就是引入移动语义的时候了。
+
+#### 移动语义
+
+**移动语义**（move semantics）意味着类对象将把一些资源的所有权转移给另一个类对象，而非进行拷贝。在上面这个问题中，就是把指针的所有权从源对象（source）转一个目标对象（destination）。
+
+我们对 `Auto_ptr1` 稍作修改就可以得到实现了上述效果的 `Auto_ptr2` 
+
+??? note "Auto_ptr2"
+
+    ```cpp
+    #include <iostream>
+
+    template <typename T>
+    class Auto_ptr2
+    {
+        T* m_ptr {};
+    public:
+        Auto_ptr2(T* ptr=nullptr)
+            :m_ptr(ptr)
+        {
+        }
+
+        ~Auto_ptr2()
+        {
+            delete m_ptr;
+        }
+
+        // A copy constructor that implements move semantics
+        Auto_ptr2(Auto_ptr2& a) // note: not const
+        {
+            m_ptr = a.m_ptr; // transfer our dumb pointer from the source to our local object
+            a.m_ptr = nullptr; // make sure the source no longer owns the pointer
+        }
+
+        // An assignment operator that implements move semantics
+        Auto_ptr2& operator=(Auto_ptr2& a) // note: not const
+        {
+            if (&a == this)
+                return *this;
+
+            delete m_ptr; // make sure we deallocate any pointer the destination is already holding first
+            m_ptr = a.m_ptr; // then transfer our dumb pointer from the source to the local object
+            a.m_ptr = nullptr; // make sure the source no longer owns the pointer
+            return *this;
+        }
+
+        T& operator*() const { return *m_ptr; }
+        T* operator->() const { return m_ptr; }
+        bool isNull() const { return m_ptr == nullptr; }
+    };
+
+    class Resource
+    {
+    public:
+        Resource() { std::cout << "Resource acquired\n"; }
+        ~Resource() { std::cout << "Resource destroyed\n"; }
+    };
+
+    int main()
+    {
+        Auto_ptr2<Resource> res1(new Resource());
+        Auto_ptr2<Resource> res2; // Start as nullptr
+
+        std::cout << "res1 is " << (res1.isNull() ? "null\n" : "not null\n");
+        std::cout << "res2 is " << (res2.isNull() ? "null\n" : "not null\n");
+
+        res2 = res1; // res2 assumes ownership, res1 is set to null
+
+        std::cout << "Ownership transferred\n";
+
+        std::cout << "res1 is " << (res1.isNull() ? "null\n" : "not null\n");
+        std::cout << "res2 is " << (res2.isNull() ? "null\n" : "not null\n");
+
+        return 0;
+    }
+    ```
+
+    这段程序将输出
+
+    ```
+    Resource acquired
+    res1 is not null
+    res2 is null
+    Ownership transferred
+    res1 is null
+    res2 is not null
+    Resource destroyed
+    ```
+
+    !!! tip
+        `delete` 一个 `nullptr` 不会发生任何事情，因此不需要担心会导致什么意外后果。
+
+!!! info "std::auto_ptr"
+    在 C++98 中引入，并在 C++17 中删除的 `std::auto_ptr` 是 C++ 对于标准化的智能指针的首次尝试，它实现移动语义的方式和我们的 `Auto_ptr2` 相当类似，也和我们的 `Auto_ptr2` 一样具有许多问题。
+
+    1. `std::auto_ptr` 通过复制构造函数和赋值运算符来实现移动语义，按值传递将会导致资源的所有权转移到函数的参数变量上，当函数返回时函数内的变量会被销毁，从而使这些资源被释放——这些资源不在能被原来的 `std::auto_ptr` 对象访问。
+    2. `std::auto_ptr` 始终使用非数组的 `delete` 来释放资源，这意味着 `std::auto_ptr` 无法正确管理一个动态数组，并且它也不会阻止我们传入一个动态数组，从而引发内存泄漏。
+    3. C++ 标准库中的许多类（包括大多数容器）对于 `std::auto_ptr` 的行为并不友好，因为这些标准库假设当他们复制一个对象时，发生的是 copy 而非 move。
+
+    综合以上原因，`std::auto_ptr` 在 C++11 中被弃用，在 C++17 中被移除。
+
+    在 C++11 中，`std::auto_ptr` 已被其他的支持 move-aware（移动感知）的智能指针所取代：`std::unique_ptr`、`std::shared_ptr` 和 `std::weak_ptr`。
+
+### 移动构造函数和移动赋值运算符
+
+C++11 中引入了移动构造函数和移动赋值运算符，用于实现移动语义。复制构造函数和赋值运算符用于将一个对象的副本制成另一个对象，而移动构造函数和移动赋值运算符用于把一个对象的资源所有权转移给另一个对象。
+
+定义移动构造函数和移动赋值运算符的语法和定义复制构造函数和赋值运算符的语法非常相似，后两者使用的是 const 左值引用，而前两者使用的是非 const 右值引用。
+
+??? example "code"
+
+    ```cpp
+    template<typename T>
+    class Auto_ptr4
+    {
+        T* m_ptr {};
+    public:
+        Auto_ptr4(T* ptr = nullptr)
+            : m_ptr { ptr }
+        {
+        }
+
+        ~Auto_ptr4()
+        {
+            delete m_ptr;
+        }
+
+        // Copy constructor
+        // Do deep copy of a.m_ptr to m_ptr
+        Auto_ptr4(const Auto_ptr4& a)
+        {
+            m_ptr = new T;
+            *m_ptr = *a.m_ptr;
+        }
+
+        // Move constructor
+        // Transfer ownership of a.m_ptr to m_ptr
+        Auto_ptr4(Auto_ptr4&& a) noexcept
+            : m_ptr(a.m_ptr)
+        {
+            a.m_ptr = nullptr;
+        }
+
+        // Copy assignment
+        // Do deep copy of a.m_ptr to m_ptr
+        Auto_ptr4& operator=(const Auto_ptr4& a)
+        {
+            // Self-assignment detection
+            if (&a == this)
+                return *this;
+
+            // Release any resource we're holding
+            delete m_ptr;
+
+            // Copy the resource
+            m_ptr = new T;
+            *m_ptr = *a.m_ptr;
+
+            return *this;
+        }
+
+        // Move assignment
+        // Transfer ownership of a.m_ptr to m_ptr
+        Auto_ptr4& operator=(Auto_ptr4&& a) noexcept
+        {
+            // Self-assignment detection
+            if (&a == this)
+                return *this;
+
+            // Release any resource we're holding
+            delete m_ptr;
+
+            // Transfer ownership of a.m_ptr to m_ptr
+            m_ptr = a.m_ptr;
+            a.m_ptr = nullptr;
+
+            return *this;
+        }
+
+        T& operator*() const { return *m_ptr; }
+        T* operator->() const { return m_ptr; }
+        bool isNull() const { return m_ptr == nullptr; }
+    };
+    ```
+
+!!! tip
+    移动构造函数和移动赋值运算符通常会在函数名后面加上 `noexcept` 说明符，以告知编译器这两个函数不会抛出异常。这样做的好处是，当我们在使用这两个函数时，编译器可以对这两个函数进行优化，从而提高程序的性能。
+
+!!! note "隐式移动构造函数和移动赋值运算符"
+    当下列条件全部满足时，编译器将会自动生成一个隐式的移动构造函数和移动赋值运算符：
+
+    - 没有用户声明的复制构造函数、复制赋值运算符
+    - 没有用户声明的移动构造函数、移动赋值运算符
+    - 没有用户声明的析构函数
+
+    需要注意的是，隐式移动构造函数和移动赋值运算符对指针进行操作时，指挥进行复制，而不是移动。因此如果我们希望移动指针成员，需要自行定义移动构造函数和移动赋值运算符。
+
+!!! property "The rule of five"
+    复制构造函数、复制赋值运算符、移动构造函数、移动赋值运算符、析构函数被称为**五个特殊成员函数**，它们通常一起出现，因此被称为**五法则**（rule of five）。
+    
+    当我们需要自行定义它们中的任何一个时，通常也需要定义其他四个。
+
+我们可以使用 `= delete` 关键字来禁用移动构造函数和移动赋值运算符，这样我们就可以确保我们的类不会被移动。虽然这看起来能为我们提供一个可复制但不可被移动的对象，但很遗憾，被 delete 的函数仍然会被视为已声明的函数，也会参与重载解析，这可能会导致一些问题。
+
+```cpp
+#include <iostream>
+#include <string>
+#include <string_view>
+
+class Name
+{
+private:
+    std::string m_name {};
+
+public:
+    Name(std::string_view name) : m_name{ name }
+    {
+    }
+
+    Name(const Name& name) = default;
+    Name& operator=(const Name& name) = default;
+
+    Name(Name&& name) = delete;
+    Name& operator=(Name&& name) = delete;
+
+    const std::string& get() const { return m_name; }
+};
+
+Name getJoe()
+{
+    Name joe{ "Joe" };
+    return joe; // error: Move constructor was deleted
+}
+
+int main()
+{
+    Name n{ getJoe() };
+
+    std::cout << n.get() << '\n';
+
+    return 0;
+}
+```
+
+比如在这个例子中，在函数 `getJoe()` 中，我们试图返回一个 `Name` 临时对象，编译器解析后决定通过移动语义返回这个临时对象，但是因为 `Name` 的移动构造函数被删除了，无法进行移动，因此编译器报错。
+
+### std::move
+
+`std::move` 是 C++11 引入的一个标准库函数，位于 `<utility>` 中，它把传入的参数转换为一个右值引用，从而可以调用移动语义。
+
+??? example "通过 std::move 调用移动语义"
+
+    ```cpp
+    #include <iostream>
+    #include <string>
+    #include <utility> // for std::move
+
+    template <typename T>
+    void mySwapMove(T& a, T& b)
+    {
+        T tmp { std::move(a) }; // invokes move constructor
+        a = std::move(b);   // invokes move assignment
+        b = std::move(tmp); // invokes move assignment
+    }
+
+    int main()
+    {
+        std::string x{ "abc" };
+        std::string y{ "de" };
+
+        std::cout << "x: " << x << '\n';
+        std::cout << "y: " << y << '\n';
+
+        mySwapMove(x, y);
+
+        std::cout << "x: " << x << '\n';
+        std::cout << "y: " << y << '\n';
+
+        return 0;
+    }
+    ```
+
+    这段程序将输出
+
+    ```
+    x: abc
+    y: de
+    x: de
+    y: abc
+    ```
+
+我们还可以在向一个容器填充左值元素时使用 `std::move`。在下面的程序中，我们首先使用复制语义添加一个元素，然后再使用移动语义给 vector 添加一个元素。
+
+```cpp
+#include <iostream>
+#include <string>
+#include <utility> // for std::move
+#include <vector>
+
+int main()
+{
+	std::vector<std::string> v;
+
+	// We use std::string because it is movable (std::string_view is not)
+	std::string str { "Knock" };
+
+	std::cout << "Copying str\n";
+	v.push_back(str); // calls l-value version of push_back, which copies str into the array element
+
+	std::cout << "str: " << str << '\n';
+	std::cout << "vector: " << v[0] << '\n';
+
+	std::cout << "\nMoving str\n";
+
+	v.push_back(std::move(str)); // calls r-value version of push_back, which moves str into the array element
+
+	std::cout << "str: " << str << '\n'; // The result of this is indeterminate
+	std::cout << "vector:" << v[0] << ' ' << v[1] << '\n';
+
+	return 0;
+}
+```
+
+在我的 wsl 上，这个程序的输出是
+
+```
+Copying str
+str: Knock
+vector: Knock
+
+Moving str
+str: 
+vector:Knock Knock
+```
+
+- 调用复制语义时，我们通过 `push_back` 将 `str` **复制**到了 vector 中，因此 `str` 保持不变。
+- 调用移动语义时，我们通过 `push_back` 将 `str` **移动**到了 vector 中，但是这个操作会使得 `str` 的值变为**不确定的值**，在我的测试中，`str` 变为空字符串。
+
+问题在于，当我们通过 `std::move` 将一个左值对象的值移动之后，它还会剩下什么呢？C++ 标准规定，当一个对象的值被移动之后，这个对象的状态是**有效但不确定的**。
+
+> The C++ standard library guarantees that moved-from objects are in a valid but unspecified state. The value of an object is not specified except that the object’s invariants are met and operations on the object behave as specified for its type
+
+> For all objects and types you use in the C++ standard library you should ensure that moved-from objects also support all requirements of the functions called
+
+因此当我们想要使用一个值已经被移动走的对象时，我们可以调用这个不依赖于这个对象当前值的任何函数（例如 `set()`、`reset()`、`clear()` 等），我们也可以使用 `empty()` 等函数测试这个对象的当前状态。但是我们应该避免使用 `front()`、`back()`、`pop_back()` 等函数，因为这些函数依赖于对象的当前值。
+
+!!! key-point 
+    当一个对象的值被移动后，我们不应对这个对象的值有任何假设（包括假设它的值保留不变和假设它的值变为某个特定值），我们只能知道这个对象的状态是有效的，但是具体的值是不确定的。
+
+### std::unique_ptr
+
+`std::unique_ptr` 是 C++11 中 `std::auto_ptr` 的一个完全替代方案，位于 `<memory>` 头文件中，它应用于未被多个对象共享的动态分配的对象，也就是说它应该完全拥有这块内存，不能和其他类共享。
+
+- std::unique_ptr 具有重载过后的 `*` 和 `->` 运算符，前者返回它正在管理的资源，后者返回这个资源的指针。
+- std::unique_ptr 并不总是在管理一个对象——它可以因默认初始化或传入 nullptr 而是空的，也可以因为管理的资源被移动给另一个 std::unique_ptr 而是空的。
+
+??? example 
+
+    ```cpp
+    #include <iostream>
+    #include <memory> // for std::unique_ptr
+
+    class Resource
+    {
+    public:
+        Resource() { std::cout << "Resource acquired\n"; }
+        ~Resource() { std::cout << "Resource destroyed\n"; }
+    };
+
+    std::ostream& operator<<(std::ostream& out, const Resource&)
+    {
+        out << "I am a resource";
+        return out;
+    }
+
+    int main()
+    {
+        std::unique_ptr<Resource> res{ new Resource{} };
+
+        if (res)
+            std::cout << *res << '\n';
+
+        return 0;
+    }
+    ```
+
+    这段程序将输出
+
+    ```
+    Resource acquired
+    I am a resource
+    Resource destroyed
+    ```
+
+与 std::auto_ptr 不同的是，std::unique_ptr 知道何时使用 delete，何时使用 delete[]，因此它可以正确地管理动态数组。但相较于用 std::unique_ptr 来管理动态数组，使用 std::vector 或 std::array 总是更好的选择。
+
+#### std::make_unique
+
+C++14 具有一个名为 `std::make_unique` 的函数，它可以用来创建一个 `std::unique_ptr` 对象。
+
+!!! example 
+
+    ```cpp
+    #include <memory> // for std::unique_ptr and std::make_unique
+    #include <iostream>
+
+    class Fraction
+    {
+    private:
+        int m_numerator{ 0 };
+        int m_denominator{ 1 };
+
+    public:
+        Fraction(int numerator = 0, int denominator = 1) :
+            m_numerator{ numerator }, m_denominator{ denominator }
+        {
+        }
+
+        friend std::ostream& operator<<(std::ostream& out, const Fraction &f1)
+        {
+            out << f1.m_numerator << '/' << f1.m_denominator;
+            return out;
+        }
+    };
+
+
+    int main()
+    {
+        auto f1{ std::make_unique<Fraction>(3, 5) };
+        std::cout << *f1 << '\n';
+
+        // Create a dynamically allocated array of Fractions of length 4
+        auto f2{ std::make_unique<Fraction[]>(4) };
+        std::cout << f2[0] << '\n';
+
+        return 0;
+    }
+    ```
+
+    输出为
+    
+    ```
+    3/5
+    0/1
+    ```
+
+一般而言，更建议使用 `std::make_unique` 来创建 `std::unique_ptr` 对象，除了实际使用时更加简洁外，它还可以避免一些潜在的内存泄漏问题。
+
+#### std::unique_ptr 的实际应用
+
+- **按值返回 std::unique_ptr **通常比直接返回原始指针更加安全，并且除非拥有什么特殊的理由，我们不应按指针或引用返回 std::unique_ptr。
+- 按值传递 std::unique_ptr 会使得资源的所有权发生转移
+- 如果我们想要从 std::unique_ptr 中获取一个原始指针，我们可以使用 `get()` 成员函数，例如
+
+    ```cpp
+    void useResource(const Resource* res)
+    {
+        if (res)
+            std::cout << *res << '\n';
+        else
+            std::cout << "No resource\n";
+    }
+
+    int main()
+    {
+        auto ptr{ std::make_unique<Resource>() };
+        useResource(ptr.get());
+
+        return 0;
+    } 
+    ```
+
+- 当 std::unique_ptr 作为类的成员时，当这个类对象被销毁，std::unique_ptr 也会被销毁，从而释放它所管理的资源。
+
+    但是，如果类对象没有被正确销毁（例如它是动态分配的，并且没有正确地被 delete），那么这个 std::unique_ptr 也不会被销毁，从而导致资源泄漏。
+
+### std::shared_ptr
+
+std::shared_ptr 和 std::unique_ptr 的不同之处在于它旨在处理多个智能指针共享同一个资源的情况。
+
+std::shared_ptr 的内部通过一种计数机制来跟踪有多少个 std::shared_ptr 在共同指向同一个资源，至少有一个 std::shared_ptr 仍指向这个资源时，std::shared_ptr 的销毁不会导致这块内存的释放，仅当最后一个指向这块资源的 std::shared_ptr 被销毁时，资源才会被销毁。
+
+!!! example
+
+    ```cpp
+    #include <iostream>
+    #include <memory> // for std::shared_ptr
+
+    class Resource
+    {
+    public:
+        Resource() { std::cout << "Resource acquired\n"; }
+        ~Resource() { std::cout << "Resource destroyed\n"; }
+    };
+
+    int main()
+    {
+        // allocate a Resource object and have it owned by std::shared_ptr
+        Resource* res { new Resource };
+        std::shared_ptr<Resource> ptr1{ res };
+        {
+            std::shared_ptr<Resource> ptr2 { ptr1 }; 
+            // make another std::shared_ptr pointing to the same thing
+
+            std::cout << "Killing one shared pointer\n";
+        } // ptr2 goes out of scope here, but nothing happens
+
+        std::cout << "Killing another shared pointer\n";
+
+        return 0;
+    } // ptr1 goes out of scope here, and the allocated Resource is destroyed
+    ```
+
+    这段程序将输出
+
+    ```
+    Resource acquired
+    Killing one shared pointer
+    Killing another shared pointer
+    Resource destroyed
+    ```
+
+!!! warning
+    需要格外强调的是，我们利用第一个 shared pointer 初始化了第二个 shared pointer，这样才能保证资源不会在第一个 shared pointer 被销毁时被释放。
+
+考虑另一个例子
+
+!!! example
+
+    ```cpp
+    #include <iostream>
+    #include <memory> // for std::shared_ptr
+
+    class Resource
+    {
+    public:
+        Resource() { std::cout << "Resource acquired\n"; }
+        ~Resource() { std::cout << "Resource destroyed\n"; }
+    };
+
+    int main()
+    {
+        Resource* res { new Resource };
+        std::shared_ptr<Resource> ptr1 { res };
+        {
+            std::shared_ptr<Resource> ptr2 { res }; // create ptr2 directly from res (instead of ptr1)
+
+            std::cout << "Killing one shared pointer\n";
+        } // ptr2 goes out of scope here, and the allocated Resource is destroyed
+
+        std::cout << "Killing another shared pointer\n";
+
+        return 0;
+    } // ptr1 goes out of scope here, and the allocated Resource is destroyed again
+    ```
+
+    这段程序在输出以下内容后会崩溃（至少在我的机器上会）
+
+    ```
+    Resource acquired
+    Killing one shared pointer
+    Resource destroyed
+    Killing another shared pointer
+    Resource destroyed
+    ```
+
+第二个例子的区别在于，我们相互独立的创建了两个 std::shared_ptr，即使它们都指向同一块资源，但它们不知道彼此的存在，都认为自己是资源的唯一持有者。当 `ptr2` 被销毁时，它会释放资源，但是 `ptr1` 仍持有指向这块资源的指针，当 `ptr1` 也被销毁时，它会再次尝试释放资源，这会导致程序崩溃。
+
+!!! info "Best practice"
+    如果我们需要让多个 std::shared_ptr 指向相同的资源，使用现有的 std::shared_ptr 来初始化新的 std::shared_ptr 是最好的选择。
+
+!!! note "std::make_shared"
+
+    类似与 `std::make_unique`，C++14 还引入了 `std::make_shared` 函数，用于创建 `std::shared_ptr` 对象。
+
+    ```cpp
+    #include <iostream>
+    #include <memory> // for std::shared_ptr
+
+    class Resource
+    {
+    public:
+        Resource() { std::cout << "Resource acquired\n"; }
+        ~Resource() { std::cout << "Resource destroyed\n"; }
+    };
+
+    int main()
+    {
+        // allocate a Resource object and have it owned by std::shared_ptr
+        auto ptr1 { std::make_shared<Resource>() };
+        {
+            auto ptr2 { ptr1 }; // create ptr2 using copy of ptr1
+
+            std::cout << "Killing one shared pointer\n";
+        } // ptr2 goes out of scope here, but nothing happens
+
+        std::cout << "Killing another shared pointer\n";
+
+        return 0;
+    } // ptr1 goes out of scope here, and the allocated Resource is destroyed
+    ```
+
+与内部使用单个指针的 std::unique_ptr 不同，std::shared_ptr 使用两个指针：一个指向资源，另一个指向控制块（control block）。控制块包含了资源的引用计数，当 std::shared_ptr 被销毁时，引用计数减一，当引用计数为 0 时，资源被销毁。
+
+这也解释了为什么独立地创建两个 std::shared_ptr 会导致资源被释放两次：因为这两个 std::shared_ptr 指向不同的控制块，它们各自维护着资源的引用计数，因此当其中一个 std::shared_ptr 被销毁时，它会减少资源的引用计数，但是另一个 std::shared_ptr 并不知道这个资源已经被销毁，因此当它被销毁时，它会再次尝试释放资源。
+
+当我们用现有的 std::shared_ptr 初始化一个新的 std::shared_ptr 时，这两个 std::shared_ptr 指向同一个控制块，因此它们共享资源的引用计数，因此只有当最后一个 std::shared_ptr 被销毁时，资源才会被销毁。
 
 
 
@@ -4620,7 +6099,13 @@ int main()
     - 当我们希望避免复制时（只查看元素而不修改），使用 `const auto&`。
 
 !!! tip
-    由于 for-each 循环是基于范围的，因此它只能用于支持迭代器的容器，比如`std::vector`、`std::list`、`std::set`、`std::map` 等，而不能用于 C 风格的数组等情况。
+    由于 for-each 循环是基于范围的，因此它只能用于支持迭代器的容器，比如`std::vector`、`std::list`、`std::set`、`std::map` 等，但它也可用于 C 风格数组（不能用于退化为指针的数组）。
+
+    ```cpp
+    int array[] { 1, 2, 3, 4, 5 };
+    for (int num : array)
+        std::cout << num << ' ';
+    ```
 
 !!! extra
     上面我们使用的 for-each 循环只能进行正序迭代，从 C++20 开始，我们可以使用 `std::views::reverse` 来得到到一个逆序的视图，从而实现逆序迭代。
