@@ -5003,7 +5003,7 @@ Cents Cents::operator+ (int value) const
 
 现在我们考虑一个简单的类 `Matrix`，我们希望能够通过 `()` 运算符来访问矩阵的元素，例如 `matrix(1, 2)`。
 
-??? examle "code"
+??? example "code"
 
     ```cpp title="Matrix.h"
     #include <cassert> // for assert()
@@ -5101,7 +5101,7 @@ void someFunction()
 
 出现上述问题的本质原因是指针变量没有一个能自我清理的固有机制。为了解决这个问题，我们可以考虑使用一个类来负责管理这个指针，让这个类“持有”这个指针，当这个类的生命周期结束时，利用析构函数来释放这个指针。
 
-??? examle "Auto_ptr1"
+??? example "Auto_ptr1"
 
     ```cpp
     #include <iostream>
@@ -5808,6 +5808,1219 @@ std::shared_ptr 的内部通过一种计数机制来跟踪有多少个 std::shar
 
 当我们用现有的 std::shared_ptr 初始化一个新的 std::shared_ptr 时，这两个 std::shared_ptr 指向同一个控制块，因此它们共享资源的引用计数，因此只有当最后一个 std::shared_ptr 被销毁时，资源才会被销毁。
 
+---
+
+## 继承
+
+C++ 的继承发生在类与类之间，在继承关系中，被继承的类称为**父类**（parent class）、基类（base class）或超级类（superclass），继承的类称为子类（child class）、派生类（derived class）或衍生类（subclass）。
+
+- 子类会从父类中继承行为（成员函数）和属性（成员变量），这些变量和函数会成为子类的成员变量和函数，子类可以通过继承来重用父类的代码，从而减少代码的重复。
+- 子类本身也是一个独立的类，可以定义自己的成员变量和成员函数，也可以重载父类的成员函数。
+
+假设我们有一个类 A，并且 B 继承自 A
+
+```cpp
+
+class A
+{
+public:
+    int m_a {};
+
+    A(int a) : 
+        m_a{ a } 
+    { 
+        std::cout << "A\n";
+    }
+};
+
+class B: public A
+{
+public:
+    int m_b {};
+
+    B(int b) : 
+        m_b{ b } 
+    { 
+        std::cout << "B\n";
+    }
+};
+```
+
+像这样在 `: public` 后接上要继承的类的名称，我们称之为公共继承（public inheritance）。
+
+如果我们再让一个类 C 也继承 A，一个类 D 继承 B，那么派生图（derivation diagram）看起来就像下面这样，形成了一个树形结构，我们称之为继承树（inheritance tree）。
+
+??? note "派生图"
+
+    ```mermaid
+    graph BT;
+
+    B--->A
+    C--->A
+    D--->B
+    ```
+
+派生类有两部分内容，一部分内容来自于它继承的类，另一部分内容是它自己的。当我们构造一个派生类时，会首先构造基类的部分（调用基类的构造函数），然后再构造自己特有的部分（调用派生类的构造函数）。
+
+继承树中的一个派生类在构造时，会从最基本的类（继承树的顶端）开始，从上至下一次构造每一个子类，最后达到我们希望构造的类为止。
+
+??? example "继承链"
+
+    这个例子中，B 继承自 A，C 继承自 B，D 继承自 C，构成了一条继承链。
+
+    ```cpp
+    #include <iostream>
+
+    class A
+    {
+    public:
+        A()
+        {
+            std::cout << "A\n";
+        }
+    };
+
+    class B: public A
+    {
+    public:
+        B()
+        {
+            std::cout << "B\n";
+        }
+    };
+
+    class C: public B
+    {
+    public:
+        C()
+        {
+            std::cout << "C\n";
+        }
+    };
+
+    class D: public C
+    {
+    public:
+        D()
+        {
+            std::cout << "D\n";
+        }
+    };
+    ```
+
+    当我们通过下面的程序构造这些类时
+
+    ```cpp
+    int main()
+    {
+        std::cout << "Constructing A: \n";
+        A a;
+
+        std::cout << "Constructing B: \n";
+        B b;
+
+        std::cout << "Constructing C: \n";
+        C c;
+
+        std::cout << "Constructing D: \n";
+        D d;
+    }
+    ```
+
+    得到的输出结果将是
+
+    ```plaintext
+    Constructing A:
+    A
+    Constructing B:
+    A
+    B
+    Constructing C:
+    A
+    B
+    C
+    Constructing D:
+    A
+    B
+    C
+    D
+    ```
+
+    从中我们可以看出整个继承链的构造顺序。
+
+### 派生类的初始化
+
+派生类的缺点之一是当我们创建一个派生类对象时，不能直接在派生类的构造函数中初始化来自于基类的成员变量。
+
+考虑下面两个类，其中 Derived 类继承自 Base 类，并且*所有的成员变量都是 public 的*。
+
+```cpp
+class Base
+{
+public:
+    int m_id {};
+
+    Base(int id=0)
+        : m_id{ id }
+    {
+    }
+
+    int getId() const { return m_id; }
+};
+
+class Derived: public Base
+{
+public:
+    double m_cost {};
+
+    Derived(double cost=0.0)
+        : m_cost{ cost }
+    {
+    }
+
+    double getCost() const { return m_cost; }
+};
+```
+
+当我们想要创建一个 Derived 对象时，通常会这么做
+
+```cpp
+int main()
+{
+    Derived derived{ 1.3 }; // use Derived(double) constructor
+
+    return 0;
+}
+```
+
+显而易见的是，在构造函数里我们只能初始化 m_cost，而不能初始化 m_id。除此之外，把 Derived 类的构造函数修改成这样也是无效的。因为 C++ 不允许一个派生类直接在它的构造函数中初始化基类的成员变量——一个成员变量的值只能被它定义的那个类的构造函数中被初始化。
+
+```cpp
+class Derived: public Base
+{
+public:
+    double m_cost {};
+
+    Derived(double cost=0.0, int id=0)
+        // does not work
+        : m_cost{ cost }
+        , m_id{ id }
+    {
+    }
+
+    double getCost() const { return m_cost; }
+};
+```
+
+除此之外，我们也不能像这样在构造函数中手动给成员变量赋值：
+
+```cpp
+Derived(double cost=0.0, int id=0)
+    : m_cost{ cost }
+{
+    m_id = id;
+}
+```
+
+- 因为如果 m_id 是一个 const 成员变量，它就必须在构造函数的函数体执行前就被初始化，此后它不能再被赋值。
+- 即使 m_id 不是 const 成员变量，假如我们允许在构造函数的函数体中给成员变量赋值，那么继承链上的每一个构造函数都有机会修改这个的成员变量，我们无法保证这个成员变量的值是我们预期的那样。
+
+那么我们该如何初始化基类的成员变量呢？答案是调用基类的构造函数！
+    
+我们可以在派生类的成员初始化列表中明确选择一个想要调用的基类构造函数，就可以初始化基类的成员变量。
+
+```cpp
+Derived(double cost=0.0, int id=0)
+    : Base{ id } // Call Base(int) constructor with value id!
+    , m_cost{ cost }
+{
+}
+```
+
+当我们执行下面的代码时：
+
+```cpp
+#include <iostream>
+
+int main()
+{
+    Derived derived{ 1.3, 5 }; // use Derived(double, int) constructor
+    std::cout << "Id: " << derived.getId() << '\n';
+    std::cout << "Cost: " << derived.getCost() << '\n';
+
+    return 0;
+}
+```
+
+m_id 和 m_cost 都将会被正确地初始化，得到的输出是
+
+```plaintext
+Id: 5
+Cost: 1.3
+```
+
+!!! tip
+    - 在派生类的构造函数中，我们可以选择调用基类的任何一个构造函数，只要这个构造函数是合法的。
+    - 无论基类的构造函数出现于派生类的成员初始化列表中的什么位置，它都会首先被执行。
+
+现在我们可以把 Base 和 Derived 类的成员变量都设置为 private，然后通过成员函数来访问这些成员变量。
+
+```cpp
+class Base
+{
+private: // our member is now private
+    int m_id {};
+
+public:
+    Base(int id=0)
+        : m_id{ id }
+    {
+    }
+
+    int getId() const { return m_id; }
+};
+
+class Derived: public Base
+{
+private: // our member is now private
+    double m_cost;
+
+public:
+    Derived(double cost=0.0, int id=0)
+        : Base{ id } // Call Base(int) constructor with value id!
+        , m_cost{ cost }
+    {
+    }
+
+    double getCost() const { return m_cost; }
+};
+```
+
+现在我们实例化的 Derived 对象不再能够直接访问 m_id 了，因为即使 m_id 也属于 Derived 类的一部分，它仍然是 Base 类的私有成员，因此我们只能通过访问函数 `getId()` 来访问 m_id。
+
+main 函数运行后的输出结果不变，仍是
+
+```plaintext
+Id: 5
+Cost: 1.3
+```
+
+!!! tip
+    C++ 中，成员的访问级别是基于类的，这意味着即使 Derived 即使继承了 Base 的 m_id，它仍然是 Base 的私有成员，Derived 不能直接访问它，只能通过 Base 的公有成员函数来访问它。
+
+???+ note "继承链"
+    回到我们之前提到的继承链，假设 C 继承自 B，B 继承自 A，这时候 C 只能调用 B 的构造函数，而不能直接越过 B 去调用 A 的构造函数。
+
+    ```cpp
+    class A
+    {
+    public:
+        A(int a)
+        {
+            std::cout << "A: " << a << '\n';
+        }
+    };
+
+    class B: public A
+    {
+    public:
+        B(int a, double b)
+        : A{ a }
+        {
+            std::cout << "B: " << b << '\n';
+        }
+    };
+
+    class C: public B
+    {
+    public:
+        C(int a, double b, char c)
+        : B{ a, b }
+        {
+            std::cout << "C: " << c << '\n';
+        }
+    };
+    ```
+
+    - 构造函数只能调用从其直接的父类/基类的构造函数，即只能一节一节沿着继承链向上
+
+
+当派生类被销毁时，析构函数会按照构造函数调用的相反顺序被调用。
+
+例如我们实例化了上面例子的一个 `C c{ 5, 4.3, 'R' };`，构造函数调用的顺序是 A->B->C，那么析构函数调用的顺序就是 C->B->A。
+
+!!! warning 
+    如果基类具有虚函数，那么它的析构函数也应该是虚函数，并且继承自它的派生类的析构函数也都要是虚拟的。否则，当我们通过基类指针删除派生类对象时，派生类的析构函数将不会被调用，从而导致资源泄漏。
+
+### 访问说明符
+
+C++ 还有第三个访问说明符：`protected`，它仅在类继承的语境下有效。protected 访问说明符允许类成员被本类的其他成员、友元和派生类访问，但是不可从外界被访问。
+
+类有三种不同的继承方式：public，protected 和 private。当不选择继承的类型时，默认选择 private 继承（类似于当不指定访问级别时，类中的成员默认为 private）。
+
+下面我们将讨论三种继承类型，在此期间需要始终牢记下面的几条规则：
+
+- 一个类始终可以访问自己的（非继承的）成员
+- 外界在访问一个类时，访问级别始终基于这个类的访问说明符
+- 派生类访问继承于基类的成员时，始终基于基类的访问说明符和它所使用的继承类型
+
+#### public inheritance
+
+公共继承是最常用的继承方式，其他两种继承事实上很少会遇见。公共继承一个基类时，继承的 public 成员仍是 public 的，继承的 protected 成员仍是 protected 的，继承的 private 成员仍是无法从派生类直接访问的。
+
+??? example "public inheritance"
+
+    ```cpp
+    class Base
+    {
+    public:
+        int m_public {};
+    protected:
+        int m_protected {};
+    private:
+        int m_private {};
+    };
+
+    class Pub: public Base // note: public inheritance
+    {
+    public:
+        Pub()
+        {
+            m_public = 1; // okay: m_public was inherited as public
+            m_protected = 2; // okay: m_protected was inherited as protected
+            m_private = 3; // not okay: m_private is inaccessible from derived class
+        }
+    };
+
+    int main()
+    {
+        // Outside access uses the access specifiers of the class being accessed.
+        Base base;
+        base.m_public = 1; // okay: m_public is public in Base
+        base.m_protected = 2; // not okay: m_protected is protected in Base
+        base.m_private = 3; // not okay: m_private is private in Base
+
+        Pub pub;
+        pub.m_public = 1; // okay: m_public is public in Pub
+        pub.m_protected = 2; // not okay: m_protected is protected in Pub
+        pub.m_private = 3; // not okay: m_private is inaccessible in Pub
+
+        return 0;
+    }
+    ```
+
+除非有一些特定的理由，否则一般而言都使用公共继承。
+
+#### protected inheritance
+
+保护继承是最少见的继承方式，除非在极其特殊的情况下，它几乎不会被使用。在保护继承中，继承的 public 和 protected 成员都变成了 protected 的，继承的 private 成员仍然是无法从派生类直接访问的。
+
+#### private inheritance
+
+在私有继承中，来自于基类的所有成员都会变成私有的，这意味着继承的 public 和 protected 成员都变成了 private 的，继承的 private 成员仍然是无法从派生类直接访问的。
+
+变成 private 的成员并不影响派生类对这些成员的访问，这个变化仅影响在外界试图通过派生类访问这些成员的代码。
+
+??? example "private inheritance"
+
+    ```cpp
+    class Base
+    {
+    public:
+        int m_public {};
+    protected:
+        int m_protected {};
+    private:
+        int m_private {};
+    };
+
+    class Pri: private Base // note: private inheritance
+    {
+        Pri()
+        {
+            m_public = 1; // okay: m_public is now private in Pri
+            m_protected = 2; // okay: m_protected is now private in Pri
+            m_private = 3; // not okay: derived classes can't access private members in the base class
+        }
+    };
+
+    int main()
+    {
+        // Outside access uses the access specifiers of the class being accessed.
+        // In this case, the access specifiers of base.
+        Base base;
+        base.m_public = 1; // okay: m_public is public in Base
+        base.m_protected = 2; // not okay: m_protected is protected in Base
+        base.m_private = 3; // not okay: m_private is private in Base
+
+        Pri pri;
+        pri.m_public = 1; // not okay: m_public is now private in Pri
+        pri.m_protected = 2; // not okay: m_protected is now private in Pri
+        pri.m_private = 3; // not okay: m_private is inaccessible in Pri
+
+        return 0;
+    }
+    ```
+
+我们可以在派生类和基类之间没有明显关系时使用私有继承，但在实践中私有继承的使用频率非常低。
+
+#### 一个例子
+
+```cpp
+class Base
+{
+public:
+    int m_public {};
+protected:
+    int m_protected {};
+private:
+    int m_private {};
+};
+```
+
+基类可以无限制地访问自己的成员，外界只能访问公有成员 m_public。
+
+```cpp
+class D2 : private Base // note: private inheritance
+{
+public:
+    int m_public2 {};
+protected:
+    int m_protected2 {};
+private:
+    int m_private2 {};
+};
+```
+
+D2 可以无限制地访问自己的成员，也可以访问继承于 Base 的 m_public 和 m_protected，但不能访问 m_private。D2 采用的是私有继承，因此无论是外界代码还是从 D2 派生出来的类，都无法通过 D2 访问 m_public 和 m_protected，因为此时 m_public 和 m_protected 都变成了 private 成员。
+
+```cpp
+class D3 : public D2
+{
+public:
+    int m_public3 {};
+protected:
+    int m_protected3 {};
+private:
+    int m_private3 {};
+};
+```
+
+D3 可以无限制地访问自己的成员，也可以访问 D2 的 m_public2 和 m_protected2，但不能访问 m_private2。D3 采用的是公共继承，所以 m_public2 和 m_protected2 将会保持自身的访问级别，即 m_public2 是 public 的，m_protected2 是 protected 的。
+
+D3 无法直接访问 Base 的 m_public 和 m_protected，因为当 D2 继承它们时，它们变成了 private 成员。
+
+!!! abstract
+
+    | Base class | inherited publicly | inherited privately | inherited protectedly |
+    |------------|--------------------|---------------------|-----------------------|
+    | Public     | Public             | Private             | Protected             |
+    | Protected  | Protected          | Private             | Protected             |
+    | Private    | Inaccessible       | Inaccessible        | Inaccessible          |
+
+### 调用与覆盖继承的函数
+
+默认情况下，派生类继承了基类中定义的所有行为（成员函数）。当在派生类对象上调用成员函数时，编译器首先查看派生类中是否存在名称匹配的函数
+
+- 如果存在，所有名称匹配的成员函数都将被考虑，并通过重载解析来寻找最佳匹配。
+- 如果不存在，则沿着继承链向上通过同样的方式依次检查每一个父类。
+
+当我们在派生类中重新定义一个在基类中具有相同名称的成员函数时，函数调用的访问说明符将会与派生类中的函数的访问说明符相匹配。例如下面的例子中，`Base::print()` 是 private 的，但 `Derived::print()` 是 public 的，可以直接被外界代码调用。
+
+??? example
+
+    ```cpp
+    #include <iostream>
+
+    class Base
+    {
+    private:
+        void print() const
+        {
+            std::cout << "Base";
+        }
+    };
+
+    class Derived : public Base
+    {
+    public:
+        void print() const
+        {
+            std::cout << "Derived";
+        }
+    };
+
+
+    int main()
+    {
+        Derived derived {};
+        derived.print(); // calls derived::print(), which is public
+        return 0;
+    }
+    ```
+
+如果我们想要在派生类对象中调用基类的一个函数，我们可以使用作用域解析运算符 `::` 来指定我们想要调用的函数。
+
+??? example
+
+    ```cpp
+    class Base
+    {
+    public:
+        Base() { }
+
+        void identify() const { std::cout << "Base::identify()\n"; }
+    };
+
+    class Derived: public Base
+    {
+    public:
+        Derived() { }
+
+        void identify() const
+        {
+            std::cout << "Derived::identify()\n";
+            Base::identify(); // note call to Base::identify() here
+        }
+    };
+    ```
+
+    注意这里必须要使用 `Base::identify()`，而不是 `identify()`。如果直接调用 `identify()`，会导致递归调用 Derived::identify()，从而导致无限循环。
+
+`::` 并不适用于我们想要调用基类的友元函数的情况，因为本质来说友元函数并不属于积累的一部分，例如 `operator<<`。这时候我们可以通过 `static_cast` 进行类型转换，从而调用基类的友元函数。
+
+??? example
+
+    ```cpp
+    #include <iostream>
+
+    class Base
+    {
+    public:
+        Base() { }
+
+        friend std::ostream& operator<< (std::ostream& out, const Base&)
+        {
+            out << "In Base\n";
+            return out;
+        }
+    };
+
+    class Derived: public Base
+    {
+    public:
+        Derived() { }
+
+        friend std::ostream& operator<< (std::ostream& out, const Derived& d)
+        {
+            out << "In Derived\n";
+            // static_cast Derived to a Base object, so we call the right version of operator<<
+            out << static_cast<const Base&>(d);
+            return out;
+        }
+    };
+
+    int main()
+    {
+        Derived derived {};
+
+        std::cout << derived << '\n';
+
+        return 0;
+    }
+    ```
+
+    这里我们通过 `static_cast<const Base&>(d)` 将 Derived 对象转换为 Base 对象，从而调用 Base 的 `operator<<`。
+
+    这段程序将会输出
+
+    ```
+    In Derived
+    In Base
+    ```
+
+!!! note "派生类中的重载解析"
+
+    考虑下面的代码
+
+    ```cpp
+    #include <iostream>
+
+    class Base
+    {
+    public:
+        void print(int)    { std::cout << "Base::print(int)\n"; }
+        void print(double) { std::cout << "Base::print(double)\n"; }
+    };
+
+    class Derived: public Base
+    {
+    public:
+        void print(double) { std::cout << "Derived::print(double)"; } // this function added
+    };
+
+
+    int main()
+    {
+        Derived d{};
+        d.print(5); // calls Derived::print(double), not Base::print(int)
+
+        return 0;
+    }
+    ```
+
+    当我们调用 `d.print(5)` 时，编译器会查找一个与 `print` 匹配的函数，它会首先查找 Derived 类中的函数。它找到了 `Derived::print(double)`，于是就把 5 隐式转换为 double，然后调用这个函数。它不会再去查找 Base 类中的函数，即使 Base 类中有一个 `print(int)` 函数。
+
+    如果我们确实希望 `d.print(5)` 调用 `Base::print(int)`，我们可以使用 using 来使 Base 类中的函数在 Derived 类中可见。
+
+    只需将 Derived 类修改为
+
+    ```cpp
+    class Derived: public Base
+    {
+    public:
+        using Base::print; // make all Base::print() functions eligible for overload resolution
+        void print(double) { std::cout << "Derived::print(double)"; }
+    };
+    ```
+
+    即可
+
+### 多重继承（多继承）
+
+**多重继承（多继承）**（multiple inheritance）是指一个类继承自多个基类的情况。在 C++ 中，一个类可以继承自多个基类，这种情况下，派生类将会继承所有基类的成员。
+
+要使用多继承，我们只需要在继承时指定多个基类，基类之间用逗号隔开。
+
+```cpp
+class A
+{
+public:
+    A() { std::cout << "A: " << a << '\n'; }
+};
+
+class B
+{
+public:
+    B() { std::cout << "B: " << b << '\n'; }
+};
+
+class C: public A, public B
+{
+public:
+    C() { std::cout << "C: " << c << '\n'; }
+};
+```
+
+继承图看起来像是这样
+
+```mermaid
+graph BT;
+
+C--->A
+C--->B
+```
+
+#### 多继承导致的问题
+
+当多个基类包含相同名称的函数时，会导致歧义。例如，如果 A 和 B 都有一个名为 `print()` 的函数，那么当我们在 C 中调用 `print()` 时，编译器无法确定我们想要调用哪一个 `print()`。
+
+```cpp
+class A
+{
+public:
+    void print() { std::cout << "A\n"; }
+};
+
+class B
+{
+public:
+    void print() { std::cout << "B\n"; }
+};
+
+class C: public A, public B
+{
+public:
+    void print() { std::cout << "C\n"; }
+};
+
+int main()
+{
+    C c;
+    c.print(); // error: which print() do we want to call?
+    return 0;
+}
+```
+
+我们可以通过明确指定要调用哪一个版本的 `print()` 来解决这个问题。
+
+```cpp
+c.A::print(); // prints A
+```
+
+尽管这种解决办法并不算复杂，但是当继承链较长并且包含多个基类时，这种问题可能会变得非常复杂。
+
+比这更糟糕的是菱形继承（diamond inheritance）问题，这是一种特殊的多重继承问题，其中一个类继承自两个类，这两个类又继承自同一个类。例如下面的这个例子：
+
+```cpp
+```cpp
+class A
+{
+};
+
+class B: public A
+{
+};
+
+
+class C: public A
+{
+};
+
+class D: public B, public C
+{
+};
+```
+
+```mermaid
+graph BT;
+
+B--->A
+C--->A
+D--->B
+D--->C
+```
+
+综合以上各种原因，我们最好避免使用多重继承。
+
+## 虚函数（虚拟函数）
+
+**虚函数**（virtual function）是一种特殊的成员函数，当被调用时，它将被解析为最接近引用或指针所指的派生类对象的函数。
+
+如果派生版本的函数与基类版本的函数具有相同的函数签名（函数名、参数类型以及 const）和返回类型，就称这样的函数是**覆盖**的（override）。
+
+??? example "不使用虚函数"
+
+    ```cpp
+    #include <iostream>
+    #include <string_view>
+
+    class Base
+    {
+    public:
+        std::string_view getName() const { return "Base"; }
+    };
+
+    class Derived: public Base
+    {
+    public:
+        std::string_view getName() const { return "Derived"; }
+    };
+
+    int main()
+    {
+        Derived derived {};
+        Base& rBase{ derived };
+        std::cout << "rBase is a " << rBase.getName() << '\n';
+
+        return 0;
+    }
+    ```
+
+    这段代码的输出是 `rBase is a Base`，而不是 `rBase is a Derived`。这是因为 rBase 被认为是一个指向 Base 类型的指针，它只能访问 `derived` 的 Base 部分，因此它调用的是 Base::getName()，而不是 Derived::getName()。
+
+    上述情况对于 `Base* pBase{ &derived };` 也是一样的。
+
+要使一个函数成为虚函数，我们需要在函数声明前加上 `virtual` 关键字。
+
+这是上面这个例子改为使用虚函数的版本。
+
+??? example "使用虚函数"
+
+    ```cpp
+    #include <iostream>
+    #include <string_view>
+
+    class Base
+    {
+    public:
+        virtual std::string_view getName() const { return "Base"; }
+    };
+
+    class Derived: public Base
+    {
+    public:
+        virtual std::string_view getName() const { return "Derived"; }
+    };
+
+    int main()
+    {
+        Derived derived {};
+        Base& rBase{ derived };
+        std::cout << "rBase is a " << rBase.getName() << '\n';
+
+        return 0;
+    }
+    ```
+
+    这段代码的输出是 `rBase is a Derived`，这是因为 `getName()` 是一个虚函数，它会被解析为最接近引用或指针所指的派生类对象的函数。
+
+由于 Base::getName() 是虚函数，因此在评估 `rBase.getName()` 时，编译器会查看是否有“更派生”的版本的 `getName()` 函数。在这种情况下，Derived::getName() 是一个更符合要求的版本，因此它将被调用。
+
+!!! tip
+    虚函数解析仅在通过指针或引用去调用一个类类型对象的虚函数时发生。
+    
+虚函数让编译器能将指针/引用的类型和实际被指向的对象的类型区分开。当我们直接在一个对象上调用虚成员函数时，将始终调用与这个对象的派生类匹配的函数。
+
+!!! info "多态"
+    在编程中，**多态**（polymorphism）泛指一个实体具有多种形式的能力。
+
+    - 编译时多态（compile-time polymorphism）是指编译器解析方式的多态性，包括重载解析和模板解析等。
+    - 运行时多态（run-time polymorphism）是指程序在运行时选择调用的函数的多态性，包括虚函数解析等。
+
+- 派生类函数的签名必须与基类中虚拟函数的签名完全相同，否则它不会被视为覆盖，而是一个新的函数。这种情况下程序或许能正常编译，但将不会按照我们的预期运行
+- 如果一个成员函数是 virtual 的，那么从这个类派生出来的所有类的相同函数都将被隐式声明为虚函数，除非它们被声明为非虚函数。
+
+    - 这条规则并没有逆——如果派生类中的覆盖是一个虚函数，基类中的函数也不会自动变成虚函数。
+
+!!! warning "不要在构造函数或析构函数中调用虚函数！"
+    - 当创建一个派生类时，它的基类部分会被首先构造，如果我们想要在 Base 的构造函数中调用一个虚函数，那么这个虚函数将会被解析为 Base 的版本，因为此时派生类部分还没有可以被调用的函数。
+    - 类似地，当我们在基类的析构函数中调用虚函数时，因为此时派生类的所有函数都已经被销毁，所以调用的将是 Base 的版本。
+
+    综上所述，我们不应该在构造函数或析构函数中调用虚函数！
+
+### override、final 和 covariant 返回类型
+
+!!! info "override 和 final"
+    C++ 具有两个与继承相关的标识符：`override` 和 `final`。它们两个不是关键字，C++ 标准称它们为 *identifiers with special meaning*，即具有特殊含义的标识符，但通常被称为说明符。
+
+#### override
+
+正如我们之前提到的那样，仅当函数签名和返回类型都完全匹配时，派生类中的虚函数才被视为覆盖。我们有时候希望一个函数成为覆盖，但实际上由于各种原因它并没有把来自于基类的函数覆盖，而这就是 override 该发挥作用的时候了。
+
+考虑下面的这个例子：
+
+??? example
+
+    ```cpp
+    #include <iostream>
+    #include <string_view>
+
+    class A
+    {
+    public:
+        virtual std::string_view getName1(int x) { return "A"; }
+        virtual std::string_view getName2(int x) { return "A"; }
+    };
+
+    class B : public A
+    {
+    public:
+        virtual std::string_view getName1(short x) { return "B"; } // note: parameter is a short
+        virtual std::string_view getName2(int x) const { return "B"; } // note: function is const
+    };
+
+    int main()
+    {
+        B b{};
+        A& rBase{ b };
+        std::cout << rBase.getName1(1) << '\n';
+        std::cout << rBase.getName2(2) << '\n';
+
+        return 0;
+    }
+    ```
+
+由于 rBase 是指向 B 对象的 A 类型参考，我们实际上想要做的是调用 B::getName1() 和 B::getName2()。但是由于 B::getName1 和 B::getName2 的签名与 A::getName1 和 A::getName2 不完全匹配，因此它们不会被视为覆盖。
+
+因此，这段程序将会输出
+
+```plaintext
+A
+A
+```
+
+在更复杂的程序中，像这样错误地调用了意料之外的函数可能导致更大的错误，并且这也难以调试。为了解决这种我们希望成为覆盖，但并没有成为覆盖的情况，我们可以把 override 说明符应用到一个虚拟函数上，以告知编译器这个函数必须是一个覆盖。
+
+!!! tip
+    override 说明符应当被放置在成员函数声明的末尾，如果这个成员函数是 const 的，那么就放置在 const 关键字之后。例如
+
+    ```cpp
+    return_type function_name(parameters) const override;
+    ```
+
+如果一个被标记为 override 的函数并没有覆盖任何基类的函数（或应用于一个非虚函数），那么编译器将会报错。
+
+!!! example
+
+    ```cpp
+    #include <string_view>
+
+    class A
+    {
+    public:
+        virtual std::string_view getName1(int x) { return "A"; }
+        virtual std::string_view getName2(int x) { return "A"; }
+        virtual std::string_view getName3(int x) { return "A"; }
+    };
+
+    class B : public A
+    {
+    public:
+        std::string_view getName1(short int x) override { return "B"; } // compile error, function is not an override
+        std::string_view getName2(int x) const override { return "B"; } // compile error, function is not an override
+        std::string_view getName3(int x) override { return "B"; } // okay, function is an override of A::getName3(int)
+
+    };
+
+    int main()
+    {
+        return 0;
+    }
+    ```
+
+    这段程序会产生两个编译错误，一个发生在 `B::getName1()`，另一个发生在 `B::getName2()`。这是因为 `B::getName1()` 的参数类型与 `A::getName1()` 不匹配，`B::getName2()` 比 `A::getName2(`) 多了一个 const。
+
+使用 override 不会造成性能上的损失，并且它能确保我们确实覆盖了一个基类的函数，因此我们应该用 override 来标注所有的覆盖虚函数。
+
+此外，由于 override 已经假定了这个成员函数是虚函数，因此我们不需要再次使用 virtual 关键字。
+
+!!! abstract
+    - 在基类的虚函数上使用 virtual 关键字
+    - 在派生类的覆盖函数上使用 override 说明符，但不使用 virtual 关键字
+
+#### final
+
+有时，我们不希望一个虚拟函数被派生类所覆盖，或是不希望一个类再被其他类所继承，那么我们就可以使用 final 说明符。被指定为 final 的虚函数将不能被覆盖，被指定为 final 的类也将不能被继承，否则将会出现编译错误。
+
+final 说明符也同样应该出现在函数声明的最后位置，如果同时还有 const 和 override，那么就应按照 const override final 的顺序来书写。
+
+!!! example
+
+    === "虚函数使用 final" hl_lines="12"
+
+        ```cpp
+        #include <string_view>
+
+        class A
+        {
+        public:
+            virtual std::string_view getName() const { return "A"; }
+        };
+
+        class B : public A
+        {
+        public:s
+            std::string_view getName() const override final { return "B"; } 
+            // okay, overrides A::getName()
+        };
+
+        class C : public B
+        {
+        public:
+            std::string_view getName() const override { return "C"; } 
+            // compile error: overrides B::getName(), which is final
+        };
+        ```
+
+        这里我们尝试在 C 类中覆盖一个在 B 类中已经被标注为 final 的函数，于是就出现了编译错误。
+
+    === "类使用 final" 
+
+        ```cpp hl_lines="13"
+        #include <string_view>
+
+        class A
+        {
+        public:
+            virtual std::string_view getName() const { return "A"; }
+        };
+
+        class B : public A
+        {
+        public:
+            std::string_view getName() const override final { return "B"; } 
+            // okay, overrides A::getName()
+        };
+
+        class C : public B
+        {
+        public:
+            std::string_view getName() const override { return "C"; } 
+            // compile error: overrides B::getName(), which is final
+        };
+        ```
+
+        这里类 B 被标注为 final，因此当我们试图让 C 继承 B 时就会出现编译错误。
+
+#### 协变返回类型
+
+在某些情况下，我们希望派生类的覆盖函数能具有与基类函数不同的返回类型，并且仍被视为一个覆盖。如果虚函数的返回类型是指向某些类的指针或引用，那么覆盖函数将可以返回从*这个类派生出来的类的指针或引用*，并且仍被视为一个覆盖。这称之为**协变返回类型**（covariant return types）。
+
+!!! example
+
+    ```cpp 
+    #include <iostream>
+    #include <string_view>
+
+    class Base
+    {
+    public:
+        // returns a pointer to a Base class
+        virtual Base* getThis() 
+        { 
+            std::cout << "called Base::getThis()\n"; 
+            return this; 
+        }
+
+        void printType() { std::cout << "returned a Base\n"; }
+    };
+
+    class Derived : public Base
+    {
+    public:
+        // Because Derived is derived from Base, it's okay to return Derived* instead of Base*
+        Derived* getThis() override 
+        { 
+            std::cout << "called Derived::getThis()\n";  
+            return this; 
+        }
+
+        void printType() { std::cout << "returned a Derived\n"; }
+    };
+
+    int main()
+    {
+        Derived d{};
+        Base* b{ &d };
+        // calls Derived::getThis(), returns a Derived*, calls Derived::printType
+        d.getThis()->printType(); 
+        // calls Derived::getThis(), returns a Base*, calls Base::printType
+        b->getThis()->printType(); 
+
+        return 0;
+    }
+    ```
+
+    这段程序将会输出
+
+    ```
+    called Derived::getThis()
+    returned a Derived
+    called Derived::getThis()
+    returned a Base
+    ```
+
+    需要强调的是，C++ 无法动态选择类型，因此我们始终将获得与函数调用者相匹配的返回类型。
+
+    在上面的示例中，我们首先调用 `d.getThis()`。由于 d 是 `Derived` 类的，这将会调用 `Derived::getThis()`，于是我们得到 `Derived*`。接着我们使用这个指针调用了 `Derived::printType()`。
+
+    然而，当我们调用 `b->getThis()` 时，由于 b 是一个指向了 Derived 类的 Base 指针，而 `Base::getThis()` 是一个虚函数，所以我们实际上调用的是 `Derived::getThis()`。这时候有趣的事情就发生了，虽然 `Derived::getThis()` 返回的类型是 `Derived*`，但由于我们是通过 `Base*` 来调用的，我们将收到这个函数在 Base 版本的返回值 `Base*`。接着我们使用这个 `Base*` 调用了 `Base::printType()`，它不是一个虚函数，因此实际上调用的就是它自己，输出 `returned a Base`。
+
+    !!! tip 
+        如果 `Base::printType()` 是一个虚拟函数，那么在第二种情况下被调用的将是 `Derived::getThis()`。
+
+### 虚析构函数
+
+当我们没有提供析构函数时，C++ 编译器会为我们的类提供一个默认的析构函数，但有时候我们需要自己定义一个析构函数（尤其是在这个类需要处理动态分配的资源时）。
+
+在继承的语境下，我们始终应该让我们的析构函数是 virtual 的。这是因为当我们 delete 一个指向派生类对象的基类指针时，我们希望调用派生类的析构函数，而不是基类的析构函数。比如下面的这个例子：
+
+```cpp
+#include <iostream>
+class Base
+{
+public:
+    ~Base() // note: not virtual
+    {
+        std::cout << "Calling ~Base()\n";
+    }
+};
+
+class Derived: public Base
+{
+private:
+    int* m_array {};
+
+public:
+    Derived(int length)
+      : m_array{ new int[length] }
+    {
+    }
+
+    ~Derived() // note: not virtual
+    {
+        std::cout << "Calling ~Derived()\n";
+        delete[] m_array;
+    }
+};
+
+int main()
+{
+    Derived* derived { new Derived(5) };
+    Base* base { derived };
+
+    delete base;
+
+    return 0;
+}
+```
+
+因为 base 是一个 Base 指针，当我们对它使用 delete 时，程序发现 Base 的析构函数不是虚函数，因此它只会调用 Base 的析构函数，而不会调用 Derived 的析构函数。这将导致 Derived 类中动态分配的内存泄漏，并输出
+
+```plaintext
+Calling ~Base()
+```
+
+当我们希望调用派生类的析构函数时，我们应该将基类的析构函数声明为虚函数。
+
+```cpp
+class Base
+{
+public:
+    virtual ~Base() // note: virtual
+    {
+        std::cout << "Calling ~Base()\n";
+    }
+};
+
+class Derived: public Base
+{
+private:
+    int* m_array {};
+
+public:
+    Derived(int length)
+      : m_array{ new int[length] }
+    {
+    }
+
+    virtual ~Derived() // note: virtual
+    {
+        std::cout << "Calling ~Derived()\n";
+        delete[] m_array;
+    }
+}
+```
+
+现在这个动态数组的内存将会被正确地释放，输出
+
+```plaintext
+Calling ~Derived()
+Calling ~Base()
+```
+
+!!! note 
+    当处理继承关系时，我们应该始终将基类的析构函数显式声明为虚函数。
+
+就像普通的虚函数一样，如果基类的析构函数是虚函数，那么派生类的析构函数也将自动成为虚函数，因此我们不需要仅仅为了把析构函数标记为 virtual 而在派生类中再次声明一个空的虚析构函数。
+
+!!! tip
+    如果我们希望基类拥有一个空的虚析构函数，我们可以这么定义：
+
+    ```cpp
+    virtual ~Base() = default; // generate a virtual default destructor
+    ```
 
 
 ---
