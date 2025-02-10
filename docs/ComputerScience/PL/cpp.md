@@ -2154,7 +2154,7 @@ l-value reference to const: 5
 r-value reference: 5
 ```
 
-右值作为函数参数常常用于[移动语义](#移动语义)
+右值作为函数参数常常用于[移动语义](#_70)
 
 !!! tip
 
@@ -2164,8 +2164,6 @@ r-value reference: 5
     ```
 
     上面的代码片段实际上调用的是 `fun(const int&)` 而非 `fun(int&&)`，因为 `ref` 虽然具有类型 `int&&`，但在表达式中使用时它是一个左值，因此实际上会调用 `fun(const int&)`。
-
-
 
 
 ---
@@ -7021,6 +7019,220 @@ Calling ~Base()
     ```cpp
     virtual ~Base() = default; // generate a virtual default destructor
     ```
+
+### 纯虚函数、抽象类和接口类
+
+#### 纯虚函数和抽象基类
+
+C++ 允许我们定义一种没有任何函数体的特殊的虚函数，称为**纯虚函数**（pure virtual function）。纯虚函数相当于一个占位符，它必须被派生类重新定义。
+
+要创建一个纯虚函数，我们只需要将函数赋值为 0。
+
+```cpp
+class Base
+{
+public:
+    std::string_view sayHi() const { return "Hi"; } 
+    // a normal non-virtual function
+
+    virtual std::string_view getName() const { return "Base"; } 
+    // a normal virtual function
+
+    virtual int getValue() const = 0; 
+    // a pure virtual function
+
+    int doSomething() = 0; 
+    // Compile error: can not set non-virtual functions to 0
+};
+```
+
+一个类中包含了至少一个纯虚函数的类称为**抽象基类**（abstract base class）。抽象基类不可被实例化。
+
+```cpp
+int main()
+{
+    Base base {}; // compile error: can't instantiate an abstract class
+    base.getValue(); 
+
+    return 0;
+}
+```
+
+!!! tip
+    任何具有纯虚函数的类也应该具有虚析构函数。
+
+??? extra "带有定义的纯虚函数"
+    事实上我们也可以创建一个具有定义的纯虚函数，只不过这个定义是在类的外部。
+
+    ```cpp
+    #include <iostream>
+
+    class A // This Animal is an abstract base class
+    {
+    protected:
+        int m_id {};
+
+    public:
+        A(int id)
+            : m_id{ id }
+        { }
+
+        const int getID() { return m_id; }
+        virtual int getOne() const = 0; 
+        // The = 0 means this function is pure virtual
+
+        virtual ~A() = default;
+    };
+
+    int A::getOne() const  // even though it has a definition
+    {
+        return 1;
+    }
+    ```
+
+    这种情况下 `getOne()` 仍被认为是一个纯虚函数，并且 A 仍被视为一个抽象基类（不可实例化）。继承 A 的所有类都必须为 `getOne()` 提供一个定义，否则也将被视为抽象基类。
+
+    如果我们对基类提供的默认纯虚函数的实现很满意，就可以直接调用抽象基类中的实现，例如：
+
+    ```cpp
+    class B : public A
+    {
+    public:
+        B(int id)
+            : A{ id }
+        { }
+
+        int getOne() const override
+        {
+            return A::getOne();
+        }
+    };
+
+    int main()
+    {
+        B b {111};
+        std::cout << b.getID() << " " << b.getOne() << '\n';
+
+        return 0;
+    }
+    ```
+
+!!! note 
+    析构函数也可以是纯虚的，但必须给出一个定义，以便于在销毁派生类对象时调用它。
+
+#### 接口类
+
+**接口类**（interface class）是一个没有成员变量的类，并且所有的函数都是纯虚的。
+
+接口类有时以 I 开头来命名，例如
+
+```cpp
+#include <string_view>
+
+class IErrorLog
+{
+public:
+    virtual bool openLog(std::string_view filename) = 0;
+    virtual bool closeLog() = 0;
+
+    virtual bool writeError(std::string_view errorMessage) = 0;
+
+    virtual ~IErrorLog() {} 
+    // 不要忘记在接口类中包含虚析构函数
+};
+```
+
+!!! info "面向对象语言中的接口类"
+    在 Java 和 C# 等现代的编程语言中具有 interface 关键字，以便于直接定义接口类。虽然 Java 和 C# 不允许在普通的类上使用多继承，但它们允许类继承多个接口类。由于接口类中没有成员变量，也没有函数体，这避免了多继承带来的许多问题，同时也为类的应用提供了较多的灵活性。 
+
+### dynamic casting
+
+C++ 允许隐式地将指向派生类的指针转换为指向基类的指针，如 `Derived*` 变为 `Base*`，这个构成有时称为 upcasting。反之，将指向基类的指针类型转换为指向派生类的指针称为 downcasting。
+
+#### dynamic_cast
+
+操作符 `dynamic_cast` 具有几种不同的功能，但它主要的用途就是用于实现 downcasting。`dynamic_cast` 会检查转换是否有效，如果有效，它将返回一个指向派生类对象的指针，否则返回一个空指针。
+
+???+ example
+
+    ```cpp
+    #include <iostream>
+    #include <string>
+    #include <string_view>
+
+    class Base
+    {
+    protected:
+        int m_value{};
+
+    public:
+        Base(int value)
+            : m_value{value}
+        {
+        }
+
+        virtual ~Base() = default;
+    };
+
+    class Derived : public Base
+    {
+    protected:
+        std::string m_name{};
+
+    public:
+        Derived(int value, std::string_view name)
+            : Base{value}, m_name{name}
+        {
+        }
+
+        const std::string& getName() const { return m_name; }
+    };
+
+    Base* getObject(bool returnDerived)
+    {
+        if (returnDerived)
+            return new Derived{1, "Apple"};
+        else
+            return new Base{2};
+    }
+
+    int main()
+    {
+        Base* b{ getObject(true) };
+
+        Derived* d{ dynamic_cast<Derived*>(b) }; 
+        // use dynamic cast to convert Base pointer into Derived pointer
+
+        std::cout << "The name of the Derived is: " << d->getName() << '\n';
+
+        delete b;
+
+        return 0;
+    }
+    ```
+
+上面这个例子之所以起作用，是因为 b 实际上指向的对象确实是一个 `Derived` 对象，因此进行 dynamic_cast 不会出现问题。但是这里我们实际上做出了一个假设：假设 b 指向的对象确实是一个 `Derived` 对象。如果这个假设不成立，那么 dynamic_cast 将失败，它会返回一个空指针 nullptr。
+
+!!! note
+    dynamic_cast 成功时，返回一个指向派生类对象的指针；失败时，返回 nullptr。
+
+为了让上面这个程序更安全，我们最好确保 dynamic_cast 确实成功了
+
+```cpp
+if (d)
+    std::cout << "The name of the Derived is: " << d->getName() << '\n';
+
+```
+
+#### 使用 static_cast 进行 downcasting
+
+`static_cast` 也可以用于 downcasting，它的区别在于 `static_cast` 不会检查转换是否有效，这让它更加快速，但也更加危险。如果这个指针指向的不是一个派生类对象，那么利用 `static_cast` 去访问派生类的成员将会导致未定义行为。
+
+- 我们最好仅在非常非常确定要进行转换的指针是指向派生类对象时才使用 `static_cast`。
+
+#### dynamic_cast 与参考
+
+dynamic_cast 也可用于对参考的转换，但由于不存在所谓的“空参考”，因此如果转换失败，dynamic_cast 将抛出一个类型为 std::bad_cast 的异常。
 
 
 ---
