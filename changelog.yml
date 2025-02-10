@@ -1,0 +1,38 @@
+- "2025":
+  - "2025.1.16":
+    - newpage: 
+        text: 增加 C++ 学习笔记
+        href: ComputerScience/PL/cpp
+
+- "2024":
+  - "2024.12.27":
+    - pageupdate: 
+        赶在期末之前补充了一些之前没来得及写的课程笔记，但是还差好多（x
+
+  - "2024.11.23":
+    - pageupdate: 
+        期中考试结束😇，补了很多之前没有来得及写的课程笔记
+  - "2024.10.8":
+    - pageupdate: 
+        更新了一些课程的笔记
+  - "2024.9.12":
+    - newpage: 
+        新增了大二上学期的一些课程
+  - "2024.9.5":
+    - pageupdate: 
+        text: 补全了线代的期末补天笔记
+        href: MathematicsAndPhysics/LA/LA
+  - "2024.9.5":
+    - pageupdate: 
+        text: 补全了数分的期末补天笔记
+        href: MathematicsAndPhysics/MA
+  - "2024.7.20":
+    - newpage: 
+        text: 更新 CTF Web 与 Misc 的专题部分笔记
+        href: CTF
+  - "2024.7.4":
+    - newpage: 
+        text: 更新 CTF Lec1~3 部分笔记
+        href: CTF
+  - "2024.7.1":
+    - function: 建立网站并添加部分插件

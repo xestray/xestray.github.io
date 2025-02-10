@@ -1,0 +1,2173 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="个人网站...">
+      
+      
+        <meta name="author" content="xestray">
+      
+      
+        <link rel="canonical" href="https://xestray.cc/ComputerScience/ADS/lec-14/">
+      
+      
+        <link rel="prev" href="../lec-13/">
+      
+      
+        <link rel="next" href="../lec-15/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.3">
+    
+    
+      
+        <title>并行算法 - xestray's website</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.d7758b05.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M320 96a32 32 0 1 1-64 0 32 32 0 1 1 64 0m21.1 80C367 158.8 384 129.4 384 96c0-53-43-96-96-96s-96 43-96 96c0 33.4 17 62.8 42.9 80H224c-17.7 0-32 14.3-32 32s14.3 32 32 32h32v208h-48c-53 0-96-43-96-96v-6.1l7 7c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L97 263c-9.4-9.4-24.6-9.4-33.9 0L7 319c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l7-7v6.1c0 88.4 71.6 160 160 160h160c88.4 0 160-71.6 160-160v-6.1l7 7c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-56-56c-9.4-9.4-24.6-9.4-33.9 0l-56 56c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l7-7v6.1c0 53-43 96-96 96h-48V240h32c17.7 0 32-14.3 32-32s-14.3-32-32-32h-10.9z"/></svg>');--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="m368.4 18.3-55.7 55.8 125.2 125.2 55.7-55.7c21.9-21.9 21.9-57.3 0-79.2l-46-46.1c-21.9-21.9-57.3-21.9-79.2 0M288 94.6l-9.2 2.8-144.1 43.2c-19.9 6-35.7 21.2-42.3 41L3.8 445.8c-3.8 11.3-1 23.9 7.3 32.4l153.6-153.5c-3-6.3-4.7-13.3-4.7-20.7 0-26.5 21.5-48 48-48s48 21.5 48 48-21.5 48-48 48c-7.4 0-14.4-1.7-20.7-4.7L33.7 500.9c8.6 8.3 21.1 11.2 32.4 7.3l264.3-88.6c19.7-6.6 35-22.4 41-42.3l43.2-144.1 2.7-9.2z"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M40 48c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h48c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24zm152 16c-17.7 0-32 14.3-32 32s14.3 32 32 32h288c17.7 0 32-14.3 32-32s-14.3-32-32-32zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32h288c17.7 0 32-14.3 32-32s-14.3-32-32-32zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32h288c17.7 0 32-14.3 32-32s-14.3-32-32-32zM16 232v48c0 13.3 10.7 24 24 24h48c13.3 0 24-10.7 24-24v-48c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24m24 136c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h48c13.3 0 24-10.7 24-24v-48c0-13.3-10.7-24-24-24z"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M272 384c9.6-31.9 29.5-59.1 49.2-86.2 5.2-7.1 10.4-14.2 15.4-21.4 19.8-28.5 31.4-63 31.4-100.3C368 78.8 289.2 0 192 0S16 78.8 16 176c0 37.3 11.6 71.9 31.4 100.3 5 7.2 10.2 14.3 15.4 21.4 19.8 27.1 39.7 54.4 49.2 86.2h160zm-80 128c44.2 0 80-35.8 80-80v-16H112v16c0 44.2 35.8 80 80 80m-80-336c0 8.8-7.2 16-16 16s-16-7.2-16-16c0-61.9 50.1-112 112-112 8.8 0 16 7.2 16 16s-7.2 16-16 16c-44.2 0-80 35.8-80 80"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7l233.4-233.3c12.5-12.5 32.8-12.5 45.3 0z"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512m-86.2-346.7c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1 0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6-13.3 0-24-10.7-24-24v-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1 0-8.4-6.8-15.1-15.1-15.1h-58.3c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1-64 0"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7.2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8.2-40.1l216-368C228.7 39.5 241.8 32 256 32m0 128c-13.3 0-24 10.7-24 24v112c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24m32 224a32 32 0 1 0-64 0 32 32 0 1 0 64 0"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c4.97 0 9 3.58 9 8s-6 10-9 10-9-5.58-9-10 4.03-8 9-8m-1.69 7.93C9.29 9.29 7.47 8.58 6.25 9.34s-1.38 2.71-.36 4.35c1.03 1.64 2.85 2.35 4.07 1.59 1.22-.78 1.37-2.71.35-4.35m3.38 0c-1.02 1.64-.87 3.57.35 4.35 1.22.76 3.04.05 4.07-1.59 1.02-1.64.86-3.59-.36-4.35s-3.04-.05-4.06 1.59M12 17.75c-2 0-2.5-.75-2.5-.75 0 .03.5 2 2.5 2s2.5-2 2.5-2-.5.75-2.5.75"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32v11.5c0 49.9-60.3 74.9-95.6 39.6l-8.2-8.1C107.7 62.5 87.5 62.5 75 75s-12.5 32.8 0 45.3l8.2 8.2c35.2 35.2 10.2 95.5-39.7 95.5H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h11.5c49.9 0 74.9 60.3 39.6 95.6l-8.1 8.2c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l8.2-8.2c35.3-35.3 95.6-10.3 95.6 39.6V480c0 17.7 14.3 32 32 32s32-14.3 32-32v-11.5c0-49.9 60.3-74.9 95.6-39.6l8.2 8.2c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-8.2-8.2c-35.3-35.3-10.3-95.6 39.6-95.6h11.5c17.7 0 32-14.3 32-32s-14.3-32-32-32h-11.5c-49.9 0-74.9-60.3-39.6-95.6l8.2-8.2c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-8.2 8.2C348.3 118.4 288 93.4 288 43.5zM176 224a48 48 0 1 1 96 0 48 48 0 1 1-96 0m128 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M320 0c17.7 0 32 14.3 32 32v64h120c39.8 0 72 32.2 72 72v272c0 39.8-32.2 72-72 72H168c-39.8 0-72-32.2-72-72V168c0-39.8 32.2-72 72-72h120V32c0-17.7 14.3-32 32-32M208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16zM264 256a40 40 0 1 0-80 0 40 40 0 1 0 80 0m152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80M48 224h16v192H48c-26.5 0-48-21.5-48-48v-96c0-26.5 21.5-48 48-48m544 0c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48h-16V224z"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M288 0H128c-17.7 0-32 14.3-32 32s14.3 32 32 32v132.8c0 11.8-3.3 23.5-9.5 33.5L10.3 406.2C3.6 417.2 0 429.7 0 442.6 0 480.9 31.1 512 69.4 512h309.2c38.3 0 69.4-31.1 69.4-69.4 0-12.8-3.6-25.4-10.3-36.4L329.5 230.4c-6.2-10.1-9.5-21.7-9.5-33.5V64c17.7 0 32-14.3 32-32S337.7 0 320 0zm-96 196.8V64h64v132.8c0 23.7 6.6 46.9 19 67.1l34.5 56.1h-171l34.5-56.1c12.4-20.2 19-43.4 19-67.1"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6 31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5 50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5l112.2-112.3c31.5-31.5 82.5-31.5 114 0 27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0z"/></svg>');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=LXGW+WenKai+Screen:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"LXGW WenKai Screen";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings1.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings2.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings3.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings4.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings5.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings6.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-material.css">
+    
+      <link rel="stylesheet" href="../../../css/toc_extra.css">
+    
+      <link rel="stylesheet" href="../../../css/timeline.css">
+    
+      <link rel="stylesheet" href="https://fonts.font.im/css2?family=Noto+Serif+SC">
+    
+      <link rel="stylesheet" href="https://fonts.font.im/css?family=Gloria+Hallelujah">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="../../../css/changelogs.css">
+    
+      <link rel="stylesheet" href="../../../css/newadmonitions.css">
+    
+      <link rel="stylesheet" href="../../../css/cards.css">
+    
+      <link rel="stylesheet" href="../../../css/card.css">
+    
+      <link rel="stylesheet" href="../../../css/custom.css">
+    
+      <link rel="stylesheet" href="../../../css/changelog_extra.css">
+    
+      <link rel="stylesheet" href="../../../css/counter.css">
+    
+      <link rel="stylesheet" href="../../../css/fold_toc.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config",""),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="xestray&#39;s website" class="md-header__button md-logo" aria-label="xestray's website" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 7V5h2V4a2 2 0 0 1 2-2h6v7l2.5-1.5L18 9V2h1c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7zm4 4H5v2h2zm0-4V5H5v2zm0 12v-2H5v2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            xestray's website
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              并行算法
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="indigo"  aria-label="太耀眼了"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="太耀眼了" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="1bdbe9b0" data-md-color-accent="indigo"  aria-label="要有光"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="要有光" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/xestray/xestray.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    xestray
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+    
+  
+  Computer Science
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../MathematicsAndPhysics/MA/MA/" class="md-tabs__link">
+          
+  
+    
+  
+  数理
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../CTF/" class="md-tabs__link">
+          
+  
+    
+  
+  CTF
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../others/WhatToDo/" class="md-tabs__link">
+          
+  
+    
+  
+  Others
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tags/" class="md-tabs__link">
+        
+  
+    
+  
+  标签
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="xestray&#39;s website" class="md-nav__button md-logo" aria-label="xestray's website" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 7V5h2V4a2 2 0 0 1 2-2h6v7l2.5-1.5L18 9V2h1c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7zm4 4H5v2h2zm0-4V5H5v2zm0 12v-2H5v2z"/></svg>
+
+    </a>
+    xestray's website
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/xestray/xestray.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    xestray
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Computer Science
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Computer Science
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../PL/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    编程语言
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    高级数据结构与算法分析
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            高级数据结构与算法分析
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lec-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AVL树与Splay树与摊还分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lec-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    红黑树与B+树
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lec-3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    倒排文件索引
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lec-4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    左倾堆与斜堆
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lec-5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二项堆
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lec-6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    回溯法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lec-7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    分治法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lec-8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    动态规划
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lec-9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    贪心算法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lec-10/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NP完全性
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lec-11/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    近似算法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lec-12/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    局部搜索
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lec-13/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    随机算法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    并行算法
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    并行算法
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      概念与定理
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      并行求和问题
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      前缀和问题
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      归并问题
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="归并问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      简单的想法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      划分范式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      寻找最大元素问题
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="寻找最大元素问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      不使用划分范式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#doubly-logarithmic-paradigm" class="md-nav__link">
+    <span class="md-ellipsis">
+      双对数范式（Doubly-logarithmic Paradigm）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accelerating-cascades-paradigm" class="md-nav__link">
+    <span class="md-ellipsis">
+      加速级联范式（Accelerating Cascades Paradigm）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      随机算法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lec-15/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    外部排序
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../COD/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    计算机组成与设计
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../MathematicsAndPhysics/MA/MA/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    数理
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../CTF/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    CTF
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../others/WhatToDo/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Others
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tags/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    标签
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      概念与定理
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      并行求和问题
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      前缀和问题
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      归并问题
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="归并问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      简单的想法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      划分范式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      寻找最大元素问题
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="寻找最大元素问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      不使用划分范式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#doubly-logarithmic-paradigm" class="md-nav__link">
+    <span class="md-ellipsis">
+      双对数范式（Doubly-logarithmic Paradigm）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accelerating-cascades-paradigm" class="md-nav__link">
+    <span class="md-ellipsis">
+      加速级联范式（Accelerating Cascades Paradigm）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      随机算法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="_1">并行算法<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8zm6.78 1a.7.7 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38z"/></svg></span> 约 6349 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6m80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3l89.3 89.4-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3"/></svg></span> 22 行代码 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 17H7V3h14m0-2H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2M3 5H1v16a2 2 0 0 0 2 2h16v-2H3m12.96-10.71-2.75 3.54-1.96-2.36L8.5 15h11z"/></svg></span> 12 张图片 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3z"/></svg></span> 预计阅读时间 26 分钟</p>
+</div>
+<p>并行算法的主要设计思路是将一个大的任务分解为多个互不干扰的小任务，然后将这些小任务分配给多个处理器并行执行，从而更好利用现代计算机多核的优势，提高计算的效率和性能。虽然在对问题进行分解和合并时有可能会增加任务的整体工作量，但由于我们可以使用多个处理器来运行这个任务，实际上的计算时间会大大减少。</p>
+<h2 id="_2">概念与定理<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">加速比</p>
+<p><strong>加速比</strong>（Speedup）是指在并行计算中，使用 <span class="arithmatex">\(p\)</span> 个处理器时相对于使用一个处理器时的性能提升比例，即
+$$ S(p) = \frac{T_1}{T_p} $$
+其中 <span class="arithmatex">\(T_1\)</span> 是使用一个处理器时的运行时间，<span class="arithmatex">\(T_p\)</span> 是使用 <span class="arithmatex">\(p\)</span> 个处理器时的运行时间。</p>
+</div>
+<p>在最理想的情况下，加速比是 <span class="arithmatex">\(p\)</span>，即使用 <span class="arithmatex">\(p\)</span> 个处理器时的运行时间是使用一个处理器时的 <span class="arithmatex">\(1/p\)</span>。但实际上，由于并行计算中存在一些额外的开销，如通信开销、同步开销等，同时代码还有可能存在一些不能并行处理的部分、每一个处理器未必能被分配到完全相同的工作量，因此加速比一般来说会小于 <span class="arithmatex">\(p\)</span>。</p>
+<div class="admonition note">
+<p class="admonition-title">内存共享模型</p>
+<p>一般来说，我们在讨论并行计算时会假设所有处理器共享一个连续的内存空间，此外模型还允许同一位置上同时进行多个访问。这种算法模型被称之为 <strong>PRAM 模型</strong>（Parallel Random Access Machine）。</p>
+<p>我们忽略掉一些内存和处理器上的细节，规定这一模型有如下三种内存共享方式：</p>
+<ol>
+<li><strong>EREW</strong>（Exclusive Read Exclusive Write）：每个内存位置在任意时刻只能被一个处理器读取或写入；</li>
+<li><strong>CREW</strong>（Concurrent Read Exclusive Write）：每个内存位置在任意时刻可以被多个处理器读取，但只能被一个处理器写入；</li>
+<li>
+<p><strong>CRCW</strong>（Concurrent Read Concurrent Write）：每个内存位置在任意时刻可以被多个处理器读取或写入，因为写入涉及到同时写入不同值可能造成的冲突，因此写入策略又可以分为如下三种：</p>
+<ul>
+<li><strong>CRCW-C（Common）</strong>：所有处理器写入的值相同时才会写入；</li>
+<li><strong>CRCW-A（Arbitrary）</strong>：所有处理器写入的值可以不同，任意选取其中一个写入即可；</li>
+<li><strong>CRCW-P（Priority）</strong>：所有处理器写入的值可以不同，但是有一个优先级，只有优先级最高的写入才会生效。</li>
+</ul>
+</li>
+</ol>
+</div>
+<p>由于程序中不一定所有的内容都可以被并行执行，那些必须串行执行的部分会影响程序的最大加速比。</p>
+<div class="admonition info">
+<p class="admonition-title">阿姆达尔定律（Amdahl's Law）</p>
+<p>设 $0 \leqslant f \leqslant 1 $ 是一个程序中必须串行执行的部分的比例，那么使用 <span class="arithmatex">\(p\)</span> 个处理器的最大加速比 <span class="arithmatex">\(S(p)\)</span> 满足
+$$ S(p) = \frac{1}{f + (1-f) / p} $$</p>
+<p><strong>证明：</strong> 设整个程序串行执行需要的时间为 <span class="arithmatex">\(t\)</span>，那么串行部分的时间为 <span class="arithmatex">\(ft\)</span>，并行部分的时间为 <span class="arithmatex">\((1−f)t\)</span>。使用 <span class="arithmatex">\(p\)</span> 个处理器时，串行部分的时间不变，而并行部分的时间最少为 <span class="arithmatex">\((1−f)t/p\)</span>，因此总时间最小为 <span class="arithmatex">\(ft +(1−f)t/p\)</span>，因此加速比最大为
+$$ S(p) = \frac{t}{ft + (1−f)t/p} = \frac{1}{f + (1−f)/p} $$</p>
+<ul>
+<li>这个定理有一个隐含的假设：当问题规模扩大时，串行计算的部分也会增大。</li>
+</ul>
+</div>
+<div class="admonition info">
+<p class="admonition-title">古斯塔夫森定律（Gustafson's Law）</p>
+<p>设某个程序使用 <span class="arithmatex">\(p\)</span> 个处理器并行执行时，串行部分使用的时间为 <span class="arithmatex">\(f_1\)</span>（不是比例），并行部分使用的时间为 <span class="arithmatex">\(f_2\)</span>，那么使用 <span class="arithmatex">\(p\)</span> 个处理器的最大加速比 <span class="arithmatex">\(S(p)\)</span> 满足
+$$ S(p) = \dfrac{f_1 + f_2 \cdot p}{f_1 + f_2} $$</p>
+<p><strong>证明：</strong>由假设可知，使用 <span class="arithmatex">\(p\)</span> 个处理器并行执行的时间为 <span class="arithmatex">\(T_p = f_1 + f_2\)</span>，使用一个处理器串行执行的时间应当为 <span class="arithmatex">\(T_1 = f_1 + f_2 \cdot p\)</span> ，因此加速比为
+$$ S(p) = \frac{T_1}{T_p} = \frac{f_1 + f_2 \cdot p}{f_1 + f_2} $$</p>
+<ul>
+<li>古斯塔夫森定律认为，当问题规模扩大时，串行计算的部分不会增大，而是会保持一个固定的值。</li>
+</ul>
+</div>
+<div class="admonition info">
+<p class="admonition-title">孙-倪定律（Sun-Ni's Law）</p>
+<p>设某个程序串行部分占比为 <span class="arithmatex">\(f\)</span>，并行部分占比为 <span class="arithmatex">\(1−f\)</span>，内存受限函数为 <span class="arithmatex">\(G(p)\)</span>，那么使用 <span class="arithmatex">\(p\)</span> 个处理器的最大加速比 <span class="arithmatex">\(S(p)\)</span> 满足
+$$ S(p) = \cfrac{f + (1-f) \cdot G(p)}{f + \cfrac{(1-f) \cdot G(p)}{p}} $$</p>
+<ul>
+<li>假设 <span class="arithmatex">\(G(p) = 1\)</span>，则问题大小是固定的或是与资源增加无关的，内存限制加速模型简化为 Amdahl 定律</li>
+<li>假设 <span class="arithmatex">\(G(p) = p\)</span>，则内存限制加速模型简化为 Gustafson 定律，这意味着当内存容量增加 <span class="arithmatex">\(p\)</span> 倍，工作负载也增加 <span class="arithmatex">\(p\)</span> 倍</li>
+</ul>
+<p>孙-倪定律是对阿姆达尔定律和古斯塔夫森定律的统一和扩展，它认为在实际应用中，串行部分的比例 <span class="arithmatex">\(f\)</span> 会随着问题规模的增大而减小，因此加速比会随着问题规模的增大而增大。</p>
+</div>
+<p>事实上上面的三个定律都是粗糙的估计，我们想要更精细地分析加速比，还需要下面两个定义：</p>
+<div class="admonition note">
+<p class="admonition-title">W 与 D</p>
+<ul>
+<li>
+<p>我们称工作量（work，workload）<span class="arithmatex">\(W\)</span> 是并行中所有任务的总时间，实际上就是使用一个处理器来执行整个任务的执行时间。$$ W = T_1 $$</p>
+</li>
+<li>
+<p>我们称深度（depth）<span class="arithmatex">\(D\)</span> 是并行中最长的路径的时间，最长的路径也被称为关键路径，关键路径上的任务有相互依赖的关系，需要一个接一个地执行。</p>
+<p>关键路径的长度就是并行执行时间的一个下限，实际上就是使用无限多个处理器来执行整个任务的执行时间。$$ D = T_{\infty} $$</p>
+</li>
+</ul>
+</div>
+<p>有了上面两个定义，我们就可以把算法的平均并行度定义为
+$$ \frac{W}{D} = \frac{T_1}{T_{\infty}} $$</p>
+<div class="admonition info">
+<p class="admonition-title">布伦特定理 Brent's Theorem</p>
+<p>设一个并行计算问题的工作量为 <span class="arithmatex">\(W\)</span>，关键路径长度为 <span class="arithmatex">\(D\)</span>，那么使用 <span class="arithmatex">\(p\)</span> 个处理器的并行时间具有如下的上下界：
+$$ \frac{W}{p} \leqslant T_p \leqslant \frac{W-D}{p} + D $$</p>
+<p><strong>证明：</strong>这个下界是很显然的，因为一定只有最理想的情况下才能把任务完全均分为 <span class="arithmatex">\(p\)</span> 份并行执行。</p>
+<p>对于上界，因为关键路径长度为 <span class="arithmatex">\(D\)</span>，因此整个算法的执行可以分为 <span class="arithmatex">\(D\)</span> 个内部并行、互相之间串行的阶段，设每个阶段的工作量为 <span class="arithmatex">\(W_i\)</span>，则有
+$$ W = \sum_{i=1}^{D} W_i $$
+使用 <span class="arithmatex">\(p\)</span> 个处理器时，每一个阶段所需的时间为 $ \lceil W_i/p \rceil$，因此我们需要的总时间就是
+$$ T_p = \sum_{i=1}^{D} \lceil W_i/p \rceil = \sum_{i=1}^{D}(\lfloor \dfrac{W_i - 1}{p} \rfloor + 1)   \leqslant \sum_{i=1}^{D} (\frac{W_i - 1}{p} + 1) = \frac{W-D}{p} + D $$</p>
+<p>其中我们使用了等式
+$$ \lceil \frac{x}{y} \rceil = \lfloor \frac{x-1}{y} \rfloor + 1 $$</p>
+</div>
+<blockquote>
+<p>PPT 中给出的上界是 <span class="arithmatex">\(\dfrac{W}{p} + D\)</span>，做题时或许需要考虑按 PPT 的结论还是按上面推导出来的结论 </p>
+</blockquote>
+<h2 id="_3">并行求和问题<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>我们首先来看一个简单的并行算法问题，即求出一个长度为 <span class="arithmatex">\(n\)</span> 的数组的所有元素的和。</p>
+<p>我们可以很自然地想到可以把这些数组的元素两两相加，再把结果继续两两相加，直到最后得到一个结果。这样就构成了下图的一个平衡二叉树。</p>
+<figure>
+    <img src="../assets/并行求和问题.png" width="75%">
+</figure>
+
+<p>在这里每一层结点都需要单独计算一次，因此深度 <span class="arithmatex">\(D\)</span> 就是树的高度，工作量 <span class="arithmatex">\(W\)</span> 就是所有结点的数量。于是
+$$ W = O(n), \quad D = O(\log n) $$</p>
+<p>我们可以定义 <span class="arithmatex">\(B(h,i)\)</span> 为这棵树中从下往上数第 <span class="arithmatex">\(h\)</span> 层（从 0 开始）的第 <span class="arithmatex">\(i\)</span> 个结点（从 1 开始）对应的值，那么有如下递推关系：
+$$ B(h,i) = B(h-1,2i-1) + B(h-1,2i) $$</p>
+<h2 id="_4">前缀和问题<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>给定一个长度为 <span class="arithmatex">\(n\)</span> 的数组 <span class="arithmatex">\(A\)</span>，我们需要设计一个并行算法，求出 <span class="arithmatex">\(A\)</span> 的前 <span class="arithmatex">\(k\)</span> 个元素的和，其中 <span class="arithmatex">\(k=1 \cdots n\)</span>。</p>
+<figure>
+    <img src="../assets/前缀和问题.png" width="80%">
+</figure>
+
+<p>我们可以定义一个式子（非常巧妙）
+$$ C(h,i) = \sum_{k=1}^{\alpha} A(k) $$
+其中 <span class="arithmatex">\(h\)</span> 表示当前所处的层数，<span class="arithmatex">\(i\)</span> 表示该层的第 <span class="arithmatex">\(i\)</span> 个节点，<span class="arithmatex">\((0, \alpha)\)</span> 是点 <span class="arithmatex">\((h,i)\)</span> 为根的子树最右下角的叶子结点，<span class="arithmatex">\(A(k)\)</span> 表示数组的第 <span class="arithmatex">\(k\)</span> 个元素（从 1 开始）。</p>
+<p>我们可以先自底向上用并行求和的方法求出 <span class="arithmatex">\(B\)</span>，然后利用 <span class="arithmatex">\(B\)</span> 从上往下计算这个 <span class="arithmatex">\(C\)</span>，每一层的计算都可以并行，直到计算完成。</p>
+<ul>
+<li>
+<p>如果 <span class="arithmatex">\(i=1\)</span>，那么 <span class="arithmatex">\(C(h,i)=B(h,i)\)</span>，</p>
+<p>这是因为 <span class="arithmatex">\(i=1\)</span> 的时候，根据定义，<span class="arithmatex">\(C(h,1)\)</span> 是从第 1 个元素加到以这一点为根的子树右下角的叶子为止，而 <span class="arithmatex">\(B(1,h)\)</span> 事实上也同样是是从第一个元素加到以这一点为根的子树右下角的叶子（从图中可以很清晰地看出这一点）</p>
+</li>
+<li>
+<p>如果 <span class="arithmatex">\(i\)</span> 是偶数，这表明这一结点是某个结点的右儿子，因此它和它的父亲最右下角的叶子是同一个，因此有 <span class="arithmatex">\(C(h,i)=C(h+1,i/2)\)</span>；</p>
+</li>
+<li>
+<p>如果 <span class="arithmatex">\(i\)</span> 是奇数且不是 1，这表明这一结点是某个结点的左儿子，它自己的值 <span class="arithmatex">\(B(h,i)\)</span> 就不是从最底层的第 1 个数开始相加得到的，所以我们要选一个左边的点，缺少的这部分补上，即 <span class="arithmatex">\(C(h,i)= C(h+1,(i-1)/2)+B(h,i)\)</span>。</p>
+<p>需要注意的是，如果不是并行算法，<span class="arithmatex">\(C(h+1,(i-1)/2)\)</span> 可以替换为 <span class="arithmatex">\(C(h,i-1)\)</span>，但因为并行算法要求每一行是同时在计算的，所以只能使用上一行的数据</p>
+</li>
+</ul>
+<p>这一种并行算法的深度是 <span class="arithmatex">\(O(\log n)\)</span>，总工作量是 <span class="arithmatex">\(O(n)\)</span>，因为我们实际上就是先从下到上计算 <span class="arithmatex">\(B\)</span>，再从上到下计算 <span class="arithmatex">\(C\)</span>，执行了两次分层的并行计算。</p>
+<details class="note">
+<summary>伪代码</summary>
+<p><img alt="前缀和问题伪代码" src="../assets/%E5%89%8D%E7%BC%80%E5%92%8C%E9%97%AE%E9%A2%98%E4%BC%AA%E4%BB%A3%E7%A0%81.png" width="80%" /></p>
+</details>
+<h2 id="_5">归并问题<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>归并排序的关键在于如何把两个已经排好序的子数组 <span class="arithmatex">\(\{ A(1) \cdots A(n) \}\)</span> 和 <span class="arithmatex">\(\{ B(1) \cdots B(m) \}\)</span> 合并成一个大数组 <span class="arithmatex">\(\{ C(1) \cdots C(n+m) \}\)</span>。</p>
+<h3 id="_6">简单的想法<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>如果我们能同时将 <span class="arithmatex">\(A\)</span> 和 <span class="arithmatex">\(B\)</span> 中的所有元素在最后的数组 <span class="arithmatex">\(C\)</span> 中的对应位置找到，然后同时将它们放到正确的位置上，那么我们就可以用并行算法快速解决这一问题。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>对于元素 <span class="arithmatex">\(A(i)\)</span>，它是 <span class="arithmatex">\(A\)</span> 中的第 <span class="arithmatex">\(i\)</span> 个元素（下标从 1 开始），那么它在前面有 <span class="arithmatex">\(i-1\)</span> 个元素。假如我们能找到它在 <span class="arithmatex">\(B\)</span> 中的位置是
+$$ B(j) &lt; A(i) \leqslant B(j+1) $$
+那么就意味着还有 <span class="arithmatex">\(j\)</span> 个 <span class="arithmatex">\(B\)</span> 中的元素要在 <span class="arithmatex">\(A(i)\)</span> 之前，在数组 <span class="arithmatex">\(C\)</span> 中会有 <span class="arithmatex">\(i+j-1\)</span> 个元素在它之前，因此 <span class="arithmatex">\(A(i)\)</span> 在 <span class="arithmatex">\(C\)</span> 中的位置就是第 <span class="arithmatex">\(i+j\)</span> 个，即 <span class="arithmatex">\(C(i+j)\)</span>。</p>
+<p>同理，对于 <span class="arithmatex">\(B\)</span> 中的元素也可以通过相同的办法来找到它在 <span class="arithmatex">\(C\)</span> 中的位置。</p>
+</div>
+<figure>
+    <img src="../assets/并行归并问题1.png" width="80%">
+</figure>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">for</span><span class="w"> </span><span class="n">Pi</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w">  </span><span class="n">pardo</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">    </span><span class="n">C</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">RANK</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">))</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="k">for</span><span class="w"> </span><span class="n">Pi</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w">  </span><span class="n">pardo</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span><span class="n">C</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">RANK</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">))</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>这样我们就把归并问题转化为了找到某个数组中的一个元素在另一个数组中的位置的问题。对这个问题我们有两种策略：</p>
+<ol>
+<li>
+<p>逐个元素二分查找：使用二分查找找到一个元素在另一个数组中的位置只需要 <span class="arithmatex">\(O(\log n)\)</span> 的时间，因此深度 <span class="arithmatex">\(D=O(\log n)\)</span>，总工作量为 <span class="arithmatex">\(O(n \log n)\)</span></p>
+<p>然后我们需要将所有元素放到正确的位置上，这一过程的深度为 <span class="arithmatex">\(O(1)\)</span>，总工作量为 <span class="arithmatex">\(O(2n)=O(n)\)</span>（如果数组长度不同则是 <span class="arithmatex">\(O(n+m)\)</span>）</p>
+<p>两步合起来深度为 <span class="arithmatex">\(O(\log n)\)</span>，总工作量为 <span class="arithmatex">\(O(n\log n)\)</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="k">for</span><span class="w"> </span><span class="n">Pi</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w">  </span><span class="n">pardo</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="n">RANK</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">BS</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">B</span><span class="p">)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="n">RANK</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">BS</span><span class="p">(</span><span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="w"> </span><span class="n">A</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div></p>
+</li>
+<li>
+<p>直接无脑从前向后依次比较，完全没有并行，深度和工作量都是 <span class="arithmatex">\(O(n)\)</span>（或 <span class="arithmatex">\(O(n+m)\)</span>）。伪代码如下：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">B</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">        </span><span class="n">RANK</span><span class="p">(</span><span class="o">++</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="p">;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="n">RANK</span><span class="p">(</span><span class="o">++</span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+</li>
+</ol>
+<p>这两种方法显然都不太好，第一种方法的总工作量太大，而第二种方法的深度太大。</p>
+<h3 id="_7">划分范式<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>划分范式的想法非常简单，且实际运用起来非常有效，分为如下两个步骤：</p>
+<ol>
+<li>划分（partitioning）：把原问题划分为很多（设为 <span class="arithmatex">\(p\)</span> 个）很小的子问题，每个子问题大小大致为 <span class="arithmatex">\(n/p\)</span></li>
+<li>真实工作（actual work）：同时对所有子问题进行处理，得到最终结果。</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>我们可以注意到，上面的二分查找相当于将原问题划分为了 <span class="arithmatex">\(n\)</span> 个子问题，即 <span class="arithmatex">\(p=n\)</span>，而线性的方法则完全没有划分，即 <span class="arithmatex">\(p=1\)</span>。因此这两种方法分别对应于划分范式的两个极端。</p>
+</div>
+<p>下面我们来套用上面的方法来解决这个问题。</p>
+<ul>
+<li>
+<p><strong>划分</strong>：我们首先分别将两个数组划分为 <span class="arithmatex">\(p\)</span> 份，<span class="arithmatex">\(p\)</span> 是一个很大的值，使得每个子问题很小，然后我们求出每一个子问题的第一个元素在另一个数组中的位置。</p>
+<p>这一步使用二分查找，这样这个子问题的深度为 <span class="arithmatex">\(O(\log n)\)</span>，总工作量为 <span class="arithmatex">\(O(p \log n)\)</span>。</p>
+</li>
+</ul>
+<figure>
+    <img src="../assets/并行归并问题2.png" width="70%">
+    <figcaption>划分A</figcaption>
+</figure>
+
+<figure>
+    <img src="../assets/并行归并问题3.png" width="70%">
+    <figcaption>划分B</figcaption>
+</figure>
+
+<figure>
+    <img src="../assets/并行归并问题4.png" width="70%">
+    <figcaption>得到互不相干的子问题</figcaption>
+</figure>
+
+<ul>
+<li>
+<p><strong>真实工作</strong>：如上图所示，现在我们要做的就是把两个相邻箭头之间的部分在这个很小的区域内确认相对位置，这些位置确定后可以根据上一步划分中得到的结果确定在整个最终的数组中的位置。</p>
+<p>很显然的是，这些箭头不会交叉，那么这些箭头就会分割出至多 <span class="arithmatex">\(2p\)</span> 个大小为 <span class="arithmatex">\(O(n/p)\)</span> 的子问题。</p>
+<ul>
+<li>我们可以并行地对每个子问题进行线性查找，这是因为每个子问题大小都很小，深度为 <span class="arithmatex">\(O(n/p)\)</span> 也很小，总工作量为 <span class="arithmatex">\(2p \cdot O(n/p) = O(n)\)</span> 也不算大，符合我们的要求。</li>
+<li>而如果这时候我们使用二分查找，总工作量就是
+    $$ 2p \cdot \frac{n}{p} O(\log \frac{n}{p}) = O(n \log \frac{n}{p}) $$
+    这是因为有 <span class="arithmatex">\(2p\)</span> 个子问题，每个子问题都至多有 <span class="arithmatex">\(n/p\)</span> 个元素要用至多 <span class="arithmatex">\(\log(n/p)\)</span> 的时间确定位置，这无法保证是 <span class="arithmatex">\(O(n)\)</span> 的，因此我们不使用二分查找。</li>
+</ul>
+</li>
+</ul>
+<p>经过上面的分析，我们知道第一步划分的总工作量为 <span class="arithmatex">\(O(p \log n)\)</span>，第二步真实工作的深度为 <span class="arithmatex">\(O(n/p)\)</span>，这两个部分的时间复杂度是未知的。而我们希望找到一个合适的 <span class="arithmatex">\(p\)</span>，使得第一步总工作量是 <span class="arithmatex">\(O(n)\)</span> 的，第二步深度是 <span class="arithmatex">\(O(\log n)\)</span> 的（因为深度和总工作量不可能比这个还小）。这样我们就可以得到一个深度为 <span class="arithmatex">\(O(\log n)\)</span>，总工作量为 <span class="arithmatex">\(O(n)\)</span> 的并行算法，成功做到取长补短。</p>
+<p>很容易看出，<span class="arithmatex">\(p = \dfrac{n}{\log n}\)</span> 就是满足条件的，因此我们选择这个 <span class="arithmatex">\(p\)</span>，就得到了一个深度为 <span class="arithmatex">\(O(\log n)\)</span>，总工作量为 <span class="arithmatex">\(O(n)\)</span> 的并行算法。</p>
+<h2 id="_8">寻找最大元素问题<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p>对于从一个数组中找到最大元素的问题，我们也希望能有一种并行算法。</p>
+<p>这里我们将会讨论并第三种并行算法的设计范式，即双对数范式，这是二叉树的一种扩展；然后讨论加速级联范式，它可以综合不同的并行算法得到更好的并行算法。</p>
+<h3 id="_9">不使用划分范式<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>我们先考虑一种不使用划分范式的方法，用类似于前面求和问题的做法，构造一棵二叉树，初始元素两两分组比较，然后逐层上递，最终得到最大值。这样的算法深度为 <span class="arithmatex">\(O(\log n)\)</span>，总工作量为 <span class="arithmatex">\(O(n)\)</span>。</p>
+<p>我们也可以采取更加激进的策略：一次性并行比较所有元素。我们并行比较每一对元素 <span class="arithmatex">\(A[i]\)</span> 和 <span class="arithmatex">\(A[j]\)</span>，只要 <span class="arithmatex">\(A[i]\)</span> 在比较中是较小的一方，就往新的数组 <span class="arithmatex">\(B[i]\)</span> 处写 1（<span class="arithmatex">\(B\)</span> 的所有位置初始化为 0），最后那个最大的元素肯定从来没被写过 1，因此还保持着 0。然后我们再并行判断 <span class="arithmatex">\(B\)</span> 中哪一个元素是 0，那么它对应的 <span class="arithmatex">\(A[i]\)</span> 就是最大值。
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">6</a></span>
+<span class="normal"><a href="#__codelineno-3-7">7</a></span>
+<span class="normal"><a href="#__codelineno-3-8">8</a></span>
+<span class="normal"><a href="#__codelineno-3-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">for</span><span class="w"> </span><span class="n">P_i</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w">  </span><span class="n">pardo</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">    </span><span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w">  </span><span class="n">pardo</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">A</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">((</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">j</span><span class="p">))</span><span class="w"> </span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">            </span><span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="n">B</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="k">for</span><span class="w"> </span><span class="n">P_i</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="w">  </span><span class="n">pardo</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">       </span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">maximum</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">A</span>
+</code></pre></div></td></tr></table></div></p>
+<p>在并行比较每一对元素时，我们可能会有多个线程同时往数组 <span class="arithmatex">\(B\)</span> 中进行写入，实际上我们只需要使用前面提到的 CRCW 策略允许同时写入，然后按 common rule 写入即可。因为这里所有线程往任意一个 <span class="arithmatex">\(B[i]\)</span> 只会写入 1 这个数字，所以写入的内容都是一样的，故用 common 就能实现写入。</p>
+<p>很显然，这个算法的深度很理想，是 <span class="arithmatex">\(O(1)\)</span> 的，但由于需要比较每一对元素的值，因此总工作量是 <span class="arithmatex">\(O(n^2)\)</span> 的。如果能在深度和总工作量上取长补短，那么最终的结果就很完美了。</p>
+<h3 id="doubly-logarithmic-paradigm">双对数范式（Doubly-logarithmic Paradigm）<a class="headerlink" href="#doubly-logarithmic-paradigm" title="Permanent link">&para;</a></h3>
+<p>双对数范式是一种二叉树的扩展。在完全二叉树中，设叶子的数量为 <span class="arithmatex">\(n\)</span>，那么树高是 <span class="arithmatex">\(\log n\)</span> 级别的，这里双对数则是希望构造一棵树，使得树高是 <span class="arithmatex">\(\log \log n\)</span> 级别的。为了构造这样一棵树，我们首先设树中每个节点的 level 表示从根到该节点的距离（需要经过的边数），根的 level 为 0。接下来我们构造这棵树如下：</p>
+<ul>
+<li>设某个节点的 level 为 <span class="arithmatex">\(s\)</span>，当 <span class="arithmatex">\(s \leqslant \log \log n-1\)</span> 时，则它有 <span class="arithmatex">\(2^{2^{h-s-1}}\)</span> 个孩子</li>
+<li>当 <span class="arithmatex">\(s = \log \log n\)</span> 时，它有 2 个孩子作为树的叶子</li>
+</ul>
+<p>其中 <span class="arithmatex">\(h = \log\log n\)</span>。不难验证这样一棵树的叶子数量的确是 <span class="arithmatex">\(n\)</span>，高度也是 <span class="arithmatex">\(\log \log n\)</span> 级别的。下图是一个 16 个叶子的双对数树示例：</p>
+<figure>
+    <img src="../assets/双对数范式1.png" width="80%">
+</figure>
+
+<p>事实上我们还可以观察到，不在倒数两行的结点的 level 为 <span class="arithmatex">\(s\)</span> 时，根据定义它有 <span class="arithmatex">\(2^{2^{h-s-1}}\)</span> 个孩子，并且以它为根的子树的叶子数量可以算出来是 <span class="arithmatex">\(2^{2^{h-s}}\)</span> ，而我们知道
+$$ 2^{2^{h-s-1}} = \sqrt{2^{2^{h-s}}} $$
+也就是说在每个结点处，我们把问题分成了 <span class="arithmatex">\(\sqrt{m}\)</span> 个子问题，其中 <span class="arithmatex">\(m\)</span> 为该节点对应的子树的叶子数量。而且以双对数树某一层单个节点为根的子树的叶子数，其实是上一层某个节点为根的子树的叶子数开根号（因为层数为 <span class="arithmatex">\(s\)</span> 的某个节点，以它为根的子树的叶子数量是 <span class="arithmatex">\(2^{2^{h-s}}\)</span>，<span class="arithmatex">\(s\)</span> 每增加 1 实际上就是开一次根号），因此层数越往下，就相当于子问题大小逐步开根号。</p>
+<p>假设原问题输入大小为 <span class="arithmatex">\(n\)</span>，那么我们可以通过增加一些 dummy 节点使得我们可以构造出以这 <span class="arithmatex">\(n\)</span> 个节点为叶子的双对数树，这样我们就可以使用双对数范式来设计一个并行算法，即在每一层将问题分为 <span class="arithmatex">\(\sqrt{m}\)</span> 个子问题，<span class="arithmatex">\(m\)</span> 为以这一层的单个节点为根的子树的叶子数量，这样每个子问题（其实就是树上某个节点）对应的叶子数也就是 <span class="arithmatex">\(\sqrt{m}\)</span> 了，这就和双对数树结合起来了。我们熟知的二叉树则是每层分成两个子问题，是更简单的策略。</p>
+<p>现在我们可以把这一思路套用在我们的问题上：我们首先将数组划分为 <span class="arithmatex">\(\sqrt{n}\)</span> 份，每一份的大小为 <span class="arithmatex">\(\sqrt{n}\)</span>，然后我们并行地递归找到每一份中的最大值，最后归并阶段再并行找到这 <span class="arithmatex">\(\sqrt{n}\)</span> 个最大值中的最大值即可。</p>
+<p>设整个算法深度为 <span class="arithmatex">\(D(n)\)</span>，工作量为 <span class="arithmatex">\(W(n)\)</span>，它们都是关于数组长度的函数。</p>
+<ul>
+<li>寻找每一份中的最大值我们采用递归的策略，因此长度为 <span class="arithmatex">\(\sqrt{n}\)</span> 的数组的最大值的寻找需要 <span class="arithmatex">\(D(\sqrt{n})\)</span> 的深度和 <span class="arithmatex">\(W(\sqrt{n})\)</span> 的总工作量。</li>
+<li>在归并阶段，返回的 <span class="arithmatex">\(\sqrt{n}\)</span> 个最大值中的最大值我们采用前面的两两比较的方法即可，深度为 <span class="arithmatex">\(O(1)\)</span>，总工作量为 <span class="arithmatex">\(O((\sqrt{n})^2)=O(n)\)</span>。于是我们按照分治法的方式可以写出递推式
+$$ \begin{cases}
+    D(n) = D(\sqrt{n}) + O(1) \\
+    W(n) = \sqrt{n} W(\sqrt{n}) + O(n)
+\end{cases} $$
+具体推导过程不赘述，最终的结果是我们得到了一个 <span class="arithmatex">\(D(n) = O(\log \log n)\)</span>，<span class="arithmatex">\(W(n) = O(n \log \log n)\)</span> 的并行算法。</li>
+</ul>
+<figure>
+    <img src="../assets/双对数范式3.png" width="80%">
+</figure>
+
+<h3 id="accelerating-cascades-paradigm">加速级联范式（Accelerating Cascades Paradigm）<a class="headerlink" href="#accelerating-cascades-paradigm" title="Permanent link">&para;</a></h3>
+<p>思路类似于双对数范式，只不过划分的大小不同</p>
+<ol>
+<li>将数组分为 <span class="arithmatex">\(\dfrac{n}{\log \log n}\)</span> 份，即每一份的大小为 <span class="arithmatex">\(\log \log n\)</span>。实际上每一份的大小都很小了，所以我们可以直接利用线性查找的方式找到每一份的最大值，则每一份的深度和工作量都是 <span class="arithmatex">\(O(\log \log n)\)</span> 的；</li>
+<li>然后我们对上面求出的 <span class="arithmatex">\(\dfrac{n}{\log \log n}\)</span> 个最大值使用双对数范式的算法。</li>
+</ol>
+<p>总的深度等于每一个部分的深度加上双对数范式的深度
+$$ D(n) = O(\log \log n) + O(\log \log (n/ \log \log n)) = O(\log \log n) $$</p>
+<p>总工作量等于每一份的工作量之和加上双对数范式的工作量
+$$  W(n) = \dfrac{n}{\log \log n} \cdot O(\log \log n) + O(\dfrac{n}{\log \log n} \cdot \log \log (n/ \log \log n)) = O(n) $$</p>
+<figure>
+    <img src="../assets/双对数范式2.png" width="80%">
+</figure>
+
+<h3 id="_10">随机算法<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>接下来我们将介绍一种随机算法，它可以保证以非常高的概率在 <span class="arithmatex">\(O(1)\)</span> 的深度和 <span class="arithmatex">\(O(n)\)</span> 的工作量内找到最大值。</p>
+<ol>
+<li><strong>第一步</strong>：从长度为 <span class="arithmatex">\(n\)</span> 的数组 <span class="arithmatex">\(A\)</span> 中，依照均匀分布随机取出 <span class="arithmatex">\(n^{7/8}\)</span> 个元素，得到新的数组记为 <span class="arithmatex">\(B\)</span>。这一步需要 <span class="arithmatex">\(n^{7/8}\)</span> 个处理器各自负责抽一个然后放到内存中某个位置，深度为 <span class="arithmatex">\(O(1)\)</span>，总工作量为 <span class="arithmatex">\(O(n^{7/8})\)</span>；</li>
+<li>
+<p><strong>第二步</strong>：求出 <span class="arithmatex">\(B\)</span> 中的最大值，使用确定性的算法实现，通过如下三个子步骤实现：</p>
+<ol>
+<li>
+<p>把 <span class="arithmatex">\(B\)</span> 分成 <span class="arithmatex">\(n^{3/4}\)</span> 个长度都为 <span class="arithmatex">\(n^{1/8}\)</span> 的子数组，然后使用两两比较的暴力算法并行找到每个子数组的最大值，这一步深度为 <span class="arithmatex">\(O(1)\)</span>，总工作量为 $ n^{&frac34;} \cdot O((n^{&#8539;})^2)=O(n)$</p>
+<p>因为有 <span class="arithmatex">\(n^{3/4}\)</span> 个子数组，每个子数组用两两比较的办法的复杂度是数组长度平方级别的；然后将这 <span class="arithmatex">\(n^{3/4}\)</span> 个最大值放在新数组 <span class="arithmatex">\(C\)</span> 中</p>
+</li>
+<li>
+<p>把 <span class="arithmatex">\(C\)</span> 分成 <span class="arithmatex">\(n^{1/2}\)</span> 个长度都为 <span class="arithmatex">\(n^{1/4}\)</span> 的子数组，然后继续使用两两比较的暴力算法并行找到每个子数组的最大值</p>
+<p>这一步深度为 <span class="arithmatex">\(O(1)\)</span>，总工作量为 <span class="arithmatex">\(n^{1/2} \cdot O((n^{1/4})^2)=O(n)\)</span>，然后将这 <span class="arithmatex">\(n^{1/2}\)</span> 个最大值放在新数组 <span class="arithmatex">\(D\)</span> 中</p>
+</li>
+<li>
+<p>数组 <span class="arithmatex">\(D\)</span> 直接使用两两比较的方法找到最大值，这一步深度为 <span class="arithmatex">\(O(1)\)</span>，总工作量为 <span class="arithmatex">\(O((n^{1/2})^2) = O(n)\)</span></p>
+</li>
+</ol>
+<p>综合上述方法，整个第二步相当于一个三轮的淘汰赛，每一轮的深度都为 <span class="arithmatex">\(O(1)\)</span>，总工作量都为 <span class="arithmatex">\(O(n)\)</span>，整体而言第二步的深度为 <span class="arithmatex">\(O(1)\)</span>，总工作量为 <span class="arithmatex">\(O(n)\)</span>，并且我们能求出 <span class="arithmatex">\(B\)</span> 中的最大值，也就是抽取的 <span class="arithmatex">\(n^{7/8}\)</span> 个元素中的最大值；</p>
+</li>
+</ol>
+<figure>
+    <img src="../assets/并行随机算法.png" width="75%">
+</figure>
+
+<ol start="3">
+<li>
+<p><strong>第三步</strong>：目前我们只得到了 <span class="arithmatex">\(n^{7/8}\)</span> 个元素中的最大值（记为 <span class="arithmatex">\(M\)</span>），如何进一步提高找到所有元素中最大值的概率呢？答案是再来一轮。</p>
+<p>但是这再来一轮是有讲究的。这一步我们首先均匀分布取出 <span class="arithmatex">\(n^{7/8}\)</span> 个元素，得到数组 <span class="arithmatex">\(B\)</span>。然后用 <span class="arithmatex">\(n\)</span> 个处理器，每个处理器放 <span class="arithmatex">\(A\)</span> 的一个元素，将其与前一步得到的 <span class="arithmatex">\(M\)</span> 进行比较，如果小于 <span class="arithmatex">\(M\)</span> 则什么也不用做，大于 <span class="arithmatex">\(M\)</span> 则往数组 <span class="arithmatex">\(B\)</span> 的一个随机位置写入这一更大的值（为什么要随机写入呢？因为一共 <span class="arithmatex">\(n\)</span> 个处理器，但只有 <span class="arithmatex">\(n^{7/8}\)</span> 个位置可供选择，不能一一对应位置供每个处理器使用，但我们又要在 <span class="arithmatex">\(O(1)\)</span> 时间内完成位置分配，只能是随机了）。上述比较和随机写入的过程深度为 <span class="arithmatex">\(O(1)\)</span>，总工作量为 <span class="arithmatex">\(O(n)\)</span>。</p>
+<p>写完后，我们再次求出更新后的 <span class="arithmatex">\(B\)</span> 中的最大值，这一步的深度和工作量和第二步一样，因此是 <span class="arithmatex">\(O(1)\)</span> 的深度和 <span class="arithmatex">\(O(n)\)</span> 的工作量。</p>
+<p><figure>
+    <img src="../assets/并行随机算法1.png" width="70%">
+</figure></p>
+</li>
+</ol>
+<p>因此我们最终得到的算法的深度为 <span class="arithmatex">\(O(1)\)</span>，总工作量为 <span class="arithmatex">\(O(n)\)</span>，并且以非常高的概率找到了数组 <span class="arithmatex">\(A\)</span> 中的最大值。</p>
+<div class="admonition theorem">
+<p class="admonition-title">Theorem</p>
+<p>以上算法以非常高的概率在 <span class="arithmatex">\(O(1)\)</span> 的深度和 <span class="arithmatex">\(O(n)\)</span> 的工作量内找到数组 <span class="arithmatex">\(A\)</span> 中的最大值：存在常数 <span class="arithmatex">\(c\)</span>，使得算法只有 <span class="arithmatex">\(\dfrac{1}{n^c}\)</span> 的概率无法在这一时间复杂度内找到最大值。</p>
+</div>
+<p>证明略</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年2月10日</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年2月10日</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+  <form class="md-feedback" name="feedback" hidden>
+    <fieldset>
+      <legend class="md-feedback__title">
+        Was this page helpful?
+      </legend>
+      <div class="md-feedback__inner">
+        <div class="md-feedback__list">
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="This page was helpful" data-md-value="1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 9v12H1V9zm4 12a2 2 0 0 1-2-2V9c0-.55.22-1.05.59-1.41L14.17 1l1.06 1.06c.27.27.44.64.44 1.05l-.03.32L14.69 8H21a2 2 0 0 1 2 2v2c0 .26-.05.5-.14.73l-3.02 7.05C19.54 20.5 18.83 21 18 21zm0-2h9.03L21 12v-2h-8.79l1.13-5.32L9 9.03z"/></svg>
+            </button>
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="This page could be improved" data-md-value="0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 15V3h4v12zM15 3a2 2 0 0 1 2 2v10c0 .55-.22 1.05-.59 1.41L9.83 23l-1.06-1.06c-.27-.27-.44-.64-.44-1.06l.03-.31.95-4.57H3a2 2 0 0 1-2-2v-2c0-.26.05-.5.14-.73l3.02-7.05C4.46 3.5 5.17 3 6 3zm0 2H5.97L3 12v2h8.78l-1.13 5.32L15 14.97z"/></svg>
+            </button>
+          
+        </div>
+        <div class="md-feedback__note">
+          
+            <div data-md-value="1" hidden>
+              
+              
+                
+              
+              Thanks for your feedback!
+            </div>
+          
+            <div data-md-value="0" hidden>
+              
+              
+                
+              
+              Thanks for your feedback! Help me improve this page by using our <a href="https://github.com/xestray/xestray.github.io/issues" target="_blank" rel="noopener">feedback form</a>.
+            </div>
+          
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+
+  <h2 id="__comments">Comments</h2>
+  <script src="https://giscus.app/client.js"
+        data-repo="xestray/xestray.github.io"
+        data-repo-id="R_kgDOMQYCsg"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOMQYCss4Cghqg"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../lec-13/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 随机算法">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                随机算法
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../lec-15/" class="md-footer__link md-footer__link--next" aria-label="Next: 外部排序">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                外部排序
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 <a href="https://github.com/xestray" target="_blank">xestray</a>
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.code.annotate", "content.code.copy", "content.code.select", "content.tabs.link", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.path", "navigation.prune", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": {"Default": "default-tag", "Hardware": "hardware-tag", "Software": "software-tag"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.f1b6f286.min.js"></script>
+      
+        <script src="../../../js/print-site.js"></script>
+      
+        <script src="../../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../javascripts/toc.js"></script>
+      
+    
+  </body>
+</html>
