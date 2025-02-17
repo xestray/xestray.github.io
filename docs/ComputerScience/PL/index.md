@@ -12,6 +12,6 @@
 
 ## Table of Contents
 
-- [C++](cpp.md)
-
+- [C++Learning](cpplearning.md)
+- [CS106L](cs106l.md)
 

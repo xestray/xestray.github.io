@@ -13,7 +13,9 @@ nav:
     - ComputerScience/index.md
     - 编程语言:
       - ComputerScience/PL/index.md
-      - C++: ComputerScience/PL/cpp.md
+      - C++: 
+        - C++Learning: ComputerScience/PL/cpp/cpplearning.md
+        - CS106L: ComputerScience/PL/cpp/cs106l.md
       # - Python: ComputerScience/PL/python.md
       # - Java: ComputerScience/PL/java.md
       # - Shell: ComputerScience/PL/shell.md 

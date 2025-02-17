@@ -12,9 +12,10 @@
 ## Table of Contents
 
 {{ BEGIN_TOC }}
-- "专业课程":
-    - "计算机组成与设计": COD/
-    - "高级数据结构与算法分析": ADS/
-- "编程语言":
-    - "C++": PL/cpp/
+- 专业课程:
+    - 计算机组成与设计[note]: COD/
+    - 高级数据结构与算法分析[note]: ADS/
+- 编程语言:
+    - C++Learning: PL/cpp/cpplearning/
+    - CS106L: PL/cpp/cs106l/
 {{ END_TOC }}

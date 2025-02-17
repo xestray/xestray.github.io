@@ -1,8 +1,13 @@
 - "2025":
+  - "2025.2.17":
+    - newpage: 
+        text: 增加 CS106L 学习笔记
+        href: ComputerScience/PL/cpp/cs106l
+
   - "2025.1.16":
     - newpage: 
         text: 增加 C++ 学习笔记
-        href: ComputerScience/PL/cpp
+        href: ComputerScience/PL/cpp/cpplearning
 
 - "2024":
   - "2024.12.27":
