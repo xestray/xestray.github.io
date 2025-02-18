@@ -11,6 +11,7 @@ nav:
   - Home: index.md
   - Computer Science:
     - ComputerScience/index.md
+
     - 编程语言:
       - ComputerScience/PL/index.md
       - C++: 
@@ -19,6 +20,7 @@ nav:
       # - Python: ComputerScience/PL/python.md
       # - Java: ComputerScience/PL/java.md
       # - Shell: ComputerScience/PL/shell.md 
+
     - 高级数据结构与算法分析: 
       - ComputerScience/ADS/index.md
       - AVL树与Splay树与摊还分析: ComputerScience/ADS/lec-1.md
@@ -36,6 +38,7 @@ nav:
       - 随机算法:                ComputerScience/ADS/lec-13.md
       - 并行算法:                ComputerScience/ADS/lec-14.md
       - 外部排序:                ComputerScience/ADS/lec-15.md 
+
     - 计算机组成与设计: 
       - ComputerScience/COD/index.md
       - 计算机概要与技术:    ComputerScience/COD/chap-1.md
@@ -44,9 +47,27 @@ nav:
       - 处理器:            ComputerScience/COD/chap-4.md
       - 内存层次架构:       ComputerScience/COD/chap-5.md
       - 储存和 IO:         ComputerScience/COD/chap-6.md
+
+    - 计算机体系结构:
+      - ComputerScience/CA/index.md
+      - 计算机设计基础:  ComputerScience/CA/chap-1.md
+      - 流水线:        ComputerScience/CA/chap-2.md
+      - 内存层次:       ComputerScience/CA/chap-3.md
+      - 指令级并行:     ComputerScience/CA/chap-4.md
+      - DLP 和 TLP:    ComputerScience/CA/chap-5.md
+
+    - 数据库系统:
+      - ComputerScience/DB/index.md
+      - 数据库介绍: ComputerScience/DB/chap-1.md
+      - 关系模型: ComputerScience/DB/chap-2.md
+
+    - 面向对象编程:
+      - ComputerScience/OOP/index.md
+
   - 数理: 
     - 数学分析: MathematicsAndPhysics/MA/MA.md
     - 线性代数: MathematicsAndPhysics/LA/LA.md
+
     - 普通物理学Ⅱ:
       - MathematicsAndPhysics/Phy2/index.md
       - 电学:    MathematicsAndPhysics/Phy2/electrostatics.md
@@ -56,12 +77,14 @@ nav:
       - 几何光学:    MathematicsAndPhysics/Phy2/geometrical_optics.md
       - 波动光学:    MathematicsAndPhysics/Phy2/wave_optics.md
       - 量子力学:    MathematicsAndPhysics/Phy2/quantum.md
+
     - 概率论: 
       - MathematicsAndPhysics/Probability/index.md
       - 事件及其概率:      MathematicsAndPhysics/Probability/chap-1.md
       - 随机变量与分布函数: MathematicsAndPhysics/Probability/chap-2.md
       - 数字特征与特征函数: MathematicsAndPhysics/Probability/chap-3.md
       - 极限定理:         MathematicsAndPhysics/Probability/chap-4.md
+
   - CTF: 
     - CTF/index.md
     - 基础周:
@@ -77,9 +100,10 @@ nav:
       - Misc:
         - Misc-1: CTF/Misc/Misc-1.md
         - Misc-2: CTF/Misc/Misc-2.md
+
   - Others: 
     - 干点啥: others/WhatToDo.md
-  - 标签: tags.md
+  # - 标签: tags.md
 
 # 配置
 theme:

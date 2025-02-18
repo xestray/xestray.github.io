@@ -13,9 +13,12 @@
 
 {{ BEGIN_TOC }}
 - 专业课程:
+    - 面向对象编程[note]: OOP/
+    - 数据库系统[note]: DB/
+    - 计算机体系结构[note]: CA/
     - 计算机组成与设计[note]: COD/
     - 高级数据结构与算法分析[note]: ADS/
 - 编程语言:
-    - C++Learning: PL/cpp/cpplearning/
     - CS106L: PL/cpp/cs106l/
+    - C++Learning: PL/cpp/cpplearning/
 {{ END_TOC }}

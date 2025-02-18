@@ -1,4 +1,9 @@
 - "2025":
+  - "2025.2.18":
+    - newpage: 
+        text: 增加大二春夏学期笔记
+        href: ComputerScience/
+
   - "2025.2.17":
     - newpage: 
         text: 增加 CS106L 学习笔记
