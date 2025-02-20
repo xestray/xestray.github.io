@@ -12,8 +12,8 @@
 ## Table of Contents
 
 {{ BEGIN_TOC }}
-- 专业课程:
-    - 面向对象编程[note]: OOP/
+- 计算机相关课程:
+    - 面向对象程序设计[note]: OOP/
     - 数据库系统[note]: DB/
     - 计算机体系结构[note]: CA/
     - 计算机组成与设计[note]: COD/

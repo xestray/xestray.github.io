@@ -61,8 +61,15 @@ nav:
       - 数据库介绍: ComputerScience/DB/chap-1.md
       - 关系模型: ComputerScience/DB/chap-2.md
 
-    - 面向对象编程:
+    - 面向对象程序设计:
       - ComputerScience/OOP/index.md
+
+    # - 杂项:
+    #   - ComputerScience/Misc/index.md
+    #   - Makefile: ComputerScience/Misc/makefile.md
+    #   - Git: ComputerScience/Misc/git.md
+    #   - Docker: ComputerScience/Misc/docker.md
+    #   - Vim: ComputerScience/Misc/vim.md
 
   - 数理: 
     - 数学分析: MathematicsAndPhysics/MA/MA.md
@@ -317,4 +324,4 @@ extra_css:
   - css/changelog_extra.css
   - css/counter.css
   - css/fold_toc.css
-#   - css/flink.css
+  - css/flink.css
