@@ -64,9 +64,9 @@ nav:
     - 面向对象程序设计:
       - ComputerScience/OOP/index.md
 
-    # - 杂项:
-    #   - ComputerScience/Misc/index.md
-    #   - Makefile: ComputerScience/Misc/makefile.md
+    - 杂项:
+      - ComputerScience/Misc/index.md
+      - Makefile: ComputerScience/Misc/makefile.md
     #   - Git: ComputerScience/Misc/git.md
     #   - Docker: ComputerScience/Misc/docker.md
     #   - Vim: ComputerScience/Misc/vim.md

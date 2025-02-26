@@ -1,4 +1,9 @@
 - "2025":
+  - "2025.2.26":
+    - newpage: 
+        text: 增加了一些杂项的笔记
+        href: ComputerScience/Misc/
+
   - "2025.2.18":
     - newpage: 
         text: 增加大二春夏学期笔记
