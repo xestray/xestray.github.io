@@ -29,8 +29,8 @@
             - Out-of-order execution：14%
 
 
-- [计算机设计基础](chap-1.md)
-- [流水线](chap-2.md)
-- [内存层次](chap-3.md)
-- [指令级并行](chap-4.md)
-- [DLP 和 TLP](chap-5.md)
+- [x] [计算机设计基础](chap-1.md)
+- [ ] [流水线](chap-2.md)
+- [ ] [内存层次](chap-3.md)
+- [ ] [指令级并行](chap-4.md)
+- [ ] [DLP 和 TLP](chap-5.md)
