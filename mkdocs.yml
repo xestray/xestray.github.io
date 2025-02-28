@@ -58,8 +58,9 @@ nav:
 
     - 数据库系统:
       - ComputerScience/DB/index.md
-      - 数据库介绍: ComputerScience/DB/chap-1.md
-      - 关系模型: ComputerScience/DB/chap-2.md
+      - 数据库介绍: ComputerScience/DB/lec-1.md
+      - 关系模型: ComputerScience/DB/lec-2.md
+      - SQL:     ComputerScience/DB/lec-3.md
 
     - 面向对象程序设计:
       - ComputerScience/OOP/index.md
