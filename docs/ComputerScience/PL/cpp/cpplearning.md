@@ -7237,6 +7237,388 @@ dynamic_cast 也可用于对参考的转换，但由于不存在所谓的“空�
 
 ---
 
+## 异常
+
+### 基本的异常处理
+
+C++ 中的异常处理通常通过三个关键字来实现：`try`、`catch` 和 `throw`。
+
+throw 语句用于发出信号，表示出现了异常或错误情况。throw 后面可以跟任何数据类型的值，通常是一个异常对象，但也可以是错误代码、问题描述、自定义的异常类等。
+
+```cpp
+// throw a literal integer value
+throw -1;
+// throw an enum value
+throw ENUM_INVALID_INDEX; 
+// a literal C-style (const char*) string
+throw "Can not take square root of negative number"; 
+// throw a double variable that was previously defined
+throw dX; 
+// Throw an object of class MyException
+throw MyException("Fatal Error"); 
+```
+
+我们使用 try 关键字来定义一个语句块（称为 try 块），其中包含可能会抛出异常的代码。如果在 try 块中检测到了被抛出的异常，那么程序将跳转到与异常匹配的 catch 块。
+
+try 块后面可以跟一个或多个 catch 块，每个 catch 块都是一个异常处理程序，用于处理特定类型的异常。一旦异常被 catch 块所捕获，就认为这个异常已经被处理，程序将从紧跟在最后一个 catch 块后面的代码开始继续执行。
+
+catch 块参数的工作方式与函数参数类似，它们是用来接收被抛出的异常的。捕获到的参数可以在 catch 块中使用，如果不需要使用，可以省略参数名。
+
+- 基本类型的异常可以通过值捕获，其它类型的异常应该通过 const 引用捕获，以避免不必要的复制。
+- 异常不会进行隐式类型转换，因此 int 类型的异常不会被一个 double 类型的 catch 块捕获。
+
+??? example
+
+    ```cpp
+    try
+    {
+        throw -1; // here's a trivial throw statement
+    } 
+    catch (double) // note: no variable name since we don't use it in the catch block below
+    {
+        // Handle exception of type double here
+        std::cerr << "We caught an exception of type double\n";
+    }
+    catch (int x) // catch an exception of type int
+    {
+        // Handle exception of type int here
+        std::cerr << "We caught an exception of type int: " << x << '\n';
+    }
+    ```
+
+### 异常处理的堆栈展开
+
+在异常处理中一个相当有用的特性是，try 块不仅捕获 try 块内的语句直接 throw 出来的异常，还捕获 try 块内调用的函数产生的异常。
+
+- 当异常被抛出时，程序首先查看是否可以在当前函数内立即处理该异常（即该异常就在当前函数的 try 块内抛出），如果可以，程序将跳转到与异常匹配的 catch 块。
+- 如果没有，当前函数会从调用堆栈上被移除（展开堆栈），程序会查看这个函数的调用者（call stack 上的下一个函数）是否可以处理异常。
+    - 这要求该当前函数的调用处于调用者的 try 块内，如果是，程序将跳转到调用者的 catch 块。
+    - 否则，就继续把异常向上传递，直到找到一个可以处理异常的 catch 块，或到达调用堆栈的顶部（main 函数）为止。
+- 如果在 main 函数里也没有把异常处理掉，那么程序将会终止。
+
+!!! tip
+    展开堆栈（unwinding the stack）的过程会销毁函数中的局部变量，这会调用局部变量的析构函数。这意味着即使异常被捕获，局部变量也会被销毁。
+
+???+ example
+
+    在这个例子中，main() 调用 A()，A() 调用 B()，B() 调用 C()，C() 调用 D()，D() 抛出一个异常。
+
+    ```cpp
+    #include <iostream>
+
+    void D() // called by C()
+    {
+        std::cout << "Start D\n";
+        std::cout << "D throwing int exception\n";
+
+        throw - 1;
+
+        std::cout << "End D\n"; // skipped over
+    }
+
+    void C() // called by B()
+    {
+        std::cout << "Start C\n";
+        D();
+        std::cout << "End C\n";
+    }
+
+    void B() // called by A()
+    {
+        std::cout << "Start B\n";
+
+        try {
+            C();
+        }
+        catch (double) // not caught: exception type mismatch
+        {
+            std::cerr << "B caught double exception\n";
+        }
+
+        try { }
+        catch (int) // not caught: exception not thrown within try
+        {
+            std::cerr << "B caught int exception\n";
+        }
+
+        std::cout << "End B\n";
+    }
+
+    void A() // called by main()
+    {
+        std::cout << "Start A\n";
+
+        try {
+            B();
+        }
+        catch (int) // exception caught here and handled
+        {
+            std::cerr << "A caught int exception\n";
+        }
+        catch (double) // not called because exception was handled by prior catch block
+        {
+            std::cerr << "A caught double exception\n";
+        }
+
+        // execution continues here after the exception is handled
+        std::cout << "End A\n";
+    }
+
+    int main()
+    {
+        std::cout << "Start main\n";
+
+        try {
+            A();
+        }
+        catch (int) // not called because exception was handled by A
+        {
+            std::cerr << "main caught int exception\n";
+        }
+        std::cout << "End main\n";
+
+        return 0;
+    }
+    ```
+
+    这段程序将会输出
+
+    ```plaintext
+    Start main
+    Start A
+    Start B
+    Start C
+    Start D
+    D throwing int exception
+    A caught int exception
+    End A
+    End main
+    ```
+
+    - D() 和 C() 都没有处理异常，因此异常会向上传递。
+    - B() 没有捕获到类型为 double 的异常（D() 抛出的是 int 类型的异常），异常继续向上传递。
+    - A() 捕获到了类型为 int 的异常，因此异常被处理，程序从最后一个 catch 块后面的代码开始继续执行。
+    - A() 执行完毕后正常地回到 main()
+
+为了防止出现未捕获的异常导致程序终止，我们可以在 catch 的参数中使用省略号 `...` 来捕获所有类型的异常。
+
+```cpp
+try
+{
+    // code that may throw exceptions
+}
+catch (int)
+{
+    // handle int exceptions
+}
+catch (...) // catch all exceptions
+{
+    // handle the
+}
+```
+
+### 异常类与派生
+
+当我们把一个类作为异常抛出时，它不仅可以被以该类为参数的 catch 块捕获，还可以被以该类的基类为参数的 catch 块捕获。例如
+
+```cpp
+#include <iostream>
+
+class Base
+{
+public:
+    Base() {}
+};
+
+class Derived: public Base
+{
+public:
+    Derived() {}
+};
+
+int main()
+{
+    try
+    {
+        throw Derived();
+    }
+    catch (const Base& base)
+    {
+        std::cerr << "caught Base";
+    }
+    catch (const Derived& derived)
+    {
+        std::cerr << "caught Derived";
+    }
+
+    return 0;
+}
+```
+
+上面的程序将会输出 `caught Base`。由于 `Derived` 是 `Base` 的派生类，也就是说 `Derived` is-a `Base`，因此 `Base` 类型的 catch 块可以捕获 `Derived` 类型的异常。如果我们想让上面的例子正常工作，就需要将 catch 块的顺序调换，即先捕获 `Derived` 类型的异常，再捕获 `Base` 类型的异常。
+
+!!! note
+    - 派生的异常类的处理应当列在基类的处理之前。
+    - catch 一个异常类时，我们应当通过 const 引用捕获，这可以避免复制带来的额外开销，也可以避免对象的切片问题。
+
+C++ 的标准库中具有一些内置的异常类，例如 `std::exception`，它是小型的接口类，是所有标准异常类的基类。`std::exception` 具有一个虚函数 `what()`，返回一个描述异常信息的 C 风格字符串。
+
+常用的标准异常类有 `std::runtime_error`、`std::out_of_range` 等，`std::runtime_error` 的构造函数接受一个描述异常的字符串，`std::out_of_range` 的构造函数接受一个描述异常的字符串和一个指向异常对象的指针。
+
+```cpp
+#include <iostream>
+#include <stdexcept>
+
+int main()
+{
+    try
+    {
+        throw std::runtime_error("An error occurred");
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Caught exception: " << e.what() << '\n';
+    }
+
+    return 0;
+}
+```
+
+这将会输出 `Caught exception: An error occurred`。
+
+### 重新抛出异常
+
+当我们在 catch 块中捕获到异常后，有时我们希望在经过一些简单处理后重新抛出这个异常。我们可以使用 `throw` 语句来重新抛出异常，不过这里我们不需要指定异常类型，只需要使用 `throw` 关键字即可。
+
+!!! example
+
+    === "bad example"
+
+        ```cpp hl_lines="24 29 32"
+        #include <iostream>
+        class Base
+        {
+        public:
+            Base() {}
+            virtual void print() { std::cout << "Base"; }
+        };
+
+        class Derived: public Base
+        {
+        public:
+            Derived() {}
+            void print() override { std::cout << "Derived"; }
+        };
+
+        int main()
+        {
+            try
+            {
+                try
+                {
+                    throw Derived{};
+                }
+                catch (Base& b)
+                {
+                    std::cout << "Caught Base b, which is actually a ";
+                    b.print();
+                    std::cout << '\n';
+                    throw b; // the Derived object gets sliced here
+                }
+            }
+            catch (Base& b)
+            {
+                std::cout << "Caught Base b, which is actually a ";
+                b.print();
+                std::cout << '\n';
+            }
+
+            return 0;
+        }
+        ```
+
+        当我们运行这段程序时，由于在最内层通过 `Base& b` 来捕获异常，`Derived` 对象被切片，因此我们重复抛出时实际上抛出的是一个 `Base` 对象。因此在最外层的 catch 块中，我们将会看到输出
+        
+        ```
+        Caught Base b, which is actually a Derived
+        Caught Base b, which is actually a Base
+        ```
+
+    === "good example" 
+
+        如果我们想要在 catch 块中重新抛出异常刚刚抛出的异常，我们应当直接使用 `throw` 关键字，这样可以避免复制和切片问题。
+
+        ```cpp hl_lines="24 29 32"
+        #include <iostream>
+        class Base
+        {
+        public:
+            Base() {}
+            virtual void print() { std::cout << "Base"; }
+        };
+
+        class Derived: public Base
+        {
+        public:
+            Derived() {}
+            void print() override { std::cout << "Derived"; }
+        };
+
+        int main()
+        {
+            try
+            {
+                try
+                {
+                    throw Derived{};
+                }
+                catch (Base& b)
+                {
+                    std::cout << "Caught Base b, which is actually a ";
+                    b.print();
+                    std::cout << '\n';
+                    throw b; // the Derived object gets sliced here
+                }
+            }
+            catch (Base& b)
+            {
+                std::cout << "Caught Base b, which is actually a ";
+                b.print();
+                std::cout << '\n';
+            }
+
+            return 0;
+        }
+        ```
+
+        这段程序将会输出
+
+        ```
+        Caught Base b, which is actually a Derived
+        Caught Base b, which is actually a Derived
+        ```
+
+### noexcept 说明符
+
+noexcept 说明符是 C++11 新增的一个特性，它用于指示一个函数不会抛出异常。noexcept 并不代表这个函数内部不会出现异常，而是表示这个函数不会抛出异常，也就是说，如果这个函数或它所调用的其他函数抛出了异常，只要在这个函数内把异常处理完毕，不向外抛出异常，那么这个函数就符合 noexcept 说明符的要求。
+
+!!! info "Dynamic exception specifications"
+    在 C++11 之前，我们可以使用 dynamic exception specifications 来指定一个函数可能抛出的异常类型。例如
+
+    ```cpp
+    // does not throw exceptions
+    int doSomething() throw(); 
+    // may throw either std::out_of_range or a pointer to an integer
+    int doSomething() throw(std::out_of_range, int*); 
+    // may throw anything
+    int doSomething() throw(...); 
+    ```
+
+    但由于编译器实现不完整、与模板函数不兼容等等问题，dynamic exception specifications 在 C++11 中被废弃，并在 C++17 和 C++20 中被移除。
+
+
+--- 
+
 
 ## 其他
 
