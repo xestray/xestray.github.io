@@ -562,11 +562,11 @@ p->func();
 - `->()`
 
     ```cpp
-    R* T::operator -> () const; // 返回一个指针
+    R* T::operator ->() const; // 返回一个指针
     ```
 
-    返回类型必须支持 `->` 运算符
-
+    - 返回类型必须支持 `->` 运算符
+    - `owner->func()` 的语义实际上是 `(owner.operator->())->func()`，而 `(owner.operator->())` 返回的是一个指针 `ptr`，最终得到的是 `ptr->func()`
 
 !!! example
 
