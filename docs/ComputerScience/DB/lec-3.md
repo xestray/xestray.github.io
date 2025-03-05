@@ -653,8 +653,43 @@ SET balance = balance + 100
 - natural join：以同名属性相等作为连接条件
 - inner join：只返回两个表中满足连接条件的元组
 - outer join：返回两个表中所有的元组，不满足连接条件的元组用 null 填充
+- 非自然连接会保留两个表中的同名属性
+
+### Left Outer Join
+
+- 返回左表中所有的元组，右表中满足连接条件的元组
+- 右表中不满足连接条件的元组用 null 填充
+
+```sql
+SELECT *
+FROM table1 LEFT OUTER JOIN table2
+ON table1.col1 = table2.col1
+```
+
+### Right Outer Join
+
+- 返回右表中所有的元组，左表中满足连接条件的元组
+- 左表中不满足连接条件的元组用 null 填充
+
+```sql
+SELECT *
+FROM table1 RIGHT OUTER JOIN table2
+ON table1.col1 = table2.col1
+```
+
+### Full Outer Join
+
+- 返回两个表中所有的元组
+- 不满足连接条件的元组用 null 填充
+
+```sql
+SELECT *
+FROM table1 FULL OUTER JOIN table2
+ON table1.col1 = table2.col1
+```
 
 ### join 的更多例子
+
 
 <figure>
     <img src="../assets/连接更多例子1.png" width="60%"/>
