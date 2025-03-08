@@ -9,5 +9,6 @@
     用于记录一些零散的知识点，和使用各种工具的笔记、经验。
 
 - [x] [makefile 杂记](./makefile.md)
+- [x] [CMake](./CMake.md)
 - [ ] git 常用命令
 - [ ] shell 常用命令

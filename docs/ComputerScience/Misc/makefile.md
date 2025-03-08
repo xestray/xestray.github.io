@@ -248,6 +248,7 @@ hello: hello.c
     all:
         @echo $(VAR) # 输出 "a.c b.c c.c" 等
     ```
+    
 - `$(shell command)`：执行 shell 命令
 
     ```makefile
