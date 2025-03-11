@@ -1954,7 +1954,6 @@ auto& ref2 { getRef() };
     ```cpp
     const int x;
     int* const ptr;
-    int& const ref;
     ```
 
     - **低级 const（low-level const）**：const 修饰的是**指针所指向的对象**或**引用所绑定的对象**，而非指针或引用本身。例如
@@ -1964,11 +1963,8 @@ auto& ref2 { getRef() };
     const int* ptr;
     ```
 
-    指针也可以同时拥有两种 const，例如
-
-    ```cpp
-    const int* const ptr;
-    ```
+    !!! tip
+        指针可以同时拥有两种 const，例如 `const int* const ptr;`，但引用只能拥有一种 const，例如 `const int& ref;`，因为引用本身就是不可修改的（即不可以改变它所绑定的对象），所以不可以拥有顶级 const。
 
 - 当我们说类型推导会删去 const 限定符时，我们指的是**顶层 const**，而**底层 const**则会被保留。
 

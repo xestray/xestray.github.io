@@ -80,8 +80,13 @@
 
 随手记一些跟着官方 tutorial 做的时候觉得有用的笔记。
 
+- `target_compile_definitions()` 可以用来定义编译时的宏，例如：
 
+    ```cmake
+    target_compile_definitions(my_target PRIVATE MY_MACRO=1)
+    ```
 
+    可以让 `my_target` 编译时定义 `MY_MACRO` 宏，于是我们就可以在代码中使用 `#ifdef MY_MACRO` 来判断是否定义了这个宏，进而控制编译条件，实现不同情况下编译不同的代码。
 
 
 

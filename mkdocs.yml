@@ -69,6 +69,7 @@ nav:
     - 杂项:
       - ComputerScience/Misc/index.md
       - Makefile: ComputerScience/Misc/makefile.md
+      - CMake: ComputerScience/Misc/cmake.md
     #   - Git: ComputerScience/Misc/git.md
     #   - Docker: ComputerScience/Misc/docker.md
     #   - Vim: ComputerScience/Misc/vim.md
