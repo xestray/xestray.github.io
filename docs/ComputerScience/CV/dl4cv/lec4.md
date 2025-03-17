@@ -84,9 +84,22 @@
 
     深度神经网络的深度是指神经网络中的层数（实际上是权重矩阵的数量），而宽度是指每一层神经元的数量。
 
+    一般而言，当我们说 N 层神经网络时，不包括输入层，因此单层神经网络描述的是没有隐藏层的网络（输入直接映射到输出），而 2 层神经网络描述的是有一个隐藏层的网络。
+
     <figure>
         <img src="../assets/深度神经网络.png" width="70%">
     </figure>
+
+!!! example "衡量神经网络的大小"
+
+    人们通常使用两个指标来衡量神经网络的大小，一个是神经元的数量，另一个是参数的数量。
+
+    <figure>
+        <img src="../assets/神经网络分层.png" width="70%">
+    </figure>
+
+    - 在左边这个网络中，有 4 + 2 = 6 个神经元，有 3 * 4 + 4 * 2 = 20 个参数，4 + 2 = 6 个 bias，共计 26 个可学习参数。
+    - 在右边这个网络中，有 4 + 4 + 1 = 9 个神经元，有 3 * 4 + 4 * 4 + 4 * 1 = 32 个参数，4 + 4 + 1 = 9 个 bias，共计 41 个可学习参数。
 
 ### Activation Functions
 
@@ -116,7 +129,7 @@ $$ f(x) = W_2(W_1x + b_1) + b_2 = (W_2W_1)x + (W_2b_1 + b_2) $$
 
     这样一来在新的空间中，原本线性不可分的数据就变得线性可分了。
     
-使用激活函数就相当于在原始空间中将超平面（Hyperplane）进行了折叠，使用的隐藏层越多，折叠的次数就越多，这样就可以实现更复杂的空间扭曲。
+使用激活函数就相当于在原始空间中将超平面（Hyperplane）进行了折叠，使用的神经元和隐藏层越多，折叠的次数就越多，这样就可以实现更复杂的空间扭曲。
 
 <figure>
     <img src="../assets/空间折叠1.png" width="65%">
@@ -128,9 +141,11 @@ $$ f(x) = W_2(W_1x + b_1) + b_2 = (W_2W_1)x + (W_2b_1 + b_2) $$
     <img src="../assets/空间折叠2.png" width="65%">
 </figure>
 
+> The takeaway is that you should not be using smaller networks because you are afraid of overfitting. Instead, you should use as big of a neural network as your computational budget allows, and use other regularization techniques to control overfitting.
+
 ### Universal Approximation
 
-具有一个隐藏层的神经网络可以以任意精度逼近任意函数 $f: \mathbb{R} \rightarrow \mathbb{R}$，这就是神经网络的万能逼近定理（Universal Approximation Theorem）。
+具有一个隐藏层的神经网络可以以任意精度逼近任意连续函数 $f: \mathbb{R} \rightarrow \mathbb{R}$，这就是神经网络的万能逼近定理（Universal Approximation Theorem）。
 
 <figure>
     <img src="../assets/神经网络万能逼近.png" width="80%">
