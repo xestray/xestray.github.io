@@ -31,9 +31,9 @@
 </figure>
 
 现在考虑计算图中的一个结点，它接受两个输入 $x$ 和 $y$，输出 $z$，假设我们已经通过反向传播计算出了损失函数 $L$ 对 $z$ 的梯度 $\dfrac{\partial L}{\partial z}$，那么我们在计算 $z$ 对 $x$ 和 $y$ 的梯度后，就可以利用链式法则求出 $L$ 对 $x$ 和 $y$ 的梯度。即
+$$ \dfrac{\partial L}{\partial x} = \dfrac{\partial z}{\partial x} \dfrac{\partial L}{\partial z} $$
 
-$$ \dfrac{\partial L}{\partial x} = \dfrac{\partial L}{\partial z} \cdot \dfrac{\partial z}{\partial x} $$
-$$ \dfrac{\partial L}{\partial y} = \dfrac{\partial L}{\partial z} \cdot \dfrac{\partial z}{\partial y} $$
+$$ \dfrac{\partial L}{\partial y} = \dfrac{\partial z}{\partial y} \dfrac{\partial L}{\partial z} $$
 
 其中，$\dfrac{\partial L}{\partial z}$ 称为 **upstream gradient**，$\dfrac{\partial z}{\partial x}$ 和 $\dfrac{\partial z}{\partial y}$ 称为 **local gradient**，$\dfrac{\partial L}{\partial x}$ 和 $\dfrac{\partial L}{\partial y}$ 称为 **downstream gradient**。
 
@@ -104,14 +104,14 @@ $$ \dfrac{\partial y}{\partial x} = \begin{bmatrix} \dfrac{\partial y_1}{\partia
     假如 $y$ 是 $m$ 维向量，$x$ 是 $n$ 维向量，那么 $\dfrac{\partial L}{\partial y}$ 是一个 $m$ 维向量，$\dfrac{\partial L}{\partial x}$ 是一个 $n$ 维向量.
 
     我们在**数学**中常见到的链式法则是 
-    $$\dfrac{\partial L}{\partial x} = \dfrac{\partial L}{\partial y} \cdot \dfrac{\partial y}{\partial x}$$
+    $$ \dfrac{\partial L}{\partial x} = \dfrac{\partial L}{\partial y} \cdot \dfrac{\partial y}{\partial x} $$
     那么 Jacobian 矩阵 $\dfrac{\partial y}{\partial x}$ 就应该是 $m \times n$ 的 。
 
     而我们在**反向传播**中使用的链式法则是
-    $$\dfrac{\partial L}{\partial x} = \dfrac{\partial y}{\partial x} \cdot \dfrac{\partial L}{\partial y} $$
+    $$ \dfrac{\partial L}{\partial x} = \dfrac{\partial y}{\partial x} \cdot \dfrac{\partial L}{\partial y} $$
     那么 Jacobian 矩阵 $\dfrac{\partial y}{\partial x}$ 就应该是 $n \times m$ 的。
 
-    这一点需要格外注意和辨析。
+    这是因为在反向传播中，我们是从损失函数开始，逐步向前计算梯度，而在数学中，我们是从输入变量开始，逐步向后计算梯度。同时这里的乘法是矩阵乘法，因此 Jacobian 矩阵的形状也会根据两个向量 $x$ 和 $y$ 的维度而变化。
 
 ### Backprop with Vectors
 
