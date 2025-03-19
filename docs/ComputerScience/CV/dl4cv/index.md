@@ -17,6 +17,6 @@
 - [x] [Linear Classification](lec2.md)
 - [x] [Regularization + Optimization](lec3.md)
 - [x] [Neural Networks](lec4.md)
-- [ ] [Backpropagation](lec5.md)
-- [ ] [Convolutional Neural Networks](lec6.md)
+- [x] [Backpropagation](lec5.md)
+- [x] [Convolutional Neural Networks](lec6.md)
 
