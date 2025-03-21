@@ -19,4 +19,5 @@
 - [x] [Neural Networks](lec4.md)
 - [x] [Backpropagation](lec5.md)
 - [x] [Convolutional Neural Networks](lec6.md)
-
+- [x] [CNN Architectures Ⅰ](lec7.md)
+- [ ] [Training Neural Networks Ⅰ](lec8.md)
