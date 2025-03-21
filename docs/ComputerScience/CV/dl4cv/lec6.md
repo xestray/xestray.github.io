@@ -211,13 +211,18 @@ $$ y_{i, j} = \gamma_j \hat{x}_{i, j} + \beta_j $$
 
 > $y_{i, j}$ 的形状为 N × D
 
+!!! note
+    如果参数 $\gamma = \sigma, \beta = \mu$，那么变换之后会把 $x$ 恢复成归一化之前的状态。
+
 但是 batch normalization 还有一些问题：
 
 - 在 batch size 很小时，计算得到的平均值和标准差可能会受到噪声的影响，并且这一个 batch 的数据可能并不能很好地代表整个数据集的分布
 - 并且在测试时我们只能对少数样本进行处理，可能无法计算出一个 batch 的平均值和标准差，这可能会导致测试时的结果和训练时的结果不一致。
 
 !!! note
-    如果参数 $\gamma = \sigma, \beta = \mu$，那么变换之后会把 $x$ 恢复成归一化之前的状态。
+    在测试时我们可以使用训练时所有批次的平均值和标准差的期望值来代替当前 batch 的平均值和标准差。比如
+    $$ \mu = \dfrac{1}{M} \sum_{j}^{M} \mu_j $$
+    $$ \sigma^2 = \dfrac{1}{M} \sum_{j}^{M} \sigma_j^2 $$
 
 <figure markdown="span">
     ![](./assets/批量归一化2.png){width=60%}
