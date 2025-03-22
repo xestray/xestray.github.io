@@ -24,6 +24,6 @@
 - [x] [数据库介绍](lec-1.md)
 - [x] [关系模型](lec-2.md)
 - [x] [SQL](lec-3.md)
-- [ ] [SQL 进阶](lec-4.md)
+- [x] [SQL 进阶](lec-4.md)
 
 
