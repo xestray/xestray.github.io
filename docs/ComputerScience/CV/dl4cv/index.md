@@ -21,3 +21,4 @@
 - [x] [Convolutional Neural Networks](lec6.md)
 - [x] [CNN Architectures Ⅰ](lec7.md)
 - [x] [Training Neural Networks Ⅰ](lec8.md)
+- [x] [Training Neural Networks Ⅱ](lec9.md)

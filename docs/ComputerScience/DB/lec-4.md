@@ -3,7 +3,7 @@
     statistics: true
 ---
 
-# 进阶 SQL
+# Advanced SQL
 
 ## SQL Data Types and Schemas
 
@@ -41,7 +41,7 @@ SQL 中还有专门用于存储大对象的类型（large-object type）
 - clob: character large object -- object is a large collection of character data
 
 !!! info
-    <figure>87
+    <figure>
     <img src="../assets/数据库实例和方法.png" width="65%"/>
     </figure>
 

@@ -5,57 +5,5 @@
 
 # 计算机视觉
 
-- [Deep Learning for Computer Vision](./dl4cv/dl4cv.md)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- [Deep Learning for Computer Vision](./dl4cv/index.md)
 
