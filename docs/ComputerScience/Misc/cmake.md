@@ -78,7 +78,7 @@
 
 ## 备忘笔记
 
-随手记一些跟着官方 tutorial 做的时候觉得有用的笔记。
+随手记一些跟着官方 tutorial 做的时候觉得有用的笔记，但是似乎发现跟着 tutorial 做也是一知半解的...
 
 - `target_compile_definitions()` 可以用来定义编译时的宏，例如：
 
