@@ -267,9 +267,187 @@ $$ \eta = \dfrac{n\times m \times \Delta t_0}{m(m+n-1)\Delta t_0} = \dfrac{n}{m+
     - 需要大量处理在执行中指令之间可能存在的依赖关系
     - 控制逻辑会变得非常庞大和复杂
 
+## Hazards of Pipelining
+
+流水线中的冒险主要可以分为以下几种情况：
+
+- 数据依赖（Data Dependences）：后续指令所需要使用到的数据依赖于前一条指令的结果
+- 名称依赖（Name Dependences）：后续指令所需要使用到的寄存器与前一条指令所写入的寄存器相同
+- 控制依赖（Control Dependences）：某些指令是否执行取决于前面的分支指令的执行结果
+
+Hazard 指的是流水线中由于指令之间的依赖关系而导致的冲突。
+
+- Structural hazards
+    - A required resource is busy
+- Data hazard
+    - Need to wait for previous instruction to complete its data read/write
+- Control hazard
+    - Deciding on control action depends on previous instruction
 
 
+### Structure Hazards
 
+由于对硬件资源的使用冲突而导致的冒险。
 
+例如在一个流水线中只有一块内存，load 和 store 指令为了数据需要访问内存，后续指令的取指操作也需要访问内存，这样就会导致结构冒险。
 
+解决方法只有 stall 或增加硬件资源（包括使用分别的指令内存和数据内存，和使用分别的指令 cache 和数据 cache）。
 
+> Can always solve a structural hazard by adding more hardware
+
+### Data Hazards
+
+An instruction depends on completion of data access by a previous instruction，包括读后写（RAW）、写后读（WAR）、写后写（WAW）三种情况。
+
+通常通过 stall 或者 forwarding 来解决，但 load-use data hazard 无法仅通过 forwarding 解决，在 forwarding 之后还是需要 stall 一个周期
+
+为了尽可能地减少 stall，提高 CPU 的运行效率，也可以对没有相互依赖关系的指令进行调度（Code Scheduling），从而尽可能地减少需要的 stall 周期数。
+
+<figure markdown="span">
+    ![](./assets/指令调度.png){width=60%}
+</figure>
+
+- 静态调度：程序还没有运行时，编译器为我们优化了代码，改变了指令的执行顺序。
+- 动态调度：程序在运行时，处理器为我们优化了代码，改变了指令的执行顺序。
+
+!!! info
+    具体如何判断是否出现了 data hazard、出现了之后要从哪个阶段对数据进行 forwarding、要对阶段寄存器如何处理在这里就不详细展开了，具体可见[计组笔记](../COD/chap-4.md#pipline-hazards)。
+
+### Control Hazards
+
+解决办法有几种：
+
+- 直接 stall，直到确定要是否要跳转和要跳转到的地址之后再继续执行后续指令
+- predict，在 RISC-V 中一般是 predict not taken，仅在预测错误的时候才 stall
+    - 也有动态分支预测的技术，即把分支指令的历史结果存储在一个表中，将要执行 branch 指令时就去检查这个表中是否有相应的指令，根据表中的内容来决定是否跳转；如果判断错误了，就 flush 流水线并且调整预测结果
+- 将判断 branch 是否跳转的硬件移到 ID 阶段，提前进行判断
+
+#### Dynamic Branch Prediction
+
+Use dynamic prediction
+
+- Branch prediction buffer (aka branch history table)
+- Indexed by recent branch instruction addresses
+- Stores outcome (taken/not taken)
+- To execute a branch
+
+    - Check table, expect the same outcome
+
+        把之前大家的结果存在一个表里，通过历史判断未来，根据之前的分支结果预测这次。
+
+    - Start fetching from fall-through or target
+    - If wrong, flush pipeline and flip prediction
+
+<figure markdown="span">
+    ![](./assets/分支历史表.png){width=70%}
+</figure>
+
+<figure markdown="span">
+    ![](./assets/2位预测.png){width=70%}
+</figure>
+
+!!! info "Advanced Techniques for Instruction Delivery and Speculation"
+    - Increasing Instruction Fetch Bandwidth
+        - Branch-Target Buffers(BTBs)
+
+        <figure markdown="span">
+            ![](./assets/分支目标缓冲.png){width=70%}
+        </figure>
+
+        类似于 TLB，用于存放分支指令以及分支预测的目标地址。如果有需要跳转的分支指令不在表中，就把它加入到表中；如果放在表中的分支指令不发生跳转，就把它移除。
+
+    - Specialized Branch Predictors: Predicting Procedure Returns, Indirect Jumps, and Loop Branches
+        - Integrated Instruction Fetch Units
+
+            一个聚合了综合分支预测、指令预取、指令内存访问等功能的单元
+
+    - Benefit
+        - Get instructions at branch target faster
+        - It can provide multiple instructions at the branch target once, which is necessary for the multi processor;
+        - branch folding
+            - It is possible to achieve unconditional branching without delay, or sometimes conditional branching without delay.
+
+## Schedule of Nonlinear pipelining
+
+**Linear pipelining**: Each section of the pipelining is connected serially without feedback loop. When data passes through each segment inthe pipelining, each segment can only flow once at most
+
+**Nonlinear pipelining**: In addition to the serial connection, there is also a
+feedback loop in the pipelining
+
+之前我们学到的都是线性流水线，但是有些时候执行某些指令时需要反复用到某些硬件资源，这就会在流水线中形成一条回路，这就是非线性流水线。
+
+非线性流水线会遇到调度问题：我们需要决定何时向流水线中引入一个新的任务（一条新指令）而不会与已经在流水线中的指令发生冲突。
+
+!!! example
+    <figure markdown="span">
+        ![](./assets/非线性流水线1.png){width=60%}
+    </figure>
+
+    例如这里表的横轴表示时钟的拍数，纵轴表示需要使用的硬件资源。如果随意地向流水线内不断引入新指令，就会导致硬件资源使用的大量冲突
+
+    <figure markdown="span">
+        ![](./assets/非线性流水线2.png){width=60%}
+    </figure>
+
+解决上述问题的方法是对非线性流水线进行调度，以避免冲突：
+
+1. Initial conflict vector
+
+    使用二进制表示，从右往左数第几位是 1 就表示每隔几拍这个指令就会产生冲突
+
+2. Conflict vector
+3. State transition graph
+4. Circular queue
+5. Shortest average interval
+
+!!! example
+    <figure markdown="span">
+        ![](./assets/非线性流水线3.png){width=60%}
+    </figure>
+
+    首先分别观察每一个部件每隔多少拍会产生冲突：
+
+    - 第一个部件每个 8 拍会出现冲突，第二个部件隔 1，5，6 拍会出现冲突，第三个部件不会出现冲突，第四、第五个部件隔 1 拍会出现冲突
+    - 于是我们把第 1，5，6，8 位二进制数字置为 1，其余为 0，就得到了初始的冲突向量（initial conflict vector）10110001
+
+    <figure markdown="span">
+        ![](./assets/非线性流水线4.png){width=60%}
+    </figure>
+
+    接着我们可以画一个表格来计算当前的冲突向量（current conflict vector，CCV），它是目前在流水线中的所有冲突向量取交集的结果。
+
+    - 上图中纵轴表示引入第几条指令，横轴表示在隔了几个周期后引入新的指令。（我们暂时只考虑所有指令都是相同的情况）
+    
+    - 比如上图中我们隔了 2 拍引入了第二条指令，就把第一条指令的冲突向量右移 2 位（高位补 0），并把移位后的冲突向零与第二条指令的冲突向量按位或起来，得到 CCV。
+    
+    这样，我们就找到了一个循环调度：2-2-7。我们还可以用类似的方法找到更多的循环调度方法，然后求出平均的间隔（执行完一个循环所需要暂停的周期数除以这个循环中的指令数量）
+
+    <figure markdown="span">
+        ![](./assets/非线性流水线5.png){width=60%}
+    </figure>
+
+!!! summary
+    1. How the instruction is executed
+        - Sequential execution
+        - Overlap once
+        - Second overlap
+        - Pipeline
+    2. Classification of pipelines
+        - Single function, multi-function
+        - Static, dynamic
+        - Linear, non-linear
+        - In-order, out-of-order
+    3. Performance indicators of the pipeline
+        - Throughput rate
+        - Speedup ratio effectiveness
+    4. Factors affecting the performance of the pipeline
+        - Pipeline design
+        - Type of instructions
+        - Instructions related
+            - Data dependence
+            - Name dependence
+            - Control dependence
+    5. Dynamic Branch Prediction
+        - Branch History Table (BHT)
+        - Branch-Target Buffer (BTB)
+    6. Non-linear pipeline scheduling problem
