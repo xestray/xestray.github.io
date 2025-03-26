@@ -22,3 +22,9 @@
 - [x] [CNN Architectures Ⅰ](lec7.md)
 - [x] [Training Neural Networks Ⅰ](lec8.md)
 - [x] [Training Neural Networks Ⅱ](lec9.md)
+- [x] [CNN Architectures Ⅱ](lec10.md)
+- [x] [Deep Learning Software](lec11.md)
+- [ ] [Object Detection](lec12.md)
+
+
+

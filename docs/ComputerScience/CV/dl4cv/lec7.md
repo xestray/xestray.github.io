@@ -155,7 +155,7 @@ ResNet 在 2015 年的 ImageNet 中取得了错误率仅 3.6% 的好成绩，并
 > Like GoogLeNet, no big fully-connected-layers: instead use **global average pooling** and a single linear layer at the end.
 
 <figure markdown="span">
-    ![](./assets/残差网络2.png){width=70%}
+    ![](./assets/残差网络3.png){width=70%}
 </figure>
 
 ResNet 除了使用上述的基本残差块之外，在训练深度大得多的网络是还使用了“瓶颈残差块”，用于在保证网络深度的情况下减少计算量和参数量。其结构如下
