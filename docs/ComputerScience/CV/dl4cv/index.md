@@ -24,7 +24,8 @@
 - [x] [Training Neural Networks Ⅱ](lec9.md)
 - [x] [CNN Architectures Ⅱ](lec10.md)
 - [x] [Deep Learning Software](lec11.md)
-- [ ] [Object Detection](lec12.md)
-
-
+- [x] [Object Detection](lec12.md)
+- [x] [Image Segmentation](lec13.md)
+- [ ] [Recurrent Networks](lec14.md)
+- [ ] [Attention](lec15.md)
 

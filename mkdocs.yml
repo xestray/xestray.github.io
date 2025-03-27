@@ -82,6 +82,9 @@ nav:
         - CNN Architectures Ⅱ: ComputerScience/CV/dl4cv/lec10.md
         - Deep Learning Software: ComputerScience/CV/dl4cv/lec11.md
         - Object Detection: ComputerScience/CV/dl4cv/lec12.md
+        - Image Segmentation: ComputerScience/CV/dl4cv/lec13.md
+        - Recurrent Networks: ComputerScience/CV/dl4cv/lec14.md
+        - Attention: ComputerScience/CV/dl4cv/lec15.md
 
     - 杂项:
       - ComputerScience/Misc/index.md

@@ -199,9 +199,6 @@ Fast R-CNN 是 R-CNN 的一个改进版本，它通过首先在整个图像上�
 - 用于提取特征向量的 CNN 被称为 backbone network，即骨干网络；对每个从特征图中提取出的区域进行处理的 CNN 被称为  Per-Region Network。
 - 从特征图上寻找候选区域时同样要对特征图进行裁剪和放缩（Crop + Resize）
 
-!!! note
-    原始图像中的真实物体边框未必能与特征图中的每个“像素点”所对应，这时候就需要进行一些处理，就不在此展开了。
-
 !!! info "Fast R-CNN vs “Slow” R-CNN"
     <figure markdown="span">
         ![](./assets/目标检测13.png){width=80%}
@@ -209,9 +206,45 @@ Fast R-CNN 是 R-CNN 的一个改进版本，它通过首先在整个图像上�
 
     可以看到 Fast R-CNN 无论是训练用时还是测试用时都比 R-CNN 要快得多，甚至 Fast R-CNN 在测试时的耗时主要来源于 region proposal 而非识别等操作。
 
+#### RoI Pooling
+
+我们要在特征图上对每个候选区域进行处理，因此我们需要将特征图上不同大小的候选区域映射到相同大小的特征图上，这就需要 RoI Pooling。
+
+RoI Pooling 的主要步骤是：
+
+1. 将原始图像的候选区域映射到特征图上（snap to grid cell）
+2. 将候选区域划分为 $H \times W$ 个子区域（实践中通常取 $H=W=7$，下图的示例中取 $H=W=2$）
+3. 对每个子区域进行 Max Pooling
+4. 将 Max Pooling 的结果拼接成一个大小为 $H \times W$ 的特征向量
+
+这样一来，我们就可以将不同大小的候选区域映射到相同大小的特征图上，从而可以使用全连接层来进行分类和回归。
+
+<figure markdown="span">
+    ![](./assets/目标检测16.png){width=70%}
+</figure>
+
+但是由于卷积的特性，原始图像中的 region proposal 未必能与特征图上的 grid cell 对齐，从原始图像到特征图像的映射会出现一定的误差（misalignment），这就会导致 RoI Pooling 时的信息损失，于是就有了 RoI Align。
+
+#### RoI Align
+
+RoI Align 的目标是解决 RoI Pooling 的对齐问题，它通过双线性插值（bilinear interpolation）来保留更多的空间信息，避免了量化误差，保证了特征的精确对齐。
+
+- 对齐每个 RoI：对于每个 RoI，我们首先计算出 RoI 在特征图上的位置，然后根据该位置在特征图上进行精确的像素对齐。
+- 双线性插值：对于每个 RoI 分割网格中的每个像素位置（采样点），RoI Align 会利用特征图中的四个邻近像素进行双线性插值，得到更精确的特征值。
+- 得到区域特征：得到了每个 RoI 的精确特征后，我们像往常一样进行 RoI Pooling，将特征图上不同大小的候选区域通过划分区域和 max pooling 映射到相同大小的特征向量上。
+
+!!! example
+    <figure markdown="span">
+        ![](./assets/目标检测17.png){width=70%}
+    </figure>
+
+    例如在上图中，与高亮的绿色采样点对应的区域是图中紫色方框标注出来的区域，RoI Align 会利用这个区域的四个邻近像素（红色点）进行双线性插值，得到更精确的特征值。
+
+    对特征图上 RoI 中的每一个采样点都进行双线性插值操作后，现在我们输出的特征向量就与原始图像中的 RoI 对齐了。
+
 ### Faster R-CNN
 
-> 的命名就来自于它比 Fast R-CNN 还要更快的训练和运行速度，相当简单粗暴...
+> Faster R-CNN 的命名就来自于它比 Fast R-CNN 还要更快的训练和运行速度，相当简单粗暴...
 
 <figure markdown="span">
     ![](./assets/目标检测15.png){width=50%}
@@ -227,10 +260,15 @@ RPN 是一个小型的卷积神经网络，通常与主网络（用于目标检�
 
 - **滑动窗口机制**：RPN 通过一个滑动窗口在 CNN 特征图上滑动，每个窗口都会生成多个候选框。每个候选框有两个输出：一个是目标物体的概率（即该框是否包含目标物体），另一个是边界框的回归值（即预测框的坐标调整量）。
 - **多种尺度和长宽比**：RPN 会为每个滑动窗口生成多个不同尺度和长宽比的候选框，这些框被称为锚框（Anchor Boxes）。
+
+    <figure markdown="span">
+        ![](./assets/锚框.png){width=50%}
+    </figure>    
+
 - **边界框回归**：每个候选框还会进行边界框回归（Bounding Box Regression），以进一步优化框的位置。
 
 !!! note
-    引入了 Region Proposal Network 之后，Faster R-CNN 现在就拥有了 4 中损失：
+    引入了 Region Proposal Network 之后，Faster R-CNN 现在就拥有了 4 种损失：
 
     1. **RPN classification**: anchor box is object / not an object
     2. **RPN regression**: predict transform from anchor box to proposal box
