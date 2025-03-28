@@ -25,5 +25,5 @@
 - [x] [关系模型](lec-2.md)
 - [x] [SQL](lec-3.md)
 - [x] [SQL 进阶](lec-4.md)
-
-
+- [x] [E-R 模型](lec-5.md)
+- [ ] [关系数据库设计](lec-6.md)
