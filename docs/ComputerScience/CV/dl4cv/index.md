@@ -27,5 +27,5 @@
 - [x] [Object Detection](lec12.md)
 - [x] [Image Segmentation](lec13.md)
 - [x] [Recurrent Networks](lec14.md)
-- [ ] [Attention](lec15.md)
-
+- [x] [Attention](lec15.md)
+- [x] [Generative Models Ⅰ](lec16.md)
