@@ -29,3 +29,4 @@
 - [x] [Recurrent Networks](lec14.md)
 - [x] [Attention](lec15.md)
 - [x] [Generative Models Ⅰ](lec16.md)
+- [x] [Generative Models Ⅱ](lec17.md)
