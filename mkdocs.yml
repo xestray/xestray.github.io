@@ -89,6 +89,9 @@ nav:
         - Attention: ComputerScience/CV/dl4cv/lec15.md
         - Generative Models Ⅰ: ComputerScience/CV/dl4cv/lec16.md
         - Generative Models Ⅱ: ComputerScience/CV/dl4cv/lec17.md
+        - Visualizing Models and Generating Images: ComputerScience/CV/dl4cv/lec18.md
+        - 3D vision: ComputerScience/CV/dl4cv/lec19.md
+        - Videos: ComputerScience/CV/dl4cv/lec20.md
 
     - 杂项:
       - ComputerScience/Misc/index.md
