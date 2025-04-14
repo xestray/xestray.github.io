@@ -2,27 +2,27 @@
   - "2025.4.14":
     - refactor:
         text: 把 CS106L 和 EECS498 的笔记转移到了 selfstudy 目录下
-        href: ComputerScience/selfstudy/
+        href: /ComputerScience/selfstudy
 
   - "2025.2.26":
     - newpage: 
         text: 增加了一些杂项的笔记
-        href: ComputerScience/Misc/
+        href: /ComputerScience/Misc
 
   - "2025.2.18":
     - newpage: 
         text: 增加大二春夏学期笔记
-        href: ComputerScience/
+        href: /ComputerScience
 
   - "2025.2.17":
     - newpage: 
         text: 增加 CS106L 学习笔记
-        href: ComputerScience/PL/cpp/cs106l
+        href: /ComputerScience/selfstudy/CS106L/cs106l
 
   - "2025.1.16":
     - newpage: 
         text: 增加 C++ 学习笔记
-        href: ComputerScience/PL/cpp/cpplearning
+        href: /ComputerScience/PL/cpp/cpplearning
 
 - "2024":
   - "2024.12.27":
@@ -41,18 +41,18 @@
   - "2024.9.5":
     - pageupdate: 
         text: 补全了线代的期末补天笔记
-        href: MathematicsAndPhysics/LA/LA
+        href: /MathematicsAndPhysics/LA/LA
   - "2024.9.5":
     - pageupdate: 
         text: 补全了数分的期末补天笔记
-        href: MathematicsAndPhysics/MA
+        href: /MathematicsAndPhysics/MA
   - "2024.7.20":
     - newpage: 
         text: 更新 CTF Web 与 Misc 的专题部分笔记
-        href: CTF
+        href: /CTF
   - "2024.7.4":
     - newpage: 
         text: 更新 CTF Lec1~3 部分笔记
-        href: CTF
+        href: /CTF
   - "2024.7.1":
     - function: 建立网站并添加部分插件
