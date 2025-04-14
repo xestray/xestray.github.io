@@ -1,4 +1,9 @@
 - "2025":
+  - "2025.4.14":
+    - refactor:
+        text: 把 CS106L 和 EECS498 的笔记转移到了 selfstudy 目录下
+        href: ComputerScience/selfstudy/
+
   - "2025.2.26":
     - newpage: 
         text: 增加了一些杂项的笔记

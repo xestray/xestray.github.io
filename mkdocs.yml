@@ -8,15 +8,17 @@ repo_url: https://github.com/xestray/xestray.github.io/ # 仓库地址
 copyright: Copyright &copy; 2025 <a href="https://github.com/xestray" target="_blank">xestray</a>
 
 nav: 
-  - Home: index.md
+  - Home: 
+    - index.md
+    - 更新记录: changelog.md
+    
   - Computer Science:
     - ComputerScience/index.md
-
     - 编程语言:
       - ComputerScience/PL/index.md
       - C++: 
         - C++Learning: ComputerScience/PL/cpp/cpplearning.md
-        - CS106L: ComputerScience/PL/cpp/cs106l.md
+        
       # - Python: ComputerScience/PL/python.md
       # - Java: ComputerScience/PL/java.md
       # - Shell: ComputerScience/PL/shell.md 
@@ -70,28 +72,32 @@ nav:
 
     - 计算机视觉:
       - ComputerScience/CV/index.md
-      - DL4CV: 
-        - ComputerScience/CV/dl4cv/index.md
-        - Image Classification: ComputerScience/CV/dl4cv/lec1.md
-        - Linear Classification: ComputerScience/CV/dl4cv/lec2.md
-        - Regularization + Optimization: ComputerScience/CV/dl4cv/lec3.md
-        - Neural Networks: ComputerScience/CV/dl4cv/lec4.md
-        - Backpropagation: ComputerScience/CV/dl4cv/lec5.md
-        - Convolutional Neural Networks: ComputerScience/CV/dl4cv/lec6.md
-        - CNN Architectures Ⅰ: ComputerScience/CV/dl4cv/lec7.md
-        - Training Neural Networks Ⅰ: ComputerScience/CV/dl4cv/lec8.md
-        - Training Neural Networks Ⅱ: ComputerScience/CV/dl4cv/lec9.md
-        - CNN Architectures Ⅱ: ComputerScience/CV/dl4cv/lec10.md
-        - Deep Learning Software: ComputerScience/CV/dl4cv/lec11.md
-        - Object Detection: ComputerScience/CV/dl4cv/lec12.md
-        - Image Segmentation: ComputerScience/CV/dl4cv/lec13.md
-        - Recurrent Networks: ComputerScience/CV/dl4cv/lec14.md
-        - Attention: ComputerScience/CV/dl4cv/lec15.md
-        - Generative Models Ⅰ: ComputerScience/CV/dl4cv/lec16.md
-        - Generative Models Ⅱ: ComputerScience/CV/dl4cv/lec17.md
-        - Visualizing Models and Generating Images: ComputerScience/CV/dl4cv/lec18.md
-        - 3D vision: ComputerScience/CV/dl4cv/lec19.md
-        - Videos: ComputerScience/CV/dl4cv/lec20.md
+      
+    - 自学课程:
+      - ComputerScience/selfstudy/index.md
+      - CS106L: ComputerScience/selfstudy/CS106L/cs106l.md
+      - EECS498:
+          - ComputerScience/selfstudy/EECS498/index.md
+          - Image Classification: ComputerScience/selfstudy/EECS498/lec1.md
+          - Linear Classification: ComputerScience/selfstudy/EECS498/lec2.md
+          - Regularization + Optimization: ComputerScience/selfstudy/EECS498/lec3.md
+          - Neural Networks: ComputerScience/selfstudy/EECS498/lec4.md
+          - Backpropagation: ComputerScience/selfstudy/EECS498/lec5.md
+          - Convolutional Neural Networks: ComputerScience/selfstudy/EECS498/lec6.md
+          - CNN Architectures Ⅰ: ComputerScience/selfstudy/EECS498/lec7.md
+          - Training Neural Networks Ⅰ: ComputerScience/selfstudy/EECS498/lec8.md
+          - Training Neural Networks Ⅱ: ComputerScience/selfstudy/EECS498/lec9.md
+          - CNN Architectures Ⅱ: ComputerScience/selfstudy/EECS498/lec10.md
+          - Deep Learning Software: ComputerScience/selfstudy/EECS498/lec11.md
+          - Object Detection: ComputerScience/selfstudy/EECS498/lec12.md
+          - Image Segmentation: ComputerScience/selfstudy/EECS498/lec13.md
+          - Recurrent Networks: ComputerScience/selfstudy/EECS498/lec14.md
+          - Attention: ComputerScience/selfstudy/EECS498/lec15.md
+          - Generative Models Ⅰ: ComputerScience/selfstudy/EECS498/lec16.md
+          - Generative Models Ⅱ: ComputerScience/selfstudy/EECS498/lec17.md
+          - Visualizing Models and Generating Images: ComputerScience/selfstudy/EECS498/lec18.md
+          - 3D vision: ComputerScience/selfstudy/EECS498/lec19.md
+          - Videos: ComputerScience/selfstudy/EECS498/lec20.md
 
     - 杂项:
       - ComputerScience/Misc/index.md

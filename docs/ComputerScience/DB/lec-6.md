@@ -384,41 +384,274 @@ result := {R};
 
 ## Third Normal Form 
 
+当我们将关系模式分解成 BCNF 时，可能会导致依赖保持的丢失，但很多时候我们需要保持依赖以在更新时进行高效的检查。
 
+这个问题的解决方法是定义一个更弱的的范式，称为第三范式（3NF），它允许某些函数依赖不满足 BCNF，但仍然保持依赖。
 
+- 允许一定程度的冗余（以及冗余带来的问题）
+- 但分解后的子关系模式是依赖保持的
+- 3NF 的分解总是无损连接、依赖保持的
 
+!!! definition
+    关系模式 $R$ 在函数依赖集 $F$ 下满足第三范式（3NF），如果对于 $F^+$ 中所有形如 $\alpha \rightarrow \beta$ 的函数依赖，至少满足以下条件之一：
 
+    - $\alpha \to \beta$ 是平凡的（即 $\beta \subseteq \alpha$）
+    - $\alpha$ 是 $R$ 的超键（即 $R \subseteq \alpha^+$，$\alpha \to R$）
+    - $\beta - \alpha$ 中的每一个属性都是 $R$ 的候选键（即 $A \in \beta - \alpha$ 是主属性，若 $\alpha \cap \beta = \emptyset$，则 $A = \beta$ 是主属性）
 
+    我们可以注意到：
 
+    - 如果一个关系满足 BCNF，那么它也一定满足 3NF（因为 BCNF 的定义要求满足前面两条约束之一）；但反之则不成立。
+    - 第三范式是能满足依赖保持的对 BCNF 的放松
+
+    > 国内其他教材关于3NF的定义: 不存在非主属性对码的部分依赖和传递依赖. 该定义实际是说, 当 $\beta$ 为非主属性时, $\alpha$ 必须是码; 但当 $\beta$ 为主属性时, 则 $\alpha$ 无限制. 国内外这二种定义本质上是一致的.
+
+!!! example
+    $R = (J,K,L),\ F = \{ JK \to L,\ L \to K \}$
+
+    我们可以注意到有两个候选键：$JK,\ JL$
+
+    因此 $R$ 满足 3NF，因为 $JK$ 是一个超键，而 $K$ 是一个候选键。
+
+    但 $R$ 满足 BCNF，因为 $L \to K$ 不是平凡的函数依赖，$L$ 也不是超键。
+
+    假设 $J$ 是学生，$K$ 是课程，$L$ 是老师。一门有多个教师,一个教师上一门课, 一个学生选多门课, 一门课有多个学生选。
+
+    |$J$|$L$|$K$|
+    |--|--|--|
+    |$j_1$|$l_1$|$k_1$|
+    |$j_2$|$l_1$|$k_1$|
+    |$j_3$|$l_1$|$k_1$|
+    |$null$|$l_2$|$k_2$|
+
+    A schema that is in 3NF but not in BCNF has the problems of repetition of information (e.g., the relationship l1, k1), and may need to use null values (e.g., to represent the relationship l2, k2, where there is no corresponding value for J).
+
+### Testing for 3NF
+
+- 只需要检查 $F$ 中的函数依赖是否违反 3NF，而不必检查 $F^+$ 中的所有函数依赖
+- 使用属性闭包来检查 $\alpha \to \beta$ 中的 $\alpha$ 是否是超键
+    - 如果 $\alpha$ 是超键，那么 $\alpha^+$ 就包含 $R$ 的所有属性
+- 如果 $\alpha$ 不是超键，那么我们需要检查 $\beta$ 中的每一个属性是否是主属性（是否是 $R$ 的候选键的一部分）
+    - 这个测试比较昂贵，因为涉及到计算所有的候选键
+    - 验证一个关系是否满足 3NF 的已经被证明是一个 NP 困难问题
+    - 将关系模式分解为 3NF 可以在多项式时间内完成
+
+### 3NF Decomposition Algorithm
+
+3NF 分解算法是一种可以在多项式时间内完成的算法，它可以将一个关系模式分解为满足 3NF 的子关系模式。
+
+1. 找到函数依赖集 $F$ 的正则覆盖 $F_c$
+2. 对于 $F_c$ 中的每一个函数依赖 $\alpha \to \beta$，将其分解为 
+    - $R_i = \{ \alpha, \beta \}$，并将其添加到结果中
+3. 如果没有任何一个模式 $R_j$ 包含原模式 $R$ 的候选键，那么就添加包含任意一个候选键的关系模式
+4. 
+
+```
+Let Fc be a canonical cover for F;
+i := 0;
+for each functional dependency α → β in Fc do
+    if none of the schemas Rj, 1 ≤ j ≤ i contains αβ
+        then begin
+            i := i + 1;
+            Ri := (α, β)
+        end
+if none of the schemas Rj, 1 ≤ j ≤ i contains a candidate key for R
+    then begin
+        i := i + 1;
+        Ri := any candidate key for R;
+    end
+return (R1, R2, ..., Ri)
+```
+
+- 第二步可以保证依赖保持，因为 $F_c$ 中的每一个函数依赖都能在分解后的子关系中找到
+- 第三步可以保证无损连接，因为它可以保证至少在一个 $R_i$ 中存在 $R$ 的候选键
+- 经过上述的算法之后，所有的子模式都满足 3NF，并且分解是无损连接的
+
+!!! example "3NF 分解"
+    假设原关系模式为
+
+    ```
+    Banker-info-schema = (branch-name, customer-name, 
+				          banker-name, office-number) 
+    ```
+
+    函数依赖集为
+    
+    ```
+    F = {banker-name → branch-name office-number, 
+		 customer-name branch-name → banker-name}
+    ```
+
+    于是我们知道候选键为 `{customer-name, banker-name}`
+
+    接下来我们可以根据 3NF 分解算法对上述关系模式进行分解：
+
+    - 首先我们需要找到函数依赖集 $F$ 的正则覆盖 $F_c$，我们发现 $F$ 的正则覆盖就是它本身
+    - 接着对每一个函数依赖创建一个关系模式，得到
+
+        ```
+        Banker-office-schema = (banker-name, branch-name, office-number)
+        Banker-schema = (customer-name, branch-name, banker-name)
+        ```
+
+    - 然后检查是否有任何一个模式包含原模式 $R$ 的候选键。我们发现 $Banker-schema$ 中包含了 Banker-info-schema 的候选键 `(customer-name, branch-name)，因此我们可以将其添加到结果中
+    - 最后检查这两个关系是否存在冗余：发现没有冗余。
+
+    于是我们最终得到的两个关系模式为
+
+    ```
+    Banker-office-schema = (banker-name, branch-name, office-number)
+    Banker-schema = (customer-name, branch-name, banker-name)
+    ```
+
+    这个分解具有无损连接和依赖保持的性质，并且所有的子模式都满足 3NF。
+
+!!! info "BCNF与3NF的实际应用"
+    3NF 是大多数数据库设计的标准范式，适用于日常开发和应用
+
+    - **常见的设计实践**：3NF 广泛应用于大多数数据库设计中，尤其是在企业级应用、传统的关系数据库（如 MySQL、PostgreSQL）中，能够有效去除冗余数据，减少数据异常问题。
+    - **优化查询性能**：由于 3NF 关系的属性已通过规范化处理，查询的执行效率通常较好，尤其是在涉及大量数据更新的操作时，3NF 的设计帮助保持数据一致性和完整性。
+    - **适用场景**：如果数据库系统需要容忍一些小的冗余，或者系统对处理数据时的性能要求较高，3NF 通常已经足够，满足实际需求。
+
+    BCNF 的实际应用在对数据一致性和无冗余的要求更高时才需要考虑，通常用于高度复杂的数据模型，或者那些依赖关系非常复杂的系统。
+
+    - **复杂的数据结构**：BCNF 适用于复杂的应用场景，尤其是当数据库中存在许多业务规则或者依赖关系较为复杂时。通过 BCNF 可以更严格地消除冗余，保证数据的高度规范化。
+    - **减少异常和冗余**：在高度规范化的情况下，BCNF 帮助彻底消除冗余、避免不必要的更新异常，特别是涉及多种关系和复杂依赖的场合，BCNF 能够提供更高的数据一致性和准确性。
+    - **适用场景**：适用于对数据一致性要求极高的场景，如金融系统、航空公司系统等。这些系统通常涉及复杂的数据关系，需要更加严格的规范化来确保数据的完整性和一致性。
 
 ## Multivalued Dependencies 
 
+有些满足 BCNF 的数据库模式并不能充分地进行规范化。例如考虑 class(course, teacher, book)，此时一门课可能有多个老师，并且一门课也可以有多本参考书，这时候 teacher 和 book 就是多值属性，并且它们之间是相互独立的。
 
+!!! definition ""
+    Let $R$ be a relation schema and let $\alpha \subseteq R,\ beta \subseteq R$，the multivalued dependency
+    $$ \alpha \to\to \beta $$
+    holds on $R$, if in any legal relation $r(R)$, for all pairs of tuples $t_1$ and $t_2$ in $r$ such that $t_1[\alpha] = t_2[\alpha]$, there exist tuples $t_3$ and $t_4$ in $r$ such that:
 
+    $$ \begin{aligned}
+    & t_1[\alpha] = t_2[\alpha] = t_3[\alpha] = t_4[\alpha] \\
+    & t_3[\beta] = t_1[\beta] \\
+    & t_4[\beta] = t_2[\beta] \\
+    & t_3[R-\alpha-\beta] = t_2[R-\alpha-\beta] \\
+    & t_4[R-\alpha-\beta] = t_1[R-\alpha-\beta]
+    \end{aligned} $$
 
+    令 $R-\alpha-\beta=Z$，后两个式子就可以被简写为 $t_3[Z] = t_1[Z]$ 和 $t_4[Z] = t_2[Z]$。
 
+    如果 $\beta \subseteq \alpha$ 或 $\alpha \cup \beta = R$，那么 $\alpha \to\to \beta$ 就是平凡的多值依赖。
 
+!!! example
+    Let R be a relation schema with a set of attributes that are partitioned into 3 nonempty subsets. 
+    $$ Y,Z,W $$
+    We say that $Y \to\to Z$ ($Y$ multi-determines $Z$) if and only if for all possible relations $r(R)$ 
 
+    $ (y_1, z_1, w_1) \in r$ and $ (y_1, z_2, w_2) \in r$ 
+
+    then there exist $ (y_1, z_1, w_2) \in r$ and $ (y_1, z_2, w_1) \in r$
+
+    > Note that since the behavior of $Z$ and $W$ are identical, it follows that $Y \to\to Z$ if $Y \to\to W$. 
+
+换句话说，多值依赖$ \alpha \to\to \beta $ 指的是一个属性 $\alpha$ 的值可以决定另一个属性 $\beta$ 的一组值，但 $\alpha$ 和 $\beta$ 之间并没有直接的函数依赖关系，同时它们也不具有传递性。
+
+与此同时，$\beta$ 的这一组值是独立于 其他属性 $R - \alpha - \beta$ 的。
+
+现在回到开始时的例子：一门课可以由多个老师教授，也可以有多本参考书，并且由哪些老师教授和参考书是什么是相互独立的。
+
+于是在这里我们就有 course $\to\to$ teacher 和 course $\to\to$ book。
+
+|course|teacher|book|
+|--|--|--|
+|course1|teacher1|book1|
+|course1|teacher1|book2|
+|course1|teacher2|book1|
+|course1|teacher2|book2|
+
+从上面这表中我们可以看到，老师和书籍的各种排列组合都出现了一次，这就是多值依赖会导致的数据冗余问题。
+
+我们可以通过把上面的表分解为两个表来消除多值依赖：（course, teacher）和（course, book）。
 
 ## Fourth Normal Form 
 
+!!! definition
+    一个关系模式在函数和多值依赖集 $D$ 下满足第四范式（4NF），如果对于 $D^+$ 中所有形如 $\alpha \to\to \beta$ 的多值依赖（其中$\alpha \subseteq R,\beta \subseteq R$），至少满足以下条件之一：
+    - $\alpha \to\to \beta$ 是平凡的（即 $\beta \subseteq \alpha$ 或 $\alpha \cup \beta = R$）
+    - $\alpha$ 是 $R$ 的超键（即 $R \subseteq \alpha^+$，$\alpha \to R$） 
 
+    这里的 $D^+$ 指的是可以从 $D$ 中推导出的所有函数依赖和多值依赖的集合。
 
+    并且我们也可以很容易知道，如果 $\alpha \to \beta$，那么也一定有 $\alpha \to\to \beta$。
 
+    - 如果一个关系满足 4NF，那么它也一定满足 BCNF 和 3NF
 
+还是上面的课程、老师和书籍的例子：
 
+|course|teacher|book|
+|--|--|--|
+|course1|teacher1|book1|
+|course1|teacher1|book2|
+|course1|teacher2|book1|
+|course1|teacher2|book2|
 
+这个关系中存在两个多值依赖：
 
+- course $\to\to$ teacher
+- course $\to\to$ book
 
+但是 course 并不是这个关系的超键，因此没有满足 4NF，我们可以把违反 4NF 的关系分解为满足 4NF 的子关系：
 
+- (course, teacher)
+- (course, book)
 
+### Requirement for decomposition
 
+Assume $R$ is decomposed into $R_1, R_2, \ldots, R_n$, each $R_i$ is required to conform to 4NF.
 
+The restriction of $D$ to $R_i$ is the set $D_i$ consisting of 
+- All functional dependencies in $D^+$ that include only attributes of $R_i$. 
 
+    所有只包含 $R_i$ 属性的在 $D^+$ 中的函数依赖
 
+- All multivalued dependencies of the form 
+    $$ \alpha \to\to (\beta \cap R_i) $$ 
+    where $\alpha \subseteq R_i$ and $\alpha \to\to \beta$ is in $D^+$.
 
+    相当于多值依赖的右侧会被“截断”，只保留 $R_i$ 中的属性
 
+### 4NF Decomposition Algorithm
 
+```
+result := {R}; 
+done := false; 
+compute D+; 
+Let Di denote the restriction of D+ to Ri 
+    while (not done) 
+	    if (there is a schema Ri in result that is not in 4NF) then 
+	        begin
+            寻找 Ri 中一个非平凡的多值依赖 α →→ β，它满足 
+                - α → Ri ∉ Di（α 不是 Ri 的超键）
+                - α ∩ β = ∅
 
+            // 把 Ri 分解为三个部分
+            result := (result - Ri) ∪ (α, β) ∪ (Ri - β); 
+		end 
+        // 此时 result 中的每个模式都满足 4NF
+	    else done:= true; 
+```
 
+!!! example "4NF 分解"
+    $R =(A,B,C,G,H,I)$
 
+    $F = \{ A \to\to B,\ B \to\to HI,\ CG \to\to H \}$
+
+    这里的 $R$ 不满足 4NF，因为存在 $A \to\to B$ 并且 $A$ 不是 $R$ 的超键。
+
+    可以按照以下的步骤进行分解：
+
+    1. $R_1 = (A,B)$（$R_1$ 满足 4NF）
+    2. $R_2 = (A,C,G,H,I)$（$R_2$ 不满足 4NF）
+    3. $R_3 = (C,G,H)$（$R_3$ 满足 4NF）
+    4. $R_4 = (A,C,G,I)$（$R_4$ 满足 4NF）
+    5. $R_5 = (A,I)$（$R_5$ 满足 4NF）
+    6. $R_6 = (A,C,G)$（$R_6$ 满足 4NF）
+
+    最终我们的分解结果是：$R_1,R_3,R_5,R_6$，这几个关系都满足 4NF，并且这个分解是无损连接的。

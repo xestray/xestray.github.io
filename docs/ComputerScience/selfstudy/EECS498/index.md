@@ -7,7 +7,7 @@
 
 !!! info
 
-    学习密歇根大学 EECS 498-007 / 598-005 课程的笔记。
+    学习密歇根大学 EECS 498-007 / 598-005: Deep Learning for Computer Vision 课程的笔记。
 
     - [课程网站](https://web.eecs.umich.edu/~justincj/teaching/eecs498)
 

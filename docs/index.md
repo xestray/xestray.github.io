@@ -1,7 +1,6 @@
 ---
     comments: true
     statistics: true
-    changelog: True
 ---
 
 # 一些碎碎念
@@ -16,22 +15,18 @@
 
 如果笔记中有任何错误或者表述不够清楚的地方还请提出，我看到之后会尽我所能修改或补充。
 
-## TODO 
+<style>
+h2:before, h3:before, h4:before, h5:before, h6:before {
+    content: none !important;
+    counter-increment: none !important;
+}
+</style>
 
-- [x] 修改计组笔记的部分错别字、错漏等
-- [ ] ~~补全概率论笔记（懒得补了怎么办）~~ 咕了！
-- [x] 学学 C++
+## TODO
+
 - [ ] 看看 CSAPP（好多东西都是课程学过的，但多学点也没问题）
 - [ ] 整理一下常用的 Git 和 Shell 命令
-
-## 更新记录
-
-### 2025
-
-{{ 2025 }}
-
-### 2024  
-
-{{ 2024 }}
+- [ ] 接着学 EECS 498/598 的内容
+- [ ] 继续更新大二春夏学期的课程笔记
 
 ---  

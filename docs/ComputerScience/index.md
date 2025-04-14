@@ -12,13 +12,15 @@
 ## Table of Contents
 
 {{ BEGIN_TOC }}
-- 计算机相关课程:
+- 校内计算机课程:
     - 面向对象程序设计[note]: OOP/
     - 数据库系统[note]: DB/
     - 计算机体系结构[note]: CA/
     - 计算机组成与设计[note]: COD/
     - 高级数据结构与算法分析[note]: ADS/
 - 编程语言:
-    - CS106L: PL/cpp/cs106l/
-    - C++Learning: PL/cpp/cpplearning/
+    - C++: PL/cpp/cpplearning/
+- 自学课程:
+    - CS106L: selfstudy/CS106L/cs106l/
+    - EECS 498/598: selfstudy/EECS498/
 {{ END_TOC }}
