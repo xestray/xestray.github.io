@@ -71,6 +71,9 @@ nav:
 
     - 计算机视觉:
       - ComputerScience/CV/index.md
+
+    - 数据可视化导论:
+      - ComputerScience/IDV/index.md
       
     - 自学课程:
       - ComputerScience/selfstudy/index.md

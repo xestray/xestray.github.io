@@ -1,4 +1,8 @@
 - "2025":
+  - "2025.4.15":
+    - newpage:
+      text: 新增了计算机视觉和数据可视化导论的笔记
+      href: /ComputerScience/IDV
   - "2025.4.14":
     - refactor:
         text: 把 CS106L 和 EECS498 的笔记转移到了 selfstudy 目录下
