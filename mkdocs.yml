@@ -65,6 +65,7 @@ nav:
       - SQL 进阶: ComputerScience/DB/lec-4.md
       - E-R 模型: ComputerScience/DB/lec-5.md
       - 关系数据库设计: ComputerScience/DB/lec-6.md
+      - 存储与文件结构: ComputerScience/DB/lec-7.md
 
     - 面向对象程序设计:
       - ComputerScience/OOP/index.md
