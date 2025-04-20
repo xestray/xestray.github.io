@@ -31,5 +31,5 @@
 - [x] [Generative Models Ⅰ](lec16.md)
 - [x] [Generative Models Ⅱ](lec17.md)
 - [x] [Visualizing Models and Generating Images](lec18.md)
-- [ ] [3D vision](lec19.md)
-- [ ] [Videos](lec20.md)
+- [x] [3D vision](lec19.md)
+- [x] [Videos](lec20.md)
