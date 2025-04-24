@@ -66,6 +66,8 @@ nav:
       - E-R 模型: ComputerScience/DB/lec-5.md
       - 关系数据库设计: ComputerScience/DB/lec-6.md
       - 存储与文件结构: ComputerScience/DB/lec-7.md
+      - 索引与哈希: ComputerScience/DB/lec-8.md
+      - 查询处理: ComputerScience/DB/lec-9.md
 
     - 面向对象程序设计:
       - ComputerScience/OOP/index.md
