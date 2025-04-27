@@ -137,3 +137,143 @@ $$ \begin{bmatrix}
     - 分类：寻找一个模型或算法来实现对数据的分类
     - 演化分析：建立模型来表示数据在时间和空间中的变化规律，用于预测未知对象的时空行为
 
+## 数据可视化基础
+
+!!! note "格式塔(Gestalt)原则"
+
+    > 格式塔原则认为结构比元素重要，视觉形象首先作为统一的整体被认知
+
+    **特性**：
+
+    - 接近性（proximity）：相互接近的对象容易被视为一组
+
+        <figure markdown="span">
+            ![](./assets/格式塔1.png){width=55%}
+        </figure>
+
+    - 相似性（similarity）：形状、颜色等相似的对象会被视为一组
+
+        <figure markdown="span">
+            ![](./assets/格式塔2.png){width=55%}
+        </figure>
+
+    - 连续性（continuity）：人脑更倾向于把对象视为连续的
+
+        <figure markdown="span">
+            ![](./assets/格式塔3.png){width=55%}
+        </figure>
+
+    - 闭合性（closure）
+
+        <figure markdown="span">
+            ![](./assets/格式塔4.png){width=55%}
+        </figure>
+
+    - 简单性（simplicity）：人脑倾向于把对象识别为最简单的模式
+
+        <figure markdown="span">
+            ![](./assets/格式塔5.png){width=55%}
+        </figure>
+
+    **原则**：
+
+    - 共势原则(common fate)
+
+        <figure markdown="span">
+            ![](./assets/格式塔6.png){width=55%}
+        </figure>
+
+    - 好图原则(pragnanz)
+
+        <figure markdown="span">
+            ![](./assets/格式塔7.png){width=55%}
+        </figure>
+
+    - 对称原则(symmetry)
+
+        <figure markdown="span">
+            ![](./assets/格式塔8.png){width=55%}
+        </figure>
+
+    - 经验原则(past experience)
+
+        <figure markdown="span">
+            ![](./assets/格式塔9.png){width=55%}
+        </figure>
+
+### 视觉编码原则
+
+数据类型：
+
+- 连续型（量化型）
+    - 定距型（interval）：数值之间的差异有意义，但比值没有意义，且没有绝对零点
+
+        例如日期、地点
+
+    - 定比型（ratio）：数值之间的差异和比值都有意义，且有绝对零点
+
+        例如长度、质量、温度（开尔文温标）
+
+- 序数型
+
+    - 小、中、大
+
+- 类别型（定类 nominal）
+
+#### 视觉编码
+
+以点、线、面、体为基本元素，使用颜色、形状、大小、方向等视觉属性（通道）对数据进行编码
+
+- Marks：点、线、面、体等几何元素
+- Channels：颜色、形状、大小、方向、长度、角度等视觉属性
+- Encoding：将数据映射到视觉属性的过程
+
+<figure markdown="span">
+    ![](./assets/视觉编码1.png){width=65%}
+</figure>
+
+不同的通道在表示不同类型的数据时具有不同的有效性
+
+<figure markdown="span">
+    ![](./assets/视觉编码2.png){width=65%}
+</figure>
+
+#### popout
+
+当我们让某个（某些）元素与其他的元素在视觉上有明显的区别时，这个元素就会从其他元素中突出处理，我们称之为 popout
+
+这在很多视觉通道上都有效果，例如颜色、形状、方向、大小等，但并非所有的通道都能有比较显著的效果
+
+<figure markdown="span">
+    ![](./assets/视觉编码3.png){width=65%}
+</figure>
+
+#### grouping
+
+当我们让某些元素在视觉上有明显的区别时，这些元素就会被分为一组，我们称之为 grouping
+
+- containment：包含
+- connection：连接
+- proximity：接近
+- similarity：相似性
+
+<figure markdown="span">
+    ![](./assets/视觉编码4.png){width=65%}
+</figure>
+
+#### color
+
+- 在小区域中颜色难以辨认，而在大区域中明亮的颜色看起来会显得更大。因此我们应该在小区域中使用明亮、饱和度高的颜色，在大区域使用低饱和度的颜色（如粉色）
+- 当色彩数量较少时，它才适合用于分类数据的可视化，因此我们在表示分类数据时使用的色彩不应超过 8 种
+- 亮度和饱和度在认知中有隐式的有序关系，可以用于排序数据（例如不同数值的数据使用不同的亮度或饱和度来表示）
+
+### 视觉分析模型
+
+<figure markdown="span">
+    ![](./assets/视觉分析模型1.png){width=65%}
+</figure>
+
+<figure markdown="span">
+    ![](./assets/视觉分析模型2.png){width=65%}
+</figure>
+
