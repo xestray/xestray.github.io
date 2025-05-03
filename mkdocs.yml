@@ -68,6 +68,10 @@ nav:
       - 存储与文件结构: ComputerScience/DB/lec-7.md
       - 索引与哈希: ComputerScience/DB/lec-8.md
       - 查询处理: ComputerScience/DB/lec-9.md
+      - 查询优化: ComputerScience/DB/lec-10.md
+      - 事务管理: ComputerScience/DB/lec-11.md
+      - 并发控制: ComputerScience/DB/lec-12.md
+      - 数据库恢复: ComputerScience/DB/lec-13.md
 
     - 面向对象程序设计:
       - ComputerScience/OOP/index.md
