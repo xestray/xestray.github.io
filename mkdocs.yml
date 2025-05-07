@@ -80,8 +80,9 @@ nav:
       - ComputerScience/CV/index.md
       - 二值图像: ComputerScience/CV/lec1.md
       - 边缘检测: ComputerScience/CV/lec2.md
-      - 曲线: ComputerScience/CV/lec3.md
+      - 轮廓拟合: ComputerScience/CV/lec3.md
       - 图像特征: ComputerScience/CV/lec4.md
+      - 特征人脸: ComputerScience/CV/lec5.md
 
     - 数据可视化导论:
       - ComputerScience/IDV/index.md
