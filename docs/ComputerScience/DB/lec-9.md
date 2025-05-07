@@ -385,7 +385,7 @@ for each tuple tr in the outer relation r:
 
 !!! note
     - 我们需要选择合适的 $n$ 和哈希函数 $h$，使得所有的 $s_i$ 都一定能放入内存中
-    - 通常 $n = \lceil b_s / bM \rceil \times f$ 
+    - 通常 $n = \lceil b_s / M \rceil \times f$
 
         其中 $f$ 为修正因子，通常大约为 1.2
 
