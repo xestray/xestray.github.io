@@ -83,6 +83,8 @@ nav:
       - 轮廓拟合: ComputerScience/CV/lec3.md
       - 图像特征: ComputerScience/CV/lec4.md
       - 特征人脸: ComputerScience/CV/lec5.md
+      - 单目视觉: ComputerScience/CV/lec6.md
+      - 双目视觉: ComputerScience/CV/lec7.md
 
     - 数据可视化导论:
       - ComputerScience/IDV/index.md
