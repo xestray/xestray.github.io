@@ -19,6 +19,8 @@
     - 课程大作业：50%
     - 出勤：5%
     
+> 感觉记这些东西没什么意义，后续可能不会再更新了（
+
 ## 数据
 
 ### 数据的属性
@@ -276,4 +278,77 @@ $$ \begin{bmatrix}
 <figure markdown="span">
     ![](./assets/视觉分析模型2.png){width=65%}
 </figure>
+
+### 数据转化
+
+#### 归一化
+
+归一化（Normalization）是将原始数据映射到一个特定的分布空间中，通常会对数据的颜色、大小、坐标等进行归一化处理
+- 线性归一化：将数据映射到 $[0,1]$ 的区间
+    $$ x' = \frac{x - min(x)}{max(x) - min(x)} $$
+- 对数归一化：将数据映射到 $[0,1]$ 的区间
+    $$ x' = \frac{\log(x) - \log(min(x))}{\log(max(x)) - \log(min(x))} $$
+- Z-score 标准化：将数据映射到 $[-1,1]$ 的区间
+    $$ x' = \frac{x - \mu}{\sigma} $$
+    其中 $\mu$ 为均值，$\sigma$ 为标准差
+- 分位数归一化：将数据映射到 $[0,1]$ 的区间
+    $$ x' = \frac{rank(x)}{n} $$
+    其中 $rank(x)$ 为数据在所有数据中的排名，$n$ 为数据的总数
+
+#### 平滑
+
+指去除数据中的噪声，使数据更加平滑
+
+- PLSR（Partial Least Squares Regression）：部分最小二乘回归
+    $$ \min_{\overrightarrow{x}} \sum_{i=1}^{n} (y_m - y_i)^2 $$
+- LOESS（Locally Weighted Scatterplot Smoothing）：局部加权回归
+    $$ \hat{y} = \sum_{i=1}^{n} w_i y_i $$
+    其中 $w_i$ 为权重，$y_i$ 为数据点的值
+
+#### 采样
+
+在信号领域中，采样是指将连续信号转换为离散信号的过程。而在于数据处理中，采样是指从数据集中选择一部分数据进行分析的过程，通过选择出的数据子集，我们能够估计数据的整体情况。
+
+#### 分箱/离散化
+
+分箱是指把数据分成若干个区间（箱），每个区间内的数据被视为同一类数据。分箱的目的是为了减少数据的复杂性，提高数据的可读性和可解释性。
+
+<figure markdown="span">
+    ![](./assets/数据转化1.png){width=65%}
+</figure>
+
+### 数据图表
+
+#### 线表
+
+线表是用来表示数据随时间等因素变化的图表，通常用于显示数据的趋势和变化。线表的优点是可以清晰地显示数据的变化趋势，但缺点是当数据量较大时，线表可能会变得混乱。
+
+<figure markdown="span">
+    ![](./assets/数据转化2.png){width=65%}
+</figure>
+
+由于图表的长宽比例会很大程度上影响我们对于数据的认知，因此我们在绘制图表时需要注意图表的长宽比例（aspect ratio）
+
+<figure markdown="span">
+    ![](./assets/数据转化3.png){width=65%}
+</figure>
+
+一般而言，我们希望把让图表中的线段整体的方向接近于 45°，这样我们就能更好地观察到数据的变化趋势
+
+<figure markdown="span">
+    ![](./assets/数据转化4.png){width=65%}
+</figure>
+
+- Average-Absolute-Slopes Banking：
+    $$ \alpha = mean|s_i| \dfrac{R_x}{R_y} $$
+- Median-Absolute-Slopes Banking：
+    $$ \alpha = median|s_i| \dfrac{R_x}{R_y} $$
+
+- Average-Absolute-Orientation Banking：
+
+    <figure markdown="span">
+        ![](./assets/数据转化5.png){width=55%}
+    </figure>
+
+    $$ \sum_i \dfrac{|\theta_i(\alpha)|}{n} = 45° $$
 
