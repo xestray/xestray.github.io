@@ -89,7 +89,11 @@ y_{screen} = f_y (\dfrac{Y}{Z}) + c_y
 于是我们就可以把上面的式子写成矩阵乘法的形式：
 $$ q = MQ $$
 其中 
-$$ q = \begin{bmatrix} x \\ y \\ z \end{bmatrix}\quad M = \begin{bmatrix} f_x & 0 & c_x \\ 0 & f_y & c_y \\ 0 & 0 & 1 \end{bmatrix} \quad Q = \begin{bmatrix} X \\ Y \\ Z \end{bmatrix} $$
+$$ q = \begin{bmatrix} x \\\\ y \\\\ z \end{bmatrix}
+\quad 
+M = \begin{bmatrix} f_x & 0 & c_x \\\\ 0 & f_y & c_y \\\\ 0 & 0 & 1 \end{bmatrix} 
+\quad 
+Q = \begin{bmatrix} X \\\\ Y \\\\ Z \end{bmatrix} $$
 
 ## 透镜畸变
 
@@ -152,7 +156,7 @@ $$ \begin{aligned}
 上面我们讨论的是相机内部的参数，但实际上都属于相机坐标系到图像坐标系的转换。也就是说，之前我们得到的矩阵乘法实际上是
 $$ q_{image} = MQ_{cam} $$
 其中 
-$$ q_{image} = \begin{bmatrix} x \\ y \\ z \end{bmatrix} , \quad 
+$$ q_{image} = \begin{bmatrix} x \\\\ y \\\\ z \end{bmatrix} , \quad 
 M = \begin{bmatrix} 
 f_x & 0 & c_x \\\\ 
 0 & f_y & c_y \\\\ 
@@ -230,8 +234,8 @@ $$ Q_{cam} =
 R & RT  \\\\
 0 & 1 
 \end{bmatrix} 
-Q_{obj}
-\ \Longrightarrow \ t = RT $$ 
+Q_{obj} $$
+$$ \Longrightarrow \ t = RT $$ 
 又因为 $R$ 是一个正交矩阵，$R^T = R^{-1}$，于是
 $$ Q_{obj} = R^T Q_{cam} - T $$ 
 即 
@@ -240,8 +244,8 @@ $$ Q_{obj} =
 R^T & -T  \\\\ 
 0 & 1 
 \end{bmatrix} 
-Q_{cam}
-\ \Longrightarrow \ t = -T $$
+Q_{cam} $$
+$$ \Longrightarrow \ t = -T $$
 
 ### 相机参数
 
