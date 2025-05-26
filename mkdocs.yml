@@ -84,7 +84,7 @@ nav:
       - 图像特征: ComputerScience/CV/lec4.md
       - 特征人脸: ComputerScience/CV/lec5.md
       - 单目视觉: ComputerScience/CV/lec6.md
-      - 运动估计与图像分割: ComputerScience/CV/lec7.md
+      - 运动估计 & 图像分割: ComputerScience/CV/lec7.md
 
     - 数据可视化导论:
       - ComputerScience/IDV/index.md
