@@ -59,14 +59,6 @@
     1. 先将信息写入第一个物理块。  
     2. 第一次写入成功后，再将相同信息写入第二个物理块。  
     3. 只有第二次写入也成功后，输出操作才算完成。
-Copies of a block may differ due to failure during output operation. To recover from failure:
-First find inconsistent blocks:
-Expensive solution: Compare the two copies of every disk block.
-Better solution: 
-Record in-progress disk writes on non-volatile storage (Non-volatile RAM or special area of disk). 
-Use this information during recovery  to find blocks that may be inconsistent, and only compare copies of these. 
-Used in hardware RAID systems
-
 - 由于输出操作期间的故障，某个数据块的副本可能不同步，再从错误中恢复时，我们需要进行如下操作：
     1. 首先找到不一致的块：
         - 代价较为高昂的解决方案：比较每个磁盘块的两个副本
@@ -225,26 +217,186 @@ checkpoint 会保证此前的所有操作都已经被反映到数据库中了，
 
 ## Buffer Management
 
+通常而言，项稳定存储器输出的单位是块，而日志记录通常会比块小得多，因此日志记录会先缓冲在主存中，直到出现以下情况时才输出到稳定存储中：
 
+- 缓冲区中的日志记录块已满
+- 执行了强制日志操作（例如出现了检查点）
 
+强制日志操作通过将所有的日志记录（包括 `<Ti commit>`）强制输出到稳定存储中来实现提交事务
 
+!!! note "The Rules for Log Record Buffering"
+    如果日志记录是被缓冲的，那么就必须遵循以下四条规则：
 
+    1. 日志记录必须按照它们被创建的顺序输出到稳定存储中。
+    2. 事务 $T_i$ 只有在日志记录 `<Ti commit>` 被输出到稳定存储中后才能进入提交状态。
+    3. 在 `<Ti commit>` 被输出到稳定存储之前，所有与 $T_i$ 相关的日志记录必须已经被输出到稳定存储中。
+    4. 在主存中的数据块被输出到数据库之前，所有与该数据块中的数据相关的日志记录必须已经被输出到稳定存储中。（日志应先于数据写到磁盘）
+        - 这个规则被称为先写日志规则（write-ahead logging rule，WAL），严格来说 WAL 只要求撤销信息被输出到稳定存储中
 
-
+- 数据库会在主存中维护一个数据块缓冲区，当需要一个新的数据块，并且缓冲区已经满时，就需要替换掉一个旧的块，假如被替换的块是脏的，那么就需要输出到磁盘中。
+- 恢复算法也可以支持**非强制策略（no-force policy）**，即事务提交时不一定强制要求被更新的数据块立即写入到磁盘中，而是可以在某个合适的时机再写入，这样可以减少 I/O 操作，提高性能。
+- 恢复算法可以支持**窃取策略（steal policy）**，即允许在事务提交之前就把脏块写回磁盘，这样可以减少主存的压力（同样要求先把对应的日志写到稳定存储中）
 
 !!! info "Failure with Loss of Nonvolatile Storage"
+    在上面的讨论中，我们都假设非易失性存储中的数据没有丢失，但是如果非易失性存储中的数据丢失了（例如磁盘损坏），那么我们需要采取一些额外的措施来恢复数据。
 
+    通常我们可以采用类似于检查点的技术来应对非易失性存储的内容丢失问题
 
+    - 定期地将整个数据库的内容转储（dump）到稳定存储中
+    - 在转储过程中，不能有任何事务处于活动状态；需要进行类似于检查点的操作
+        - 将当前主存中的所有日志记录输出到稳定存储中
+        - 将所有缓冲块输出到磁盘中
+        - 将数据库的内容复制到稳定存储中
+        - 输出一条日志记录 `<dump>` 到稳定存储的日志中
+
+    当出现磁盘故障时，首先从最近的转储中恢复数据库内容，然后根据日志记录重新执行所有在转储之后提交的事务。
+    
+    我们还可以对这种方法进行拓展，即允许事务在转储过程中保持活跃状态，这通常被称为模糊转储（fuzzy dump）或在线转储（online dump）。
 
 ## Advanced Recovery Techniques
 
+在高并发环境中，我们进行 B+ 树的插入和删除操作后可能会提前释放锁资源，因此撤销操作就不能通过恢复旧值的方法（物理撤销，physical undo）来实现，因为一旦锁被释放，那么其他事务就可能立即对 B+ 树进行了更新，直接进行物理撤销就可能导致其他事务的操作被破坏，因此我们需要采用逻辑撤销（logical undo）的方法来实现撤销操作。
 
+!!! info "物理日志与逻辑日志"
+    - 物理日志：
+        - 记录了数据项的物理变化
+        - 适用于简单的事务和操作
+        - 例如从 $V1$ 改为 $V2$，`<Ti, X, V1, V2>`
+    - 逻辑日志：
+        - 记录了数据项的逻辑变化，例如插入、删除、更新等操作
+        - 适用于复杂的事务和操作，尤其是需要撤销的情况
+        - `<Ti, Oj, operation-begin>` 表示开始一个操作 $O_j$，`<Ti, Oj, operation-end, U>` 表示结束操作 $O_j$，其中 $U$ 是撤销操作对应的逻辑信息
+    
+    例如事务 $T_1$ 要令数据项 $A$ 的值从 100 改为 200，那么
+    
+    - 物理日志记录为 `<T1, A, 100, 200>`
+    - 逻辑日志记录为
+        ```
+        <T1, O1, operation-begin>
+        <T1, A, 100, 200>
+        <T1, O1, operation-end, (A, -100)>
+        ```
 
+- 假如在操作完成之前就出现了崩溃/回滚，那么将找不到 operation-end 的记录，我们需要使用物理撤销信息来撤销这个操作
+- 假如在整个操作完成后才出现崩溃/回滚，那么我们可以找到 operation-end 的记录，此时我们可以直接使用使用逻辑撤销信息 $U$ 来撤销这个操作
 
+!!! tip "回滚事务"
+    我们也可以利用逻辑日志来回滚事务，我们需要从后往前逆向扫描日志：
 
+    1. 如果找到日志记录 `<Ti, X, V1, V2>`，那么就执行物理撤销操作，并记录补偿日志（仅重做日志记录） `<Ti, X, V1>`
+    2. 如果找到 `<Ti, Oj, operation-end, U>`
+        - 使用撤销信息 $U$ 执行逻辑回滚操作
+            - 回滚期间执行的操作会像正常操作一样被记录
+            - 回滚操作结束时，生成记录 `<Ti, Oj, operation-abort>` 而非 operation-end
+        - 跳过事务 $T_i$ 的所有操作，直到找到 `<Ti, operation-begin>`，然后继续回滚下一个操作
+    3. 如果找到了仅重做记录（redo-only record），忽略它，继续扫描
+    4. 如果找到了 `<Ti, Oj, operation-abort>`，则跳过事务 $T_i$ 的所有操作，直到找到 `<Ti, operation-begin>`
+    5. 当找到记录 `<Ti, start>` 时停止扫描
+    6. 在日志中添加一条 `<Ti, abort>` 记录，表示事务 $T_i$ 已经被回滚
 
+    > 情况 3 和 4 仅在数据库在事务正在进行回滚时崩溃才会出现
 
+!!! example
+    <figure markdown="span">
+        ![](./assets/数据库恢复8.png){width=65%}
+    </figure>
+
+    在上图的例子中，执行完 `<T2, C, 400, 300>` 后发生了崩溃，我们从 checkpoint 开始 redo，得到的 undo list 为 {T1, T2}.
+
+    由于此时 $T_2$ 还没有 end，因此我们需要做的是物理撤销 `<T2, C, 400, 300>`，并记录相应的日志 `<T2, C, 400>`，接着遇到了 `<T2 start>`，因此再记录 `<T2 abort>`。
+
+    接着继续按照上面的步骤回滚 $T_1$ 即可。
 
 ## ARIES Recovery Algorithm
 
+> ARIES is a state of the art recovery method. ARIES 目前正在工业界中被广泛使用。
 
+### ARIES Data Structures
+
+- **Log sequence number (LSN)** identifies each log record
+    - 每个日志记录都有一个唯一的 LSN 作为标识符
+    - Must be sequentially increasing
+    - 通常使用相对于日志文件开头的偏移量来表示 LSN，以便快速访问
+- **Page LSN**
+    - 每个数据页都有一个 Page LSN，表示该页上最近的日志记录的 LSN
+    - 用于判断数据页是否需要 redo 或 undo
+- **Log records of several different types**
+- **Dirty page table**
+    - 记录了所有脏页（dirty page）的 LSN
+
+#### Log Record
+
+每一个日志记录中都包含同一事务中前一个日志记录的 LSN（prevLSN），用于在 redo/undo 时追踪事务的操作顺序。
+
+<figure markdown="span">
+    ![](./assets/数据库恢复9.png){width=75%}
+</figure>
+
+特别的 redo-only 日志记录被称为补偿日志记录（compensation log record，CLR），用于记录在恢复过程中采取的操作
+
+- 这些操作永远不需要被撤销
+- 它具有一个 UndoNextLSN 字段，用于指示下一个（更早的）需要撤销的记录
+- 位于当前记录和下一个记录之间的记录已经被撤销，因此不需要再次撤销。
+
+<figure markdown="span">
+    ![](./assets/数据库恢复10.png){width=75%}
+</figure>
+
+#### DirtyPage Table
+
+脏页表（DirtyPage Table）用于记录所有脏页的 LSN，包括
+
+- **PageLSN** of the page
+- **RecLSN** is an LSN such that log records before this LSN have already been applied to the page version on disk
+
+PageLSN 表示的是该页上最近的日志记录的 LSN，而 RecLSN 表示在该页上最近被反映到数据库中的日志记录的 LSN
+
+#### Checkpoint Log
+
+- **Checkpoint Log** contains DirtyPageTable and list of active transactions
+- 记录了每个活动事务的最后一个日志记录的 LSN，便于知道要从哪里开始恢复
+- 脏页不会在 checkpoint 时被输出到磁盘中，而是会在后台持续地被输出，因此 checkpoint 带来的开销很小，可以持续地记录检查点
+
+!!! example
+    <figure markdown="span">
+        ![](./assets/数据库恢复11.png){width=75%}
+    </figure>
+
+    如上图所示：
+    
+    - 数据库缓冲区中的每一个 page 都会记录最近的日志记录的 LSN
+    - 脏页表会记录脏页对应的 PageLSN 和 RecLSN
+    - 日志缓冲区会记录尚未被输出到稳定存储器中的日志记录（4894.1 表示块 4894 的第 1 个数据项）
+    - 横线下方的稳定存储中包含已经被输出的数据页和日志记录
+
+### ARIES Recovery
+
+ARIES 的恢复过程分为三个阶段：
+
+1. **Analysis Phase**：分析阶段
+    - 从最近的检查点开始，分析日志记录，构建脏页表和活动事务列表
+    - 确定需要 redo 和 undo 的事务
+2. **Redo Phase**：重做阶段
+    - 从检查点开始，按照日志记录的顺序重做所有需要重做的事务
+    - 对于每个脏页，检查其 PageLSN 是否大于 RecLSN，如果是，则需要 redo
+    - 如果遇到 CLR，则不需要 redo，而是继续处理下一个日志记录
+3. **Undo Phase**：撤销阶段
+    - 从活动事务列表中找到需要撤销的事务，按照 LSN 的逆序进行撤销
+    - 对于每个需要撤销的事务，按照日志记录的顺序逆向执行 undo 操作
+    - 如果遇到 CLR，则不需要撤销，而是继续处理下一个日志记录
+
+<figure markdown="span">
+    ![](./assets/数据库恢复12.png){width=75%}
+</figure>
+
+!!! example
+    <figure markdown="span">
+        ![](./assets/数据库恢复13.png){width=75%}
+    </figure>
+
+    下方是较老的日志，上方是较新的日志。
+
+    - 当出现崩溃后，我们从最近的检查点开始分析，我们发现 page 4884 的 PageLSN 是 7567，大于 RecLSN 7564，因此需要 redo。
+    - 接着我们 redo 事务 $T_{146}$ 的内容，并把 page 2390 更新到脏页表中
+    - 我们此时发现 undo list 中只有 $T_{145}$，因此需要撤销它的操作。在撤销过程中，我们可以利用 $T_{145}$ 的日志记录的 PrevLSN 字段来找到它的上一个日志记录，从而逆向执行撤销操作。
+    - 撤销操作完成后，我们会在日志中记录补偿日志记录（CLR），表示该操作已经被撤销，并且不需要再次撤销。
