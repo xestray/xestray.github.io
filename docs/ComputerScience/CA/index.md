@@ -33,4 +33,4 @@
 - [x] [流水线](chap-2.md)
 - [x] [内存层次](chap-3.md)
 - [x] [指令级并行](chap-4.md)
-- [ ] [DLP 和 TLP](chap-5.md)
+- [x] [DLP 和 TLP](chap-5.md)
