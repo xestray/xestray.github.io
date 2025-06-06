@@ -179,3 +179,319 @@
 
         我们只需要直到 V4 的第一个元素需要多长时间被计算出来即可：(1+6+1)+(1+7+1)=17 拍，随后还有 N-1 个元素需要计算，因此总拍数为 N+16
 
+## SIMD: array processor 
+
+阵列处理器：N 个处理单元（processing element, PE）会组成一个处理器阵列，从 $PE_0$ 到 $PE_{N-1}$，每个处理单元都可以独立地执行指令。
+
+- 阵列之间有通信通道，将处理元素连接起来
+- 每个阵列都使用一个单一的控制单元来控制所有处理单元，使得指令可以并行地运行
+- 有时阵列处理器也被称为并行处理器（parallel processor）
+
+根据内存在系统中的布局，阵列处理器可以被分为两类：
+
+- Distributed memory
+- Centralized shared memory
+
+### Distributed Memory
+
+<figure markdown="span">
+    ![](./assets/数据级并行7.png){width=70%}
+</figure>
+
+PE 是处理单元，PEM 是处理单元对应的内存，CU 是控制单元，CUM 是控制单元的内存，ICN 是内部控制的互联网络
+
+### Centralized Shared Memory
+
+<figure markdown="span">
+    ![](./assets/数据级并行8.png){width=70%}
+</figure>
+
+多个处理器阵列通过一个互联网络共享一个中央内存，所有处理器阵列都可以访问这个中央内存。
+
+### Parallel Computer Design
+
+上面这两种设计都需要把处理单元连接起来，假设有 n 个处理单元，如果我们让它们两两相连，那就需要 $C_n^2 = \dfrac{n(n-1)}{2}$ 个连接，这样的开销很大且难以实现。
+
+!!! definition
+    A network composed of switching units according to a certain topology and control mode to realize the interconnection between multiple processors or multiple functional components within a computer system.
+
+    我们使用一个网络图（network graph）来表示处理单元之间的连接关系，其中每个节点表示一个处理单元，每条边表示两个处理单元之间的连接。
+
+一个互联网络主要由一个部分组成：CPU, memory, interface, link and switch node
+
+!!! tip "Some key points"
+    - Topology of interconnection network
+        - Static topology
+
+            静态拓扑，即处理单元之间的连接关系在设计时就已经确定，并且在运行时不会改变。
+
+        - Dynamic topology
+
+            动态拓扑，即处理单元之间的连接可以在运行时根据需要进行调整，例如通过调整开关可以改变节点之间的连接关系。
+
+    - Timing mode of interconnection network
+        - Synchronization system: Use a unified clock. Such as SIMD array processor
+
+            同步系统，即所有处理单元都使用同一个时钟信号来同步工作，所有处理单元在同一时刻执行相同的指令。
+
+        - Asynchronous system: No uniform clock. Each processor in the system works independently
+
+            异步系统，即每个处理单元都可以独立地工作，没有统一的时钟信号。每个处理单元可以根据自己的时钟信号来执行指令。
+
+    - Exchange method of interconnection network
+        - Circuit switching
+        - Packet switching
+    - Control Strategy of interconnection network
+        - Centralized control mode: 有一个全局控制器来管理所有处理单元的工作
+        - Distributed control mode: 没有全局控制器
+
+### Goal of interconnection network
+
+- Single-stage interconnection network: There are only a limited number of connections at the only level to realize information transmission between any two processing units.
+
+    单级连接，只有有限数量的连接
+
+- Multi-stage interconnection network: It is composed of multiple single-level networks in series to realize the connection between any two processing units.
+
+    多级连接，把多个单级网络串联起来
+
+N 个入端和 N 个出端会建立一个映射关系 $j \to f(j)$，入端和出端通常都使用二进制来进行编码，这个映射关系被称为互连函数（interconnection function）。
+
+### Single-stage interconnection network
+
+<figure markdown="span">
+    ![](./assets/数据级并行9.png){width=70%}
+</figure>
+
+#### Cube
+
+假设有 N 个入端和出端，我们使用 n-bit 来对它们进行编码（$n = \log_2 N$），表示为 $P_{n-1} \cdots P_1 P_0$
+
+那么我们就有 n 个不同的互连函数（对第 i 位取反）：
+    $$ Cube_i(P_{n-1} \cdots P_i \cdots P_0) = P_{n-1} \cdots \overline{P_i} \cdots P_0 $$
+
+!!! example
+   
+    <figure markdown="span">
+        ![](./assets/数据级并行10.png){width=70%}
+    </figure> 
+
+    <figure markdown="span">
+        ![](./assets/数据级并行11.png){width=70%}
+    </figure> 
+
+    <figure markdown="span">
+        ![](./assets/数据级并行12.png){width=70%}
+    </figure> 
+
+<figure markdown="span">
+    ![](./assets/数据级并行13.png){width=70%}
+</figure> 
+
+- 当 n=3 时，网络的连接情况看起来就像是一个立方体，这也就是 cube 这一名称的由来，从一个节点到另一个节点至多需要经过 3 条边。
+- 不难发现，当我们使用 Cube 连接时，任意两个节点之间的距离（即需要经过的边数）最多为 n。
+
+#### PM2I
+
+- **PM2I**：Plus Minus $2^i$
+- 互联网络共有 2n 种：
+    $$ PM2_{+i}(j) = (j + 2^i) \mod N $$
+    $$ PM2_{-i}(j) = (j - 2^i) \mod N $$
+
+    其中 N 为互联网络中的节点数量，$0 \leqslant j \leqslant N-1$，$0 \leqslant i \leqslant n-1$
+
+!!! example
+    - N = 8
+
+    <figure markdown="span">
+        ![](./assets/数据级并行14.png){width=70%}
+    </figure> 
+
+#### Shuffle exchange network
+
+顾名思义，Shuffle exchange network 主要由两部分组成：shuffle + exchange
+
+- **Shuffle**：将输入数据进行打乱，一般将输入数据的二进制编码进行循环左移或右移
+- **Exchange**：将打乱后的数据进行交换，交换的方式通常是是将相邻的两个数据进行交换
+
+$$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
+
+!!! example
+    - N = 8
+
+    <figure markdown="span">
+        ![](./assets/数据级并行15.png){width=70%}
+    </figure> 
+
+不难发现，000 和 111 与其他任何节点都不相连，因此我们还需要在此基础上增加 exchange 的连线
+
+<figure markdown="span">
+    ![](./assets/数据级并行16.png){width=70%}
+</figure> 
+
+- 任意两个节点相连至多需要经过 3 exchange + 2 shuffle，总共需要 5 条边。
+- 更一般的，任意两个节点之间的距离（即需要经过的边数）最多为 n exchange + n-1 shuffle，总共需要 2n-1 条边。
+
+??? extra "其他连接方式"
+    - Linear array
+
+        开销低，但任意节点出现问题都会导致整个网络崩溃
+
+        <figure markdown="span">
+            ![](./assets/数据级并行17.png){width=70%}
+        </figure>
+
+    - Circular array
+
+        也可以在环上增加一些弦来提高连接效率
+
+        <figure markdown="span">
+            ![](./assets/数据级并行18.png){width=70%}
+        </figure>
+
+    - Tree array
+
+        <figure markdown="span">
+            ![](./assets/数据级并行19.png){width=70%}
+        </figure>
+
+        可以拓展为 Tree with loop、Binary fat tree
+
+        <figure markdown="span">
+            ![](./assets/数据级并行20.png){width=70%}
+        </figure>
+
+    - Star array
+
+        <figure markdown="span">
+            ![](./assets/数据级并行21.png){width=70%}
+        </figure>
+
+    - Grid
+
+        <figure markdown="span">
+            ![](./assets/数据级并行22.png){width=70%}
+        </figure>
+
+    - Cube with loop
+
+        <figure markdown="span">
+            ![](./assets/数据级并行23.png){width=70%}
+        </figure>
+
+    <figure markdown="span">
+        ![](./assets/数据级并行24.png){width=80%}
+    </figure>
+
+### Multi-stage interconnection network
+
+<figure markdown="span">
+    ![](./assets/数据级并行25.png){width=80%}
+</figure>
+
+通过交叉开关来控制网络之间的连接方式，开关的控制也有很多方式：
+
+- 每个开关都有自己的控制器
+- 使用一个全局控制器来控制所有开关
+- 介于上面两者之间，将开关分级，每一级的开关都相同
+
+最常用的方式是级控制，每一级开关的状态都是相同的
+
+<figure markdown="span">
+    ![](./assets/数据级并行26.png){width=65%}
+</figure>
+
+#### Switching unit
+
+- 带有两个输入和两个输出的控制单元是多级互连网络的基本组件
+- 下面四种连接状态分别为：
+
+    ![](./assets/数据级并行27.png){align=right width=35%}
+
+    - Straight
+    - Exchange
+    - Upper broadcast
+    - Lower broadcast
+
+
+- 如果只有 Straight 和 Exchange 两种连接状态，我们称其为 **two-function switch unit**
+- 如果上面四种连接状态都有，我们称其为 **four-function switch unit**。
+
+随着入端和出端数量的增加，还可以有其他的连接状态：
+
+<figure markdown="span">
+    ![](./assets/数据级并行28.png){width=60%}
+</figure>
+
+#### Multi-stage cube interconnection network
+
+我们假设：
+
+- Switch unit: two-function switch unit
+- Control mode: stage, part stage and unit control
+- Topology: cube structure
+
+如果有 N 个输入，我们需要把开关分为 $n = \log_2 N$ 级，每一级有 $2^{n-1}$ 个开关，每个开关有两个输入和两个输出。
+
+<figure markdown="span">
+    ![](./assets/数据级并行29.png){width=70%}
+</figure>
+
+上图中的开关与开关之间的连线方式是固定的，但是开关内部对于两个输入和两个输出的连接方式是可以改变的，因此我们可以通过控制开关的状态来实现不同的连接方式。
+
+!!! note "不同连接方式对应的互连函数"
+    <figure markdown="span">
+        ![](./assets/数据级并行30.png){width=70%}
+    </figure>
+
+    因为这是 two-function switch unit，我们用 0 表示 connect，1 表示 exchange，那么上图中的每一列都对应一种连接方式。
+    
+    可以看到我们可以通过改变开关的状态来实现各种不同的连接方式。
+
+#### Multi-stage shuffle exchange network
+
+也被称为 **Omega network**
+
+- The switch function has four functions
+- The topological structure is shuffled topology followed by a four function switch
+- Control mode is unit control
+
+<figure markdown="span">
+    ![](./assets/数据级并行31.png){width=70%}
+</figure>
+
+!!! tip
+    如果我们限定 omega network 也只能使用直连和交换两种模式，那么我们可以看到它就是 cube network 的逆网络
+
+    <figure markdown="span">
+        ![](./assets/数据级并行32.png){width=70%}
+    </figure>
+
+    Omega network 与 n-cube network 的不同之处在于：
+
+    - The level of Omega network data flow: n-1, n-2,..., 1, 0.
+
+        The level of n-cube network data flow: 0, 1,..., n-1.
+
+    - The Omega network uses a **four-function exchange unit**.
+
+        The n-cube network uses a **two-function exchange unit**.
+
+    - Omega network **can** realize **one-to-many** broadcasting function.
+    
+        N-cube network **cannot** achieve.
+
+<figure markdown="span">
+    ![](./assets/数据级并行33.png){width=80%}
+</figure>
+
+## DLP in GPU
+
+
+
+
+
+
+
+
+
