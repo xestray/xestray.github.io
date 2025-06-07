@@ -485,13 +485,511 @@ $$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
     ![](./assets/数据级并行33.png){width=80%}
 </figure>
 
-## DLP in GPU
+## Loop-Level Parallelism（LLP）
+
+- 循环是许多并行类型的基础
+- 寻找和实现循环级并行是实现 DLP 与 TLP 的关键
+
+!!! example "example1"
+    ```C
+    for (i=999; i>=0; i=i-1)
+        x[i] = x[i] + s;
+    ```
+
+    这个循环体中的内容是不存在相互依赖关系的，因此我们可以让这 1000 次循环并行执行。
+
+!!! example "example2"
+    ```C
+    for (i=0; i<100; i=i+1) {
+        A[i+1] = A[i] + C[i];   /* S1 */
+        B[i+1] = B[i] + A[i+1]; /* S2 */
+    }
+    ```
+
+    我们注意到本次迭代的运算依赖于上一次迭代的结果，因此显然我们不可能让所有的迭代并行执行，但是我们希望能让同一个循环体内部的指令可以并行执行。
+
+    这个循环体中，我们会发现 S2 的执行依赖于本次循环中 S1 的执行结果
+
+    - S1 and S2 use values computed by S1 in previous iteration
+    - S2 uses value computed by S1 in same iteration
+    
+    我们可以修改上面的代码，把 S1 的第一次循环与 S2 的最后一次循环提取出来，改成如下的形式，就可以并行执行了：
+
+    ```C
+    A[1] = A[0] + C[0];         /* S1 */
+    for (i=1; i<100; i=i+1) {
+        A[i+1] = A[i] + C[i];   /* S1 */
+        B[i] = B[i-1] + A[i];   /* S2 */
+    }
+    B[100] = B[99] + A[100];    /* S2 */
+    ```
+
+    现在我们就消除了循环体内部的依赖，虽然乍一看代码变得复杂了，但是实际上这么做可以利用循环级并行来提高程序的执行效率（同一次迭代中循环体的内容可以同时执行）。
+
+    为方便起见，我们把执行一行代码看作一次运算
+
+    - 原始代码需要进行 2×100 = 200 次运算
+    - 修改后的代码需要进行 1+100+1 = 102 次运算
+
+!!! example "example3"
+    ```C
+    for (i=0; i<100; i=i+1) {
+        A[i] = A[i] + B[i];     /* S1 */
+        B[i+1] = C[i] + D[i];   /* S2 */
+    }
+    ```
+
+    在这个例子中，S1 会使用 S2 在上一次迭代的运算结果，但是没有出现循环依赖，因此这个循环也是可以并行的。模仿 example2 的思路，我们可以把 S1 的第一次循环与 S2 的最后一次循环提取出来 
 
 
+    ```C
+    A[0] = A[0] + B[0];         /* S1 */
+    for (i=1; i<100; i=i+1) {
+        A[i] = A[i] + B[i];     /* S1 */
+        B[i+1] = C[i] + D[i];   /* S2 */
+    }
+    B[100] = C[99] + D[99];     /* S2 */
+    ```
+
+    现在循环内部的依赖关系就消除了，原始代码需要 200 次运算，修改后的代码需要 102 次运算。
+
+!!! example "example4"
+    ```C
+    for (i=0; i<100; i=i+1) {
+        Y[i] = X[i] / c;    /* S1 */
+        X[i] = X[i] + c;    /* S2 */
+        Z[i] = Y[i] + c;    /* S3 */
+        Y[i] = c - Y[i];    /* S4 */
+    }
+    ```
+
+    上面这个例子出现了各种依赖，包括数据相关和名相关
+    
+    - 数据相关：
+        - RAW：S1 和 S3，S1 和 S4
+    - 名相关：
+        - WAR：S1 和 S2，S3 和 S4
+        - WAW：S1 和 S4
+    
+    我们可以通过重命名变量来消除这些名相关
+
+    ```C
+    for (i=0; i<100; i=i+1) {
+        T[i] = X[i] / c;      /* S1 */
+        P[i] = X[i] + c;      /* S2 */
+        Z[i] = T[i] + c;      /* S3 */
+        Y[i] = c - T[i];      /* S4 */
+    }
+    ```
+
+    现在 S1 和 S2 之间没有依赖关系，S3 和 S4 之间也没有依赖关系，因此我们可以让 S1 和 S2 并行执行，S3 和 S4 并行执行。
+
+    > 下面这部分是我的想法，PPT 上没有，不一定正确（
+
+    我们注意到循环体内部被分为了两组（S3、S4 依赖于 S1），现在我们接着模仿前面例子的思路，把 S1 和 S2 的第一次循环提取出来，S3 和 S4 的最后一次循环提取出来
+
+    ```C
+    T[0] = X[0] / c;          /* S1 */
+    P[0] = X[0] + c;          /* S2 */
+
+    for (i=1; i<100; i=i+1) {
+        T[i] = X[i] / c;      /* S1 */
+        P[i] = X[i] + c;      /* S2 */
+        Z[i-1] = T[i-1] + c;  /* S3 */
+        Y[i-1] = c - T[i-1];  /* S4 */
+    }
+
+    Z[99] = T[99] + c;        /* S3 */
+    Y[99] = c - T[99];        /* S4 */
+    ```
+
+### Vector Chaining Technology
+
+!!! example
+    <figure markdown="span">
+        ![](./assets/数据级并行34.png){width=85%}
+    </figure>
+
+    - 有两个 load/store 单元，执行需要 10 个时钟周期
+    - 一个乘法器，执行需要 7 个时钟周期
+    - 一个加法器，执行需要 4 个时钟周期
+
+    假设流水线是满的，每个时钟周期都可以开始一个新的指令。指令如下所示，向量长度为 64。
+
+    ```asm
+    Vld   v0, x5        ; load vector X
+    Vmul  v1, v0, f0    ; vector –scalar multiply
+    Vld   v2, x6        ; Load vector Y
+    Vadd  v3, v1, v2    ; vector –vector add
+    Vst   v3, x6        ; store the sum
+    ```
+
+!!! question
+    1. 如果不使用向量链接技术，执行完这 5 条指令需要多少个时钟周期？
+    2. 如果使用向量链接技术，需要进行多少组元素传递（convey）操作？（即有多少组向量链接）
+    3. 如果每个元素传入和传出链接寄存器（chaining register）都需要 1 个时钟周期，那么使用向量链接技术执行上述指令需要多少个时钟周期？
+
+??? tip
+    - 其实这个题目的表述还不够清晰，没说两个 load 能不能同时执行（
+    - 在这里我们不考虑指令乱序执行的情况，假设指令按顺序执行。
+    - 一个运算单元只能同时接受一个向量链接的输入，因此 add 指令不能同时接受 mul 和 load 的输出。
+
+!!! answer
+    1. 当我们不使用向量链接时，
+        - load/store 需要 10+63 = 73 个时钟周期
+        - mul 需要 7+63 = 70 个时钟周期
+        - add 需要 4+63 = 67 个时钟周期
+
+        因此所需的总时钟周期为： 73+70+73+67+73 = 356
+
+        > 还有另一种思路，我们让两次 load 同时执行，因此总时钟周期为：73+70+67+73 = 283
+
+    2. 由于 add 同时需要 mul 和 load 的运算结果，而我们不可能让加法运算单元的不停切换链接对象，来交替接受来自于 mul 和 load 的输出，因此我们不能同时把 mul 和 load 链接到 add 上。
+
+        考虑到以上情况，我们可以得到两组向量链接，其中需要三次传递：
+
+        - 1 -> 2
+
+            `Vld -> Vmul`
+
+        - 3 -> 4 -> 5 
+            
+            `Vld -> Vadd -> Vst`
+
+        其中第二组可以这么链接的原因是我们有两个 load/store 单元，因此可以同时进行 load 和 store 操作。
+
+    3. 两组向量链接需要按顺序执行，先执行第一组，再执行第二组
+
+        - 第一组需要 10+1+1+7+63 = 82 个时钟周期
+        - 第二组需要 10+1+1+4+1+1+10+63 = 91 个时钟周期
+
+        因此总时钟周期为：82+91 = 173
+
+## MIMD: Tread-level Parallelism
+
+!!! info "MIMD"
+    <figure markdown="span">
+        ![](./assets/线程级并行23.png){width=70%}
+    </figure>
+
+- 线程级并行（TLP）是由软件系统或程序员在较高层次上确认和识别的
+- 线程由数百到数百万条指令组成，这些指令可以并行执行。
+
+Multi-processor system 可以分为两大类：
+
+- based on shared memory
+    - 系统中的地址空间是唯一的，所有处理器共享这一个地址空间
+    - 这不意味着在物理上只有一块内存，这个共享的地址空间可以通过一块共享的物理内存实现，也可以通过具有硬件和软件支持的分布式内存实现（也就是说在逻辑上是共享的，但在物理上是分布式的）
+- based on message passing
+    - 每个处理器都有自己的内存，不能直接访问其他处理器的内存，称为局部内存或私有内存
+    - 通过消息（message）来进行通信和同步，例如处理器 A 想要向 B 发送数据，就需要将数据打包成消息，然后通过网络发送给 B，B 收到消息后再进行处理
+
+### Shared Memory Systems
+
+<figure markdown="span">
+    ![](./assets/线程级并行1.png){width=70%}
+</figure>
+
+- 共享内存被划分为若干块，它们共同组成一个统一的地址空间
+- 由一个统一的操作系统负责管理所有处理器的信息，负责管理不同线程所使用的内存
+- 如果所有的 CPU 都对所有的内存模块以及 I/O 设备有相同的访问权限，并且 CPU 在系统中是可交换的，那么我们就称这个系统为**对称多处理器系统**，（Symmetric Multi-processor, SMP）。
+
+### Message Passing Systems
+
+<figure markdown="span">
+    ![](./assets/线程级并行2.png){width=70%}
+</figure>
+
+- 每个线程（处理器）都有自己的私有内存，他们通过 ICN（interconnection network）进行通信
+- 我们也可以构建多层次的通信网络，让若干个处理器使用一个 ICN，然后再让这些 ICN 通过一个更大的 ICN 进行连接
+
+<figure markdown="span">
+    ![](./assets/线程级并行3.png){width=70%}
+</figure>
+
+### MIMD Architecture
+
+- Different memory access models of MIMD multi-processor system
+    - Uniform Memory Access (**UMA**)
+    - Non Uniform Memory Access (**NUMA**)
+    - Cache Only Memory Access (**COMA**)
+- Further division of MIMD multi-computer system
+    - Massively Parallel Processors (**MPP**)
+    - Cluster of Workstations (**COW**)
+
+#### UMA
+
+<figure markdown="span">
+    ![](./assets/线程级并行4.png){width=70%}
+</figure>
+
+- 物理内存由所有处理器一致地共享
+- 所有处理器对于任意的内存字节的访问时间是相同的
+- 每个处理器也可以有自己的 cache、memory 等
+
+<figure markdown="span">
+    ![](./assets/线程级并行5.png){width=70%}
+</figure>
+
+#### NUMA
+
+<figure markdown="span">
+    ![](./assets/线程级并行6.png){width=70%}
+</figure>
+
+- 所有 CPU 共享一个一致的地址空间，实际上是把每个 CPU 的私有内存连接起来
+- 访问共享内存的时间是不均匀的，访问自己的 local memory 的时间是最短的，访问其他 CPU 的内存的时间会更长
+
+NUMA 还可以进行两种拓展：
+
+- NC-NUMA：Non-Cache NUMA
+    - 没有 cache，所有的内存访问都需要直接访问物理内存
+- CC-NUMA：Cache Coherent NUMA
+    - 有 cache 与相应的目录（directory）
+    - 需要考虑 cache coherence （缓存一致性）问题，即多个处理器的 cache 中可能会有相同的内存地址的副本，如何保证这些副本的一致性
+
+<figure markdown="span">
+    ![](./assets/线程级并行7.png){width=70%}
+</figure>
+
+!!! info "UMA and NUMA"
+    - **UMA** is also called **symmetric (shared-memory) multiprocessors (SMP)** or c**entralized shared-memory multiprocessors**.
+    - **NUMA** is called **distributed shared-memory multiprocessor (DSP)**.
+
+    <figure markdown="span">
+        ![](./assets/线程级并行8.png){width=70%}
+    </figure>
+
+#### COMA
+
+<figure markdown="span">
+    ![](./assets/线程级并行9.png){width=70%}
+</figure>
+
+- COMA 是 NUMA 的一种特殊形式，地址空间由各个处理器的 cache 组成，所有的内存访问都需要通过 cache 来进行。
+- 它使用分布式的缓存目录进行远端 cache 的访问。数据在最开始时可以被分配在任意 cache 中，但程序开始执行后这些数据会被移动到需要使用的地方去
+
+<figure markdown="span">
+    ![](./assets/线程级并行10.png){width=70%}
+</figure>
+
+!!! example "Challenges of Parallel Processing"
+    <figure markdown="span">
+        ![](./assets/线程级并行11.png){width=70%}
+    </figure>
+
+    <figure markdown="span">
+        ![](./assets/线程级并行12.png){width=70%}
+    </figure>
+
+## Cache Coherence
+
+内存一致性（cache coherence）是指在多处理器系统中，多个处理器的 cache 中可能会有相同的内存地址的副本，这些副本需要保持一致。
+
+- 如果一个处理器修改了某个内存地址的值，但是这个修改还除以 cache 中，没有更新到 memory 里，如果此时其他处理器也使用到了这个内存地址的值，那么就会出现数据不一致的问题。
+
+!!! info "Memory Consistency and Cache Coherence" 
+    > Consistency 与 Coherence 都可翻译为“一致性”，但它们的含义不同：
+
+    - **Memory Consistency**：Need Memory Consistency Model
+        - 当被写入的一个值将要被读操作返回时，
+        - 如果一个处理器写入了位置 A，然后写入了位置 B，那么任何看到 B 的新值的处理器也必须看到 A 的新值
+    - **Cache Coherence**：Need Cache Coherence Protocol
+        - 所有处理器的读取都必须返回最近写入的值（读出来的一定是最新的数据）
+        - 两个处理器对同一位置的写入，都必须被所有处理器中都以相同的顺序被看到
 
 
+我们一般通过一些协议来确保不会出现内存一致性问题，主要可以分为两类：
 
+- Bus snooping protocol 
+    - 在总线上监听各个处理器之间发生了什么事情
+    - UMA
+- Directory based protocol
+    - 应用于分布式系统
+    - NUMA
 
+### Snoopy Coherence Protocols
 
+#### MSI Protocol
 
+<figure markdown="span">
+    ![](./assets/线程级并行13.png){width=70%}
+</figure>
 
+当我们写入数据时，通常会有两种保持一致性的方法：
+
+- **Invalidate Strategy**：更新数据时，让其他处理器的 cache 中的副本被标记为 invalid（无效）
+    - It invalidates other copies on a write
+    - 当其他处理器需要访问这个内存地址时，就会重新从 memory 中读取最新的数据
+- **Update Strategy**：更新数据时，让其他处理器的 cache 中的副本被更新为最新的数据
+    - Update all the cached copies of a data item when that item is written
+    - 这样其他处理器就可以直接使用这个副本，而不需要重新从 memory 中读取数据
+    - 也被称为广播（broadcast）策略，但是开销很大，不太常用
+
+cache 块有三种状态（MSI protocol）
+
+- **Modified（M）**：表示这个 cache 块是最新的，是唯一的副本（其他 cache 中没有这个数据项），并且也还没有写回 memory 中
+- **Shared（S）**：表示这个 cache 块是最新的，并且在其他的 cache 中还有副本
+- **Invalid（I）**：表示这个 cache 块不是最新的，这个数据在其他 cache 中被更新了，但还未更新到这个 cache 中 
+
+??? note "Write Invalidation Protocol（write back）"
+    当我们进行读写操作时，数据的 state 会不断发生变化：
+
+    **CPU 行为**：
+
+    <figure markdown="span">
+        ![](./assets/线程级并行14.png){width=80%}
+    </figure>
+
+    <figure markdown="span">
+        ![](./assets/线程级并行15.png){width=80%}
+    </figure>
+
+    **总线信号**
+
+    <figure markdown="span">
+        ![](./assets/线程级并行16.png){width=80%}
+    </figure>
+
+    <figure markdown="span">
+        ![](./assets/线程级并行17.png){width=80%}
+    </figure>
+
+!!! example
+    一个多处理器系统中 cache 和 memory 的初始状态如下所示。每个处理器都使用直接映射，有 4 个 cache 块，使用 write back 策略，使用基础的写无效监听协议（write invalidate snooping protocol）。
+
+    <figure markdown="span">
+        ![](./assets/线程级并行18.png){width=85%}
+    </figure>
+
+    给出执行以下行为后系统中发生的动作：
+
+    1. C0, R, A10C
+    2. C1, W, A104, 0204
+    3. C0, W, A118, 0308
+
+    !!! tip "answer"
+        1. 
+
+            ```asm title="C0, R, A10C"
+            C0, read miss
+            C2 write back A10C
+            Memory A10C, 010C -> 020C
+            C2.3 (S, A10C, 020C)
+            Memory returns 020C to C0
+            C0.3 (S, A10C, 020C)
+            ```
+
+        2. 
+
+            ```asm title="C1, W, A104, 0204"
+            C1 write hit
+            C0 invalidation      # 令 C0 和 C2 中的 A104 块无效
+            C0.1 (I, A104, 0104)
+            C2 invalidation
+            C2.1 (I, A104, 0104)
+            C1.1 (M, A104, 0204)
+            ```
+
+        3. 
+
+            ```asm title="C0, W, A118, 0308"
+            C0, write miss
+            C0 write back A108
+            Memory A108, 0108 -> 0208
+            Memory returns 0118 to C0
+            C0.2 (M, A118, 0118)
+            C0.2 (M, A118, 0308)
+            ```
+
+#### MSI Protocol Extensions
+
+**MESI Protocol**：在 MSI 协议的基础上增加了一个状态：Exclusive（E）
+
+- **Modified（M）**：cache 中的数据有效，但是 memory 中的数据是旧的（无效的），并且在其他处理器的 cache 中没有这个数据的副本
+    - 被其他处理器 read 或发生 read miss：变为 shared
+- **Exclusive（E）**：没有其他 cache 项包含这个数据，并且 memory 中的数据是最新的
+    - 被其他处理器 read 或发生 read miss：变为 shared
+    - 对 exclusive 的数据进行写入时，它会变为 modified 状态，并且不需要在总线上广播这一操作
+- **Shared（S）**：这行数据存在于多个 cache 项中，并且 memory 中的数据是最新的
+- **Invalid（I）**：这个 cache 项中的数据是无效的
+
+> MESI 协议有很多种不同的实现（如何进行状态转换），相应的状态转换图也会不同
+
+!!! example
+    <figure markdown="span">
+        ![](./assets/线程级并行19.png){width=70%}
+    </figure>
+
+    <figure markdown="span">
+        ![](./assets/线程级并行20.png){width=70%}
+    </figure>
+
+### Directory Protocol
+
+<figure markdown="span">
+    ![](./assets/线程级并行21.png){width=70%}
+</figure>
+
+使用一个目录来记录哪些处理器的 cache 有特定数据块的副本，当数据需要更新时，处理器通过目录向这些拥有数据副本的处理器发送失效信号，从而是其他所有副本变为 invalid 状态。
+
+有三种状态：
+
+- **Shared**
+
+    一个或多个节点的 cache 中有这个数据块的副本，并且 memory 中的数据是最新的
+
+- **Uncached**
+
+    没有任何节点的 cache 中有这个数据块的副本
+
+- **Modified**
+
+    有且仅有一个节点的 cache 中有这个数据块的副本，并且 memory 中的数据是旧的（无效的），此时这个处理器被称为这个数据块的 owner
+
+!!! note 
+    For uncached block:
+
+    - Read miss
+        - 发出请求的节点会收到数据，状态变为 sharing node
+        - 数据块是 shared 的
+    - Write miss
+        - 发出请求的节点会收到数据，状态变为 sharing node
+        - 数据块是 exclusive 的
+
+    For shared block:
+
+    - Read miss
+        - 发出请求的节点会从内存中收到数据，并且被加入到 sharing set 中
+    - Write miss
+        - The requesting node is sent the value, all nodes in the sharing set are sent invalidate messages, sharing set only contains requesting node, block is now exclusive
+        - 发出请求的节点会收到数据，其他节点会被发送失效消息，现在这个节点是 owner，sharing set 只包含发出请求的节点
+        - 数据块变为 exclusive 的
+
+    For exclusive block:
+
+    - Read miss
+        - 向 owner 发送数据获取消息，数据块变为 shared
+        - owner 向目录发送数据，数据被写回内存中
+        - 现在 sharing set 中包含原先的 owner 和发出 read 请求的节点
+    - Data write back
+        - 数据块被置为 uncached 状态，sharing set 变为空
+    - Write miss
+        - 向原先的 owner 发送失效消息，并且把新写入的数据发送到目录中
+        - 发出请求的节点成为新的 owner，数据块仍然是 exclusive 的
+
+## MIMD: Data-Level Parallelism
+
+### Massively Parallel Processors (MPP)
+
+<figure markdown="span">
+    ![](./assets/线程级并行22.png){width=70%}
+</figure>
+
+- 由数百个处理器组成（集群）
+- 每个节点都可以认为是一个独立的 system
+
+### Cluster of Workstations (COW)
+
+- 由多个 PC 或工作站连接在一起组成
+- 可以通过各种大规模生产的商用组件组装，性价比较高
