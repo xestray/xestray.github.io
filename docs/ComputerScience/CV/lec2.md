@@ -151,7 +151,7 @@ $$ \nabla^2 g(x,y) = \left( \frac{x^2 + y^2 - 2\sigma^2}{\sigma^4} \right) e^{-\
     ![](./assets/边缘检测6.png){width=65%}
 </figure>
 
-!!! note "OpenCV 中的相关函数" 
+??? note "OpenCV 中的相关函数" 
     - C++ 版本
 
         ```cpp
@@ -212,59 +212,60 @@ Canny 边缘检测算法是一个多阶段的边缘检测算法，主要包括�
         <img src="../assets/边缘检测9.png" width="35%">
     </center>
 
-在 OpenCV 中也有相关的函数可以直接调用：
+??? note "OpenCV 中的相关函数"
+    在 OpenCV 中也有相关的函数可以直接调用：
 
-- C++ 版本：
+    - C++ 版本：
 
-    ```cpp
-    void cv::Canny(
-        InputArray image, // 输入图像
-        OutputArray edges, // 输出的边缘图像
-        double threshold1, // 低阈值
-        double threshold2, // 高阈值
-        int apertureSize = 3, // Sobel 算子的核大小
-        bool L2gradient = false // 是否使用 L2 范数计算梯度幅值，默认使用 L1 范数
-    );
-    ```
+        ```cpp
+        void cv::Canny(
+            InputArray image, // 输入图像
+            OutputArray edges, // 输出的边缘图像
+            double threshold1, // 低阈值
+            double threshold2, // 高阈值
+            int apertureSize = 3, // Sobel 算子的核大小
+            bool L2gradient = false // 是否使用 L2 范数计算梯度幅值，默认使用 L1 范数
+        );
+        ```
 
-    使用示例如下：
+        使用示例如下：
 
-    ```cpp
-    #include <opencv2/opencv.hpp>
-    using namespace cv;
+        ```cpp
+        #include <opencv2/opencv.hpp>
+        using namespace cv;
 
-    int main() {
-        Mat src = imread("image.jpg", IMREAD_GRAYSCALE);
-        Mat edges;
-        Canny(src, edges, 100, 200, 3, false);
-        imshow("Edges", edges);
-        waitKey(0);
-        return 0;
-    }
-    ```
+        int main() {
+            Mat src = imread("image.jpg", IMREAD_GRAYSCALE);
+            Mat edges;
+            Canny(src, edges, 100, 200, 3, false);
+            imshow("Edges", edges);
+            waitKey(0);
+            return 0;
+        }
+        ```
 
-- Python 版本
+    - Python 版本
 
-    ```python
-    cv2.Canny(
-        image, # 输入图像
-        threshold1, # 低阈值
-        threshold2, # 高阈值
-        edges=None, # 输出的边缘图像
-        apertureSize=3, 
-        L2gradient=False
-    )
-    # 返回值为处理得到的边缘图像
-    ```
+        ```python
+        cv2.Canny(
+            image, # 输入图像
+            threshold1, # 低阈值
+            threshold2, # 高阈值
+            edges=None, # 输出的边缘图像
+            apertureSize=3, 
+            L2gradient=False
+        )
+        # 返回值为处理得到的边缘图像
+        ```
 
-    使用示例如下：
+        使用示例如下：
 
-    ```python
-    import cv2
+        ```python
+        import cv2
 
-    src = cv2.imread("image.jpg", cv2.IMREAD_GRAYSCALE)
-    edges = cv2.Canny(src, 100, 200, apertureSize=3, L2gradient=False)
-    cv2.imshow("Edges", edges)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-    ```
+        src = cv2.imread("image.jpg", cv2.IMREAD_GRAYSCALE)
+        edges = cv2.Canny(src, 100, 200, apertureSize=3, L2gradient=False)
+        cv2.imshow("Edges", edges)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+        ```

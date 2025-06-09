@@ -8,7 +8,7 @@
 !!! note "二值图像"
     二值图像是指每个像素只有 0 和 1 两种取值的图像。我们可以通过二值化把图像分为前景（1）和背景（0）两部分。
 
-!!! info "二值化"
+??? info "使用 OpenCV 二值化"
     我们可以使用 OpenCV 提供的现成的算法来进行二值化处理。
 
     ```python title="python"
@@ -45,8 +45,8 @@
 - 面积（零阶矩）
     $$ A = \sum_{x=0}^{W-1} \sum_{y=0}^{H-1} B[x,y] $$
 - 区域中心（一阶矩）
-    $$ \bar{x} = \frac{\sum\limits_{x=0}^{W-1} \sum\limits_{y=0}^{H-1} x B[x,y]}{A} $$
-    $$ \bar{y} = - \frac{\sum\limits_{x=0}^{W-1} \sum\limits_{y=0}^{H-1} y B[x,y]}{A} $$
+    $$ \bar{x} = \frac{\sum\limits_{i=0}^{n-1} \sum\limits_{j=0}^{m-1} j B[i,j]}{A} $$
+    $$ \bar{y} = - \frac{\sum\limits_{i=0}^{n-1} \sum\limits_{j=0}^{m-1} i B[i,j]}{A} $$
 - 方向
     - 某些形状（例如圆形）是没有方向的
     - 假定物体是“长形”的，那么我们可以用长轴方向作为物体的方向
