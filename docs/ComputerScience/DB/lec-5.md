@@ -9,15 +9,18 @@
 
 现实世界可以被建模为
 
-- A collection of entities (实体)
+- A collection of **entities (实体)**
 
-    - An entity is an object that exists and is distinguishable from other objects. --- An entity may be concrete, or abstract. 
-    - Entities have attributes (属性)
-    - An entity set is a set of entities of the same type that share the same properties.
+    - An entity is an object that exists and is distinguishable from other objects. 
+
+        实体可以是具体的某个事物，也可以是一个抽象的概念
+
+    - Entities have **attributes (属性)**
+    - An **entity set** is a set of entities of the same type that share the same properties.
 
         例如学生、公司、树、用户等不同种类的实体各自构成的集合。一个实体集中包含多个同类实体
 
-- Relationships (联系) among entities 
+- **Relationships (联系)** among entities 
 
 ### Attributes
 
@@ -52,7 +55,7 @@ Domain (域, value set) –– the set of permitted values for each attribute.
 - 一个联系集包含多个同类联系 (或联系实例, relationship instance)，表示两个或多个实体集之间的关联
 
 形式化地来说，一个联系集是由若干个联系实例组成的集合，每个联系实例都是一个实体集中的属性值的集合。
-$$ \{ (e_1, e_2, \cdots e_n) | e_1 \in E_1, e_2 \in E_2, \cdots e_n \in E_n \} $$
+$$ \\{ (e_1, e_2, \cdots e_n) | e_1 \in E_1, e_2 \in E_2, \cdots e_n \in E_n \\} $$
 其中 $E_1, E_2, \cdots E_n$ 是实体集，$e_1, e_2, \cdots e_n$ 是实体集中的实体，$(e_1, e_2, \cdots e_n)$ 是一个联系实例。
 
 ### Degree of a Relationship Set
@@ -93,7 +96,7 @@ $$ \{ (e_1, e_2, \cdots e_n) | e_1 \in E_1, e_2 \in E_2, \cdots e_n \in E_n \} $
 - A **candidate key** of an entity set is **a minimal super key**.
 - Although several candidate keys may exist, one of the candidate keys is selected to be the **primary key.** 
 
-    只能从所有的候选键中选择一个作为主键
+    所有的候选键中只能选出*一个*作为主键
 
 ### Keys for Relationship Sets
 
@@ -120,11 +123,11 @@ E-R 图是用来表示实体集、联系集和联系集的映射基数的图形�
 - 实体集和对应的属性之间用实线连接，实体集和联系集之间也要用实线连接
 - 属性中的主码用下划线标记
 
-<figure markdown="span">
-    ![](./assets/ER图1.png){width=60%}
-</figure>
-
 ![](./assets/ER图2.png){align=right width=15%}
+
+<figure markdown="span">
+    ![](./assets/ER图1.png){width=70%}
+</figure>
 
 此外我们还可以用如右图的画法来表示一个实体集及其属性
 
@@ -148,42 +151,50 @@ E-R 图是用来表示实体集、联系集和联系集的映射基数的图形�
 
 我们可以通过不同的连线方式来表示联系集的映射基数约束，通常来说，一个由联系集指向实体集的箭头表示 one，直接用直线把实体集和联系集连接起来则表示 many。
 
-=== "One-to-One"
-    这里每一个教授至多能指导一个学生，并且每个学生至多被一个教授指导。
+!!! example
+    === "One-to-One"
+        这里每一个教授至多能指导一个学生，并且每个学生至多被一个教授指导。
 
-    <figure markdown="span">
-        ![](./assets/ER图4.png){width=60%}
-    </figure>
+        <figure markdown="span">
+            ![](./assets/ER图4.png){width=60%}
+        </figure>
 
-=== "One-to-Many"
-    这里每个教授都能指导若干个学生（包括 0 个），而每个学生至多被一个教授指导。
+    === "One-to-Many"
+        这里每个教授都能指导若干个学生（包括 0 个），而每个学生至多被一个教授指导。
 
-    <figure markdown="span">
-        ![](./assets/ER图5.png){width=60%}
-    </figure>
+        <figure markdown="span">
+            ![](./assets/ER图5.png){width=60%}
+        </figure>
 
-=== "Many-to-One"
-    这里每个教授都至多能指导一个学生，而每个学生都能被若干个教授指导（包括 0 个）。
+    === "Many-to-One"
+        这里每个教授都至多能指导一个学生，而每个学生都能被若干个教授指导（包括 0 个）。
 
-    <figure markdown="span">
-        ![](./assets/ER图6.png){width=60%}
-    </figure>
+        <figure markdown="span">
+            ![](./assets/ER图6.png){width=60%}
+        </figure>
 
-=== "Many-to-Many"
-    这里每个教授都能指导若干个学生（包括 0 个），而每个学生也能被若干个教授指导（包括 0 个）。
+    === "Many-to-Many"
+        这里每个教授都能指导若干个学生（包括 0 个），而每个学生也能被若干个教授指导（包括 0 个）。
 
-    <figure markdown="span">
-        ![](./assets/ER图7.png){width=60%}
-    </figure>
+        <figure markdown="span">
+            ![](./assets/ER图7.png){width=60%}
+        </figure>
 
 ### Participation of an Entity Set in a Relationship Set
 
-- Total participation (全参与) (indicated by double line): every entity in the entity set participates in at least one relationship in the relationship set. 
-    - 例如 borrower 联系集必须全参与 loan 实体集，也就是说每个贷款必须有一个借款人
-- Partial participation (部分参与): some entities may not participate in any relationship in the relationship set.
-    - 例如 borrower 联系集部分参与 customer 实体集，也就是说有些客户没有贷款（例如只存但不借）
+- **Total participation (全参与)** (indicated by **double line**): 
 
-映射基数约束(Mapping cardinality constraints)，限定了一个实体与发生关联的另一端实体可能关联的数目上限。
+    every entity in the entity set participates in at least one relationship in the relationship set. 
+
+    - 例如 loan 实体集必须全参与 borrower 联系集，也就是说每个贷款必须有一个借款人
+
+- **Partial participation (部分参与)**: 
+
+    some entities may not participate in any relationship in the relationship set.
+
+    - 例如 customer 实体集部分参与 borrower 联系集，也就是说有些客户没有贷款（例如只存但不借）
+
+**映射基数约束(Mapping cardinality constraints)**，限定了一个实体与发生关联的另一端实体可能关联的数目上限。
 
 全参与和部分参与约束，则反映了一个实体参与关联的数目下限：0 次，还是至少 1 次。
 
@@ -197,7 +208,9 @@ E-R 图是用来表示实体集、联系集和联系集的映射基数的图形�
     ![](./assets/全参与和部分参与2.png){width=50%}
 </figure>
 
-我们还可以用另一种方式来表示全参与和部分参与。这里我们在实体集和联系集之间的连线上用 "0..*" 表示至少有 0 个参与，至多无上限个参与（部分参与）；而用 "1..1" 表示至少有 1 个参与，至多有 1 个参与（全参与），即必须有且只能有一个参与。
+我们还可以用另一种方式来表示全参与和部分参与。
+
+这里我们在实体集和联系集之间的连线上用 "0..*" 表示至少有 0 个参与，至多无上限个参与（部分参与）；而用 "1..1" 表示至少有 1 个参与，至多有 1 个参与（全参与），即必须有且只能有一个参与。
 
 !!! info "Binary vs. Non-Binary Relationships"
     Some relationships that appear to be non-binary may be better represented using binary relationships
@@ -217,6 +230,9 @@ E-R 图是用来表示实体集、联系集和联系集的映射基数的图形�
 ## Weak Entity Sets
 
 - An entity set that does not have a primary key is referred to as a weak entity set.
+
+    没有主键的实体集称为弱实体集（weak entity set），它依赖于一个强实体集来确定其唯一性。
+
 - The existence of a weak entity set depends on the existence of a identifying entity set or owner entity set
 
     弱实体集所依赖的强实体集称为标识实体集或属主实体集，它们之间的联系称为标识性联系（identifying relationship）
@@ -224,16 +240,15 @@ E-R 图是用来表示实体集、联系集和联系集的映射基数的图形�
     - It must relate to the identifying entity set via a total, one-to-many relationship set from the identifying to the weak entity set
     - Identifying relationship depicted using a double diamond，
     - 弱实体集没有足够属性来作为主键，因此必须依赖于一个强实体集来确定其唯一性
-- The discriminator (or partial key) of a weak entity set is the set of attributes that distinguishes among all the entities of a weak entity set.
+- The **discriminator** (or **partial key**) of a weak entity set is the set of attributes that distinguishes among all the entities of a weak entity set.
 - The primary key of a weak entity set is formed by the primary key of the strong entity set on which the weak entity set is existence dependent, plus the weak entity set’s discriminator.
     - 弱实体集的标识通常由两个部分组成：强实体集的主码和弱实体集的标识符
 
-用虚下划线标记弱实体集的标识符，用虚线箭头表示弱实体集和强实体集之间的联系。用双菱形表示弱实体集和它所依赖的强实体集之间的联系集
+用虚下划线标记弱实体集的标识符，用虚线箭头表示弱实体集和强实体集之间的联系。用**双菱形**表示弱实体集和它所依赖的强实体集之间的**联系集**
 
 !!! note
-    强实体集的主键不会显式地地保存在弱实体集中，因为它已经通过联系集与弱实体集关联了。
-
-    如果我们把强实体集的主键直接保存在弱实体集中，那么这个弱实体集就会成为一个强实体集。这样一来它和自己所依赖的强实体集之间的联系集就会重复地保存了相同的信息。
+    - 强实体集的主键不会显式地地保存在弱实体集中，因为它已经通过联系集与弱实体集关联了。
+    - 如果我们把强实体集的主键直接保存在弱实体集中，那么这个弱实体集就会成为一个强实体集（应为此时就可以用这个主键来明确地标识自己）。这样一来它和自己所依赖的强实体集之间的联系集就会重复地保存了相同的信息。
 
 ??? example
     <figure markdown="span">
@@ -244,15 +259,16 @@ E-R 图是用来表示实体集、联系集和联系集的映射基数的图形�
 
 我们可以把实体集分为不同的层级：
 
-- Specialization (特化)：the **top-down process** of identifying lower-level, more specific entity subtypes from a higher-level entity type.
+- **Specialization (特化)**：the **top-down process** of identifying lower-level, more specific entity subtypes from a higher-level entity type.
 
     - 较低层次的实体集称为子类型，较高层次的实体集称为父类型。
     - 底层级的实体集会“继承”父类型的属性，还可以拥有自己的属性。（可以类比于 OOP 中的继承）
 
-- Generalization (泛化)：a **bottom-up process** – combine a number of entity sets that share the same features into a higher-level entity set.
+- **Generalization (泛化)**：a **bottom-up process** – combine a number of entity sets that share the same features into a higher-level entity set.
 
     - 通过泛化，我们可以把多个实体集合并为一个更高层次的实体集，这个实体集包含了合并前所有实体集的共同属性。
-    - 某种程度上，泛化与特化是互逆的过程，它们在 E-R 图中可以用相同的符号表示。
+
+> 某种程度上，泛化与特化是互逆的过程，它们在 E-R 图中可以用相同的符号表示。
 
 ### Design Constraints on a Specialization / Generalization
 
@@ -269,16 +285,18 @@ Constraint on which entities can be members of a given lower-level entity set. �
 Constraint on whether or not entities may belong to more than one lower-level entity set within a single generalization. 可以定义约束条件来限制一个实体是否可以属于多个子类型。
 
 - Disjoint (不相交)：
-    - An entity can belong to only one lower-level entity set. 
+    - 一个实体只能属于一个低层的实体集 
     - Noted in E-R diagram by writing disjoint next to the ISA triangle.
 - Overlapping (可重叠)
-    - An entity can belong to more than one lower-level entity set.
+    - 一个实体可以同时属于多个低层的实体集
 
     <figure markdown="span">
         ![](./assets/ER图10.png){width=60%}
     </figure>
 
 我们还可以定义完全性约束（total completeness constraint）：specifies whether or not an entity in the higher-level entity set **must belong to at least one of the lower-level entity sets** within a generalization.
+
+即一个高层次实体集中的实体是否必须属于某一个低层次实体集。
 
 - Total: an entity must belong to one of the lower-level entity sets. 
 - Partial: an entity need not belong to one of the lower-level entity sets.
@@ -300,6 +318,9 @@ Constraint on whether or not entities may belong to more than one lower-level en
 于是现在我们就可以通过聚合（aggregation）来解决这个信息冗余的问题
 
 - Treat relationship as an abstract entity. 
+
+    把联系集看作一个抽象实体集，这样我们就可以把 works-on 联系集和这三个实体集（employee, branch, job）聚合成一个新的实体集，再让这个新的实体集和 manager 实体集之间建立联系。
+
 - Allows relationships between relationships. 
 - Abstraction of relationship into new entity.
 
@@ -331,22 +352,22 @@ Constraint on whether or not entities may belong to more than one lower-level en
 
 ## Design of an E-R Database Schema 
 
-- **Requirement analysis** 
+- **Requirement analysis** 需求分析
     - What data, applications, and operations needed. 
-- **Conceptual database design** 
+- **Conceptual database design** 概念数据库设计
     - A high-level description of data, constraints using E-R model or a similar high level data model. 
-- **Logical database design** 
+- **Logical database design** 逻辑数据库设计
     - Convert the conceptual design into DB schema --- tables 
     - Schema refinement: Normalization of relations --- Check relational schema for redundancies and related anomalies. 
-- **Physical database design** 
+- **Physical database design** 物理数据库设计
     - Indexing, clustering and database tuning. 
 
 ### E-R Design Decisions
 
 1. Use an attribute or entity set to represent an object?
-    - 若一个对象只对其名字及单值感兴趣，则可作为属性，如性别；若一个对象除名字外，本身还有其他属性需描述，则该对象应定义为实体集。如电话, 部门. 
-    - 一个对象不能同时作为实体和属性. 
-    - 一个实体集不能与另一实体集的属性相关联，只能实体与实体相联系.
+    - 若我们只对一个对象的名字及单值感兴趣，则可作为属性，如性别；若一个对象除名字外，本身还有其他属性需描述，则该对象应定义为实体集，如电话, 部门。
+    - 一个对象不能同时作为实体和属性。
+    - 一个实体集不能与另一实体集的属性相关联，只能实体与实体相联系。
 2. Use it as an entity set or a relationship set?
     - 用联系集表示两个实体对象之间的 action
 3. Use it as an attribute of an entity or a relationship?
@@ -395,7 +416,7 @@ Constraint on whether or not entities may belong to more than one lower-level en
 
 - If participation is partial on the many side, replacing a table by an extra attribute in the relation corresponding to the “many” side could result in null values.
 
-    - 例如 cust-banker(customer-id, employee-id, type); 但有的 customer 没有 banker, 则合并之后得：
+    - 例如 cust-banker(customer-id, employee-id, type); 但有的 customer 没有 banker（银行员工）, 则合并之后得：
 	customer(customer-id, cust-name, cust-street, cust-city, banker-id, type) ，customer 有些元组的 banker-id、type 为 null。
 
 ### Representing Specialization as Tables

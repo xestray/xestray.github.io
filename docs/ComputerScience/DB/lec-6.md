@@ -10,7 +10,7 @@
 - Domain is **atomic** if its elements are considered to be indivisible units.
     - 如果一个域的元素是不可分割的单位，那么这个域就是原子域。
     - 例如：
-        - `age` 是原子域，因为年龄不可以再被分割（只精确到年）
+        - `age` 是原子域，因为年龄不可以再被分割（只精确到年的情况）
         - `name` `address` 不是原子域，因为它们可以被分割为姓和名，或者城市、街道和门牌号等
 - A relational schema R is in **first normal form** (1NF) if the domains of all attributes of R are atomic.
     - 在关系型数据库中，要求所有的关系都必须是满足第一范式的
@@ -42,7 +42,7 @@ Decomposition 指的是将一个关系分解成多个关系，例如将 $r(ABCD)
 - 分解前的 schema $R$ 的所有属性都应该出现在分解后的属性 $(R_1,R_2)$ 中，例如
     $$ R = R_1 \cup R_2 $$ 
 - **无损连接分解(Lossless-join decomposition)** 指的是对于 schema $R$ 上所有可能的关系 $r$，都有
-    $$ r = \Pi_{R_1}(r) \bowtie \Pi_{R_2}(r) $$
+    $$ r = \Pi_{R_1} ( r ) \bowtie \Pi_{R_2} ( r ) $$
 
     - 无损连接分解的要求是可以通过子关系的自然连接恢复原关系
 
@@ -56,14 +56,14 @@ Decomposition 指的是将一个关系分解成多个关系，例如将 $r(ABCD)
 ## Functional Dependencies 
 
 !!! definition 
-    Let $R$ be a relation schema,$\alpha$ and $\beta$ be attributes of $R$.
+    Let $R$ be a relation schema, $\alpha$ and $\beta$ be attributes of $R$.
 
     The functional dependency 
     $\alpha \to \beta$ holds on $R$ if and only if for any legal relations $r(R)$, whenever any two tuples $t_1$ and $t_2$ of $r$ agree on the attributes $\alpha$, they also agree on the attributes $\beta$, i.e.,
 
     $$ t_1[\alpha] = t_2[\alpha] \to t_1[\beta] = t_2[\beta] $$
 
-也就是说，当我们知道 $\alpha$ 的值时，就可以唯一确定 $\beta$ 的值，此时我们称
+也就是说，当我们知道属性 $\alpha$ 的值时，就可以唯一确定属性 $\beta$ 的值，此时我们称
 
 - $\beta$ is functionally dependent on $\alpha$, $\alpha$ functionally determines $\beta$.
 
@@ -71,7 +71,7 @@ Decomposition 指的是将一个关系分解成多个关系，例如将 $r(ABCD)
 
 函数依赖也是完整性约束的一种，它表示特定属性的值之间的关系，可以用判断 schema 的规范化程度，并作为改进设计的参考。
 
-!!! note "Functional dependency vs. key"
+!!! note "Functional dependency vs. Key"
     - A functional dependency is a generalization of the notion of a key. 
     - $K$ is a superkey for the relation schema $R$ if and only if $K \to R$. 
     - $K$ is a candidate key for $R$ if and only if 
@@ -85,7 +85,7 @@ Decomposition 指的是将一个关系分解成多个关系，例如将 $r(ABCD)
 We use functional dependencies to: 
 
 1. Test relations to see if they are legal under a given set of functional dependencies $F$
-    - 如果一个关系 $r$ 在 $F$ 的要求下是合法的，那么就称 $r$ 满足 $F$
+    - 如果一个关系 $r$ 在函数依赖集 $F$ 的所有要求下都是合法的，那么就称 $r$ 满足 $F$
 
     <figure markdown="span">
         ![](./assets/函数依赖1.png){width=75%}
@@ -97,7 +97,7 @@ We use functional dependencies to:
     !!! note 
         - 容易判别一个 $r$ 是否满足给定的F;
         - 不易判别 $F$ 是否在 $R$ 上成立。不能仅由某个 $r$ 推断出 $F$。
-        - $R$ 上的函数依赖F, 通常由定义 $R$ 的语义决定
+        - $R$ 上的函数依赖集 $F$, 通常由定义 $R$ 的语义决定
 
 ### Trivial and Non-Trivial Dependency
 
@@ -107,8 +107,8 @@ A functional dependency is trivial (平凡的) if it is satisfied by all relatio
 
 更一般的来说，如果 $\beta \subseteq \alpha$，那么 $\alpha \to \beta$ 就是平凡的函数依赖，否则就是不平凡的函数依赖
 
-- Trivial：$\alpha \to \beta$ if $\beta \subseteq \alpha$
-- Non-Trivial：$\alpha \to \beta$ if $\beta \not\subseteq \alpha$
+- Trivial：$\alpha \to \beta$, if $\beta \subseteq \alpha$
+- Non-Trivial：$\alpha \to \beta$, if $\beta \not\subseteq \alpha$
 
 ### Closure of a Set of Functional Dependencies
 
@@ -116,10 +116,10 @@ A functional dependency is trivial (平凡的) if it is satisfied by all relatio
 
 - 例如：如果 $F$ 中有 $A \to B$ 和 $B \to C$，那么我们可以推导出 $A \to C$
 
-!!! definition
+!!! definition "函数依赖集的闭包"
     The closure of a set of functional dependencies $F$ is the set of all functional dependencies that can be inferred from $F$ using Armstrong's axioms.
 
-    - 函数依赖集 $F$ 的闭包记作 $F^+$
+    - 函数依赖集 $F$ 的闭包指的是所有可以从 $F$ 中推导出的函数依赖的集合，记作 $F^+$。
 
 !!! note "Armstrong's Axioms"
     - 自反律（reflexivity）: If $\beta \subseteq \alpha$, then $\alpha \to \beta$ is in $F^+$.
@@ -143,10 +143,10 @@ A functional dependency is trivial (平凡的) if it is satisfied by all relatio
 !!! question "如何计算 $F$ 的闭包 $F^+$？"
     首先令 $F^+ = F$，然后重复以下步骤，直到 $F^+$ 不再发生变化：
 
-    - 对于 $F^+$ 中的每一个函数依赖 $f$，
+    1. 对于 $F^+$ 中的每一个函数依赖 $f$，
         - 对 $f$ 应用自反律和增补律
         - 把新得到的函数依赖添加进 $F^+$ 中
-    - 对于 $F^+$ 中的每一对函数依赖 $f_1$ 和 $f_2$
+    2. 对于 $F^+$ 中的每一对函数依赖 $f_1$ 和 $f_2$
         - 对 $f_1$ 和 $f_2$ 应用传递律
         - 把新得到的函数依赖添加进 $F^+$ 中
 
@@ -169,7 +169,7 @@ A functional dependency is trivial (平凡的) if it is satisfied by all relatio
         ![](./assets/属性闭包.png){width=75%}
     </figure>
 
-There are three kind uses if the atrribute set closure:
+There are three kind uses of the atrribute set closure algorithm:
 
 - Testing for a superkey --- ($A \to R?$)
     - $A^+$ 是否包含 $R$ 的所有属性，即是否有 $R \subseteq A^+$
@@ -259,7 +259,7 @@ DBMS should always check to ensure not violate any Functional Dependency (FD) in
     To test if attribute $A \in \beta$ is extraneous in $\beta$:
 
     - 仅使用 $F'$ 中的依赖来计算 $\alpha^+$，其中
-        $$ F' = (F - \{\alpha \to \beta \}) \cup \{ \alpha \to (\beta - A) \} $$
+        $$ F' = (F - \\{\alpha \to \beta \\}) \cup \\{ \alpha \to (\beta - A) \\} $$
     - 查看 $\alpha^+$ 是否包含 $A$，如果是，那么 $A$ 就是多余的
     - 也就是说如果可以证明 $F'$ 蕴含 $A \in \alpha^+$，即 $\alpha \to A$，那么 $A$ 就是多余的，可以删去
 
@@ -274,7 +274,7 @@ DBMS should always check to ensure not violate any Functional Dependency (FD) in
 - 寻找一个在 $\alpha$ 或 $\beta$ 中具有多余属性的函数依赖 $\alpha \to \beta$
 - 如果找到了多余属性，就把它从 $\alpha \to \beta$ 删去
 
-**注意**：当某些多余属性被删除后，合并规则可能可以应用在新的函数依赖上，因此需要重新应用合并规则。
+> **注意**：当某些多余属性被删除后，合并规则可能可以应用在新的函数依赖上，因此需要重新应用合并规则。
 
 ## Decomposition 
 
@@ -312,11 +312,11 @@ DBMS should always check to ensure not violate any Functional Dependency (FD) in
 
 ## Boyce-Codd Normal Form
 
-!!! definition
+!!! definition "BCNF"
     一个关系模式 $R$ 相对于函数依赖集 $F$ 满足 BCNF，如果 $F^+$ 中的所有形如 $\alpha \to \beta$ 的函数依赖，其中 $\alpha \subseteq R$，$\beta \subseteq R$，至少满足以下条件之一：
 
     - $\alpha \to \beta$ 是平凡的（即 $\beta \subseteq \alpha$）
-    - $\alpha$ 是 $R$ 的超键（即 $R \subseteq \alpha^+$，$\alpha \to R$）
+    - $\alpha$ 是 $R$ 的超键（即 $R \subseteq \alpha^+$，或 $\alpha \to R$）
 
 !!! example
     $R = (A,B,C),\ F = \{ A \to B,\ B \to C \}$，key = $\{ A \}$
@@ -339,7 +339,7 @@ DBMS should always check to ensure not violate any Functional Dependency (FD) in
 
 - 如果 $F$ 中没有依赖违反 BCNF，那么 $F^+$ 中的依赖也不会违反 BCNF
 
-> 因为 $F^+$ 是由 Armstrong 的 3 个公理从 $F$ 推出的，而任何公理都不会使函数依赖(FD)左边变小(拆分)，故如果 $F$ 中没有违反BCNF的FD(即左边是 superkey)，则 $F^+$ 中也不会。
+> 因为 $F^+$ 是由 Armstrong 的 3 个公理从 $F$ 推出的，而任何公理都不会使函数依赖 (FD) 左边变小（拆分），故如果 $F$ 中没有违反 BCNF 的 FD（即左边是 superkey），则 $F^+$ 中也不会。
 
 但是如果我们仅使用 $F$ 来测试 $R$ 分解得到的子关系 $R_i$ 是否满足 BCNF，就会出现错误
 
@@ -349,7 +349,8 @@ DBMS should always check to ensure not violate any Functional Dependency (FD) in
 - $F$ 中没有仅包含 $(A, C, D)$ 属性的函数依赖，因此也就没有 FD 会违反 BCNF，我们可能误认为 $R_2$ 满足 BCNF
 - 但实际上 $A \to C$ 处在 $F^+$ 中，这表明 $R_2$ 不满足 BCNF
 
-> 可在 $F$ 下判别 $R$ 是否违反 BCNF, 但必须在 $F^+$ 下判别 $R$ 的分解式是否违反 BCNF
+!!! note
+    可在 $F$ 下判别 $R$ 是否违反 BCNF, 但必须在 $F^+$ 下判别 $R$ 的分解式是否违反 BCNF
 
 ### BCNF Decomposition Algorithm
 
@@ -375,9 +376,21 @@ result := {R};
         ![](./assets/BCNF算法.png){width=75%}
     </figure>
 
+    - 首先在 $R_i$ 中找到一个函数依赖 $\alpha \to \beta$，其中 $\alpha$ 与 $\beta$ 没有交集，且 $\alpha$ 不是超键。
+    - 然后将 $R_i$ 分解为 $\alpha, \beta$ 和 $R_i - \beta$，这两个分解结果的共同属性是 $\alpha$。
+
+??? example
+    <figure markdown="span">
+        ![](./assets/BCNF分解例子.png){width=75%}
+    </figure>
+
+    - 首先把 $R$ 分解成 $R_1, R_2$
+    - 发现 $R_2$ 不满足 BCNF，因此再把 $R_2$ 分解成 $R_3, R_4$
+    - 最后的分解结果就是 $R_1, R_3, R_4$，它们都满足 BCNF
+
 !!! tip "BCNF and Dependency Preservation"
-    - 一个满足 BCNF 的分解无法总是保证满足依赖保持
-    - 换句话说，我们无法总是保证以下三个设计目标
+    - 一个满足 BCNF 的分解无法保证始终满足依赖保持
+    - 换句话说，我们无法做到始终同时保证以下三个设计目标
         - Lossless join 
         - BCNF 
         - Dependency preservation 
@@ -397,7 +410,7 @@ result := {R};
 
     - $\alpha \to \beta$ 是平凡的（即 $\beta \subseteq \alpha$）
     - $\alpha$ 是 $R$ 的超键（即 $R \subseteq \alpha^+$，$\alpha \to R$）
-    - $\beta - \alpha$ 中的每一个属性都是 $R$ 的候选键（即 $A \in \beta - \alpha$ 是主属性，若 $\alpha \cap \beta = \emptyset$，则 $A = \beta$ 是主属性）
+    - $\beta - \alpha$ 中的每一个属性都被包含在 $R$ 的候选键之中（即 $\forall A \in (\beta - \alpha)$，$A$ 是主属性。若此时还有 $\alpha \cap \beta = \emptyset$，则 $A = \beta$ 是主属性）
 
     我们可以注意到：
 
@@ -411,11 +424,11 @@ result := {R};
 
     我们可以注意到有两个候选键：$JK,\ JL$
 
-    因此 $R$ 满足 3NF，因为 $JK$ 是一个超键，而 $K$ 是一个候选键。
+    因此 $R$ 满足 3NF，因为 $JK$ 是一个超键，而 $\{K\} - \{L\} = K$ 是一个候选键。
 
-    但 $R$ 满足 BCNF，因为 $L \to K$ 不是平凡的函数依赖，$L$ 也不是超键。
+    但 $R$ 不满足 BCNF，因为 $L \to K$ 不是平凡的函数依赖，$L$ 也不是超键。
 
-    假设 $J$ 是学生，$K$ 是课程，$L$ 是老师。一门有多个教师,一个教师上一门课, 一个学生选多门课, 一门课有多个学生选。
+    假设 $J$ 是学生，$K$ 是课程，$L$ 是老师。那么这个例子说明一门有多个教师，一个教师上一门课, 一个学生选多门课, 一门课有多个学生选。
 
     |$J$|$L$|$K$|
     |--|--|--|
@@ -444,7 +457,8 @@ result := {R};
 2. 对于 $F_c$ 中的每一个函数依赖 $\alpha \to \beta$，将其分解为 
     - $R_i = \{ \alpha, \beta \}$，并将其添加到结果中
 3. 如果没有任何一个模式 $R_j$ 包含原模式 $R$ 的候选键，那么就添加包含任意一个候选键的关系模式
-4. 
+
+经过上述步骤后的分解结果就满足 3NF，并且是无损连接、依赖保持的。
 
 ```
 Let Fc be a canonical cover for F;
@@ -464,7 +478,7 @@ return (R1, R2, ..., Ri)
 ```
 
 - 第二步可以保证依赖保持，因为 $F_c$ 中的每一个函数依赖都能在分解后的子关系中找到
-- 第三步可以保证无损连接，因为它可以保证至少在一个 $R_i$ 中存在 $R$ 的候选键
+- 第三步可以保证无损连接，因为它可以保证至少在一个子关系 $R_i$ 中存在 $R$ 的候选键
 - 经过上述的算法之后，所有的子模式都满足 3NF，并且分解是无损连接的
 
 !!! example "3NF 分解"
@@ -494,10 +508,10 @@ return (R1, R2, ..., Ri)
         Banker-schema = (customer-name, branch-name, banker-name)
         ```
 
-    - 然后检查是否有任何一个模式包含原模式 $R$ 的候选键。我们发现 $Banker-schema$ 中包含了 Banker-info-schema 的候选键 `(customer-name, branch-name)，因此我们可以将其添加到结果中
+    - 然后检查是否有任何一个模式包含原模式 $R$ 的候选键。我们发现 `Banker-schema` 中包含了 `Banker-info-schema` 的候选键 `(customer-name, branch-name)`，因此我们不需要再新创建一个包含候选键的子关系模式。
     - 最后检查这两个关系是否存在冗余：发现没有冗余。
 
-    于是我们最终得到的两个关系模式为
+    于是我们最终分解得到的两个子关系模式为
 
     ```
     Banker-office-schema = (banker-name, branch-name, office-number)
@@ -523,10 +537,10 @@ return (R1, R2, ..., Ri)
 
 有些满足 BCNF 的数据库模式并不能充分地进行规范化。例如考虑 class(course, teacher, book)，此时一门课可能有多个老师，并且一门课也可以有多本参考书，这时候 teacher 和 book 就是多值属性，并且它们之间是相互独立的。
 
-!!! definition ""
-    Let $R$ be a relation schema and let $\alpha \subseteq R,\ beta \subseteq R$，the multivalued dependency
+!!! definition "多值依赖"
+    Let $R$ be a relation schema and let $\alpha \subseteq R,\ \beta \subseteq R$，the multivalued dependency
     $$ \alpha \to\to \beta $$
-    holds on $R$, if in any legal relation $r(R)$, for all pairs of tuples $t_1$ and $t_2$ in $r$ such that $t_1[\alpha] = t_2[\alpha]$, there exist tuples $t_3$ and $t_4$ in $r$ such that:
+    holds on $R$, if in any legal relation $r(R)$, for **all pairs** of tuples $t_1$ and $t_2$ in $r$ such that $t_1[\alpha] = t_2[\alpha]$, there exist tuples $t_3$ and $t_4$ in $r$ such that:
 
     $$ \begin{aligned}
     & t_1[\alpha] = t_2[\alpha] = t_3[\alpha] = t_4[\alpha] \\
@@ -538,24 +552,25 @@ return (R1, R2, ..., Ri)
 
     令 $R-\alpha-\beta=Z$，后两个式子就可以被简写为 $t_3[Z] = t_1[Z]$ 和 $t_4[Z] = t_2[Z]$。
 
-    如果 $\beta \subseteq \alpha$ 或 $\alpha \cup \beta = R$，那么 $\alpha \to\to \beta$ 就是平凡的多值依赖。
+    - 如果 $\beta \subseteq \alpha$ 或 $\alpha \cup \beta = R$，那么 $\alpha \to\to \beta$ 就是平凡的多值依赖。
 
 !!! example
     Let R be a relation schema with a set of attributes that are partitioned into 3 nonempty subsets. 
     $$ Y,Z,W $$
     We say that $Y \to\to Z$ ($Y$ multi-determines $Z$) if and only if for all possible relations $r(R)$ 
 
-    $ (y_1, z_1, w_1) \in r$ and $ (y_1, z_2, w_2) \in r$ 
+    如果存在元组 $(y_1, z_1, w_1) \in r$ 和 $(y_1, z_2, w_2) \in r$，那么
 
-    then there exist $ (y_1, z_1, w_2) \in r$ and $ (y_1, z_2, w_1) \in r$
+    就存在元组 $ (y_1, z_1, w_2) \in r$ and $ (y_1, z_2, w_1) \in r$
 
     > Note that since the behavior of $Z$ and $W$ are identical, it follows that $Y \to\to Z$ if $Y \to\to W$. 
 
-换句话说，多值依赖$ \alpha \to\to \beta $ 指的是一个属性 $\alpha$ 的值可以决定另一个属性 $\beta$ 的一组值，但 $\alpha$ 和 $\beta$ 之间并没有直接的函数依赖关系，同时它们也不具有传递性。
+!!! note
+    换句话说，多值依赖$ \alpha \to\to \beta $ 指的是一个属性 $\alpha$ 的值可以决定另一个属性 $\beta$ 的一组值（把 $\beta$ 的值限定在某个范围内），但 $\alpha$ 和 $\beta$ 之间并没有直接的函数依赖关系，同时它们也不具有传递性。
 
-与此同时，$\beta$ 的这一组值是独立于 其他属性 $R - \alpha - \beta$ 的。
+    与此同时，$\beta$ 的这一组值是独立于其他属性 $R - \alpha - \beta$ 的。
 
-现在回到开始时的例子：一门课可以由多个老师教授，也可以有多本参考书，并且由哪些老师教授和参考书是什么是相互独立的。
+现在回到开始时的例子：一门课可以由多个老师教授，也可以有多本参考书，并且这门课程由哪些老师教授和这门课程的参考书是哪些是相互独立的。
 
 于是在这里我们就有 course $\to\to$ teacher 和 course $\to\to$ book。
 
@@ -568,19 +583,22 @@ return (R1, R2, ..., Ri)
 
 从上面这表中我们可以看到，老师和书籍的各种排列组合都出现了一次，这就是多值依赖会导致的数据冗余问题。
 
-我们可以通过把上面的表分解为两个表来消除多值依赖：（course, teacher）和（course, book）。
+一般而言，我们可以通过把上面的表分解为两个表来消除多值依赖造成的冗余：（course, teacher）和（course, book）。
 
 ## Fourth Normal Form 
 
-!!! definition
-    一个关系模式在函数和多值依赖集 $D$ 下满足第四范式（4NF），如果对于 $D^+$ 中所有形如 $\alpha \to\to \beta$ 的多值依赖（其中$\alpha \subseteq R,\beta \subseteq R$），至少满足以下条件之一：
+!!! definition "4NF"
+    我们称一个关系模式在函数和多值依赖集 $D$ 下满足第四范式（4NF），如果
+
+    对于 $D^+$ 中所有形如 $\alpha \to\to \beta$ 的多值依赖（其中$\alpha \subseteq R,\beta \subseteq R$），都至少满足以下条件之一：
+
     - $\alpha \to\to \beta$ 是平凡的（即 $\beta \subseteq \alpha$ 或 $\alpha \cup \beta = R$）
     - $\alpha$ 是 $R$ 的超键（即 $R \subseteq \alpha^+$，$\alpha \to R$） 
 
     这里的 $D^+$ 指的是可以从 $D$ 中推导出的所有函数依赖和多值依赖的集合。
 
-    并且我们也可以很容易知道，如果 $\alpha \to \beta$，那么也一定有 $\alpha \to\to \beta$。
-
+!!! note
+    - 并且我们也可以很容易知道，如果 $\alpha \to \beta$，那么也一定有 $\alpha \to\to \beta$（此时相当于 $\beta$ 被限定的范围中只有一个值）。
     - 如果一个关系满足 4NF，那么它也一定满足 BCNF 和 3NF
 
 还是上面的课程、老师和书籍的例子：
@@ -597,19 +615,20 @@ return (R1, R2, ..., Ri)
 - course $\to\to$ teacher
 - course $\to\to$ book
 
-但是 course 并不是这个关系的超键，因此没有满足 4NF，我们可以把违反 4NF 的关系分解为满足 4NF 的子关系：
+但是 course 显然并不是这个关系的超键（它不能唯一确定 teacher 和 book 的值），因此没有满足 4NF，我们可以把违反 4NF 的关系分解为满足 4NF 的子关系：
 
-- (course, teacher)
-- (course, book)
+- $R_1$ = (course, teacher) = {course} $\cup$ {teacher}
+- $R_2$ = (course, book) = {course} $\cup$ {book}
 
 ### Requirement for decomposition
 
 Assume $R$ is decomposed into $R_1, R_2, \ldots, R_n$, each $R_i$ is required to conform to 4NF.
 
-The restriction of $D$ to $R_i$ is the set $D_i$ consisting of 
+函数与多值依赖集 $D$ 对于子关系 $R_i$ 的约束 $D_i$ 由以下内容组成
+
 - All functional dependencies in $D^+$ that include only attributes of $R_i$. 
 
-    所有只包含 $R_i$ 属性的在 $D^+$ 中的函数依赖
+    $D$ 对 $R_i$ 的约束是 $D^+$ 中所有只包含 $R_i$ 属性的函数依赖
 
 - All multivalued dependencies of the form 
     $$ \alpha \to\to (\beta \cap R_i) $$ 
@@ -633,10 +652,18 @@ Let Di denote the restriction of D+ to Ri
 
             // 把 Ri 分解为三个部分
             result := (result - Ri) ∪ (α, β) ∪ (Ri - β); 
-		end 
+		    end 
         // 此时 result 中的每个模式都满足 4NF
 	    else done:= true; 
 ```
+
+1. 首先求出函数和多值依赖集 $D$ 的闭包 $D^+$
+2. 寻找 $D_i$ 中的一个非平凡的多值依赖 $\alpha \to\to \beta$，它满足：
+    - $\alpha \to R_i \notin D_i$（即 $\alpha$ 不是 $R_i$ 的超键）
+    - $\alpha \cap \beta = \emptyset$（即 $\alpha$ 和 $\beta$ 没有交集）
+3. 将 $R_i$ 分解为 $\alpha, \beta$ 和 $R_i - \beta$，并将这两个分解结果添加到结果中
+4. 重复步骤 2、3，直到所有的子关系模式都满足 4NF
+
 
 !!! example "4NF 分解"
     $R =(A,B,C,G,H,I)$
@@ -647,11 +674,11 @@ Let Di denote the restriction of D+ to Ri
 
     可以按照以下的步骤进行分解：
 
-    1. $R_1 = (A,B)$（$R_1$ 满足 4NF）
-    2. $R_2 = (A,C,G,H,I)$（$R_2$ 不满足 4NF）
-    3. $R_3 = (C,G,H)$（$R_3$ 满足 4NF）
-    4. $R_4 = (A,C,G,I)$（$R_4$ 满足 4NF）
-    5. $R_5 = (A,I)$（$R_5$ 满足 4NF）
-    6. $R_6 = (A,C,G)$（$R_6$ 满足 4NF）
+    1. $R_1 = (A,B),\ R_2 = (A,C,G,H,I)$
+        - $R_1$ 满足 4NF，$R_2$ 不满足，对 $R_2$ 继续分解
+    2. $R_3 = (C,G,H),\ R_4 = (A,C,G,I)$
+        - $R_3$ 满足 4NF，$R_4$ 不满足，对 $R_4$ 继续分解
+    3. $R_5 = (A,I),\ R_6 = (A,C,G)$
+        - $R_5,\ R_6$ 都满足 4NF，分解完毕
 
-    最终我们的分解结果是：$R_1,R_3,R_5,R_6$，这几个关系都满足 4NF，并且这个分解是无损连接的。
+    因此最终我们的分解结果是：$R_1,\ R_3,\ R_5,\ R_6$，这几个关系都满足 4NF，并且这个分解是无损连接的。

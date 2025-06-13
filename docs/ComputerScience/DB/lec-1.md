@@ -145,6 +145,20 @@ SQL is the most widely used non-procedural query language.
 
 ## Database Design 
 
+1. Requirement analysis 
+    - 识别需要管理的数据、操作类型和业务需求
+2. Conceptual database design 
+    - 使用 E-R 模型等高层模型描述数据和约束
+3. Logical database design 
+    - 把概念设计转变为数据库模式（如关系表）
+4. Schema refinement 
+    - 规范化（Normalization）以消除冗余和不一致性
+5. Physical database design 
+    - 选择存储结构、索引方式、查询优化策略
+6. Create and initialize the database & Security design 
+    - 加载初始数据，测试系统
+    - 设置不同用户权限，确保数据访问控制
+
 ### Entity-Relationship (E-R) Model
 
 <figure>
@@ -163,11 +177,16 @@ A Sample of Relational Model: University Database
 
 Users are differentiated by the way they expect to interact with the system.
 
-- **Naive users**（普通用户）– invoke one of the permanent application programs that have been written previously by a high level language
-- **Application programmers**（应用程序员）– interact with system via SQL calls
-- **Sophisticated users**（高级用户）– form requests in a database query language
-- **Specialized users**（专业用户）– write specialized database applications that do not fit into the traditional data processing framework
-- **Database administrator** (DBA，数据库管理员): A special user having central control over database and programs accessing those data.
+- **Naive users**（普通用户）、
+    - invoke one of the permanent application programs that have been written previously by a high level language
+- **Application programmers**（应用程序员）
+    - interact with system via SQL calls
+- **Sophisticated users**（高级用户）
+    - form requests in a database query language
+- **Specialized users**（专业用户）
+    - write specialized database applications that do not fit into the traditional data processing framework
+- **Database administrator** (DBA，数据库管理员): 
+    - A special user having central control over database and programs accessing those data.
 
 
 <figure>

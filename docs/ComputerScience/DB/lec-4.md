@@ -90,7 +90,8 @@ Integrity constraints guard against accidental damage to the database, by ensuri
     - 参照关系中外码的值必须在被参照关系中实际存在，或这个外码的值为 null。
 
 当我们对一个表进行修改时，必须始终保证参照一致完整性
-$ \Pi_{\alpha}(r_2) \subseteq \Pi_{K_1}(r_1) $，where $\alpha$ in $r_2$ is a Foreign Key，$K_1$ 是主码。
+$$ \Pi_{\alpha}(r_2) \subseteq \Pi_{K_1}(r_1) $$ 
+其中 $r_2$ 中的属性 $\alpha$ 是一个外码，$K_1$ 是主码。
 
 - Insert: 
 
@@ -363,13 +364,13 @@ GRANT <privilege list> ON <table | view> TO <user list>;
 
 `<user list>` 可以是：
 
-- user_ids
+- user_ids，向特定的某个用户授予权限
 - public，表示允许所有用户拥有这些权限
-- A role，表示允许这个角色的所有用户拥有这些权限
+- role，表示允许这个角色的所有用户拥有这些权限
 
 授予对某个视图的权限不会让用户得到对视图中的基本表的权限。
 
-权限的授予者必须拥有这个将要授予其他用户的权限，或者授予者就是数据库管理员。
+权限的授予者必须拥有这个将要授予其他用户的权限，或者授予者本身就是数据库管理员。
 
 !!! note "SQL 中的权限"
     - `SELECT`: 允许用户查询表中的数据，或者通过视图查询数据
@@ -379,7 +380,7 @@ GRANT <privilege list> ON <table | view> TO <user list>;
     - `REFERENCES`: 允许用户在创建关系时声明外键
     - `ALTER`: 允许用户修改表的结构
     - `ALL PRIVILEGES`: 授予用户所有权限
-    - `ALL`: 相当于 `ALL PRIVILEGES`
+    - `ALL`: 相当于 `ALL PRIVILEGES` 的简写
     - `WITH GRANT OPTION`: 允许用户将自己拥有的权限授予其他用户
 
         - 例如 `GRANT SELECT ON branch TO user1 WITH GRANT OPTION` 表示授予 user1 对 branch 表的查询权限，并且 user1 可以将这个权限授予其他用户。
@@ -399,9 +400,10 @@ GRANT <privilege list> ON <table | view> TO <user list>;
     Grant select on branch to teller; 
     Grant update (balance) on account to teller; 
     Grant all privileges on account to manager; 
-        Grant teller to manager; 
-        Grant teller to alice, bob; 
-        Grant manager to avi;
+
+    Grant teller to manager; 
+    Grant teller to alice, bob; 
+    Grant manager to avi;
     ```
 
 ### Revoking Authorization
@@ -445,8 +447,8 @@ AUDIT <st-opt> [BY <users>] [BY SESSION | ACCESS]
     [WHENEVER SUCCESSFUL | WHENEVER NOT SUCCESSFUL];
 ```
 
-- 当 `BY <users>` 时，会对所有用户审计
-- `BY SESSION` 表示每次会话期间，相同类型的需审计的SQL语句仅记录一次
+- 当 `BY <users>` 没有指定时，会对所有用户审计
+- `BY SESSION` 表示每次会话期间，相同类型的需审计的 SQL 语句仅记录一次
 - 常用的 `<St-opt>` 有：table, view, role, index 等
 - 使用 `NOAUDIT` 关闭审计功能（其余部分与 `AUDIT` 语句相同）
 
@@ -462,17 +464,17 @@ AUDIT <obj-opt> ON <obj> | DEFAULT [BY SESSION | BY ACCESS]
 ```
 
 - 实体审计对所有的用户起作用
-- `ON <obj>` 指出审计对象表、视图名。 
+- `ON <obj>` 指出审计对象：表名、视图名。 
 - `ON DEFAULT` 表示对其后创建的所有对象起作用。 
 - 取消审计：`NOAUDIT`
 
-审计结果记录在数据字典表: sys.aud$中，也可从 dba_audit_trail, dba_audit_statement, dba_audit_object 中获得有关情况。这些数据字典表需在 DBA 用户（system）下才可见。
+审计结果记录在数据字典表: sys.aud$ 中，也可从 dba_audit_trail, dba_audit_statement, dba_audit_object 中获得有关情况。这些数据字典表需在 DBA 用户（system）下才可见。
 
 ## Embedded SQL
 
 SQL 标准定义了在 Pascal、PL/I、Fortran、C 和 Cobol 等多种编程语言中嵌入 SQL 的方式。
 
-嵌入了 SQL 查询的语言被成为宿主语言（host language），宿主语言所允许的 SQL 结构构成了嵌入式 SQL。
+嵌入了 SQL 查询的语言被称为宿主语言（host language），宿主语言所允许的 SQL 结构构成了嵌入式 SQL。
 
 通常使用 `EXEC SQL` 关键字来标识 SQL 语句。
 
@@ -483,7 +485,7 @@ EXEC SQL <embedded SQL statement> END_EXEC;
 但在不同语言中的嵌入式 SQL 语法略有不同，比如 Java 使用 `#SQL{...}` 来标识 SQL 语句。
 
 ???+ example
-    单行查询
+    **单行查询：**
 
     ```c
     EXEC SQL BEGIN DECLARE SECTION; 
@@ -491,17 +493,23 @@ EXEC SQL <embedded SQL statement> END_EXEC;
     float  bal; 
     EXEC SQL END DECLARE SECTION; 
     ...
-    scanf(“%s”, V_an);   // 读入账号,然后据此在下面的语句获得bn, bal的值 
+    scanf("%s", V_an);   // 读入账号，然后据此在下面的语句获得bn, bal的值 
     EXEC SQL SELECT branch_name, balance INTO :bn, :bal FROM 
     account WHERE account_number = :V_an; 
     END_EXEC
-    printf(“%s, %s, %f”, V_an, bn, bal);
+    printf("%s, %s, %f", V_an, bn, bal);
     ...
     ```
 
-    其中 `:V_an`、`:bn` 和 `:bal` 是宿主语言变量，可在宿主语言程序中赋值，从而将值带入 SQL。宿主变量在宿主语言中使用时不加`:`号。
+    其中 `:V_an`、`:bn` 和 `:bal` 是宿主语言变量，可在宿主语言程序中赋值，从而将值带入 SQL。
 
-    多行查询：在嵌入式 SQL 中，可以使用 `EXEC SQL DECLARE CURSOR` 语句声明一个游标（cursor），然后使用 `EXEC SQL OPEN`、`EXEC SQL FETCH` 和 `EXEC SQL CLOSE` 语句来操作游标。
+    - 宿主变量在宿主语言中使用时不加`:`号。
+
+    ---
+
+    **多行查询：**
+    
+    在嵌入式 SQL 中，可以使用 `EXEC SQL DECLARE CURSOR` 语句声明一个游标（cursor），然后使用 `EXEC SQL OPEN`、`EXEC SQL FETCH` 和 `EXEC SQL CLOSE` 语句来操作游标。
 
     假设现在我们拥有 account 、depositor、customer 三个表，我们希望找到余额超过某个数值的账户的客户的名字和所在城市。
 
@@ -542,7 +550,7 @@ EXEC SQL <embedded SQL statement> END_EXEC;
 
 我们还可以用嵌入式 SQL 来执行更新操作，例如单行的修改
 
-```c
+```sql
 // 首先声明用于存储用户输入的账号和存款额的变量
 Exec SQL BEGIN DECLARE SECTION; 
     char an[20]; 
@@ -550,7 +558,7 @@ Exec SQL BEGIN DECLARE SECTION;
 Exec SQL END DECLARE SECTION; 
 ...
 // 读入账号及要增加的存款额 
-scanf(“%s, %d”, an, &bal);   
+scanf("%s, %d", an, &bal);   
 // 执行更新操作
 EXEC SQL update account set balance = balance + :bal 
 where account_number = :an; 
@@ -559,7 +567,7 @@ where account_number = :an;
 
 也可以通过声明游标（cursor）来对多行数据进行修改：
 
-```c
+```sql
 // 声明宿主变量
 EXEC SQL BEGIN DECLARE SECTION;
     char an[20];  // account number

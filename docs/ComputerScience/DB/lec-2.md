@@ -5,6 +5,12 @@
 
 # Relational Model
 
+!!! tip "relation 与 relationship"
+    这两个单词虽然都是“关系”，但是在数据库中所指的内容不同：
+
+    - **relationship**：若干个实体（entity）之间的联系
+    - **relation**：数学上的概念，实际上就是数据库中的一个 table
+
 ## Structure of Relational Databases
 
 ### Basic Structure
@@ -49,15 +55,15 @@ An element $t$ of $r$ is a **tuple**, represented by a **row** in a table.
 
 Let $K \subseteq R$ be a set of attributes of relation schema $R$. Then 
 
-- $K$ is a **superkey** for $R$, if values for $K$ are sufficient to identify a unique tuple of each possible relation r(R) 
+- $K$ is a **superkey** for $R$, if values for $K$ are sufficient to identify a unique tuple of each possible relation $r(R)$ 
 
     如果 $K$ 的值足以唯一标识关系 $r(R)$ 中的每个元组，则 $K$ 是关系 $R$ 的超键
 
     e.g. $\{ID\}$, $\{ID, name\}$
 
-- $K$ is a **candidate key** for $R$, if $K$ is is **minimal superkey** for $R
+- $K$ is a **candidate key** for $R$, if $K$ is is **minimal superkey** for $R$
 
-    如果 $K$ 是最小的超键（$K$ 的任何真子集都不是超键，$K$ 中没有冗余的属性），则 $K$ 是关系 $R$ 的候选键
+    如果 $K$ 是不可再分的超键（$K$ 的任何真子集都不是超键，$K$ 中没有冗余的属性），则 $K$ 是关系 $R$ 的候选键，候选键可能有多个
 
 - $K$ is a **primary key** for $R$, if $K$ is a candidate key and is defined by user explicitly. 
 
@@ -65,7 +71,7 @@ Let $K \subseteq R$ be a set of attributes of relation schema $R$. Then
 
 - **Foreign Key (外键/外码)**
 
-    Assume there exists relations $r$ and $s$: $r(A, B, C)$, $s(B, D)$（$B$ is the primary key of $s$）, we can say that attribute $B$ in relation $r$ is foreign key referencing $s$, and $r$ is a **referencing relation (参照关系)**, and $s$ is a **referenced relation (被参照关系)**. 
+    Assume there exists relations $r$ and $s$: $r(\underline{A}, B, C)$, $s(\underline{B}, D)$（$B$ is the primary key of $s$）, we can say that attribute $B$ in relation $r$ is foreign key referencing $s$, and $r$ is a **referencing relation (参照关系)**, and $s$ is a **referenced relation (被参照关系)**. 
 
     - 参照关系中外码的值必须在被参照关系中实际存在, 或为 null。
 
@@ -98,7 +104,7 @@ Let $K \subseteq R$ be a set of attributes of relation schema $R$. Then
 
 Notation: $\sigma_p(r)=\{t|t\in r\ and\ p(t)\}$  , where $p$ is called **selection predicate**.  
 
-其中 p 是通过逻辑运算符把各项连接起来的一个条件表达式，每一项都具有如下的形式：
+其中 $p$ 是通过逻辑运算符把各项连接起来的一个条件表达式（即逻辑谓词），每一项都具有如下的形式：
 $$ < attribute > \ op \ < attribute / constant > $$
 其中 $op$ 属于 =, <, >, <=, >=, != 等。
 
@@ -114,8 +120,8 @@ $$ < attribute > \ op \ < attribute / constant > $$
 
 $\prod_{A_1,A_2,\ldots, A_k}(r)$ where $A_i$ are attribute names and $r$ is a relation name.
 
-- 这个操作相当于从关系 $r$ 中删除除了 $A_1, A_2, \ldots, A_k$ 之外的所以的属性。
-- 进行操作后，重复的元组将会被删除（关系是一个集合）
+- 这个操作相当于从关系 $r$ 中删除除了 $A_1, A_2, \ldots, A_k$ 之外的所有的属性。
+- 进行投影操作后，重复的元组将会被删除（关系是一个集合）
 
 ??? example
     <figure>
@@ -151,7 +157,7 @@ Set differences must be taken between compatible relations.
 
 ### Cartesian Product
 
-$r\times s  =\{t\ q|t\in r\ and\ q\in s\}$
+$r \times s  =\{ t \ q| t \in r \ and \ q \in s \}$
 
 - Assume that attributes of $r(R)$ and $s(S)$ are disjoint (i.e., $R \cap S = \emptyset$). 
 - If attributes of $r(R)$ and $s(S)$ are not disjoint, then renaming for attributes must be used.
@@ -165,6 +171,7 @@ $r\times s  =\{t\ q|t\in r\ and\ q\in s\}$
         </figure>
 
     === "Example2"
+        这里两个关系具有相同的属性名 B，因此要重命名为 r.B 和 s.B
     
         <figure>
             <img src="../assets/笛卡尔乘积例子2.png" width="70%"/>
@@ -187,7 +194,7 @@ $\rho_{X(A1, A2, \cdots, An)}(E)$ —— 给关系 $E$ 重命名为 $X$，并且
 
         $ \prod_{instructor}-\prod_{instructor.salary}(\sigma_{instructor.salary}<d.salary(instructor\times \rho_d(instructor))) $
 
-    首先，我们找到所有工资小于其他教师的工资的教师（得到一个不是最高工资构成的集合），然后从所有教师的工资中减去这些不是 maximum 的工资，就得到了最高的工资。
+    首先，我们找到所有工资小于其他某个教师的教师（得到一个不是最高工资构成的集合），然后从所有教师的工资中减去这些不是 maximum 的工资，就得到了最高的工资。
 
 ## Additional Relational-Algebra Operations
 
@@ -206,6 +213,8 @@ $r\cap s=\{t| t\in r\ and\ t\in s\}$
 - attributes of $r$ and s are compatible
 
 $ r \cap s = r - (r - s) $
+
+> 注意这里的减法是集合之间的减
 
 ??? example
     <figure>
@@ -233,10 +242,12 @@ $r\bowtie s$ is a relation on schema $R \cup S$ obtained as follows:
 
     $r \bowtie_{\theta} s = \sigma_{\theta}(r \times s)$
 
-    where $\theta$ is the predicate on attributes in the schema, that is applied to the Cartesian product of $r$ and $s$.
+    - where $\theta$ is the predicate on attributes in the schema, that is applied to the Cartesian product of $r$ and $s$.
+    - 满足谓词 $\theta$ 时，这个元组才会保留在结果中
 
 !!! extra "Outer Join"
-        
+    外连接：当连接属性上的某个值没有在另一个关系中出现时，也可以把这个元组保留下来，缺少的数据用 null 填充
+
     Computes the join and then adds tuples form one relation that does not match tuples in the other relation to the result of the join.   
 
     Uses *null values*:  
@@ -251,7 +262,7 @@ $r\bowtie s$ is a relation on schema $R \cup S$ obtained as follows:
     - $r$⟗$s$ $=(r\bowtie s)\cup (r-\cap_R(r\bowtie  s))\times \{(null, \ldots)\}\cup\{(null,\ldots,null)\}\times (s-\cap_s(r\bowtie s))$
 
     <figure>
-        <img src="../assets/外连接例子.png" width="60%"/>
+        <img src="../assets/外连接例子.png" width="70%"/>
     </figure>
 
 ### Division
@@ -261,7 +272,7 @@ Notation: $r(A) \div s(B)$
 Let $r$ and $s$ be relations on schemas $R$ and $S$, respectively, where $R = (A1, …, Am, B1, …, Bn)$ and $S = (B1, …, Bn)$. Then, the result of  $r \div s$ is a relation on the schema $R – S = (A1, …, Am)$ and 
 $r \div s = \{ t | t \in \prod_{R-S}(r) \land  \forall u \in s ,tu \in r \}$. 
 
-相当于先在 $r$ 中找到满足所有 $s$ 中的属性的元组，然后再投影。
+相当于先在 $r$ 中找到能同时满足 $s$ 中的所有属性的元组，然后再投影。
 
 ??? example
     === "Example1"
@@ -308,12 +319,14 @@ $ \prod_{F_1, F_2, \cdots, F_n} (E) $
 $$ G_1,G_2,\ldots,G_n \ \mathcal{G}_{F_1(A_1),\ldots F_n(A_n)}(E) $$ 
 其中 $E$ 是任意的关系代数表达式，$G_i$ 是属性名，$F_i$ 是聚合函数，$A_i$ 是属性名。
 
+表示在关系 $E$ 的属性 $A_i$ 上使用聚合函数 $F_i$，并且根据属性 $G_1, \ldots, G_n$ 进行分组
+
 ??? example
     <figure>
         <img src="../assets/聚合函数例子.png" width="70%"/>
     </figure>
 
-> 聚合之后的分组结果是没有名字的，但我们可以通过重命名操作来为其命名。例如 `dept_name G avg(salary) as avg_sal (instructor)`
+> 聚合之后的分组结果是没有名字的，但我们可以通过重命名操作来为其命名。例如 $dept\_name\ \mathcal{G}\ _{avg(salary)\ as\ avg\_sal}\ (instructor)$
 
 ## Modification of the Database
 

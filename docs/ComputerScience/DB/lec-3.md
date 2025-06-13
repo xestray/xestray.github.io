@@ -57,9 +57,9 @@ An SQL relation is defined using the create table command:
 
 ```sql
 CREATE TABLE r (A1 D1, A2 D2, ..., An Dn,
-                (integrity constraint1),
+                (integrity constraint_1),
                 ...
-                (integrity constraintk)) 
+                (integrity constraint_k)) 
 ```
 
 - $r$ is the name of the relation
@@ -269,16 +269,17 @@ SQL includes a **string-matching operator** for comparisons on character strings
 !!! info
     当我们使用 `like` 操作符对汉字进行匹配操作时，可能会遇见意料之外的情况。
 
-    例如我们想要查询名字里带 “一” 字的人，使用了 `LIKE '%一%'`，但是查询到的结果中可能有一些没有 “一” 这个字的名字。
+    例如我们想要查询名字里带 “丁” 字的人，使用了 `LIKE '%丁%'`，但是查询到的结果中可能有一些没有 “丁” 这个字的名字。
 
-    这与汉字的编码方式有关，例如假设 “一” 的字节编码占据两个字节，分别为 b1, b2，那么查询过程中可能会出现某些汉字的编码是 b1, b2, b3，或 b4, b1, b2, b3 等情况，这些汉字也会被匹配到，因此就会出现奇怪的匹配情况。
+    这与汉字的编码方式有关，例如假设 “丁” 的字节编码占据两个字节，分别为 b1, b2，那么查询过程中可能会出现某些汉字的编码是 b1, b2, b3，或 b4, b1, b2, b3 等情况，这些汉字也会被匹配到，因此就会出现奇怪的匹配情况。
 
-    - 当我们使用汉字进行匹配时，最好输入完整的汉字，而尽可能少用通配符。
+    - 因此，当我们使用汉字进行匹配时，最好输入完整的汉字，而尽可能少用通配符。
 
 SQL 还包括一些其他的字符串操作符，比如
 
 - `concat(s1, s2)`：连接两个字符串
 - concatenate operator `||`：连接两个字符串
+    - 例如 `SELECT "name=" || customer_name FROM customer WHERE ...`
 - 将字符串转换为大写或小写：`upper(s)`, `lower(s)`
 - 去除字符串两端的空格：`trim(s)` 等
 
@@ -349,7 +350,7 @@ order by cnt;
 这条语句会找出工资大于 100000 的教师所在的部门，如果这个部门的教师人数大于 10，那么就会出现在结果中。
 
 - where 子句出现在 group by 之前，用于筛选元组
-- having 子句出现在 group by 之后，用于筛选组
+- having 子句出现在 group by 之后，用于筛选分组后的结果
 
 ???+ example "使用聚合函数分组的例子"
 
@@ -440,11 +441,11 @@ A common use of subqueries is to perform tests for **set membership**, **set com
 
     ```sql
     SELECT distinct branch_name 
+    FROM branch 
+    WHERE assets > some
+        (SELECT assets 
         FROM branch 
-        WHERE assets > some
-            (SELECT assets 
-            FROM branch 
-            WHERE branch_city = 'Brooklyn') 
+        WHERE branch_city = 'Brooklyn') 
     ```
 
     相当于
@@ -475,7 +476,7 @@ The `exists` construct returns the value true if the argument subquery is **non-
     ```
 
 ???+ example
-    找出选了所有生物系课程的学生。
+    > 目标：找出选了生物系中所有课程的学生。
 
     我们可以从逆向角度考虑这个问题，即寻找一些学生，要求不存在他们没选的生物系课程，即**生物系的课程是他们所选课程的子集**。或者说，可以注意到 $A \subseteq B \Leftrightarrow A - B = \emptyset$，因此可以这么写：
 
@@ -489,7 +490,8 @@ The `exists` construct returns the value true if the argument subquery is **non-
         EXCEPT
             (SELECT T.course_id /* 这个学生所选的课程 */
             FROM takes as T
-            WHERE S.ID = T.ID));
+            WHERE S.ID = T.ID)
+        );
     ```
 
 ### Test for Absence of Duplicate Tuples
@@ -498,7 +500,7 @@ The `unique` construct tests whether a subquery has any duplicate tuples in its 
 
 即使用 `unique` 来判断子查询的结果是否有重复元组（是否为多重集），当结果中没有重复元组（有零个或一个）时返回 true，否则返回 false。
 
-- 可以把 unique 理解为 at most once
+- 可以把 `unique` 理解为 at most once，`not unique` 理解为 at least two。
 
 !!! example
 
@@ -513,13 +515,13 @@ The `unique` construct tests whether a subquery has any duplicate tuples in its 
 
     ```sql
     SELECT distinct T.customer_name 
-        FROM depositor T 
-        WHERE not unique ( 
-            SELECT R.customer_name 
-            FROM account, depositor as R 
-            WHERE T.customer_name = R.customer_name 
-                and R.account_number = account.account_number 
-                and ccount.branch_name = 'Perryridge') 
+    FROM depositor T 
+    WHERE not unique ( 
+        SELECT R.customer_name 
+        FROM account, depositor as R 
+        WHERE T.customer_name = R.customer_name 
+            and R.account_number = account.account_number 
+            and ccount.branch_name = 'Perryridge') 
     ```
 
 ## views
@@ -613,15 +615,22 @@ UPDATE account
 SET balance = balance + 100
 ```
 
-当我们需要根据不同条件对不同的属性进行更新时，可以使用 `case` 语句。
+当我们需要根据不同条件对不同的属性进行更新时，可以使用 `case` 语句，而不需要分别写两条 `update` 语句。
 
-<figure>
-    <img src="../assets/更新例子.png" width="70%"/>
-</figure>
+```sql
+UPDATE account
+SET balance = 
+    CASE 
+        WHEN branch_name = 'Perryridge' THEN balance + 100
+        WHEN branch_name = 'Northwood'  THEN balance + 200
+        ELSE balance
+    END
+```
 
 !!! tip
     - View 是虚表，对其进行的所有操作都将转化为对基表的操作。
-    - 查询操作时，VIEW 与基表没有区别，但对 VIEW 的更新操作有严格限制，如只有行列视图，可更新数据。
+    - 若一个视图建立在单个基本表上，且视图的列对应表的列，称为“行列视图”
+    - 查询操作时，VIEW 与基表没有区别，但对 VIEW 的更新操作有严格限制，如只有行列视图可更新数据（通过视图进行的插入、更新、删除操作往往会被严格限制）。
 
 ## Joined Relations
 
@@ -702,9 +711,3 @@ ON table1.col1 = table2.col1
 <figure>
     <img src="../assets/连接更多例子3.png" width="60%"/>
 </figure>
-
-
-
-
-
-

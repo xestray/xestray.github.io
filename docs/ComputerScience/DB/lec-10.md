@@ -85,14 +85,14 @@ Two relational algebra expressions are said to be **equivalent** if the two expr
 9. 集合算子：
 
     <figure markdown="span">
-        ![](./assets/查询优化2.png){width=65%}
+        ![](./assets/查询优化2.png){width=75%}
     </figure>
 
 !!! note
     - 由于连接操作的开销较大，一般而言我们会先做选择和投影操作，减小连接操作的输入数据量，然后再做连接操作。
     - 当我们需要多次连接时，连接操作的顺序会影响到最终的代价。
-        - 例如 $E_1 \bowtie E_2 \bowtie E_3$，如果 $E_1 \bowtie E_2$ 的结果集比 $E_2 \bowtie E_3$ 的结果集小，那么我们就应该先做 $E_1 \bowtie E_2$，再
-        - 对于更多个表达式的连接操作，我们可以使用动态规划的方法来选择连接的顺序。（类似于矩阵链乘法）
+        - 例如 $E_1 \bowtie E_2 \bowtie E_3$，如果 $E_1 \bowtie E_2$ 的结果集比 $E_2 \bowtie E_3$ 的结果集小，那么我们就应该先做 $E_1 \bowtie E_2$，再做 $E_2 \bowtie E_3$ 
+        - 对于更多个表达式的连接操作，我们可以使用动态规划的方法来选择连接的顺序。（类似于矩阵乘法链）
 
 ### Enumeration of Equivalent Expressions
 
@@ -134,16 +134,16 @@ Two relational algebra expressions are said to be **equivalent** if the two expr
 - $\sigma_{A=v}(r)$
     - 假设属性值均匀分布，那么就会选择出 $n_r / V(A, r)$ 个记录
     - 假如等值选择是基于键属性的，那么我们就会选择出 $1$ 个记录
-- $\sigma_{A \leqslant v}(r)$（$\sigma_{A \geqslant v}(r)$ 是类似地对称情况）
+- $\sigma_{A \leqslant v}(r)$（$\sigma_{A \geqslant v}(r)$ 是类似的对称情况）
     - 假设有 $c$ 个元组满足上述条件，并且 $\min(A,r)$ 和 $\max(A,r)$ 是可以从统计信息中得到的，那么
         - 如果 $v < \min(A,r)$，那么 $c = 0$
         - 如果 $v > \max(A,r)$，那么 $c = n_r$
-        - 否则 $c = n_r \cdot \dfrac{v - \min(A,r)}{\max(A,r) - \min(A,r)}$
+        - 否则 $c = n_r \cdot \dfrac{v - \min(A,r)}{\max(A,r) - \min(A,r)}$（假设分布是均匀的）
     - 在无法得知最大最小值的情况下，我们可以假设 $c = n_r / 2$，即一半的元组满足条件
 
 !!! info "Size Estimation of Complex Selections"
     <figure markdown="span">
-        ![](./assets/查询优化4.png){width=65%}
+        ![](./assets/查询优化4.png){width=75%}
     </figure>
 
     需要注意的是，这里的公式都要求各个条件（事件）是相互独立的
@@ -156,7 +156,7 @@ The Cartesian product $r \times s$ contains $n_r \cdot n_s$ tuples; each tuple o
 - 如果 $R \cap S$ 是其中一个集合的键，比如 $R$，那么 $s$ 中的每一个元组至多会匹配到 $r$ 中的一个元组
     - 因此 $r \bowtie s$ 的元组数量一定不会大于 $n_s$，即 $s$ 中的元组数量
 - 如果 $R \cap S$ 是 $S$ 中一个参照着 $R$ 的外码，那么 $r \bowtie s$ 的元组数量就等于 $n_s$，即 $s$ 中的元组数量
-    - 如果 $R \cap S$ 是参照着 $S$ 的外码，就是对称的情况
+    - 如果 $R \cap S$ 是 $R$ 中参照着 $S$ 的外码，就是对称的情况
 - 如果 $R \cap S = \{ A \}$ 不是 $R$ 或 $S$ 的键属性，那么
     - 如果我们假设 $R$ 中的每个元组都会产生 $R \bowtie S$ 中的元组，结果的元组数量会被估计为 $\dfrac{n_r \cdot n_s }{V(A, s)}$，即每个 $R$ 中的元组都会产生 $\dfrac{n_s}{V(A, s)}$ 个元组
     - 反之，我们也可以估计为 $\dfrac{n_r \cdot n_s }{V(A, r)}$，即每个 $S$ 中的元组都会产生 $\dfrac{n_r}{V(A, r)}$ 个元组
@@ -176,12 +176,12 @@ The Cartesian product $r \times s$ contains $n_r \cdot n_s$ tuples; each tuple o
 - 投影 $\Pi_A(r)$：$V(A, r)$ 个元组
 - 聚合 $_A\mathcal{G}_F(r)$：$V(A, r)$ 个元组
 - 外部连接
-    - $r \rtimes s$：size of $r \bowtie s$ + size of $r$（$n_r$）
-    - $r$ ⟗ $s$：size of $r \bowtie s$ + size of $r$（$n_r$） + size of $s$（$n_s$）
+    - $r \rtimes s$：$r \bowtie s$ 的大小 + $r$ 的大小（$n_r$）
+    - $r$ ⟗ $s$：$r \bowtie s$ 的大小 + $r$ 的大小（$n_r$） + $s$ 的大小（$n_s$）
 - 集合操作：
     - 在同一个关系上的交/并集操作，可以把它重写为选择操作
         - 例如 $\sigma_{\theta_1}(r) \cup \sigma_{\theta_2}(r)$ 可以重写为 $\sigma_{\theta_1 \lor \theta_2}(r)$
-    - 在不同关系上的交/并集操作，可以进行非常粗略的估计（但是可以给出结果大小的一个上界）
+    - 在不同关系上的交/并集操作，可以进行非常粗略的估计（可以给出结果大小的一个上界）
         - $r \cup s$：$n_r + n_s$
         - $r \cap s$：$\min(n_r, n_s)$
         - $r - s$：$n_r$
@@ -194,16 +194,19 @@ The Cartesian product $r \times s$ contains $n_r \cdot n_s$ tuples; each tuple o
     - $V(A,\sigma_\theta(r))=1$
 - If $\theta$ forces A to take on one of a specified set of values: 
     - $V(A,\sigma_\theta(r))=$ number of specified values  
-- If the selection condition $\theta$ is of the form A op v
+- If the selection condition $\theta$ is of the form $A op v$
     - $V(A,\sigma_\theta(r)) = V(A,r) \times s$ 其中 $s$ 是选择率
-- In all the other cases, use approx1imate estimate: $V(A,\sigma_\theta(r))=\min(V(A,r),\ n_{\sigma_\theta(r)})$
+- In all the other cases, use approximate estimate:
+    - $V(A,\sigma_\theta(r))=\min(V(A,r),\ n_{\sigma_\theta(r)})$
 
 对于连接操作 $r \bowtie s$，要估计 $V(A,r \bowtie s)$
 
 - If all attributes in $A$ are from $r$
     - $V(A,r\bowtie s)=\min(V(A,r), n_{r\bowtie s})$
-- If $A$ contains attributes $A_1$ from $r and $A_2$ from $s$, 
+- If $A$ contains attributes $A_1$ from $r$ and $A_2$ from $s$, 
     - $V(A,r\bowtie s) = \min(V(A_1,r) \times V(A_2-A_1,s),\ V(A_1-A_2,r) \times V(A_2,s),\ n_{r\bowtie s})$
+
+        三者中较小的一个
 
 ### Choice of Evaluation Plans
 
@@ -212,11 +215,11 @@ The Cartesian product $r \times s$ contains $n_r \cdot n_s$ tuples; each tuple o
 - Practical query optimizers incorporate elements of the following two broad approaches
     - Search all the plans and choose the best plan in a cost-based fashion
 
-        暴力搜索所有的评估计划，选择成本最低的计划，但是开销非常大，我们有时可以使用动态规划等方法来减少搜索空间
+        可以暴力搜索所有的评估计划，选择成本最低的计划，但是开销非常大，我们有时可以使用动态规划等方法来减少搜索空间
 
     - Uses heuristics to choose a plan
 
-        基于过往经验等信息用启发式方法来寻找可用的执行计划
+        基于过往经验等其他信息，用启发式方法来寻找可用的执行计划
 
 ## Dynamic Programming for Choosing Evaluation Plans
 
@@ -225,7 +228,7 @@ The Cartesian product $r \times s$ contains $n_r \cdot n_s$ tuples; each tuple o
 例如我们想要找到对 $n$ 个关系的连接操作的优化，可以使用以下的算法：
 
 <figure markdown="span">
-    ![](./assets/查询优化7.png){width=70%}
+    ![](./assets/查询优化7.png){width=75%}
 </figure>
 
 - 使用动态规划后，上面的算法的时间复杂度为 $O(3^n)$，空间复杂度为 $O(2^n)$
@@ -237,7 +240,7 @@ The Cartesian product $r \times s$ contains $n_r \cdot n_s$ tuples; each tuple o
         ![](./assets/查询优化8.png){width=65%}
     </figure>
 
-假如只考虑左深连接树，那么找到最优的连接树的时间复杂度为 $O(n \cdot 2^n)$，空间复杂度为仍 $O(2^n)$。
+假如只考虑左深连接树，那么找到最优的连接树的时间复杂度为 $O(n \cdot 2^n)$，空间复杂度为仍 $O(2^n)$
 
 ### Interesting Sort Orders
 
@@ -245,7 +248,7 @@ An interesting sort order is a particular sort order of tuples that could be use
 
 - 例如使用归并连接来计算 $r_1 \bowtie r_2$ 的开销可能会比使用哈希连接更大，但它会让结果按照连接属性排序，这对于后续的其他操作可能会有所帮助
 
-因此为每一个连接操作寻找最佳的算法往往还不够，，我们还需要考虑后续的操作。
+因此为每一个连接操作寻找最佳的算法往往还不够，我们还需要考虑后续的操作。
 
 - 我们只能为每个 interesting sort order 寻找最佳的连接子集（例如 $(r_1 \bowtie r_2) \bowtie r_3$ 中的 $r_1 \bowtie r_2$）
 - 通常而言 interesting sort order 的数量不会太多，寻找它们的开销也不会太大
@@ -274,7 +277,7 @@ where exists
 这里我们会使用到两层循环，外层循环是对 instructor 表的循环，内层循环是对 teaches 表的循环，如果不优化直接执行，效率很低。
 
 !!! info "correlation variables and correlation ecaluation"
-    Parameters are variables from outer level query that are used in the nested subquery; such variables are called **correlation variables**
+    **Parameters** are variables from outer level query that are used in the nested subquery; such variables are called **correlation variables**
 
     我们把来自于外层查询中，并且会在内层查询中被使用的变量称为**关联变量（correlation variables）**
 
@@ -318,11 +321,13 @@ from instructor
 group by dept_name
 ```
 
-**materialized view maintenance**（物化视图维护）：我们需要注意时刻保持这个视图和原始表一致，尤其是当原始表发生变化时。
+**materialized view maintenance（物化视图维护）**：
 
-比起每一次更新表时都重建一次视图，更好的方法是使用**增量试图维护（incremental view maintenance）**，即只更新那些受影响的元组。
+- 我们需要注意时刻保持这个视图和原始表一致，尤其是当原始表发生变化时。
 
-我们把新插入或被删除的元组称为**差分（differential）**，分别记为 $i_r$ 和 $d_r$
+比起每一次更新表时都重建一次视图，更好的方法是使用**增量视图维护（incremental view maintenance）**，即只更新那些受影响的元组。
+
+我们把新插入或被删除的元组称为**差分（differential）**，分别记为 $i_r$ 和 $d_r$，对于不同的物化视图：
 
 - join: 考虑一个物化视图 $V = r \bowtie s$
     - 插入时，$V^{new} = V^{old} \cup (i_r \bowtie s)$
@@ -330,7 +335,7 @@ group by dept_name
 
     ??? example
         <figure markdown="span">
-            ![](./assets/查询优化10.png){width=65%}
+            ![](./assets/查询优化10.png){width=675%}
         </figure>
 
 - selection: 考虑一个物化视图 $V = \sigma_\theta(r)$
@@ -342,10 +347,11 @@ group by dept_name
 
     - 插入时，如果新插入的元组已经出现在 $\Pi_A(r)$ 中了，就只需要增加它的计数器；如果没有出现过，就需要把它插入到 $\Pi_A(r)$ 中，并设置 count = 1
     - 删除时，把要删除的元组的计数器减去 1，如果计数器为 0，就需要把它从 $\Pi_A(r)$ 中删除
+
 - aggregation: 
 
     <figure markdown="span">
-        ![](./assets/查询优化11.png){width=65%}
+        ![](./assets/查询优化11.png){width=75%}
     </figure>
 
 - 交集：考虑一个物化视图 $V = r \cap s$
@@ -356,12 +362,7 @@ group by dept_name
 !!! extra "Query Optimization and Materialized Views"
     假设我们有一个物化视图 $v = r \bowtie s$
     
-    - 那么我们可以把查询查询 $q = r \bowtie s \bowtie t$，重写为 $q = v \bowtie t$
-    - 如果我们要查询 $\sigma_{A=10}(v)$，但是 $v$ 上没有索引，并且 $s$ 上有公共属性 $B$ 的索引，$r$ 上有选择属性 $A$ 的索引
-    
-        那么我们可以把 $v$ 替换为 $r \bowtie s$，最终的查询可以被写成 $\sigma_{A=10}(r) \bowtie s$
-
-
-
-
-
+    - 那么我们可以把查询操作 $q = r \bowtie s \bowtie t$，重写为 $q = v \bowtie t$
+    - 如果我们要查询 $\sigma_{A=10}(v)$，但是 $v$ 上没有索引，但是 $s$ 上有公共属性 $B$ 的索引，$r$ 上有选择属性 $A$ 的索引
+        - 那么我们可以把 $v$ 替换回 $r \bowtie s$，最终的查询可以被写成 $\sigma_{A=10}(r) \bowtie s$
+        - 这样一来，我们就可以利用 $r$ 上的索引来加速查询

@@ -17,7 +17,7 @@
 - 存储每个单位数据的开销
 - 可靠性
     - 在断电或系统崩溃等情况下的数据丢失
-    - 存储设备的发生了物理错误（RAID）
+    - 存储设备发生了物理错误（使用 RAID）
 
 Storages classified by *reliability*: 
 
@@ -53,7 +53,7 @@ Storages classified by *speed*:
 **Cache**:
 
 - **Fastest** and most **costly** form of storage, volatile, and  managed by the computer system hardware. 
-- **Speed**: $\leqslant$ 0.5 nanoseconds (ns for short, 1 ns = $10^{–9}$ seconds);
+- **Speed**: $\leqslant$ 0.5 nanoseconds (**ns** for short, 1 ns = $10^{–9}$ seconds);
 - **size**: ~ KB ~ MB 
 
 **Main memory**:
@@ -64,7 +64,7 @@ Storages classified by *speed*:
     - Capacities have gone up and per-byte costs have decreased steadily and rapidly (roughly factor of 2 every 2 to 3 years) 
 - **Volatile**: contents of main memory are usually lost if a power failure or system crash occurs.
 
-**Flash memory（快闪存储器）**:
+**Flash memory（快闪存储器，闪存）**:
 
 - Also known as **EEPROM** (Electrically Erasable Programmable Read-Only Memory，电可擦可编程只读存储器) 
 - **Non-volatile**: Data survives when power failure
@@ -145,8 +145,8 @@ Access time = seek time（寻道时间）+ rotational latency（旋转等待时�
 
 - 目标：对磁盘的访问次序进行优化，以最小化磁臂的移动次数
 - Elevator algorithm (电梯算法):
-    - 把磁臂不断向一个方向移动（从外圈向内圈，或反之），不断处理这个方向上的下一个请求
-    - 知道这个方向上没有更多请求后，再改变磁盘移动方向重复上述过程
+    - 把磁臂不断向一个方向移动（从外圈向内圈移动，或反之），不断处理这个方向上的下一个请求
+    - 直到这个方向上没有更多请求后，再改变磁盘移动方向重复上述过程
 
 **File organization**
 
@@ -155,14 +155,14 @@ Access time = seek time（寻道时间）+ rotational latency（旋转等待时�
 - 但随着数据的插入和删除，可能会导致空闲空间碎片化，导致新插入的数据被分散到各个位置，导致访问这些数据的时间变长
     - 可以利用一些磁盘整理工具来把这些数据重新组织到一起
 
-**Nonvolatile write buffers** (非易失性写缓冲区)
+**Nonvolatile write buffers（非易失性写缓冲区）**
 
 - 作用：通过把块写入非易失性 RAM 缓冲区来加速磁盘写入操作
 - Non-volatile RAM: 由电池供电的 RAM 或闪存
     - 即使断电后数据也能保留，在通电后把数据写入磁盘
-- 在磁盘没有其他请求或者请求等待一段时间后，控制器会把数据写回到磁盘中
+- 在磁盘没有其他请求或者请求等待了一段时间后，控制器会把数据写回到磁盘中
 
-**Log disk**（日志磁盘）
+**Log disk（日志磁盘）**
 
 - 一个专门用于写入块的更新日志的磁盘
     - 由于不需要寻道，写入速度非常快
@@ -173,7 +173,7 @@ Access time = seek time（寻道时间）+ rotational latency（旋转等待时�
 
 ## RAID
 
-RAID 0-6 的内容和[计组笔记](../COD/chap-6.md)中关于 RAID 的内容是一致的，这里就不记了。
+RAID 0-6 的内容和[计组笔记](../COD/chap-6.md#redundant-arrays-of-inexpensive-disks)中关于 RAID 的内容是一致的，这里就不记了。
 
 !!! abstract "Choice of RAID Level "
     选择 RAID 级别时需要考虑以下几个方面：
@@ -187,7 +187,7 @@ RAID 0-6 的内容和[计组笔记](../COD/chap-6.md)中关于 RAID 的内容是
 
     - RAID 0：仅在数据安全不那么重要时使用，例如可以从其他来源快速恢复数据
     - RAID 2 and 4：被 RAID 3 和 5 上位替代了，不使用
-    - RAID 3：由于比特级条带化要求每个块都要读取所有的磁盘，因此性能较差，已不再被使用
+    - RAID 3：由于比特级条带化要求对单个块的读取都要访问所有的磁盘，因此性能较差（有不必要的磁臂移动），而块级条带化的 RAID 5 避免了这个问题，因此常选择 RAID 5
     - RAID 6：由于 RAID 1 和 RAID 5 已经提供了几乎所有应用场景下足够的安全性，很少被考虑使用
     
     因此被考虑使用的基本上只有 RAID 1 和 RAID 5。
@@ -198,7 +198,7 @@ RAID 0-6 的内容和[计组笔记](../COD/chap-6.md)中关于 RAID 的内容是
     - RAID 1 的存储成本比 RAID 5 更大，
         - RAID 1 需要 2 倍的存储空间来存储数据
         - RAID 5 只需要 N+1 个磁盘来存储 N 个磁盘的数据
-        - 但由于磁盘技术的快速发展，单位数据存储成本已经大幅下降，因此 RAID 1 很常用
+        - 但由于磁盘技术的快速发展，单位数据存储成本已经大幅下降，因此选择使用 RAID 1 的情况也并不少见
 
 ### Hardware Issues
 
@@ -211,7 +211,7 @@ RAID 0-6 的内容和[计组笔记](../COD/chap-6.md)中关于 RAID 的内容是
 
 ## Storage Access
 
-数据库文件在逻辑上被划分为定长的存储单元，称为块（block）。块是数据存储分配和传输的单位。
+数据库文件在逻辑上被划分为定长的存储单元，称为块（block）。块是数据存储分配和传输的基本单位。
 
 - 主存会使用 buffer 来保存磁盘中的数据块，以此来加速数据的访问
 - 数据库系统希望最小化磁盘与主存之间数据块的传输次数
@@ -225,14 +225,14 @@ RAID 0-6 的内容和[计组笔记](../COD/chap-6.md)中关于 RAID 的内容是
 - 缓冲池中保存着磁盘页（disk page），即上图中黑色方块
 - 来自于更高层次的访问请求会被转换为对缓冲池的访问请求
 - 数据必须处在 RAM 中才能被 DBMS 操作
-- 会维护一个内容为 <frame#, pageid> 组成的对的表格
+- 会维护一个内容为 < frame#, page_id > 组成的对的表格
 
 !!! note
     - Page: a unit of data
     - Block: a unit of disk space
     - Frame: a unit of buffer pool
     
-    in practice block $\approx$ page
+    in practice, block $\approx$ page
 
 ### Buffer Manager
 
@@ -249,8 +249,8 @@ RAID 0-6 的内容和[计组笔记](../COD/chap-6.md)中关于 RAID 的内容是
 
 !!! info "一些其他概念"
     - Pinned block（固定块）: 被锁定在缓冲池中的块，不能被替换。例如这个块正在被使用，不能被替换。
-    - Toss-immediate strategy：当一个快被使用后，就立即把它从缓冲池中替换掉
-    - 有些缓冲池中的页面会被多个事务使用，我们需要使用一个固定计数（pin count）记录，当 pin count 为 0 时，才可以替换这个页面
+    - Toss-immediate strategy：当一个块被使用后，就立即把它从缓冲池中替换掉
+    - 有些缓冲池中的页面会被多个事务使用，我们需要使用一个固定计数（pin count）记录使用这个页的事务数量，当 pin count 为 0 时，才可以替换这个页面
 
 ### Buffer-Replacement Policies
 
@@ -296,8 +296,8 @@ RAID 0-6 的内容和[计组笔记](../COD/chap-6.md)中关于 RAID 的内容是
 
 !!! info "Free list"
     - 在文件头保存第一个被删除的（空闲的）记录的地址（也还有其他的信息）
-    - 每一个空闲记录的会保存下一个空闲记录的位置，从而形成一个列表
-    - 好处在于能够跟高效地利用空间，而不需要移动其他记录
+    - 每一个空闲记录会记录下一个空闲记录的位置，从而形成一个列表
+    - 好处在于能够更高效地利用空间，而不需要移动其他记录
 
 ### Variable-Length Records
 
@@ -311,6 +311,8 @@ RAID 0-6 的内容和[计组笔记](../COD/chap-6.md)中关于 RAID 的内容是
     ![](./assets/存储与文件结构5.png){width=70%}
 </figure>
 
+> 比如上图中的 (21, 5) 表示从第 21 个字节开始存储记录，长度为 5 个字节
+
 #### Slotted Page Structure
 
 <figure markdown="span">
@@ -318,9 +320,16 @@ RAID 0-6 的内容和[计组笔记](../COD/chap-6.md)中关于 RAID 的内容是
 </figure>
 
 !!! info
-    slotted page 是数据库中页的常见组织形式。优点是可以存储可变长的 record。其核心是通过 slot 数组中存储的偏移值来查找 page 中的某个 record 具体内容是什么。即可以通过 page 号和 slot 号就可以查询磁盘上任意一个 record 的内容。
+    slotted page 是数据库中页的常见组织形式
 
-slotted page 主要由 header、slot array 和存储在 page 中的各个 record 组成。
+    - 优点是可以存储可变长的 record
+    - 其核心是通过 slot 数组中存储的偏移值来查找 page 中的某个 record 具体内容是什么。即可以通过 page 号和 slot 号就可以查询磁盘上任意一个 record 的内容。
+
+slotted page 主要由三个部分组成
+
+- header
+- slot array
+- 存储在 page 中的各个 record
 
 Slotted page header 包含各种元数据：
 
@@ -328,11 +337,12 @@ Slotted page header 包含各种元数据：
 - block 中空闲空间的结束位置
 - 每个 record 的位置和大小
 
-slot array 中的每个 slot 都包含着一个两个关键信息：记录长度与指向记录的指针
+slot array 中的每个 slot 都包含着两个关键信息：记录长度与指向记录的指针
 
 !!! note
     - 记录可以在 page 中移动，以保证记录之间没有空闲的空间（即页内没有碎片），在删除一个记录时会移动其他记录来保证这一性质
-    - 记录的索引不会直接指向记录本身，而是会指向 header 中这个 record entry 对应的 slot（间接指针）
+    - 记录的索引不会直接指向记录本身，而是会指向 header 中这个 record entry 对应的 slot（间接指针，先访问对应的 slot，再通过 slot 中的偏移量来访问记录内容）
+        - 这样做的好处是当我们移动记录时，只需要更新对应 slot 中的偏移量，而不需要更新所有指向这个记录的指针
 
 ## Organization of Records in Files
 
@@ -344,7 +354,7 @@ slot array 中的每个 slot 都包含着一个两个关键信息：记录长度
 
 - **Sequential file (顺序文件)**: store records in sequential order, based on the value of a search key of each record
 
-    对所有的记录维护一个次序
+    对所有的记录维护一个次序，按照次序插入新记录
 
 - **Hashing file (散列文件)**: a hash function computed on some attribute of each record; the result specifies in which block of the file the record should be placed 
 
@@ -363,19 +373,18 @@ slot array 中的每个 slot 都包含着一个两个关键信息：记录长度
     - 如果有空闲位置，就把新数据插入到那里
     - 如果没有，那么就把新记录插入到 overflow block 中
     - 两种情况都需要更新 pointer chain
+- 需要定期对文件进行重新排序来保持次序
 
 <figure markdown="span">
     ![](./assets/存储与文件结构7.png){width=65%}
 </figure>
-
-需要定期对文件进行重新排序来保持次序
 
 ### Multitable Clustering File Organization
 
 Store several relations in one file using a multitable clustering file organization
 
 !!! example
-    例如对于“老师”和“部门”这两个常常一起访问的 relation，我们可以把它们放在一起。但这么做之后如果我们只想要访问它们其中之一，就可能不太方便。
+    例如对于“老师”和“部门”这两个常常一起访问的 table，我们可以把它们放在一起。但这么做的缺点在于，如果我们只想要访问它们其中之一，就必须把整个文件都读入到内存中，造成不必要的 I/O 操作。
 
     <figure markdown="span">
         ![](./assets/存储与文件结构8.png){width=75%}
@@ -383,9 +392,9 @@ Store several relations in one file using a multitable clustering file organizat
 
 ## Data-Dictionary Storage
 
-Data dictionary (also called system catalog) stores metadata: 
+**Data dictionary** (also called system **catalog**) stores metadata: 
 
-元数据（matadata）也是数据，我们也要把它们保存下来
+元数据（matadata）也是数据，它记录了整个数据库的结构、内容、存储方式等信息，我们也要把它们保存下来
 
 - Information about relations
 - User and accounting information, including passwords
