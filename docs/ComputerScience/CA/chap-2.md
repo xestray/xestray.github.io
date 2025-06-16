@@ -33,7 +33,7 @@
 ### Sequential execution
 
 <figure>
-    <img src="../assets/三段指令.png" width="55%">
+    <img src="../assets/顺序执行.png" width="55%">
 </figure>
 
 即按顺序依次执行每一条指令，执行时间等于每条指令的执行时间乘以指令的数量
@@ -76,12 +76,14 @@
 但这样合并过后的 ID 阶段的时间也未必与 EX 阶段一致，那么我们可以再给 ID 阶段之后添加一个 buffer，把 decode 的结果存放到这个 buffer 里面，这样下一次的 ID 就不必等到当前的 EX 执行结束才开始。
 
 <figure>
-    <img src="../assets/取指后buffer.png" width="55%">
+    <img src="../assets/取指后buffer.png" width="65%">
 </figure>
 
 <figure>
-    <img src="../assets/取指后buffer时间.png" width="60%">
+    <img src="../assets/取指后buffer时间.png" width="65%">
 </figure>
+
+- 可以看到，上图中 `ID K+2` 在 `ID K+1` 完成后就可以立即开始，而不需要等到 `EX K` 完成后再开始，这就减少了等待的时间
 
 ## Classes of pipelining
 
@@ -89,11 +91,11 @@
 -  **Multi function pipelining（多功能流水线）**: each section of the pipelining can be
 connected differently for several different functions.
 
-    - 执行不同的运算（功能）时会使用流水线中不同的段
+    - 执行不同的运算（功能）时会使用流水线中不同的段（某个段可能会被多次使用）
 
 ??? example "多功能流水线"
     <figure>
-        <img src="../assets/多功能流水线.png" width="60%">
+        <img src="../assets/多功能流水线.png" width="70%">
     </figure>
 
 针对于多功能流水线，还可以继续细分为两种：
@@ -115,7 +117,7 @@ connected differently for several different functions.
         <img src="../assets/静态与动态流水线.png" width="65%">
     </figure>
 
-    横轴表示时间，纵轴表示此时使用到的是流水线的那一部分硬件（空间资源）。
+    横轴表示时间，纵轴表示此时使用到的是流水线的哪一部分硬件（空间资源）。
 
 流水线也可以按照划分粒度的不同进行分类
 
@@ -161,11 +163,13 @@ connected differently for several different functions.
 ### Throughput
 
 流水线的目的是提高单位时间内执行的指令数目，即提高吞吐率（throughput）。
-$$ TP = \frac{N}{T_K} < TP_{max} $$
+$$ TP = \frac{n}{T_K} < TP_{max} $$
 
 <figure>
     <img src="../assets/吞吐率.png" width="70%">
 </figure>
+
+假设流水线被分为 $M$ 段，共有 $n$ 条指令要执行：
 
 $$ TP=\dfrac{n}{n+m-1}TP_{max} $$
 
@@ -174,8 +178,10 @@ $$ TP=\dfrac{n}{n+m-1}TP_{max} $$
 ???+ example 
 
     - $M = 4$
-    - Time of S1, S3, S4: $\delta t$
-    - Time of S2: $3\delta t$ (Bottleneck)
+    - Time of S1, S3, S4: $\Delta t$
+    - Time of S2: $3\Delta t$ (Bottleneck)
+
+    流水线中耗时最长的段被称为瓶颈段（bottleneck segment）
 
     <figure>
         <img src="../assets/瓶颈段1.png" width="70%">
@@ -185,7 +191,7 @@ $$ TP=\dfrac{n}{n+m-1}TP_{max} $$
         <img src="../assets/瓶颈段2.png" width="70%">
     </figure>
 
-    $TP_{max}$ 仅和瓶颈段的时间有关
+    吞吐量最大值 $TP_{max}$ 仅和瓶颈段的时间有关
 
 解决瓶颈问题的方法有两种
 
@@ -214,7 +220,7 @@ $$ TP=\dfrac{n}{n+m-1}TP_{max} $$
 加速比（speedup）是指在流水线中总的执行时间相较于不使用流水线的提升程度。
 $$ Sp = \dfrac{T_{seq}}{T_{pipe}} $$
 
-$$ S_p = \dfrac{n\times m \times \Delta t_0}{m(m+n-1)\Delta t_0} = \dfrac{n}{m+n-1} $$
+$$ S_p = \dfrac{n \times m \times \Delta t_0}{(m+n-1)\Delta t_0} = \dfrac{n \times m}{m+n-1} $$
 
 - if $n>>m, Sp \approx m$
 
@@ -228,7 +234,7 @@ $$ S_p = \dfrac{n\times m \times \Delta t_0}{m(m+n-1)\Delta t_0} = \dfrac{n}{m+n
 
 $$ \eta = \dfrac{n\times m \times \Delta t_0}{m(m+n-1)\Delta t_0} = \dfrac{n}{m+n-1} $$
 
-- if $n>>m, \eta \approx m$
+- if $n>>m, \eta \approx 1$
 
 !!! example "计算流水线性能"
 
@@ -240,17 +246,25 @@ $$ \eta = \dfrac{n\times m \times \Delta t_0}{m(m+n-1)\Delta t_0} = \dfrac{n}{m+
             <img src="../assets/计算静态双功能流水线的效率1.png" width="70%">
         </figure>
 
-        由于这是**静态流水线**，同一时刻只能做一类事情，一种操作后才能去做另一种操作。这里我们需要先做乘法，排空，再做加法。需要注意的是，第三个乘法需要等前两个乘法的结果相加后，才能开始计算。
+        由于这是**静态流水线**，同一时刻只能做一类事情，一种操作后才能去做另一种操作。
+        
+        这里我们需要先做乘法，排空流水线，再做加法。需要注意的是，我们需要先让四个乘法结果分成两组相加后，再把它们的结果再相加，需要三次加法运算。
 
         <figure>
             <img src="../assets/计算静态双功能流水线的效率2.png" width="70%">
         </figure>
 
-        最终得到 $T_p = 7/15 \Delta t, Sp = 1.6, \eta = 32%$
+        最终得到 
+        
+        - $T_p = 7/15 \Delta t$
+        - $Sp = \dfrac{4 \times 3 \Delta t + 3 \times 4 \Delta t}{15 \Delta t} = 1.6$
+        - $\eta = \dfrac{4 \times 3 \Delta t + 3 \times 4 \Delta t}{4 \times 15 \Delta t} = 32\%$
 
     === "动态双功能流水线"
         
         使用动态流水线时可以在同一时刻执行不同类型的操作，因此不需要等待。
+
+        需要注意的是在进行乘法操作时，需要占据功能部件 2 的时间为 $2\Delta t$
 
         <figure>
             <img src="../assets/计算动态双功能流水线的效率1.png" width="65%">
@@ -267,13 +281,29 @@ $$ \eta = \dfrac{n\times m \times \Delta t_0}{m(m+n-1)\Delta t_0} = \dfrac{n}{m+
     - 需要大量处理在执行中指令之间可能存在的依赖关系
     - 控制逻辑会变得非常庞大和复杂
 
+!!! note "影响多功能流水线相率的因素"
+    - 当多功能流水线执行某个功能时，总有一些用于其他功能的段处于空闲状态
+    - 在流水线建立过程中（最开始的几条指令刚刚传入流水线），一些段也会处于待使用的空闲状态
+    - 流水线各段的时间不等时，时钟周期取决于瓶颈段的时间
+    - 静态流水线在功能切换时，需要清空流水线
+    - 上一个操作的输出是下一个操作的输入
+    - 还有一些额外的开销：流水线寄存器的延迟以及时钟偏移（时钟信号到达两个寄存器之间的时间差）
+
 ## Hazards of Pipelining
 
-流水线中的冒险主要可以分为以下几种情况：
+流水线中的指令依赖主要可以分为以下几种情况：
 
-- 数据依赖（Data Dependences）：后续指令所需要使用到的数据依赖于前一条指令的结果
-- 名称依赖（Name Dependences）：后续指令所需要使用到的寄存器与前一条指令所写入的寄存器相同
-- 控制依赖（Control Dependences）：某些指令是否执行取决于前面的分支指令的执行结果
+- 数据依赖（Data Dependences）
+
+    后续指令所需要使用到的数据依赖于前一条指令的结果
+
+- 名称依赖（Name Dependences）
+
+    后续指令所需要使用到的寄存器与前一条指令所写入的寄存器相同（但是未必存在数据相关）
+
+- 控制依赖（Control Dependences）
+
+    某些指令是否执行取决于前面的分支指令的执行结果
 
 Hazard 指的是流水线中由于指令之间的依赖关系而导致的冲突。
 
@@ -291,27 +321,41 @@ Hazard 指的是流水线中由于指令之间的依赖关系而导致的冲突�
 
 例如在一个流水线中只有一块内存，load 和 store 指令为了数据需要访问内存，后续指令的取指操作也需要访问内存，这样就会导致结构冒险。
 
-解决方法只有 stall 或增加硬件资源（包括使用分别的指令内存和数据内存，和使用分别的指令 cache 和数据 cache）。
+解决方法只有 stall 或增加硬件资源（包括使用分离的指令内存和数据内存、使用分离的指令 cache 和数据 cache 等）。
 
 > Can always solve a structural hazard by adding more hardware
 
 ### Data Hazards
 
-An instruction depends on completion of data access by a previous instruction，包括读后写（RAW）、写后读（WAR）、写后写（WAW）三种情况。
+An instruction depends on completion of data access by a previous instruction
+
+包括读后写（RAW）、写后读（WAR）、写后写（WAW）三种情况
+
+<figure markdown="span">
+    ![](./assets/数据冒险.png){width=55%}
+</figure>
 
 通常通过 stall 或者 forwarding 来解决，但 load-use data hazard 无法仅通过 forwarding 解决，在 forwarding 之后还是需要 stall 一个周期
 
 为了尽可能地减少 stall，提高 CPU 的运行效率，也可以对没有相互依赖关系的指令进行调度（Code Scheduling），从而尽可能地减少需要的 stall 周期数。
 
 <figure markdown="span">
-    ![](./assets/指令调度.png){width=60%}
+    ![](./assets/指令调度.png){width=65%}
 </figure>
 
-- 静态调度：程序还没有运行时，编译器为我们优化了代码，改变了指令的执行顺序。
-- 动态调度：程序在运行时，处理器为我们优化了代码，改变了指令的执行顺序。
+- **静态调度**：程序还没有运行时，**编译器**为我们优化了代码，改变了指令的执行顺序。
+- **动态调度**：程序在运行时，**处理器**为我们优化了代码，改变了指令的执行顺序。
 
 !!! info
     具体如何判断是否出现了 data hazard、出现了之后要从哪个阶段对数据进行 forwarding、要对阶段寄存器如何处理在这里就不详细展开了，具体可见[计组笔记](../COD/chap-4.md#pipline-hazards)。
+
+!!! abstract "Summary of Data Hazards"
+    - EX hazard & MEM hazard
+        - forwarding
+    - Double hazard
+        - Revise the forwarding condition
+    - Load-use hazard
+        - One stall is needed, except for forwarding
 
 ### Control Hazards
 
@@ -333,7 +377,7 @@ Use dynamic prediction
 
     - Check table, expect the same outcome
 
-        把之前大家的结果存在一个表里，通过历史判断未来，根据之前的分支结果预测这次。
+        把之前预测的结果存在一个表里，通过历史结果判断未来，根据之前的分支结果预测这次。
 
     - Start fetching from fall-through or target
     - If wrong, flush pipeline and flip prediction
@@ -348,13 +392,17 @@ Use dynamic prediction
 
 !!! info "Advanced Techniques for Instruction Delivery and Speculation"
     - Increasing Instruction Fetch Bandwidth
+
         - Branch-Target Buffers(BTBs)
 
         <figure markdown="span">
-            ![](./assets/分支目标缓冲.png){width=70%}
+            ![](./assets/分支目标缓冲.png){width=90%}
         </figure>
 
-        类似于 TLB，用于存放分支指令以及分支预测的目标地址。如果有需要跳转的分支指令不在表中，就把它加入到表中；如果放在表中的分支指令不发生跳转，就把它移除。
+        类似于 TLB，用于存放分支指令以及分支预测的目标地址。
+        
+        - 如果遇见一条需要跳转的分支指令，但它不在表中，就把它加入到表中；否则就不需要加入表中
+        - 如果执行一条分支指令时发现它在 BTB 中，但是不需要跳转，就把这条指令从表中移除
 
     - Specialized Branch Predictors: Predicting Procedure Returns, Indirect Jumps, and Loop Branches
         - Integrated Instruction Fetch Units
@@ -389,6 +437,9 @@ feedback loop in the pipelining
         ![](./assets/非线性流水线2.png){width=60%}
     </figure>
 
+!!! tip
+    在这里我们暂且假设进入非线性流水线的指令都是相同的。
+
 解决上述问题的方法是对非线性流水线进行调度，以避免冲突：
 
 1. Initial conflict vector
@@ -416,14 +467,20 @@ feedback loop in the pipelining
 
     接着我们可以画一个表格来计算当前的冲突向量（current conflict vector，CCV），它是目前在流水线中的所有冲突向量取交集的结果。
 
-    - 上图中纵轴表示引入第几条指令，横轴表示在隔了几个周期后引入新的指令。（我们暂时只考虑所有指令都是相同的情况）
+    上图中纵轴表示引入第几条指令，横轴表示在隔了几个周期后引入新的指令。（**我们暂时只考虑所有指令都相同的情况**）
+
+    1. 比如在上图中，initial 的 CCV 在第 2、3、4、7 位是 0，因此我们可以隔 2、3、4、7 拍后引入新一条的指令
+    2. 我们选择隔 2 拍后引入第二条指令，就把第一条指令的冲突向量右移 2 位（高位补 0），并把移位后的冲突向零与第二条指令的冲突向量**按位或**起来，得到新的 CCV。
+    3. 现在 CCV 的第 2、7 位是 0，我们可以隔 2 拍或 7 拍后引入第三条指令，以此类推
     
-    - 比如上图中我们隔了 2 拍引入了第二条指令，就把第一条指令的冲突向量右移 2 位（高位补 0），并把移位后的冲突向零与第二条指令的冲突向量按位或起来，得到 CCV。
+    这样，我们就找到了一个循环调度：2-2-7。
     
-    这样，我们就找到了一个循环调度：2-2-7。我们还可以用类似的方法找到更多的循环调度方法，然后求出平均的间隔（执行完一个循环所需要暂停的周期数除以这个循环中的指令数量）
+    循环调度是不唯一的，我们还可以用类似的方法找到更多的循环调度方法，然后求出平均的间隔（执行完一个循环所需要暂停的周期数除以这个循环中的指令数量）
+    
+    - 例如 2-2-7 的平均间隔就是 (2+2+7) / 3 = 3.67
 
     <figure markdown="span">
-        ![](./assets/非线性流水线5.png){width=60%}
+        ![](./assets/非线性流水线5.png){width=70%}
     </figure>
 
 !!! summary

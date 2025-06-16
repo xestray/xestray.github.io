@@ -20,7 +20,7 @@
     - 是 cache 和主存进行数据交换的最小单位，其中包含着我们所需要使用到的数据（例如某个 word）
 
     <figure markdown="span">
-        ![](./assets/内存层次1.png){width=70%}
+        ![](./assets/内存层次1.png){width=75%}
     </figure>
 
 - Cache **Locality**
@@ -58,6 +58,18 @@
 
 > 这一部分只随便记一些，详细内容可以参考我的[计组笔记](../COD/chap-5.md)
 
+!!! info "两种 cache"
+    - Unified cache
+        - 内存中的所有内容都保存在同一个 cache 中，即指令和数据都放在这一个缓存里
+        - 需要的硬件更少，但是性能较低
+    - Split I & D cache
+        - 指令和数据分别使用不同的 cache 来存储
+        - 需要使用额外的硬件资源，但是简化了一些操作（比如 I-cache 对于 memory 而言是 read-only 的）
+
+    <figure markdown="span">
+        ![](./assets/内存层次23.png){width=75%}
+    </figure>
+
 **Caching** is a general concept used in processors, operating systems, file systems, and applications.
 There are Four Questions for Cache/Memory Hierarchy Designers
 
@@ -77,7 +89,7 @@ There are Four Questions for Cache/Memory Hierarchy Designers
 
     (**Block replacement**)
 
-    - Random, LRU,FIFO
+    - Random, LRU, FIFO
 
 - Q4: What happens on a write? 
 
@@ -88,10 +100,15 @@ There are Four Questions for Cache/Memory Hierarchy Designers
 ### Q1: Block Placement
 
 - Direct mapped：内存中的每一个 block 只能映射到 cache 中的一个固定的位置
-    - 可以通过 (Block address) modulo (Number of blocks in the cache) 取模计算得到相应位置
+    - 可以通过 $Block\ address \mod Number\ of\ blocks\ in\ the\ cache$ 取模计算得到相应位置
+    
+    <figure markdown="span">
+        ![](./assets/内存层次24.png){width=75%}
+    </figure>
+
 - Fully-associative：内存中的 block 可以映射到 cache 中的任意位置
     - 需要在 cache 中查找这个 block 的 tag 来判断这个 block 是否在 cache 中
-    - 但是查找时需要比较所有的 tag，速度较慢
+    - 但是查找时需要遍历比较 cache 中所有的 tag，速度较慢
 - Set-associative：内存中的 block 会被映射到 cache 中的一个 set 中
     - 根据 index 来确定这个 block 映射到 cache 中的哪个 set 中
     - 再根据 tag 来判断这个 block 是否这一个 set 里
@@ -106,6 +123,18 @@ There are Four Questions for Cache/Memory Hierarchy Designers
 <figure markdown="span">
     ![](./assets/内存层次3.png){width=75%}
 </figure>
+
+??? example "example: Bits in a Cache"
+    <figure markdown="span">
+        ![](./assets/内存层次25.png){width=75%}
+    </figure>
+
+??? example "example: Mapping an Address to a Multiword Cache Block"
+    <figure markdown="span">
+        ![](./assets/内存层次26.png){width=75%}
+    </figure>
+
+    地址为 1200 的数据属于第 75 个 block，第 75 个 block 被映射到 cache 中的第 11 个位置
 
 ### Q3: Block Replacement
 
@@ -158,15 +187,32 @@ cache 满了之后，如果我们希望访问的数据不在 cache 中，就需�
 
 #### Stack replacement algorithm
 
-有些算法在 cache 增大时命中率至少不会下降，有些算法在 cache 增大时命中率反而有可能下降。我们称使用更大的 cache 时命中率至少不会低于原来情况的算法为 **stack replacement algorithm**。
+有些算法在 cache 增大时命中率至少不会下降，有些算法在 cache 增大时命中率反而有可能下降。
 
-即使用更大的 cache 的性能至少不会比使用小的 cache 差。
+我们称使用更大的 cache 时命中率至少不会低于原来情况的算法为**堆栈替换算法（stack replacement algorithm）**。
+
+> 即使用更大的 cache 的性能至少不会比使用小的 cache 差。
 
 - $B_t(n)$ represents the set of access sequences contained in a cache block 
 of size $n$ at time $t$.
 - $B_t(n)$ is the subset of $B_t(n＋1)$.
 
-LRU 替换算法就是一种堆栈替换算法，FIFO 则不是。
+!!! note
+    LRU 替换算法就是一种堆栈替换算法，FIFO 则不是。
+
+    <figure markdown="span">
+        ![](./assets/内存层次27.png){width=70%}
+    </figure>
+
+    n=3 时处在 cache 中的数据一定也会出现在 n=4 的 cache 中，小容量缓存能直接访问的数据也一定能在大容量缓存中直接访问到
+
+    <figure markdown="span">
+        ![](./assets/内存层次28.png){width=70%}
+    </figure>
+
+    可以看到在时刻 7，n=3 的 cache 里含有 1，但是 n=4 时没有 1。
+    
+    如果下一时刻我们要访问数据 1，容量较小的缓存可以直接访问；而容量较大的缓存反而需要从内存中把它取出来，耗费时间更多，因此 FIFO 不是堆栈替换算法
 
 !!! example
     我们可以使用一个堆栈来模拟 LRU，栈顶是最近被访问的数据，栈的最下方是最久未被访问的。当堆栈满了之后，我们就将栈底的数据替换掉。
@@ -177,7 +223,7 @@ LRU 替换算法就是一种堆栈替换算法，FIFO 则不是。
         ![](./assets/内存层次7.png){width=85%}
     </figure>
 
-#### LRU —— Comparison Pair Method
+#### LRU - Comparison Pair Method
 
 该如何**只使用门和触发器**来实现 LRU 算法？—— Comparison Pair Method
 
@@ -185,7 +231,7 @@ LRU 替换算法就是一种堆栈替换算法，FIFO 则不是。
 
     Let each cache block be combined in pairs, use a **comparison pair flip-flop** to record the order in which the two cache blocks have been accessed in the comparison pair, and then use a gate circuit to combine the state of each comparison pair flip-flop, you can find the block to be replaced according to the LRU algorithm.
 
-    让所有的 cache 块两两结对，使用一个触发器来记录这两个块最近的访问次序（例如 $T_{AB}$ 为 1 表示 A 比 B 最近被访问过，0 表示 B 比 A 最近被访问过），然后使用门电路将每个触发器的状态结合起来，就可以找到最久没有被访问的块了。
+    让所有的 cache 块两两结对，使用一个触发器来记录这两个块最近的访问次序（例如 $T_{AB}$ 为 1 表示 A 比 B 最近被访问过，0 表示 B 比 A 最近被访问过），然后使用门电路将每个触发器的状态结合起来，每次都能比较两个 cache 块中的访问次序，就可以找到最久没有被访问的块了。
 
 !!! example
     考虑我们有 A, B, C 三个 cache 块，我们需要使用 $C_3^2 = 3$ 个触发器来记录这三个 cache 块的访问顺序。$T_{AB} = 1$ 表示 A 比 B 最近被访问过，其他同理。
@@ -200,14 +246,16 @@ LRU 替换算法就是一种堆栈替换算法，FIFO 则不是。
 
 不难知道，当我们有 p 个 cache 块时，需要 $C_p^2 = \frac{p(p-1)}{2}$ 个触发器来记录这些 cache 块的访问顺序。
 
-当 p 增大时所需要的触发器的数量会迅速增大，因此在 p 较大时，使用这种方法来实现 LRU 算法就不太现实了。
+当 p 增大时，所需要的触发器的数量会迅速增大，因此在 p 较大时，使用这种方法来实现 LRU 算法就不太现实了。
 
 ### Q4: Write Strategy
 
 - **Write Hit**：
     - **Write Through**: 直接把数据同时写入 cache 和主存中
 
-        由于写回到内存所需的时间较长，这个过程需要 Write stall，或者使用 Write Buffer 来缓冲写入的内容（但只要写入 cache 和写入内存的耗时存在差距，始终无法避免 Write stall）。
+        由于写回到内存所需的时间较长，这个过程需要 Write stall，或者我们可以使用 Write Buffer 来缓冲写入的内容
+
+        但只要写入 cache 和写入内存的耗时存在差距，始终无法避免 Write stall，因为我们总要把 Write Buffer 里的内容写回内存里
 
     - **Write Back**: 写命中时，只把数据写入 cache 中，并将这个 block 标记为 dirty，表示这个 block 中的数据和主存中的数据不一致了。
 
@@ -235,16 +283,16 @@ LRU 替换算法就是一种堆栈替换算法，FIFO 则不是。
 总之就是 CPU 运行时间等于指令的时钟周期与访问内存带来的额外周期相加，再乘以每个时钟周期所需的时间。
 
 <figure markdown="span">
-    ![](./assets/内存层次11.png){width=75%}
+    ![](./assets/内存层次11.png){width=85%}
 </figure>
 
 <figure markdown="span">
-    ![](./assets/内存层次12.png){width=75%}
+    ![](./assets/内存层次12.png){width=85%}
 </figure>
 
 ??? example
     <figure markdown="span">
-        ![](./assets/内存层次13.png){width=75%}
+        ![](./assets/内存层次13.png){width=90%}
     </figure>
 
 How to Improve？
@@ -256,7 +304,7 @@ How to Improve？
 
 ## Virtual Memory
 
-内存总是有限的，当一个进程需要使用到的内存超过了物理内存的大小时，就需要使用虚拟内存来扩展内存的大小。虚拟内存技术能通过将虚拟地址映射到物理地址的方式来让程序认为自己拥有了连续的、更大的内存空间。
+内存总是有限的，当一个进程需要使用到的内存超过了物理内存的大小时，就需要使用虚拟内存来扩展内存的大小。虚拟内存技术能通过将虚拟地址映射到物理地址的方式来让程序认为自己拥有了连续的、足够大的内存空间。
 
 - Why virtual memory (besides larger)?
 - Virtual-physical address translation?
@@ -281,9 +329,11 @@ How to Improve？
 
 ### Virtual Memory Allocation
 
+虚拟内存的管理有分页和分段两种
+
 - Paged virtual memory
     - page: fixed-size block
-    - page address: page# +o ffset
+    - page address: page# + offset
 
         地址由页表编号与页内偏移量连接起来得到
 
@@ -310,14 +360,14 @@ How to Improve？
 
 - Q1. Where can a block be placed in main memory?
 
-    由于缺页带来的损失非常高（需要访问磁盘），与之相比，比较 tag 所花费的时间就不值一提了，因此我们采用全相联的方式来进行映射，从而降低 miss rate。
+    由于缺页带来的损失非常高（需要访问磁盘），与之相比，逐个比较 tag 所花费的时间就不值一提了，因此我们采用全相联的方式来进行映射，从而降低 miss rate。
 
 - Q2. How is a block found if it is in main memory?
 
     如上面所说的，虚拟地址分为两部分：页号和页内偏移量。页号相当于页表的索引，可以帮助我们从页表中找到对应的页表项，然后根据页表存储的物理地址来找到物理内存中对应的页。
 
     <figure markdown="span">
-        ![](./assets/内存层次18.png){width=65%}
+        ![](./assets/内存层次18.png){width=75%}
     </figure>
 
 - Q3. Which block should be replaced on a virtual memory miss?
@@ -325,7 +375,7 @@ How to Improve？
     - Least recently used (LRU) block，使用 LRU 来替换掉最久没有被使用的 block
     - use/reference bits，使用访问位来记录每个页是否被访问过
 
-        OS 每隔一段时间清空一次访问位，然后根据访问位来判断哪些页是最久没有被使用的，这些页就是可以被替换的
+        OS 每隔一段时间清空一次访问位，然后根据访问位来判断哪些页最近没有被使用，这些页就是可以被替换的
 
 - Q4. What happens on a write?
 
@@ -333,36 +383,47 @@ How to Improve？
 
 ### Page Table：Address Translation
 
+<figure markdown="span">
+    ![](./assets/内存层次29.png){width=70%}
+</figure>
+
+
 - Page tables are often large
 
     例如 32-bit virtual address, 4KB pages, 4 bytes per page table entry.
 
-    那么页表的大小就是 $2^{32} / 2^{12} * 4 = 2^{22} = 4MB$。
+    那么页表的大小就是 $2^{32} / 2^{12} \times 2^2 = 2^{22} = 4MB$。
 
+- 页表被保存在主存里
 - Logically two memory accesses for data access:
     - one to obtain the physical address from page table
     - one to get the data from the physical address
 
-我们想要利用页表来读取数据需要两次访问内存，第一次访问页表获取数据的物理地址，第二次访问这个物理地址获取数据，效率低下。因此我们可以采用类似于 cache 的方式来加速页表的访问 —— TLB。
+我们想要利用页表来读取数据需要两次访问内存，第一次访问页表获取数据的物理地址，第二次访问这个物理地址获取数据，效率低下。因此我们可以参考使用 cache 来加速内存访问的思路，添加一个部件来加速页表的访问 —— TLB。
 
-Translation lookaside buffer (TLB) 会保存最近被使用到的页表项，这让我们只需要访问 TLB 而无需访问页表就可以得到数据的物理地址
+!!! note "Translation lookaside buffer (TLB)"
+    TLB 会保存最近被使用到的页表项（tag 以及相应的物理地址），这让我们只需要访问 TLB 而无需访问页表就可以直接得到数据的物理地址
 
-- tag: portions of the virtual address
-- data: a physical page frame number, protection field, valid bit, use bit, dirty bit
+    - tag: portions of the virtual address
+    - data: a physical page frame number, protection field, valid bit, use bit, dirty bit
+    - 使用全相联的形式
 
 !!! example
-    首先发送 tag（即 VPN，virtual page number）到 TLB 中进行查找，并查看访问类型是否违反了保护位。如果没有，就尝试在 TLB 中寻找匹配的项，如果找到了，就可以直接使用 TLB 中的物理页号（PPN）加上偏移量来访问数据了。
+    1. 首先发送 tag（即 virtual page number，VPN）到 TLB 中进行查找
+    2. 查看本次的内存访问类型是否违反了保护 TLB 记录的用于内存保护的信息
+    3. 尝试在 TLB 中寻找匹配的项，从中获取物理页号（physical page number，PPN）
+    4. 把 PPN 和页偏移量连接起来，得到真实的物理地址，使用它来获取物理内存中的数据
 
     <figure markdown="span">
-        ![](./assets/内存层次19.png){width=65%}
+        ![](./assets/内存层次19.png){width=75%}
     </figure>
 
     <figure markdown="span">
-        ![](./assets/内存层次20.png){width=65%}
+        ![](./assets/内存层次20.png){width=75%}
     </figure>
 
     <figure markdown="span">
-        ![](./assets/内存层次21.png){width=65%}
+        ![](./assets/内存层次21.png){width=75%}
     </figure>
 
 ### Page Size Selection
@@ -385,7 +446,7 @@ Pros of **larger** page size
 
     TLB 能映射到更多的物理内存空间，miss 次数更少。
 
-Pros of smaller page size
+Pros of **smaller** page size
 
 - Conserve storage
 
@@ -395,10 +456,53 @@ Pros of smaller page size
 
 结合以上两方面，有的操作系统会使用不同大小的页来进行内存管理（multiple page sizes）
 
-???+ abstract "Address Translation"
+!!! example "Address Translation"
     <figure markdown="span">
-        ![](./assets/内存层次22.png){width=75%}
+        ![](./assets/内存层次22.png){width=85%}
     </figure>
+
+    - page size 为 8 KB = $2^{13}$ byte，page offset 有 13 位
+        - 于是VPN 是 64-13=51 位，PPN 是 41-13=28 位
+    - TLB 有 $256 = 2^8$ 个 entry，于是 TLB index 是 8 位，TLB tag 是 43 位
+    - 于是 TLB 每一行中都有 43 bit 的 tag 和 28 bit 的 data（即 PPN）
+    - L1 cache 大小为 $2^{13}$ bytes，block size 为 $2^6$ bytes
+        - block offset 有 6 位
+        - 因此 L1 cache 有 $2^{13} / 2^6 = 2^7$ 项，L1 cache index 有 7 位
+        - 两者加起来恰好是 13 位的 page offset
+    - L2 cache 大小为 $2^{22}$ bytes，于是有 $2^{16}$ 项，L2 cache index 有 16 位
+        - L2 cache 使用 41 位的物理地址，因此 L2 cache tag 有 41-16-6=19 位
+
+    > L1 和 L2 cache 中每一个 entry 的数据都为一个块，64 bytes = 512 bits
+
+### Process Protection
+
+**进程（process）**指的是一个正在运行的程序以及维持它运行所需的各种状态
+
+- Time-sharing
+
+    多个进程会同时运行在处理器和内存之上，每个进程都会认为自己正在独立地使用整个计算机
+
+- Process/Context switch
+
+    进程切换/上下文切换：系统从一个进程切换到另一个进程
+
+- Proprietary page tables
+
+    每个进程都会拥有自己的页表，每个页表指向不同的进程页
+
+操作系统负责对进程以及它们的页表进行管理，防止不同进程相互影响，保护进程安全
+
+- Rings
+
+    将内存的访问分为多个级别，构建一种层级化的保护结构，称为*保护环*
+
+    - 最受信任的进程可以访问任何内容
+    - 第二受信任的可访问除最内层外的所有内容
+    - 以此类推，普通进程最不受信任，访问权限最有限
+
+- Keys and Locks
+    - 给数据加上锁，仅当进程拥有对应密钥时才可以解锁并访问数据
+    - 硬件和操作系统必须能显式地在程序之间传递密钥，而不允许程序本身伪造密钥
 
 ### Summary
 
@@ -416,4 +520,3 @@ Pros of smaller page size
             - Reduce miss penalty
             - Reduce hit time
     - Virtual Memory (the influence of memory organization structure on Cache failure rate)
-
