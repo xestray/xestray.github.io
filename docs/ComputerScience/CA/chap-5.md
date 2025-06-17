@@ -6,12 +6,12 @@
 # DLP and TLP
 
 !!! abstract "Flynn 分类法"
-    Flynn 分类法按照指令和数据流不同的组织方式，将计算机系统分为四类：
+    Flynn 分类法按照指令流和数据流不同的组织方式，将计算机系统分为四类：
 
-    - SISD（Single Instruction Single Data）：单指令单数据流，传统的单核处理器。
-    - SIMD（Single Instruction Multiple Data）：单指令多数据流，适用于向量处理器和图形处理器。
-    - MISD（Multiple Instruction Single Data）：多指令单数据流，较少见，通常用于冗余计算。
-    - MIMD（Multiple Instruction Multiple Data）：多指令多数据流，现代多核处理器。
+    - SISD（Single Instruction Single Data）：单指令流单数据流，传统的单核处理器。
+    - SIMD（Single Instruction Multiple Data）：单指令流多数据流，适用于向量处理器和图形处理器。
+    - MISD（Multiple Instruction Single Data）：多指令流单数据流，较少见，通常用于冗余计算。
+    - MIMD（Multiple Instruction Multiple Data）：多指令流多数据流，现代多核处理器。
 
     <figure markdown="span">
         ![](./assets/数据级并行1.png){width=80%}
@@ -21,8 +21,8 @@
 
 ### Vector Processor & Scalar Processor 
 
-- **向量处理器（vector processor）**：具有向量数据表示和相应的向量指令的*流水线处理器*。
-- **标量处理器（scalar processor）**：没有向量数据表示和相应的向量指令的*流水线处理器*。
+- **向量处理器（vector processor）**：具有向量数据表示和相应的向量指令的**流水线处理器**。
+- **标量处理器（scalar processor）**：没有向量数据表示和相应的向量指令的**流水线处理器**。
 
 它们通常有三种处理数据的模式：
 
@@ -37,28 +37,29 @@
     - The vector calculation is performed vertically from top to bottom in a column manner
 3. Vertical and horizontal processing method (group processing method)
     - 把上面两种方法结合起来
+    - 例如当内存/buffer 的大小不足以容纳整个向量时，可以将向量分成多个组，每组使用纵向处理方法进行计算，组与组之间使用横向处理方法进行计算。
 
 !!! example
     考虑计算 $D = A \times (B+C)$，向量长度为 $N$
 
-    - Horizontal processing method
+    1. Horizontal processing method
         - 分成 $N$ 个 scalar operations，逐行计算
         - 先计算 $d_1 \leftarrow a_1 \times (b_1 + c_1)$，然后计算 $d_2 \leftarrow a_2 \times (b_2 + c_2)$，依次类推
         - 计算过程可以写作：
             - $k_i \leftarrow b_i + c_i$
             - $d_i \leftarrow a_i \times k_i$
-        - 会出现 N 次数据相关，需要 2N 次功能切换
-    - Vertical processing method
+        - 会出现 $N$ 次数据相关，需要 $2N$ 次功能切换
+    2. Vertical processing method
         - 先计算向量加法，再计算向量乘法
         - 计算过程可以写作：
             - $K \leftarrow B + C$
             - $D \leftarrow A \times K$
         - 只会出现 1 次数据相关，和 2 次功能切换
-    - Vertical and horizontal processing method
-        - 如果 N 很大，一个向量无法容纳所有数据，那么数据分成多个组
+    3. Vertical and horizontal processing method
+        - 如果 $N$ 很大，一个向量无法容纳所有数据，那么数据分成多个组
         - $N = S \times n + r$，即分成 $S$ 组，每组 $n$ 个元素，最后剩下的一组可能有 $r$ 个元素
         - 组内做纵向计算，组间做横向计算
-        - S+1 次数据相关，和 2(S+1) 次功能切换
+        - $S+1$ 次数据相关，和 $2(S+1)$ 次功能切换
 
 
 - 方法二操作要求处理器结构为 **memory-memory structure**：
@@ -92,8 +93,8 @@
 !!! info
     - **$V_i$ conflict**: The source vector or result vector of each vector instruction working in parallel uses the same $V_i$
 
-        - 即向量寄存器之间的使用存在依赖，后续指令需要等待前面指令的执行完成后再执行
-        - 向量元素级别的等待，即前面的指令的第一个元素计算完成后，就开始计算后面指令的第一个元素
+        - 即向量寄存器之间的使用存在依赖，后续指令需要等待前面指令完成后再执行
+        - 向量元素级别的等待，在前面的指令的第一个元素计算完成后，就开始计算后面指令的第一个元素
         - Writing and reading data related
             $$ V0 \leftarrow V1 + V2 $$
             $$ V3 \leftarrow V0 + V4 $$
@@ -119,10 +120,10 @@
 
 #### Improve the Performance of Vector Processor
 
-- Set up multiple functional components and make them work in parallel.
-- Use vector chaining technology to speed up the execution of a string of vector instructions.
-- Adopt recycling mining technology to speed up recycling processing.
-- Using a multi-processor system to further improve the performance.
+1. Set up **multiple functional components** and make them work in parallel.
+2. Use **vector chaining technology** to speed up the execution of a string of vector instructions.
+3. Adopt **recycling mining technology** to speed up recycling processing.
+4. Using a **multi-processor** system to further improve the performance.
 
 第 1、3、4 种方法实际上都是增加硬件资源，在这里我们主要介绍第 2 种方法
 
@@ -131,7 +132,7 @@
     - 例如我们有两条指令，第一条指令的计算结果是第二条指令的输入。那么我们就可以把这两条指令链接起来，第一条指令每计算出一个元素，就立即传递给第二条指令，从而实现类似于流水线的连续执行。
 
 !!! example
-    考虑 $D = A \times (B+C)$，假设向量长度 $N \leqslant 64$，元素均为浮点数，$B$ 和 $C$ 分别存储在寄存器 $V_0$ 和 $V_1$ 中
+    考虑执行 $D = A \times (B+C)$，假设向量长度 $N \leqslant 64$，元素均为浮点数，$B$ 和 $C$ 已经分别存储在寄存器 $V_0$ 和 $V_1$ 中了，$A$ 位于内存中
 
     我们可以按照如下的方法计算：
 
@@ -141,7 +142,9 @@
     V4 <- V3 * V2   // Floating point multiplication, the result is stored in V4
     ```
 
-    前两条指令不存在冲突，可以并行执行；第三条指令 RAW 依赖于前两条指令，但是我们可以将它们连接起来
+    前两条指令不存在冲突，可以并行执行；第三条指令 RAW 依赖于前两条指令，但它们没有功能部件上的冲突，我们可以将它们连接起来
+
+    - 当 V2 的第一个元素和 V3 的第一个元素都计算出来后，我们可以立即用它们来计算 V4 的第一个元素，而不需要等待 V2 和 V3 的后续元素被计算出来
 
     <figure markdown="span">
         ![](./assets/数据级并行6.png){width=70%}
@@ -152,10 +155,12 @@
     - 路径一：1 拍从内存到 fetch function unit，6 拍进行取数据操作，1 拍把取出的数据送至 V3
     - 路径二：1 拍将数据从 V0 和 V1 送到加法单元，6 拍进行加法操作，1 拍把加法结果送至 V2
 
-    两条路径花费的时间都是 8 拍，因此在第 9 拍乘法单元就可以开始计算
+    两条路径花费的时间都是 8 拍，即 8 拍后乘法所需的元素就都就位了，把就位的元素送入乘法单元还需要一个周期，因此乘法单元在第 10 拍可以开始计算。乘法计算需要 7 拍，因此 V4 的第一个元素在第 17 拍就可以计算出来了。
+    
+    又因为这是一个流水线处理器，当我们在计算第一个元素时，后续的元素也在源源不断地送过来，计算剩余的 63 个元素需要额外的 63 拍，于是在第 80 拍时，V4 的最后一个元素也计算完成了。
 
 !!! question 
-    考虑下面的指令，它们在不同情况下执行花费的总时间是多少？
+    考虑下面的指令，向量长度为 N，它们在不同情况下执行花费的总时间是多少？
 
     ```asm
     V3 <- memory
@@ -206,28 +211,29 @@ PE 是处理单元，PEM 是处理单元对应的内存，CU 是控制单元，C
     ![](./assets/数据级并行8.png){width=70%}
 </figure>
 
-多个处理器阵列通过一个互联网络共享一个中央内存，所有处理器阵列都可以访问这个中央内存。
+多个处理器阵列通过一个互联网络（Interconnect Network）共享一个中央内存，所有处理器阵列都可以访问这个中央内存。
 
 ### Parallel Computer Design
 
-上面这两种设计都需要把处理单元连接起来，假设有 n 个处理单元，如果我们让它们两两相连，那就需要 $C_n^2 = \dfrac{n(n-1)}{2}$ 个连接，这样的开销很大且难以实现。
+上面这两种设计都需要把处理单元连接起来，假设有 n 个处理单元，如果我们让所有的处理器两两相连，那就需要 $C_n^2 = \dfrac{n(n-1)}{2}$ 个连接，这样的开销很大且难以实现，因此我们要让处理器之间间接相连。
 
 !!! definition
     A network composed of switching units according to a certain topology and control mode to realize the interconnection between multiple processors or multiple functional components within a computer system.
 
-    我们使用一个网络图（network graph）来表示处理单元之间的连接关系，其中每个节点表示一个处理单元，每条边表示两个处理单元之间的连接。
+    我们使用一个网络图（network graph）来表示处理单元之间的连接关系，其中每个节点表示一个处理单元，每条边表示两个处理单元之间的连接。两个节点之间的网络路径越短，信息传递的效率就越高。
 
 一个互联网络主要由一个部分组成：CPU, memory, interface, link and switch node
 
 !!! tip "Some key points"
     - Topology of interconnection network
+
         - Static topology
 
             静态拓扑，即处理单元之间的连接关系在设计时就已经确定，并且在运行时不会改变。
 
         - Dynamic topology
 
-            动态拓扑，即处理单元之间的连接可以在运行时根据需要进行调整，例如通过调整开关可以改变节点之间的连接关系。
+            动态拓扑，即处理单元之间的连接可以在系统运行时根据需要进行调整，例如通过调整开关可以改变节点之间的连接关系。
 
     - Timing mode of interconnection network
         - Synchronization system: Use a unified clock. Such as SIMD array processor
@@ -247,6 +253,8 @@ PE 是处理单元，PEM 是处理单元对应的内存，CU 是控制单元，C
 
 ### Goal of interconnection network
 
+目标：通过有限数量的连接，使得任意两个处理单元之间都可以进行通信
+
 - Single-stage interconnection network: There are only a limited number of connections at the only level to realize information transmission between any two processing units.
 
     单级连接，只有有限数量的连接
@@ -255,7 +263,7 @@ PE 是处理单元，PEM 是处理单元对应的内存，CU 是控制单元，C
 
     多级连接，把多个单级网络串联起来
 
-N 个入端和 N 个出端会建立一个映射关系 $j \to f(j)$，入端和出端通常都使用二进制来进行编码，这个映射关系被称为互连函数（interconnection function）。
+我们可以对 N 个入端和 N 个出端建立一个映射关系 $j \to f(j)$，入端和出端通常都使用二进制来进行编码，这个映射关系被称为互连函数（interconnection function）。
 
 ### Single-stage interconnection network
 
@@ -267,7 +275,7 @@ N 个入端和 N 个出端会建立一个映射关系 $j \to f(j)$，入端和�
 
 假设有 N 个入端和出端，我们使用 n-bit 来对它们进行编码（$n = \log_2 N$），表示为 $P_{n-1} \cdots P_1 P_0$
 
-那么我们就有 n 个不同的互连函数（对第 i 位取反）：
+Cube 函数的定义是对 n-bit 的某一位取反，那么我们就会得到 n 个不同的互连函数：
     $$ Cube_i(P_{n-1} \cdots P_i \cdots P_0) = P_{n-1} \cdots \overline{P_i} \cdots P_0 $$
 
 !!! example
@@ -300,19 +308,24 @@ N 个入端和 N 个出端会建立一个映射关系 $j \to f(j)$，入端和�
 
     其中 N 为互联网络中的节点数量，$0 \leqslant j \leqslant N-1$，$0 \leqslant i \leqslant n-1$
 
+    实际上会有两个 PM2I 函数实际上是相同的，因此共有 2n-1 种不同的互联网络。
+
 !!! example
     - N = 8
 
     <figure markdown="span">
-        ![](./assets/数据级并行14.png){width=70%}
+        ![](./assets/数据级并行14.png){width=80%}
     </figure> 
+
+    - 任意两个节点之间相连需要 2 条边
+    - 需要把上述的几种函数结合起来一起使用，比如 0 可以一步直接连接到 1、7、2、6、4，连接到其他节点需要经过 2 条边
 
 #### Shuffle exchange network
 
 顾名思义，Shuffle exchange network 主要由两部分组成：shuffle + exchange
 
 - **Shuffle**：将输入数据进行打乱，一般将输入数据的二进制编码进行循环左移或右移
-- **Exchange**：将打乱后的数据进行交换，交换的方式通常是是将相邻的两个数据进行交换
+- **Exchange**：将打乱后的数据进行交换，交换的方式通常是将相邻的两个数据进行交换
 
 $$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
 
@@ -323,14 +336,15 @@ $$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
         ![](./assets/数据级并行15.png){width=70%}
     </figure> 
 
-不难发现，000 和 111 与其他任何节点都不相连，因此我们还需要在此基础上增加 exchange 的连线
+不难发现，000 和 111 与其他任何节点都不相连，因此我们还需要在此基础上增加 exchange 的连线（红线）
 
 <figure markdown="span">
     ![](./assets/数据级并行16.png){width=70%}
 </figure> 
 
 - 任意两个节点相连至多需要经过 3 exchange + 2 shuffle，总共需要 5 条边。
-- 更一般的，任意两个节点之间的距离（即需要经过的边数）最多为 n exchange + n-1 shuffle，总共需要 2n-1 条边。
+- 更一般的，任意两个节点之间的距离（即需要经过的边数）最多为 $n$ exchange + $n-1$ shuffle，总共需要 2n-1 条边。
+- 虽然它的连接长度较长，但它的开销较小
 
 ??? extra "其他连接方式"
     - Linear array
@@ -427,7 +441,7 @@ $$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
 
 我们假设：
 
-- Switch unit: two-function switch unit
+- Switch unit: two-function switch unit（直连或交换）
 - Control mode: stage, part stage and unit control
 - Topology: cube structure
 
@@ -436,6 +450,9 @@ $$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
 <figure markdown="span">
     ![](./assets/数据级并行29.png){width=70%}
 </figure>
+
+- $cube_1$ 意味着第 1 位取反（下标从 0 开始），因此 0 和 2 可以相互转换，所以 0 和 2 分为一组，同理 1 和 3 分为一组
+- $cube_2$ 意味着第 2 位取反，同理 0 和 4 分为一组，2 和 6 分为一组
 
 上图中的开关与开关之间的连线方式是固定的，但是开关内部对于两个输入和两个输出的连接方式是可以改变的，因此我们可以通过控制开关的状态来实现不同的连接方式。
 
@@ -452,7 +469,7 @@ $$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
 
 也被称为 **Omega network**
 
-- The switch function has four functions
+- The switch function has four functions（直连、交换、上行广播、下行广播）
 - The topological structure is shuffled topology followed by a four function switch
 - Control mode is unit control
 
@@ -464,7 +481,7 @@ $$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
     如果我们限定 omega network 也只能使用直连和交换两种模式，那么我们可以看到它就是 cube network 的逆网络
 
     <figure markdown="span">
-        ![](./assets/数据级并行32.png){width=70%}
+        ![](./assets/数据级并行32.png){width=80%}
     </figure>
 
     Omega network 与 n-cube network 的不同之处在于：
@@ -496,9 +513,10 @@ $$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
         x[i] = x[i] + s;
     ```
 
-    这个循环体中的内容是不存在相互依赖关系的，因此我们可以让这 1000 次循环并行执行。
+    这个循环体中的内容是不存在相互依赖关系的，因此我们可以让这 1000 次循环的循环体并行执行。
 
 !!! example "example2"
+
     ```C
     for (i=0; i<100; i=i+1) {
         A[i+1] = A[i] + C[i];   /* S1 */
@@ -506,32 +524,10 @@ $$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
     }
     ```
 
-    我们注意到本次迭代的运算依赖于上一次迭代的结果，因此显然我们不可能让所有的迭代并行执行，但是我们希望能让同一个循环体内部的指令可以并行执行。
-
-    这个循环体中，我们会发现 S2 的执行依赖于本次循环中 S1 的执行结果
-
-    - S1 and S2 use values computed by S1 in previous iteration
-    - S2 uses value computed by S1 in same iteration
-    
-    我们可以修改上面的代码，把 S1 的第一次循环与 S2 的最后一次循环提取出来，改成如下的形式，就可以并行执行了：
-
-    ```C
-    A[1] = A[0] + C[0];         /* S1 */
-    for (i=1; i<100; i=i+1) {
-        A[i+1] = A[i] + C[i];   /* S1 */
-        B[i] = B[i-1] + A[i];   /* S2 */
-    }
-    B[100] = B[99] + A[100];    /* S2 */
-    ```
-
-    现在我们就消除了循环体内部的依赖，虽然乍一看代码变得复杂了，但是实际上这么做可以利用循环级并行来提高程序的执行效率（同一次迭代中循环体的内容可以同时执行）。
-
-    为方便起见，我们把执行一行代码看作一次运算
-
-    - 原始代码需要进行 2×100 = 200 次运算
-    - 修改后的代码需要进行 1+100+1 = 102 次运算
+    我们注意到这个循环体里存在跨迭代的相关，本次迭代的 S1、S2 运算依赖于上一次迭代的结果，因此显然我们不可能让迭代并行执行，即使我们可以通过向量链接技术加速一次迭代内的运算，也无法让迭代之间并行执行。
 
 !!! example "example3"
+
     ```C
     for (i=0; i<100; i=i+1) {
         A[i] = A[i] + B[i];     /* S1 */
@@ -539,21 +535,25 @@ $$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
     }
     ```
 
-    在这个例子中，S1 会使用 S2 在上一次迭代的运算结果，但是没有出现循环依赖，因此这个循环也是可以并行的。模仿 example2 的思路，我们可以把 S1 的第一次循环与 S2 的最后一次循环提取出来 
+    在这个例子中，S1 会使用 S2 在上一次迭代的运算结果，但是没有出现循环依赖，因此这个循环是可以一定的修改让它能够并行执行的。
+    
+    思路是把 S1 的第一次迭代提取出来，这样跨迭代的依赖就被消除了，数据的依赖是迭代内部的依赖。交换 S1 和 S2 的顺序之后，我们就可以通过向量链接技术来加速迭代内部的运算，并且循环体的这 99 次迭代可以并行执行。
 
+    最后不要忘记我们还剩下 S2 的最后一次迭代没有完成，需要单独处理。
 
     ```C
-    A[0] = A[0] + B[0];         /* S1 */
-    for (i=1; i<100; i=i+1) {
-        A[i] = A[i] + B[i];     /* S1 */
-        B[i+1] = C[i] + D[i];   /* S2 */
+    A[0] = A[0] + B[0];           /* S1 */
+    for (i=0; i<99; i=i+1) {
+        B[i+1] = C[i] + D[i];     /* S2 */
+        A[i+1] = A[i+1] + B[i+1]; /* S1 */
     }
-    B[100] = C[99] + D[99];     /* S2 */
+    B[100] = C[99] + D[99];       /* S2 */
     ```
 
-    现在循环内部的依赖关系就消除了，原始代码需要 200 次运算，修改后的代码需要 102 次运算。
+    现在的代码可能看起来会有些奇怪，但是我们成功地把原先只能顺序执行 100 轮迭代的循环体修改成了可以并行执行的循环体，大大加速了程序的运行。
 
 !!! example "example4"
+
     ```C
     for (i=0; i<100; i=i+1) {
         Y[i] = X[i] / c;    /* S1 */
@@ -563,7 +563,7 @@ $$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
     }
     ```
 
-    上面这个例子出现了各种依赖，包括数据相关和名相关
+    上面这个例子里没有跨迭代的相关，但是出现了各种依赖，包括数据相关和名相关
     
     - 数据相关：
         - RAW：S1 和 S3，S1 和 S4
@@ -582,26 +582,7 @@ $$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
     }
     ```
 
-    现在 S1 和 S2 之间没有依赖关系，S3 和 S4 之间也没有依赖关系，因此我们可以让 S1 和 S2 并行执行，S3 和 S4 并行执行。
-
-    > 下面这部分是我的想法，PPT 上没有，不一定正确（
-
-    我们注意到循环体内部被分为了两组（S3、S4 依赖于 S1），现在我们接着模仿前面例子的思路，把 S1 和 S2 的第一次循环提取出来，S3 和 S4 的最后一次循环提取出来
-
-    ```C
-    T[0] = X[0] / c;          /* S1 */
-    P[0] = X[0] + c;          /* S2 */
-
-    for (i=1; i<100; i=i+1) {
-        T[i] = X[i] / c;      /* S1 */
-        P[i] = X[i] + c;      /* S2 */
-        Z[i-1] = T[i-1] + c;  /* S3 */
-        Y[i-1] = c - T[i-1];  /* S4 */
-    }
-
-    Z[99] = T[99] + c;        /* S3 */
-    Y[99] = c - T[99];        /* S4 */
-    ```
+    现在我们就消除了 S1 和 S2 之间、S3 和 S4 之间的名相关，但是 S1 和 S3 之间的 RAW 相关依然存在（这是不可避免的），因此我们无法让这四条指令并行执行。
 
 ### Vector Chaining Technology
 
@@ -629,13 +610,14 @@ $$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
     2. 如果使用向量链接技术，需要进行多少组元素传递（convey）操作？（即有多少组向量链接）
     3. 如果每个元素传入和传出链接寄存器（chaining register）都需要 1 个时钟周期，那么使用向量链接技术执行上述指令需要多少个时钟周期？
 
-??? tip
+!!! tip
     - 其实这个题目的表述还不够清晰，没说两个 load 能不能同时执行（
     - 在这里我们不考虑指令乱序执行的情况，假设指令按顺序执行。
     - 一个运算单元只能同时接受一个向量链接的输入，因此 add 指令不能同时接受 mul 和 load 的输出。
 
-!!! answer
+??? answer
     1. 当我们不使用向量链接时，
+
         - load/store 需要 10+63 = 73 个时钟周期
         - mul 需要 7+63 = 70 个时钟周期
         - add 需要 4+63 = 67 个时钟周期
@@ -667,13 +649,13 @@ $$ Shuffle(P_{n-1} \cdots P_1 P_0) = P_{n-2} \cdots P_1 P_0 P_{n-1} $$
 
 ## MIMD: Tread-level Parallelism
 
-!!! info "MIMD"
-    <figure markdown="span">
-        ![](./assets/线程级并行23.png){width=70%}
-    </figure>
+<figure markdown="span">
+    ![](./assets/线程级并行23.png){width=70%}
+</figure>
 
 - 线程级并行（TLP）是由软件系统或程序员在较高层次上确认和识别的
-- 线程由数百到数百万条指令组成，这些指令可以并行执行。
+- 线程由数百到数百万条指令组成，这些指令可以并行执行
+- TLP 主要通过 MIMD 多处理器系统来实现
 
 Multi-processor system 可以分为两大类：
 
@@ -701,10 +683,10 @@ Multi-processor system 可以分为两大类：
 </figure>
 
 - 每个线程（处理器）都有自己的私有内存，他们通过 ICN（interconnection network）进行通信
-- 我们也可以构建多层次的通信网络，让若干个处理器使用一个 ICN，然后再让这些 ICN 通过一个更大的 ICN 进行连接
+- 我们也可以构建多层次的通信网络，让若干个处理器使用一个 ICN，然后再让这些 ICN 通过一个更大的 ICN 连接起来
 
 <figure markdown="span">
-    ![](./assets/线程级并行3.png){width=70%}
+    ![](./assets/线程级并行3.png){width=80%}
 </figure>
 
 ### MIMD Architecture
@@ -757,7 +739,7 @@ NUMA 还可以进行两种拓展：
     - **NUMA** is called **distributed shared-memory multiprocessor (DSP)**.
 
     <figure markdown="span">
-        ![](./assets/线程级并行8.png){width=70%}
+        ![](./assets/线程级并行8.png){width=90%}
     </figure>
 
 #### COMA
@@ -766,7 +748,7 @@ NUMA 还可以进行两种拓展：
     ![](./assets/线程级并行9.png){width=70%}
 </figure>
 
-- COMA 是 NUMA 的一种特殊形式，地址空间由各个处理器的 cache 组成，所有的内存访问都需要通过 cache 来进行。
+- COMA 是 NUMA 的一种特殊形式，地址空间由各个处理器的 cache 组成，所有的内存访问都需要通过 cache 来进行，没有 memory。
 - 它使用分布式的缓存目录进行远端 cache 的访问。数据在最开始时可以被分配在任意 cache 中，但程序开始执行后这些数据会被移动到需要使用的地方去
 
 <figure markdown="span">
@@ -775,25 +757,29 @@ NUMA 还可以进行两种拓展：
 
 !!! example "Challenges of Parallel Processing"
     <figure markdown="span">
-        ![](./assets/线程级并行11.png){width=70%}
+        ![](./assets/线程级并行11.png){width=90%}
     </figure>
 
+    假设我们可以达到 100 的局部加速比，通过计算可以知道如果我们想要实现 80 的整体加速比，就需要对 99.75% 的部分进行加速
+
     <figure markdown="span">
-        ![](./assets/线程级并行12.png){width=70%}
+        ![](./assets/线程级并行12.png){width=90%}
     </figure>
+
+    假如我们可以对一个程序应用 1、50 或 100 个处理器（假设使用多少个处理器就可以达到多少的局部加速比），并且有 95% 的部分可以使用 100 个处理器加速，通过计算我们也可以发现，我们需要对剩余的 4.8% 使用 50 个处理器加速才能实现 80 的整体加速比
 
 ## Cache Coherence
 
 内存一致性（cache coherence）是指在多处理器系统中，多个处理器的 cache 中可能会有相同的内存地址的副本，这些副本需要保持一致。
 
-- 如果一个处理器修改了某个内存地址的值，但是这个修改还除以 cache 中，没有更新到 memory 里，如果此时其他处理器也使用到了这个内存地址的值，那么就会出现数据不一致的问题。
+- 如果一个处理器修改了某个内存地址的值，但是这个修改还在 cache 中，没有更新到 memory 里，如果此时其他处理器也要使用到这个内存地址的值，那么就会出现数据不一致的问题。
 
 !!! info "Memory Consistency and Cache Coherence" 
     > Consistency 与 Coherence 都可翻译为“一致性”，但它们的含义不同：
 
     - **Memory Consistency**：Need Memory Consistency Model
         - 当被写入的一个值将要被读操作返回时，
-        - 如果一个处理器写入了位置 A，然后写入了位置 B，那么任何看到 B 的新值的处理器也必须看到 A 的新值
+        - 如果一个处理器写入了位置 A，然后写入了位置 B，那么任何看到 B 的新值的处理器也必须能够看到 A 的新值
     - **Cache Coherence**：Need Cache Coherence Protocol
         - 所有处理器的读取都必须返回最近写入的值（读出来的一定是最新的数据）
         - 两个处理器对同一位置的写入，都必须被所有处理器中都以相同的顺序被看到
@@ -801,10 +787,10 @@ NUMA 还可以进行两种拓展：
 
 我们一般通过一些协议来确保不会出现内存一致性问题，主要可以分为两类：
 
-- Bus snooping protocol 
+- Bus snooping protocol 总线监听协议
     - 在总线上监听各个处理器之间发生了什么事情
     - UMA
-- Directory based protocol
+- Directory based protocol 基于目录的协议
     - 应用于分布式系统
     - NUMA
 
@@ -823,16 +809,18 @@ NUMA 还可以进行两种拓展：
     - 当其他处理器需要访问这个内存地址时，就会重新从 memory 中读取最新的数据
 - **Update Strategy**：更新数据时，让其他处理器的 cache 中的副本被更新为最新的数据
     - Update all the cached copies of a data item when that item is written
-    - 这样其他处理器就可以直接使用这个副本，而不需要重新从 memory 中读取数据
+    - 其他处理器就可以直接使用更新后的副本，而不需要重新从 memory 中读取数据
     - 也被称为广播（broadcast）策略，但是开销很大，不太常用
 
 cache 块有三种状态（MSI protocol）
 
-- **Modified（M）**：表示这个 cache 块是最新的，是唯一的副本（其他 cache 中没有这个数据项），并且也还没有写回 memory 中
-- **Shared（S）**：表示这个 cache 块是最新的，并且在其他的 cache 中还有副本
+- **Modified（M）**：表示这个 cache 块是最新的，与 memory 中的内容不一致，并且是唯一的副本（其他 cache 中没有这个数据项）
+- **Shared（S）**：表示这个 cache 块是最新的，与 memory 中的内容一致，并且在其他的 cache 中还有其他副本
 - **Invalid（I）**：表示这个 cache 块不是最新的，这个数据在其他 cache 中被更新了，但还未更新到这个 cache 中 
 
 ??? note "Write Invalidation Protocol（write back）"
+    > 状态的转移有很多种实现方式，这里列出其中的一种
+
     当我们进行读写操作时，数据的 state 会不断发生变化：
 
     **CPU 行为**：
@@ -855,11 +843,17 @@ cache 块有三种状态（MSI protocol）
         ![](./assets/线程级并行17.png){width=80%}
     </figure>
 
+    把上面两个状态转移图汇总在如下的一张图里：
+
+    <figure markdown="span">
+        ![](./assets/线程级并行24.png){width=80%}
+    </figure>
+
 !!! example
     一个多处理器系统中 cache 和 memory 的初始状态如下所示。每个处理器都使用直接映射，有 4 个 cache 块，使用 write back 策略，使用基础的写无效监听协议（write invalidate snooping protocol）。
 
     <figure markdown="span">
-        ![](./assets/线程级并行18.png){width=85%}
+        ![](./assets/线程级并行18.png){width=95%}
     </figure>
 
     给出执行以下行为后系统中发生的动作：
@@ -872,7 +866,7 @@ cache 块有三种状态（MSI protocol）
         1. 
 
             ```asm title="C0, R, A10C"
-            C0, read miss
+            C0 read miss
             C2 write back A10C
             Memory A10C, 010C -> 020C
             C2.3 (S, A10C, 020C)
@@ -894,7 +888,7 @@ cache 块有三种状态（MSI protocol）
         3. 
 
             ```asm title="C0, W, A118, 0308"
-            C0, write miss
+            C0 write miss
             C0 write back A108
             Memory A108, 0108 -> 0208
             Memory returns 0118 to C0
@@ -931,7 +925,7 @@ cache 块有三种状态（MSI protocol）
     ![](./assets/线程级并行21.png){width=70%}
 </figure>
 
-使用一个目录来记录哪些处理器的 cache 有特定数据块的副本，当数据需要更新时，处理器通过目录向这些拥有数据副本的处理器发送失效信号，从而是其他所有副本变为 invalid 状态。
+使用一个目录来记录哪些处理器的 cache 有特定数据块的副本，当数据需要更新时，处理器通过目录向这些拥有数据副本的处理器发送失效信号，从而使其他所有副本变为 invalid 状态。
 
 有三种状态：
 
