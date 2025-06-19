@@ -162,6 +162,7 @@ Instruction Set Design Basic Principles
 - Security 安全性
 
 指令集设计设计的问题包括：
+
 - Where are operands stored?
     - registers, memory, stack, accumulator
 - How many explicit operands are there?
