@@ -34,7 +34,7 @@
 
     ```cpp
     Type &ref = var1; // ref 是 var 的引用
-    ref = var2;       // var1 的值被修改为 var2，不会使 ref 指向 var2 
+    ref = var2;       // var2 的值赋给 var1，不会使 ref 指向 var2
     ```
 
 - 引用可以作为函数参数，按引用传递可以避免拷贝，提高效率
@@ -43,7 +43,7 @@
 
         ```cpp
         void f(const int &x) {
-            // x = 1; // error
+            x = 1; // error
         }
         ```
 
@@ -61,7 +61,7 @@
 
 - `new`：在堆上分配内存，返回指向该内存的指针
 
-    - `T* p = new T[n]` 先分配 n 个 T 类型的内存，然后创建 n 个 T 类型的对象，返回指向第一个对象的指针赋给 p
+    - `T* p = new T[n]` 先分配 n 个 T 类型的内存，然后创建 n 个 T 类型的对象（会调用构造函数），返回指向第一个对象的指针赋给 p
 
 - `delete p`：释放 p 指向的内存
 
@@ -70,8 +70,11 @@
 - `delete[] p`：释放 p 指向的数组内存
 
     - new 一个数组的时候会记录数组的大小，delete[] 会根据这个大小释放内存
-    - 释放数组时，必顿使用 `delete[]`，否则只会释放第一个元素的内存，其他元素的内存不会被释放
+    - 释放数组时，必须使用 `delete[]`，否则只会释放第一个元素的内存，其他元素的内存不会被释放
 
+!!! note
+    - `new` 和 `new[]` 会调用对象的构造函数
+    - `delete` 和 `delete[]` 会调用对象的析构函数
 
 ## 关于容器
 
@@ -84,7 +87,7 @@ Constructor
 - `vector<T> v`：创建一个空的 vector，元素类型为 T
 - `vector<T> v(n)`：创建一个大小为 n 的 vector，元素类型为 T
 - `vector<T> v(n, x)`：创建一个大小为 n 的 vector，元素类型为 T，每个元素的值都是 x
-- `vector<T> v(v2)`：创建一个 vector，内容和 v2 一样
+- `vector<T> v(v2)`：创建一个 vector，内容和 v2 一样（对元素而言是浅拷贝）
 
 Simple Methods
 
@@ -129,14 +132,11 @@ Add / Remove / Find Elements
 - `l.push_front(x)`：在 list 的开头添加一个元素 x
 - `l.pop_front()`：删除 list 的第一个元素
 
-## 关于变量
-
-
 ## 关于函数
 
 ### inline 函数
 
-- 类似于一个宏，编译器会在调用处直接展开函数体，而不是真正的调用函数
+- 类似于一个宏，编译器会在调用处直接展开函数体，而不是进行真正的函数调用
 
     ```cpp
     inline f(int x) {
@@ -144,7 +144,7 @@ Add / Remove / Find Elements
     }
 
     int a = f(1);
-    // 编译器会将上面的代码展开为 int a = 1 + 1;
+    // 编译器会将上面这行代码展开为 int a = 1 + 1;
     ```
 
 - inline 函数的定义也相当于声明，可以在头文件中定义。并且不会因为被多个文件引用而出现重复定义的错误
@@ -154,11 +154,37 @@ Add / Remove / Find Elements
 
 - C++ 中 class 和 struct 的区别仅在于默认的访问权限不同，class 默认是 private，struct 默认是 public
 - 直接在类的内部定义成员函数时，函数默认是 inline
--访问权限有三种：
+- 访问权限有三种：
     - public：可以被任何人访问
     - protected：可以在类的内部和子类中访问
     - private：只能在类的内部访问
-        - 访问权限是以类为单位的，而不是对象，即一个对象可以访问同一个类的另一个对象的 private 成员
+        - 访问权限是以类为基准的，而不是以对象为基准的。也就是说某个类的对象可以访问同属于
+
+??? example
+
+    ```cpp
+    class A {
+    private:
+        int x;
+    public:
+        A(int val) : x(val) {}
+        void copyFrom(const A& other) {
+            x = other.x; // 这里可以访问 other.x，即使 x 是 private
+        }
+        void setX(int val) { x = val; }
+        void print() const { std::cout << x << std::endl; }
+    };
+
+    int main() {
+        A a1(10), a2(20);
+        a1.copyFrom(a2); // 在 a1 内部可以直接访问 a2 的 private 成员 x
+        a1.print(); // 输出 20
+
+        /* 编译错误: 不可以在类外部直接访问 a2 的 private 成员 x */
+        a1.setX(a2.x);
+        return 0;
+    }
+    ```
 
 ### 构造函数
 
@@ -192,6 +218,12 @@ class A {
 public:
     static int a;
     int b;
+    static void func() {
+        // 可以访问静态成员变量
+        std::cout << "Static member a: " << a << std::endl;
+        // 但是不能访问非静态成员变量
+        // std::cout << "Non-static member b: " << b << std::endl; // error
+    }
 };
 
 int A::a = 0;
@@ -199,17 +231,14 @@ A obj;
 ```
 
 - 静态成员变量从属于这一个类，而不是单独属于某个对象
-- 静态成员变量被这个类的所有对象共享（只有一份内存），并且在对象被创建之前就已经存在了
+- 静态成员变量被这个类的所有对象共享（只有一份内存），在程序开始运行时（即第一次使用该类之前）就被创建
 - 上面的例子中 `A::a` 和 `obj.a` 访问的都是同一个变量
 
 !!! warning 
-    当我们想要初始化一个静态成员变量时，必须在类的外部进行初始化，不能在类的内部进行初始化。例如
-
-    ```CPP
-    int A::a = 0;
-    ```
+    当我们想要初始化一个静态成员变量时，必须在类的外部进行初始化，不能在类的内部进行初始化，就像上面的这个例子一样。
 
 - 静态成员函数也是属于类的，而不是属于对象的，可以直接通过类名调用，也可以通过对象调用
+    - 例如 `A::func()` 或 `obj.func()`
 - 静态成员函数不能访问非静态成员变量，也不能调用非静态成员函数
 - 静态成员函数不会隐式地包含 this 指针
 
@@ -226,7 +255,7 @@ A obj;
         int getA() const { // 设为 const
             return m_a;
         }
-        void setA(int a) {// 不能设为 const
+        void setA(int a) { // 不能设为 const
             m_a = a;
         }
     };
@@ -237,8 +266,8 @@ A obj;
 - 不添加标识符时，默认继承方式是 private
 - 构造函数、析构函数、重载运算符、友元不会被继承
 - 初始化的顺序为
-    - 按照继承的顺序初始化基类（出现在冒号`:`后面的顺序）
-    - 柑橘生命顺序初始化成员变量
+    - 按照继承的顺序初始化基类（继承多个类时按照出现在冒号`:`后面的顺序）
+    - 根据声明顺序初始化成员变量
     - 执行构造函数函数体
 
 ### 多态
@@ -343,9 +372,13 @@ graph BT
 #### 静态/动态绑定
 
 - 静态绑定：编译时就能明确确定需要调用的函数
+
     static / early binding: call the function as the code
+
 - 动态绑定：在运行时根据对象的实际类型来调用相应的函数，而不是根据指针或引用的类型
+
     dynamic / late bindin: call the function of the object
+
     - 出现多态，编译器并不知道具体调用的是哪个类的方法
     - 在 C++ 中，只有通过指针/引用调用 virtual function 时才会发生动态绑定
 
@@ -373,25 +406,52 @@ p->func();
     }
 
     int main() {
-        Shape s; Circle c;
-        s.render(); // 静态绑定 输出 Shape
-        c.render(); // 静态绑定 输出 Circle
-        render(&s); // 静态绑定 输出 Shape
-        render(&c); // 静态绑定 输出 Shape
+        Shape s; 
+        Circle c;
+        s.render();
+        c.render();
+        render(&s);
+        render(&c);
     }
     ```
 
-    若把两个类的 `render` 函数声明为 `virtual`，则后两次调用 render 函数将会发生动态绑定，输出结果变为
+    上面这段代码的输出是
 
     ```
-    Shape
-    Circle
-    Shape
-    Circle
+    Shape   // 静态绑定
+    Circle  // 静态绑定
+    Shape   // 静态绑定
+    Shape   // 静态绑定
+    ```
+
+    因为在 `render` 函数中，`p` 的类型是 `Shape*`，并且 `Shape` 的 `render` 函数不是虚函数，所以编译器在编译时就确定了会调用 `Shape::render()`，因此后两次调用都会输出 `Shape`。
+
+    若把这两个类的 `render` 函数声明为 `virtual`，则后两次调用 render 函数将会发生动态绑定
+    
+    ```cpp
+    class Shape {
+    public:
+        virtual void render() { cout << "Shape" << endl; }
+    };
+
+    class Circle : public Shape {
+    public:
+        void render() override { cout << "Circle" << endl; }
+    };
+    ```
+
+    输出结果变为
+
+    ```
+    Shape   // 静态绑定
+    Circle  // 静态绑定
+    Shape   // 动态绑定
+    Circle  // 动态绑定
     ```
 
 !!! tip 
     在成员函数内部调用一个 virtual 函数，也有可能发生动态绑定
+
     - 因为调用另一个成员函数实际上是通过指针 this 做到的
 
 ### 友元
@@ -403,6 +463,7 @@ p->func();
     - 不具有对称性：如果 A 是 B 的友元，那么 B 不一定是 A 的友元
         - A 可以访问 B 的私有成员，但 B 不能访问 A 的私有成员
     - 不具有传递性：如果 A 是 B 的友元，B 是 C 的友元，那么 A 不一定是 C 的友元
+        - A 可以访问 B 的私有成员，B 可以访问 C 的私有成员，但 A 不能直接访问 C 的私有成员
 
 ## 关于重载
 
@@ -447,53 +508,71 @@ p->func();
     static_cast dynamic_cast const_cast reinterpret_cast // 四种类型转换
     ```
 
-!!! info "关于 `->` `->*` `.` `.*` 运算符"
+??? info "关于 `->` `->*` `.` `.*` 运算符"
     - `p1->x` 与 `(*p1).x` 等价
         - `p1` 是一个指向类的指针，`x` 是类的一个成员变量/函数
     - `p1->*p2` 与 `(*p1).*p2` 等价
         - `p1` 是一个指向类的指针，`p2` 是一个指向类成员变量/函数的指针
 
-    > 感觉好复杂，估计也不会真的会用到（×）
-
-    !!! example 
+    1. `->` 运算符通常用于智能指针等类，让对象像指针一样访问成员。
 
         ```cpp
-        #include <iostream>
-        
-        struct S
-        {
-            S(int n): mi(n) {}
-            mutable int mi;
-            int f(int n) { return mi + n; }
+        struct Data {
+            void hello() { std::cout << "Hello\n"; }
         };
-        
-        struct D: public S
-        {
-            D(int n): S(n) {}
+
+        class SmartPtr {
+            Data* ptr;
+        public:
+            SmartPtr(Data* p) : ptr(p) {}
+            Data* operator->() { return ptr; }
         };
-        
-        int main()
-        {
-            int S::* pmi = &S::mi;      // 声明一个指向 S::mi 的指针
-            int (S::* pf)(int) = &S::f; // 声明一个指向 S::f 的指针
-        
-            const S s(7);
-        //  s.*pmi = 10; // 错误：无法通过 mutable 进行修改
-            std::cout << s.*pmi << '\n';// 通过 .* 访问成员变量
-        
-            D d(7); // 基类的指针可以在派生类对象上工作
-            D* pd = &d;
-            std::cout << (d.*pf)(7) << ' '
-                    << (pd->*pf)(8) << '\n';
+
+        int main() {
+            Data d;
+            SmartPtr sp(&d);
+            sp->hello(); // 实际等价于 sp.operator->()->hello();
+            return 0;
         }
         ```
 
-        输出结果为
-        
+    2. `->*` 运算符用于“指向成员的指针”，可以被重载，但很少见。
+
+        ```cpp
+        struct Data {
+            void hello() { std::cout << "Hello\n"; }
+        };
+
+        class Wrapper {
+            Data* ptr;
+        public:
+            Wrapper(Data* p) : ptr(p) {}
+            Data* operator->() { return ptr; }
+            // 重载 ->* 运算符
+            void operator->*(void (Data::*func)()) {
+                (ptr->*func)();
+            }
+        };
+
+        int main() {
+            Data d;
+            Wrapper w(&d);
+
+            // 指向成员函数的函数指针
+            void (Data::*funcPtr)() = &Data::hello; 
+
+            // 调用成员函数，等价于 d.hello();
+            (d.*funcPtr)(); 
+
+            // 实际等价于 (w.operator->())->*funcPtr;
+            // 即 ptr->*funcPtr; 即 ptr->hello(); 即 d.hello();
+            w->*funcPtr; 
+            return 0;
+        }
         ```
-        7
-        14 15
-        ```
+
+        3. `.` 是成员访问运算符，**不能被重载**。
+        4. `.*` 通过成员指针的成员访问运算符，**不能被重载**。
 
 - 双目运算符的左操作数是对象本身，右操作数是函数的参数
 - 全局运算符需要访问私有成员时，要设置为友元
@@ -515,22 +594,33 @@ p->func();
 - `+` `-` `*` `/` `%` `^` `&` `|` `~`
 
     ```cpp
-    const T operator @ (const T &l, const T &r);
+    friend const T operator @ (const T& l, const T& r); // 全局友元函数
+    const T T::operator @ (const T& r); // 成员函数
     ```
 
 - `!` `&&` `||` `<` `<=` `==` `>=` `>`
 
     ```cpp
-    bool operator @ (const T &l, const T &r);
+    friend bool operator @ (const T& l, const T& r); // 全局友元函数
+    bool T::operator @ (const T& r); // 成员函数
     ```
 
 - `+=` `-=` `*=` `/=` `%=` `^=` `&=` `|=` `<<=` `>>=`
 
     ```cpp
-    T& operator @= (const T &l, const T &r);
+    friend T& operator @= (T& l, const T& r); // 全局友元函数
+    T& T::operator @= (const T& r); // 成员函数
     ```
 
-- `[]`
+- `=` 赋值运算符，只能是成员函数
+
+    ```cpp
+    T& operator = (const T& r); // 成员函数
+    ```
+
+    - 注意：如果类中有指针成员变量，必须在赋值时进行深拷贝，否则会导致浅拷贝的问题
+
+- `[]` 下标运算符，只能是成员函数
 
     ```cpp
     E& T::operator [] (int index); // 参数也可以是 size_t 等其他类型
@@ -545,28 +635,30 @@ p->func();
     const T operator -- (int);    // postfix --
     ```
 
-- 流运算符重载 `<<` `>>`
+- 流运算符重载 `<<` `>>`，由于第一个参数是流对象，所以必须是全局友元函数
 
     ```cpp
     ostream& operator << (ostream &os, const T &obj); // 返回 os
     istream& operator >> (istream &is, T &obj);       // 返回 is
     ```
 
-- 类型转换运算符重载
+- 类型转换运算符重载（如 `int()`、`double()` 等），可以让类的对象隐式转换为其他类型
     - 没有参数和返回类型，但可以有返回值
 
     ```cpp
     operator Type() const; // 将类转换为 Type 类型
     ```
 
-- `->()`
+- `->`
 
     ```cpp
     R* T::operator ->() const; // 返回一个指针
     ```
 
-    - 返回类型必须支持 `->` 运算符
-    - `owner->func()` 的语义实际上是 `(owner.operator->())->func()`，而 `(owner.operator->())` 返回的是一个指针 `ptr`，最终得到的是 `ptr->func()`
+    - 返回类型必须支持 `->` 运算符，即返回指针或智能指针等
+    - 如 `owner->func()` 的语义实际上是 `(owner.operator->())->func()`
+    
+        `(owner.operator->())` 返回的是一个指针 `ptr`，最终得到的是 `ptr->func()`
 
 !!! example
 
@@ -591,10 +683,10 @@ p->func();
 
     如果我们想要实现两个类之间的转换，如 `A` 类转换为 `B` 类，有两种方法
 
-    - 在 `B` 类中定义一个接受 `A` 类对象作为参数的的构造函数 `B(A a)`
-    - 在 `A` 类中定义一个转换运算符 `operator B()`，使得 `A` 类对象可以隐式转换为 `B` 类对象
+    1. 在 `B` 类中定义一个接受 `A` 类对象作为参数的的构造函数 `B(A a)`
+    2. 在 `A` 类中定义一个转换运算符 `operator B()`，使得 `A` 类对象可以隐式转换为 `B` 类对象
 
-    但是不能两者兼有，否则编译器会不知道该使用哪一个（二义性）
+    但是不能两者兼有，否则编译器会不知道该使用哪一个（出现二义性）
 
 ## 其他
 
@@ -607,11 +699,11 @@ p->func();
     class A {
     public:
         void func1(T x) { ... }
-        void func2(T x);
+        void func2(T x); // 函数声明
     };
 
     template <class T>
-    void A<T>::func2(T x) { ... }
+    void A<T>::func2(T x) { ... } // 函数定义
     ```
 
 - 模板参数可以有默认值，也可以是常量表达式
@@ -642,11 +734,17 @@ p->func();
     class A: public B<T> { ... }
     ```
 
-    - 普通类继承自模板类（注意不是类模板，是实例化后的类）
+    - 普通类继承自**模板类**（注意不是**类模板**，是实例化后的类）
 
     ```cpp
     class A: public B<int> { ... }
     ```
+
+!!! warning "类模板与模板类"
+    - 类模板是一个**模板**，用于生成类的蓝图。它不是一个具体的类，而是一个可以**根据不同类型参数实例化出不同类**的模板。
+        - 本身不能直接使用，必须通过实例化（提供具体类型）才能生成可用的类
+    - 模板类是指**通过类模板实例化后的具体类**。它是一个**已经填充了具体类型参数的类**，可以直接使用。
+        - 模板类是一个真正可用的类，可以用于创建类对象。
 
 ### 异常
 
@@ -655,13 +753,18 @@ p->func();
 - try-catch 语句
 
     ```cpp
-    try { ... } // try 的块中有 throw 语句
-    catch (SomeError& e) { ... }
-    catch (AnotherError) { ... } // 不使用异常的具体内容
-    catch (...) { ... } // 注意这里括号内的 ... 表示接受任意类型的异常
+    try { 
+        // try 的块中有 throw 语句
+    } catch (SomeError& e) {
+        // 捕获到该种异常后进行一些操作
+    } catch (AnotherError) { 
+        // 在 catch 语句中不使用异常的具体内容
+    } catch (...) { // 注意这里括号内的 ... 表示接受任意类型的异常
+        // 捕捉到上述异常之外的内容时进行相应操作
+    } 
     ```
 
-    - 也可以在 catch 块中继续使用 `throw;` 来吧当前处理的异常重新抛出去，从而实现异常的向上传递
+    - 也可以在 catch 块中继续使用 `throw;` 来把当前处理的异常重新抛出去，从而实现异常的向上传递
 
 - 标准库异常
     - `bad_alloc` `bad_cast` `bad_typeid` `bad_exception`
@@ -675,7 +778,7 @@ p->func();
 
 函数的异常声明
 
-- 在函数参数列表之后、函数题之前，用于声明当前函数可能会抛出哪些异常（暗示函数内部将会自行处理这些异常）
+- 在函数参数列表之后、函数体之前，用于声明当前函数可能会抛出哪些异常（暗示函数内部将会自行处理这些异常）
 
     ```
     // 有时也会在 throw 之前加上一个冒号 :
@@ -819,3 +922,9 @@ p->func();
 - reinterpret_cast 用于进行低级别的、几乎没有类型检查的转换。它进行的转换非常危险，因为可能破坏数据的完整性
 
     - 通常用于指针之间的转换，不会进行类型检查
+
+    ```cpp
+    int a = 10;
+    int* p = &a;
+    char* c = reinterpret_cast<char*>(p); // 将 int* 转换为 char*
+    ```
