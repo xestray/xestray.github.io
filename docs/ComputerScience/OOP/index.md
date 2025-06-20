@@ -22,7 +22,7 @@
     - [咸鱼暄的各种 C++ 笔记](https://xuan-insr.github.io/cpp/cpp_restart/)
     - [Isshiki 修的 OOP 笔记](https://www.yuque.com/isshikixiu/codes/wk_oop)
     - [金鱼马老师的 C/C++ 沉思录](https://www.zhihu.com/column/c_1561843704159232000)
-    - [箱子的 OOP 无痛指南（不知道是不是真的无痛）](https://tree.45gfg9.net/lcppthw/01-bootstrap/)
+    - [箱子的 OOP 无痛指南（不知道是不是真的无痛）](https://tree.45gfg9.net/lcppthw/bootstrap/)
 
 ## 关于变量
 
