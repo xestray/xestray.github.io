@@ -7,6 +7,9 @@ repo_name: xestray # 仓库名称
 repo_url: https://github.com/xestray/xestray.github.io/ # 仓库地址
 copyright: Copyright &copy; 2025 <a href="https://github.com/xestray" target="_blank">xestray</a>
 
+# 默认为 true，设置为 false 时会生成带有 .html 后缀的链接
+# use_directory_urls: false 
+
 nav: 
   - Home: 
     - index.md
@@ -94,27 +97,27 @@ nav:
       - ComputerScience/selfstudy/index.md
       - CS106L: ComputerScience/selfstudy/CS106L/cs106l.md
       - EECS498:
-          - ComputerScience/selfstudy/EECS498/index.md
-          - Image Classification: ComputerScience/selfstudy/EECS498/lec1.md
-          - Linear Classification: ComputerScience/selfstudy/EECS498/lec2.md
-          - Regularization + Optimization: ComputerScience/selfstudy/EECS498/lec3.md
-          - Neural Networks: ComputerScience/selfstudy/EECS498/lec4.md
-          - Backpropagation: ComputerScience/selfstudy/EECS498/lec5.md
-          - Convolutional Neural Networks: ComputerScience/selfstudy/EECS498/lec6.md
-          - CNN Architectures Ⅰ: ComputerScience/selfstudy/EECS498/lec7.md
-          - Training Neural Networks Ⅰ: ComputerScience/selfstudy/EECS498/lec8.md
-          - Training Neural Networks Ⅱ: ComputerScience/selfstudy/EECS498/lec9.md
-          - CNN Architectures Ⅱ: ComputerScience/selfstudy/EECS498/lec10.md
-          - Deep Learning Software: ComputerScience/selfstudy/EECS498/lec11.md
-          - Object Detection: ComputerScience/selfstudy/EECS498/lec12.md
-          - Image Segmentation: ComputerScience/selfstudy/EECS498/lec13.md
-          - Recurrent Networks: ComputerScience/selfstudy/EECS498/lec14.md
-          - Attention: ComputerScience/selfstudy/EECS498/lec15.md
-          - Generative Models Ⅰ: ComputerScience/selfstudy/EECS498/lec16.md
-          - Generative Models Ⅱ: ComputerScience/selfstudy/EECS498/lec17.md
-          - Visualizing Models and Generating Images: ComputerScience/selfstudy/EECS498/lec18.md
-          - 3D vision: ComputerScience/selfstudy/EECS498/lec19.md
-          - Videos: ComputerScience/selfstudy/EECS498/lec20.md
+        - ComputerScience/selfstudy/EECS498/index.md
+        - Image Classification: ComputerScience/selfstudy/EECS498/lec1.md
+        - Linear Classification: ComputerScience/selfstudy/EECS498/lec2.md
+        - Regularization + Optimization: ComputerScience/selfstudy/EECS498/lec3.md
+        - Neural Networks: ComputerScience/selfstudy/EECS498/lec4.md
+        - Backpropagation: ComputerScience/selfstudy/EECS498/lec5.md
+        - Convolutional Neural Networks: ComputerScience/selfstudy/EECS498/lec6.md
+        - CNN Architectures Ⅰ: ComputerScience/selfstudy/EECS498/lec7.md
+        - Training Neural Networks Ⅰ: ComputerScience/selfstudy/EECS498/lec8.md
+        - Training Neural Networks Ⅱ: ComputerScience/selfstudy/EECS498/lec9.md
+        - CNN Architectures Ⅱ: ComputerScience/selfstudy/EECS498/lec10.md
+        - Deep Learning Software: ComputerScience/selfstudy/EECS498/lec11.md
+        - Object Detection: ComputerScience/selfstudy/EECS498/lec12.md
+        - Image Segmentation: ComputerScience/selfstudy/EECS498/lec13.md
+        - Recurrent Networks: ComputerScience/selfstudy/EECS498/lec14.md
+        - Attention: ComputerScience/selfstudy/EECS498/lec15.md
+        - Generative Models Ⅰ: ComputerScience/selfstudy/EECS498/lec16.md
+        - Generative Models Ⅱ: ComputerScience/selfstudy/EECS498/lec17.md
+        - Visualizing Models and Generating Images: ComputerScience/selfstudy/EECS498/lec18.md
+        - 3D vision: ComputerScience/selfstudy/EECS498/lec19.md
+        - Videos: ComputerScience/selfstudy/EECS498/lec20.md
 
     - 杂项:
       - ComputerScience/Misc/index.md
@@ -123,6 +126,24 @@ nav:
     #   - Git: ComputerScience/Misc/git.md
     #   - Docker: ComputerScience/Misc/docker.md
     #   - Vim: ComputerScience/Misc/vim.md
+      - CTF: 
+        - CTF/index.md
+        - 基础周:
+          - lec1-Intro:   CTF/fundament/lec1-Intro.md
+          - lec2-Web:     CTF/fundament/lec2-Web.md
+          - lec3-Misc:    CTF/fundament/lec3-Misc.md
+          - lec4-Reverse: CTF/fundament/lec4-Rev.md
+          - lec5-Pwn:     CTF/fundament/lec5-Pwn.md
+          - lec6-Crypto:  CTF/fundament/lec6-Crypto.md
+        - 专题周:
+          - Web:
+            - Web-1:  CTF/Web/Web-1.md
+          - Misc:
+            - Misc-1: CTF/Misc/Misc-1.md
+            - Misc-2: CTF/Misc/Misc-2.md
+      - 数据要素交易基础:
+        - ComputerScience/econ/index.md
+        - 博弈论基础: ComputerScience/econ/game-theory.md
 
   - 数理: 
     - 数学分析: MathematicsAndPhysics/MA/MA.md
@@ -144,22 +165,6 @@ nav:
       - 随机变量与分布函数: MathematicsAndPhysics/Probability/chap-2.md
       - 数字特征与特征函数: MathematicsAndPhysics/Probability/chap-3.md
       - 极限定理:         MathematicsAndPhysics/Probability/chap-4.md
-
-  - CTF: 
-    - CTF/index.md
-    - 基础周:
-      - lec1-Intro:   CTF/fundament/lec1-Intro.md
-      - lec2-Web:     CTF/fundament/lec2-Web.md
-      - lec3-Misc:    CTF/fundament/lec3-Misc.md
-      - lec4-Reverse: CTF/fundament/lec4-Rev.md
-      - lec5-Pwn:     CTF/fundament/lec5-Pwn.md
-      - lec6-Crypto:  CTF/fundament/lec6-Crypto.md
-    - 专题周:
-      - Web:
-        - Web-1:  CTF/Web/Web-1.md
-      - Misc:
-        - Misc-1: CTF/Misc/Misc-1.md
-        - Misc-2: CTF/Misc/Misc-2.md
 
   - Others: 
     - 干点啥: others/WhatToDo.md
@@ -341,9 +346,11 @@ markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
       linenums: true # 显示行号
+      use_pygments: true # 使用 Pygments 进行语法高亮
       # auto_title: true # 显示编程语言名称
   - pymdownx.arithmatex:
       generic: true
+  - pymdownx.progressbar
   - neoteroi.cards
   # - mdx_truly_sane_lists
   # - hbfm.inline_coloring
