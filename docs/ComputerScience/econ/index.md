@@ -11,5 +11,5 @@
     - 教师：刘金飞（jinfeiliu@zju.edu.cn）
     - 助教：吴一航（yhwu_is@zju.edu.cn）
 
-- [ ] [博弈论基础](./game-theory.md)
-
+- [x] [博弈论基础1](./game-theory1.md)
+- [x] [博弈论基础2](./game-theory2.md)
