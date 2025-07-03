@@ -25,4 +25,7 @@
 - 自学课程:
     - CS106L: selfstudy/CS106L/cs106l/
     - EECS 498/598: selfstudy/EECS498/
+- 其他杂项内容:
+    - Makefile: Misc/makefile/
+    - 数据要素交易基础: datamarket/
 {{ END_TOC }}

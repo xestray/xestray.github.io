@@ -142,9 +142,9 @@ nav:
             - Misc-1: CTF/Misc/Misc-1.md
             - Misc-2: CTF/Misc/Misc-2.md
       - 数据要素交易基础:
-        - ComputerScience/econ/index.md
-        - 博弈论基础1: ComputerScience/econ/game-theory1.md
-        - 博弈论基础2: ComputerScience/econ/game-theory2.md
+        - ComputerScience/datamarket/index.md
+        - 博弈论基础1: ComputerScience/datamarket/game-theory1.md
+        - 博弈论基础2: ComputerScience/datamarket/game-theory2.md
 
   - 数理: 
     - 数学分析: MathematicsAndPhysics/MA/MA.md
