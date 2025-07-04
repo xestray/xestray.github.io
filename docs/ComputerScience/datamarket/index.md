@@ -13,3 +13,10 @@
 
 - [x] [博弈论基础1](./game-theory1.md)
 - [x] [博弈论基础2](./game-theory2.md)
+- [x] [Shapley 值](./Shapley.md)
+- [ ] [多臂老虎机算法](./mab.md)
+- [ ] [拍卖与机制设计基础](./auction.md)
+- [ ] [最优机制](./opt.md)
+
+
+

@@ -145,6 +145,10 @@ nav:
         - ComputerScience/datamarket/index.md
         - 博弈论基础1: ComputerScience/datamarket/game-theory1.md
         - 博弈论基础2: ComputerScience/datamarket/game-theory2.md
+        - 沙普利值: ComputerScience/datamarket/Shapley.md
+        - 多臂老虎机算法: ComputerScience/datamarket/mab.md
+        - 拍卖与机制设计基础: ComputerScience/datamarket/auction.md
+        - 最优机制: ComputerScience/datamarket/opt.md
 
   - 数理: 
     - 数学分析: MathematicsAndPhysics/MA/MA.md
