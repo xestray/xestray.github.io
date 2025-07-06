@@ -33,7 +33,7 @@
 !!! definition
     1. 伪遗憾（pseudo-regret）
 
-        $$ R(T) \sum_{t=1}^T \left( \mu^* - \mu(a_t) \right) = \mu^*T - \sum_{t=1}^T \mu(a_t) $$
+        $$ R(T) = \sum_{t=1}^T \left( \mu^* - \mu(a_t) \right) = \mu^* \cdot T - \sum_{t=1}^T \mu(a_t) $$
 
     2. 期望遗憾（expected regret）：$ \mathbb{E}[R(T)] $
 
@@ -107,9 +107,9 @@ $$ \mathbb{E}[R|\bar{E}] \leqslant T \times P(\bar{E}) = O(K T^{-3}) $$
 **分析好事件：**
 
 当好事件 $E$ 发生时，对所有的臂都成立 $|\mu(a) - Q(a)| \leqslant \text{rad}$，显然当我们选择最优臂 $a^*$ 时遗憾比选择其他臂要小，因此我们可以得到如下的不等式：
-$$ \mu(a) + \text{rad} \ge Q(a) > Q(a^*) \ge \mu(a^*) - \text{rad} $$
+$$ \mu(a) + \text{rad} \geqslant Q(a) > Q(a^ * ) \geqslant \mu(a^ * ) - \text{rad} $$ 
 整理上式可得单步选择中遗憾的上界为
-$$ \mu(a^*) - \mu(a) < 2 \ \text{rad} $$
+$$ \mu(a^ *) - \mu(a) < 2 \ \text{rad} $$ 
 这说明在好事件中遗憾总是不会很大，因此好事件对整体遗憾的贡献为
 $$ \mathbb{E}[R|E] \leqslant (T-NK) \cdot 2 \text{rad} \cdot T $$
 
@@ -125,8 +125,8 @@ $$ \mathbb{E}[R(T)] \leqslant NK + 2 T \sqrt{\frac{2\log T}{N}} \cdot $$
 为了最小化这个遗憾的上界，显然我们需要平衡探索成本（$N$ 增大时增加）和利用成本之间的（$N$ 增大时减小）关系。我们希望这两项的量级应当是相等的，于是
 
 $$ \begin{aligned}
-NK \approx T \sqrt{\frac{2\log T}{N}} \\
-\Rightarrow N \approx \left( \frac{T^2 \log T}{2K^2} \right)^{2/3} \\
+NK \approx T \sqrt{\frac{2\log T}{N}} \\\\
+\Rightarrow N \approx \left( \frac{T^2 \log T}{2K^2} \right)^{2/3}
 \end{aligned} $$
 
 于是我们令 $N = (\frac{T}{K})^{2/3} \cdot O(\log T)^{1/3}$，带入上式就最终得到
@@ -144,6 +144,8 @@ $$ \mathbb{E}[R(T)] = O\left(T^{\frac{2}{3}}(K\log T)^{\frac{1}{3}}\right) $$
         ![](./assets/mab2.png){width=75%}
     </figure>
 
+    其中 $N_t(\hat{a})$ 表示的是在时间 $t$ 时臂 $\hat{a}$ 在之前的操作中被选择的次数，$Q_t(\hat{a})$ 表示臂 $\hat{a}$ 在时间 $t$ 时的奖励均值估计。
+
 ### 上置信界算法
 
 $\varepsilon$-贪心算法仍存在一个问题：虽然每个动作都有被选择的概率，但是这种选择太过于随机，导致最优臂被访问的概率较低，这并不能有助于智能体很大概率的发现最优选择，上置信界算法（upper confidence bound，UCB）很好地改进了这一点。
@@ -154,9 +156,12 @@ UCB 算法是多臂赌博机问题中一种经典的基于置信区间的探索-
     ![](./assets/mab3.png){width=75%}
 </figure>
 
-简而言之，UCB 的算法流程是：首先将每一个候选臂都选择一遍，作为初始化；然后在后续的时间步中，选择奖励均值估计量的上置信界最大的臂，其中均值估计量的上置信界定义为
-$$ Q_t(a) + \sqrt{\frac{2\log t}{N_t(a)}} $$
-最后更新被选中的臂的相关参数。
+简而言之，UCB 的算法流程是：
+
+1. 首先将每一个候选臂都选择一遍，作为初始化
+2. 然后在后续的时间步中，选择奖励均值估计量的上置信界最大的臂，其中均值估计量的上置信界定义为
+    $$ Q_t(a) + \sqrt{\frac{2\log t}{N_t(a)}} $$
+3. 最后更新被选中的臂的相关参数。
 
 其中上置信界的直观理解是：
 
@@ -181,7 +186,7 @@ $$ Q_t(a) + \sqrt{\frac{2\log t}{N_t(a)}} $$
 在做决策时，算法不会直接选择均值最高或上限最高的臂，而是会从每个臂的后验分布中采样一个值，然后选择**采样值最大的臂**，具体来说：
 
 - Beta 分布中参数 $\alpha$ 和 $\beta$ 分别表示伯努利试验中的成功和失败次数，$\alpha$ 越大分布越集中于 1，$\beta$ 越大则越接近于 0；
-- 在每一个时间步中，对于每个臂，从其 $\text{Beta}(S_t(a)+1, F_t(a)+1)$ 分布中进行采样。选择采样值最高的臂。执行所选臂，并观察奖励。
+- 在每一个时间步中，对于每个臂，从其 $\text{Beta}(S_t(a)+1,\\ F_t(a)+1)$ 分布中进行采样。选择采样值最高的臂。执行所选臂，并观察奖励。
 - 根据获得的奖励更新所选臂的 Beta 分布参数；
 - 如果成功，则 $S_t(a)=S_t(a)+1$；如果失败，则 $F_t(a)=F_t(a)+1$。
 
@@ -238,7 +243,7 @@ $$ Q_t(a) + \sqrt{\frac{2\log t}{N_t(a)}} $$
     - 这一定义的合理在于，有自然的算法实现无遗憾，但无悔的实现也不是平凡的。
 
 !!! definition "跟风算法"
-    跟风算法（Follow-The-Leader, FTL）指在每一个时间点$t$，选择最小累积代价 $\sum_{s=1}^{t-1} c_s(i)$ 的行动 $i$
+    跟风算法（Follow-The-Leader, FTL）指在每一个时间点 $t$，选择最小累积代价 $\sum_{s=1}^{t-1} c_s(i)$ 的行动 $i$
 
 <figure markdown="span">
     ![](./assets/mab5.png){width=75%}
@@ -261,19 +266,19 @@ $$ Q_t(a) + \sqrt{\frac{2\log t}{N_t(a)}} $$
     - 观察：只要一个行动出现了非零代价，那就可以永远排除它，但我们并不知道剩余行动中哪个最好；
     - 可以设计算法如下：对每一步 $t=1,2,\dots,T$，记录截至目前从没出现过代价 1 的行动，然后在这些行动中根据均匀分布随机选择一个行动。
 
-    在任意一轮 $t$ 中，令 $S_{good} = \{ i \in [n] | \text{行动 i 从未出现过代价 1} \},\ k = |S_{good}|$。因此每个 $i \in S_{good}$ 在下一轮被选中的概率为 $1/k$，每个 $i \notin S_{good}$ 被选中的概率为 0。
+    在任意一轮 $t$ 中，令 $S_{good} = \{ i \in [n] \\ | \\ \text{行动 i 从未出现过代价 1} \},\ k = |S_{good}|$。因此每个 $i \in S_{good}$ 在下一轮被选中的概率为 $1/k$，每个 $i \notin S_{good}$ 被选中的概率为 0。
 
-    对于任意 $\epsilon \in (0, 1)$，下面两种情况之一一定会发生：
+    对于任意 $\varepsilon \in (0, 1)$，下面两种情况之一一定会发生：
 
-    - $S_{good}$ 中至多 $\epsilon k$ 个行动有代价 1，此时这一阶段的期望代价至多为 $\epsilon$
-        - 因为每个行动被选中的概率为 $\dfrac{1}{k}$，选中 $\epsilon k$ 个行动的概率为 $\epsilon$，因此期望代价为 $\epsilon$；
-    - $S_{good}$ 中至少 $\epsilon k$ 个行动有代价 1，每次出现这一情况时，下一步就可以排除掉至少 $\epsilon k$ 个行动，因此这种情况最多出现 $\log_{1-\epsilon} \frac{1}{n}$ 次
+    - $S_{good}$ 中至多 $\varepsilon k$ 个行动有代价 1，此时这一阶段的期望代价至多为 $\varepsilon$
+        - 因为每个行动被选中的概率为 $\dfrac{1}{k}$，选中 $\varepsilon k$ 个行动的概率为 $\varepsilon$，因此期望代价为 $\varepsilon$；
+    - $S_{good}$ 中至少 $\varepsilon k$ 个行动有代价 1，每次出现这一情况时，下一步就可以排除掉至少 $\varepsilon k$ 个行动，因此这种情况最多出现 $\log_{1-\varepsilon} \frac{1}{n}$ 次
 
     因此总的遗憾至多为 
 
-    $$ R_T = T \times \epsilon + \log_{1-\epsilon} \frac{1}{n} \times 1 = T \epsilon + \frac{\ln n}{-\ln(1-\epsilon)} \leqslant T \epsilon + \frac{\ln n}{\epsilon} $$
+    $$ R_T = T \times \varepsilon + \log_{1-\varepsilon} \frac{1}{n} \times 1 = T \varepsilon + \frac{\ln n}{-\ln(1-\varepsilon)} \leqslant T \varepsilon + \frac{\ln n}{\varepsilon} $$
 
-    最后的不等号导来源于 $-\ln(1-\epsilon) \geqslant \epsilon (0 < \epsilon < 1)$。显然当 $\epsilon = \sqrt{\frac{\ln n}{T}}$ 时，$R_T \leqslant 2\sqrt{T \ln n}$，即次线性遗憾。
+    最后的不等号来源于 $-\ln(1-\varepsilon) \geqslant \varepsilon (0 < \varepsilon < 1)$。显然当 $\varepsilon = \sqrt{\frac{\ln n}{T}}$ 时，$R_T \leqslant 2\sqrt{T \ln n}$，即次线性遗憾。
 
 可以将上面的算法描述得更加形式化：
 

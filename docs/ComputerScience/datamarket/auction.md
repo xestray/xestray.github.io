@@ -200,18 +200,18 @@ $$ \int_0^1 \frac{t_1^2}{2} \ dt_1 = \frac{1}{6} $$
 !!! note "二价拍卖的期望收益"
     由于在二价拍卖中诚实报价占优，可知卖家的期望收益为
 
-    $$ \mathbb{E}[\max(t_1, t_2)] $$
+    $$ \mathbb{E}[\min(t_1, t_2)] $$
 
     $\min(t_1, t_2)$ 同样是一个次序统计量，分布函数为
 
     $$ \begin{aligned}
-    \mathbb{P}(\min(t_1, t_2) < t) &= 1 - \mathbb{P}(t_1 \geqslant t) \cdot \mathbb{P}(t_2 \geqslant t) \\
+    F(t) = \mathbb{P}(\min(t_1, t_2) < t) &= 1 - \mathbb{P}(t_1 \geqslant t) \cdot \mathbb{P}(t_2 \geqslant t) \\
     &= 1 - (1-t)^2 = 2t - t^2
     \end{aligned} $$
 
     于是对应的密度函数为 $f(t) = 2 - 2t$，因此期望收益为
 
-    $$ \mathbb{E}[\max(t_1, t_2)] = \int_0^1 t \cdot (2 - 2t) dt = \frac{1}{3} $$
+    $$ \mathbb{E}[\min(t_1, t_2)] = \int_0^1 t \cdot (2 - 2t) dt = \frac{1}{3} $$
 
 我们可以发现，对于卖家而言，在上述情况下选择第一和第二价格拍卖，最终得到的期望收益无差别。事实上这并不是巧合，而是下面这一定理的一个特例：
 
@@ -405,7 +405,7 @@ $$ p_i(\mathbf{b}) = \sum_{j \neq i} b_j(\omega^*_{-i}) - \sum_{j \neq i} b_j(\o
 
 > 先求出没有 $i$ 的最大福利分配结果，然后再求出有 $i$ 的最大福利分配结果，并且从中去掉 $i$ 的福利，二者的差值就是 $i$ 需要支付的价格。
 
-结合以上的分配规则和支付规则，就得到了一般物品分配场景下的福利最大化 DSIC 机制，称之为维克里-克拉克-格罗夫斯（Vickrey-ClarkeGroves）机制，或简称 VCG 机制。
+结合以上的分配规则和支付规则，就得到了一般物品分配场景下的福利最大化 DSIC 机制，称之为维克里-克拉克-格罗夫斯（Vickrey-Clarke-Groves）机制，或简称 VCG 机制。
 
 !!! info "二价拍卖与 VCG 机制"
     事实上，二价拍卖是 VCG 机制在单物品拍卖下的特例：
