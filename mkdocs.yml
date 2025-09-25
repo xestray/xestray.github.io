@@ -123,6 +123,12 @@ nav:
       - ComputerScience/Misc/index.md
       - Makefile: ComputerScience/Misc/makefile.md
       - CMake: ComputerScience/Misc/cmake.md
+      - The Missing Semester:
+        - ComputerScience/Misc/TMS/index.md
+        - Shell: ComputerScience/Misc/TMS/shell.md
+        - Vim: ComputerScience/Misc/TMS/vim.md
+        - 数据整理: ComputerScience/Misc/TMS/data-wrangling.md
+
     #   - Git: ComputerScience/Misc/git.md
     #   - Docker: ComputerScience/Misc/docker.md
     #   - Vim: ComputerScience/Misc/vim.md
@@ -325,6 +331,7 @@ markdown_extensions:
   - sane_lists
   - admonition
   - pymdownx.keys
+  - pymdownx.caret
   - pymdownx.mark
   - pymdownx.tilde
   - pymdownx.critic
