@@ -18,7 +18,7 @@ jobs:
       - run: pip install mkdocs-print-site-plugin
       - run: pip install mkdocs-mermaid2-plugin
       - run: pip3 install mdx_truly_sane_lists
-      - run: git clone https://github.com/TonyCrane/mkdocs-toolchain.git
+      - run: git clone -b old https://github.com/xestray/mkdocs-toolchain.git
       - run: ls
       - run: pip install ./mkdocs-toolchain/mkdocs-toc-plugin/
       - run: mkdocs gh-deploy --force
