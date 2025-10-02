@@ -92,6 +92,13 @@ nav:
 
     - 数据可视化导论:
       - ComputerScience/IDV/index.md
+
+    - 操作系统:
+      - ComputerScience/OS/index.md
+      - 引言: ComputerScience/OS/chap01.md
+      - OS 结构: ComputerScience/OS/chap02.md
+      - 进程: ComputerScience/OS/chap03.md
+      - 线程: ComputerScience/OS/chap04.md
       
     - 自学课程:
       - ComputerScience/selfstudy/index.md
