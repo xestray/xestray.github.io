@@ -93,6 +93,11 @@ nav:
     - 数据可视化导论:
       - ComputerScience/IDV/index.md
 
+    - 数值分析:
+      - ComputerScience/NA/index.md
+      - 数学基础: ComputerScience/NA/lec-1.md
+      - 单变量方程的解: ComputerScience/NA/lec-2.md
+
     - 操作系统:
       - ComputerScience/OS/index.md
       - 引言: ComputerScience/OS/chap01.md

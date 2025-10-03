@@ -40,17 +40,17 @@
 
 .md-typeset .admonition.proof,
 .md-typeset details.proof {
-  border-color: #d8d0aa;
+  border-color: #55a4d2;
 }
 
 .md-typeset .proof>.admonition-title,
 .md-typeset .proof>summary {
-  background-color: #fdfdec40;
+  background-color: #55a4d240;
 }
 
 .md-typeset .proof>.admonition-title::before,
 .md-typeset .proof>summary::before {
-  background-color: #d8d0aa;
+  background-color: #55a4d2;
   -webkit-mask-image: var(--md-admonition-icon--proof);
   mask-image: var(--md-admonition-icon--proof);
 }

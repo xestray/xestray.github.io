@@ -21,6 +21,7 @@
     - 计算机视觉[note]: CV/
     - 数据可视化导论[note]: IDV/
     - 操作系统[note]: OS/
+    - 数值分析[note]: NA/
 - 编程语言:
     - C++: PL/cpp/cpplearning/
 - 自学课程:
