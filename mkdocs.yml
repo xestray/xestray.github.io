@@ -97,6 +97,7 @@ nav:
       - ComputerScience/NA/index.md
       - 数学基础: ComputerScience/NA/lec-1.md
       - 单变量方程的解: ComputerScience/NA/lec-2.md
+      - 解线性系统的直接方法: ComputerScience/NA/lec-3.md
 
     - 操作系统:
       - ComputerScience/OS/index.md
