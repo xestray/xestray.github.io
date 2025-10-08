@@ -105,6 +105,15 @@ nav:
       - OS 结构: ComputerScience/OS/chap02.md
       - 进程: ComputerScience/OS/chap03.md
       - 线程: ComputerScience/OS/chap04.md
+
+    - 计算机网络:
+      - ComputerScience/CN/index.md
+      - 计算机网络概述: ComputerScience/CN/chap-1.md
+      - 物理层: ComputerScience/CN/chap-2.md
+      - 数据链路层: ComputerScience/CN/chap-3.md
+      # - 网络层: ComputerScience/CN/chap4.md
+      # - 传输层: ComputerScience/CN/chap5.md
+      # - 应用层: ComputerScience/CN/chap6.md
       
     - 自学课程:
       - ComputerScience/selfstudy/index.md
