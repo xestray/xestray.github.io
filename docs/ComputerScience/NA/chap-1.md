@@ -3,7 +3,7 @@
     statistics: true
 ---
 
-# Mathematical Preliminaries
+# Chap 1: Mathematical Preliminaries
 
 ## Roundoff Errors and Computer Arithmetic
 

@@ -95,9 +95,11 @@ nav:
 
     - 数值分析:
       - ComputerScience/NA/index.md
-      - 数学基础: ComputerScience/NA/lec-1.md
-      - 单变量方程的解: ComputerScience/NA/lec-2.md
-      - 解线性系统的直接方法: ComputerScience/NA/lec-3.md
+      - Chap 1 数学基础: ComputerScience/NA/chap-1.md
+      - Chap 2 单变量方程的解: ComputerScience/NA/chap-2.md
+      - Chap 6 解线性系统的直接方法: ComputerScience/NA/chap-6.md
+      - Chap 7 矩阵代数中的迭代方法: ComputerScience/NA/chap-7.md
+      - Chap 9 逼近特征值: ComputerScience/NA/chap-9.md
 
     - 操作系统:
       - ComputerScience/OS/index.md
@@ -106,11 +108,11 @@ nav:
       - 进程: ComputerScience/OS/chap03.md
       - 线程: ComputerScience/OS/chap04.md
 
-    - 计算机网络:
-      - ComputerScience/CN/index.md
-      - 计算机网络概述: ComputerScience/CN/chap-1.md
-      - 物理层: ComputerScience/CN/chap-2.md
-      - 数据链路层: ComputerScience/CN/chap-3.md
+    # - 计算机网络:
+    #   - ComputerScience/CN/index.md
+    #   - 计算机网络概述: ComputerScience/CN/chap-1.md
+    #   - 物理层: ComputerScience/CN/chap-2.md
+    #   - 数据链路层: ComputerScience/CN/chap-3.md
       # - 网络层: ComputerScience/CN/chap4.md
       # - 传输层: ComputerScience/CN/chap5.md
       # - 应用层: ComputerScience/CN/chap6.md

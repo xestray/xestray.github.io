@@ -3,7 +3,7 @@
     statistics: true
 ---
 
-# Solutions of Equations in One Variable
+# Chap 2: Solutions of Equations in One Variable
 
 ## The Bisection Method
 

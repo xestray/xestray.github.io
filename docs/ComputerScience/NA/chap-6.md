@@ -3,7 +3,7 @@
     statistics: true
 ---
 
-# Direct Methods for Solving Linear Systems
+# Chap 6: Direct Methods for Solving Linear Systems
 
 ## Linear Systems of Equations
 
@@ -11,17 +11,40 @@
 
 <figure markdown="span">
     ![](./assets/lec-3-1.png){width=75%}
-</figure>
+</figure>   
 
 $$ x_n = \frac{b_n^{(n)}}{a_{nn}^{(n)}} $$
 
 $$ x_i = \frac{b_i^{(i)} - \sum\limits_{j=i+1}^{n} a_{ij}^{(i)} x_j}{a_{ii}^{(i)}} \quad i=n-1,n-2,\ldots,1 $$
 
-!!! note
-    对于较大的 $n$，高斯消元+回代法所需的乘除法数量大约为 $\dfrac{n^3}{3}$
+高斯消元+回代法可以写成如下的伪代码：
 
-    - 高斯消元：$$ \sum_{k=1}^{n-1} (n-k)(n-k+2) = \frac{n^3}{3} + \frac{n^2}{2} -\frac{5}{6}n $$
-    - 回代：$$ 1 + \sum_{i=1}^{n-1} (n-i+1) = \frac{n^2}{2} + \frac{n}{2} $$
+<figure markdown="span">
+    ![](./assets/lec-3-5.png){width=75%}
+</figure>  
+
+
+!!! note "计算量"
+    在计算机上做乘除法的时间远大于加减法，因此我们主要关注乘除法的数量。
+
+    - 高斯消元：对于每个 $i$*
+        - 在 step 5 中需要完成 $n - i$ 次除法
+        - 在 step 6 中，对于每个 $j$ 需要完成 $n - i + 1$ 次乘法和 $n - i + 1$ 次减法，共计 $2(n - i + 1)$ 次乘法，因此共需完成 $(n - i)(n - i + 1)$ 次乘除法
+        - 因此，消元过程中需要做的乘除法数量为
+    
+        $$ \sum_{i=1}^{n-1} [(n-i) + (n-i)(n-i+1)] = \frac{n^3}{3} + \frac{n^2}{2} -\frac{5}{6}n $$
+
+    - 回代：
+        - 在 step 8 中，需要完成 1 次除法
+        - 在 step 9 中，对于每个 $i$ 需要完成 $n - i$ 次乘法和 1 次除法
+    
+        $$ 1 + \sum_{i=1}^{n-1} (n-i+1) = \frac{n^2}{2} + \frac{n}{2} $$
+
+    综上，总的乘除法数量为
+
+    $$ \frac{n^3}{3} + n^2 - \frac{n}{3} $$
+
+    因此当 $n$ 很大时，高斯消元法的算法复杂度为 $O(n^3)$
 
 ## Pivoting Strategies
 
@@ -61,6 +84,16 @@ $$ x_i = \frac{b_i^{(i)} - \sum\limits_{j=i+1}^{n} a_{ij}^{(i)} x_j}{a_{ii}^{(i)
 
 所谓部分选主元策略就是在每一步消元前，选择当前列中绝对值最大的元素作为主元，并将该行交换到当前行。形式化地来说，就是寻找一个最大的 $p \geqslant k$，使得 $|a_{pk}^{(k)}| = \max\limits_{k \leqslant i \leqslant n} |a_{ik}^{(k)}|$，然后交换第 $k$ 行和第 $p$ 行。
 
+??? note "伪代码"
+    <figure markdown="span">
+        ![](./assets/lec-3-6.png){width=75%}
+    </figure>
+
+    <figure markdown="span">
+        ![](./assets/lec-3-7.png){width=75%}
+    </figure>
+
+
 ### Scaled Partial Pivoting (scaled-column pivoting)
 
 缩放部分选主元是高斯消元法（以及 LU 分解）中用于选择稳定主元的常用策略。
@@ -81,6 +114,13 @@ $$ x_i = \frac{b_i^{(i)} - \sum\limits_{j=i+1}^{n} a_{ij}^{(i)} x_j}{a_{ii}^{(i)
 3. 交换第 $k$ 行和第 $p$ 行
 
 > 我们可以事先计算好每一行的缩放因子 $s_i$，然后在每一步消元时直接使用它们来选择主元，而不需要每一次都单独计算。
+
+它和部分选主元策略的伪代码类似，只是在选择主元时多了一个缩放因子的计算，写成伪代码的形式后只有前三步有所不同
+
+!!! note "伪代码与部分选主元策略的差异"
+    <figure markdown="span">
+        ![](./assets/lec-3-8.png){width=75%}
+    </figure>
 
 ### Complete Pivoting
 
@@ -174,22 +214,21 @@ $$
 $$ U = 
 \begin{bmatrix} 
 a_{11}^{(1)} & a_{12}^{(1)} & \cdots & a_{1n}^{(1)} & \\ 
-& a_{22}^{(1)} & \cdots & a_{1n}^{(1)} & \\  
+& a_{22}^{(2)} & \cdots & a_{1n}^{(2)} & \\  
 & & \ddots & \vdots \\
-& & & 1 
+& & & a_{nn}^{(n)} & 
 \end{bmatrix}
 $$ 
 
-我们就成功把方针 $A$ 分解了，这称为方针 LU 分解
+我们就成功把方阵 $A$ 分解了，这称为方阵的 LU 分解
 
 $$ A = LU $$
 
 > L 表示下三角矩阵（Lower Triangular Matrix），U 表示上三角矩阵（Upper Triangular Matrix）
 
 !!! theorem
-    如果可以对线性方程组 $A \vec{x} = \vec{b}$ 进行高斯消元而不需要行交换，那么矩阵 $A$ 可以分解为一个下三角矩阵 $L$ 和一个上三角矩阵 $U$ 的乘积。
-    
-    若还满足 $L$ 是​​单位下三角矩阵​​（对角线元素为1 ），则这种分解是唯一的。
+    - 如果可以对线性方程组 $A \vec{x} = \vec{b}$ 进行高斯消元而不需要行交换，那么矩阵 $A$ 可以分解为一个下三角矩阵 $L$ 和一个上三角矩阵 $U$ 的乘积。
+    - 若还满足 $L$ 是​​单位下三角矩阵​​（对角线元素为1 ），则这种分解是唯一的。
 
 ??? proof
     若分解不唯一，那么存在两种分解
@@ -273,11 +312,14 @@ $$ A = LU $$
 ### Choleski’s Method for Positive Definite Matrix
 
 !!! definition "正定矩阵"
+    > 这里定义的的正定矩阵实际上是对称正定矩阵，和其他书中的定义不同
+
     若 $n$ 阶矩阵 $A$ 是对称的且对于任意的非零 $n$ 维向量 $\vec{x}$ 都满足
     $$ \vec{x}^T A \vec{x} > 0 $$
     则称 $A$ 为正定矩阵（Positive Definite Matrix）
 
 !!! property "正定矩阵的性质"
+    - 正定矩阵是非奇异的
     - 正定矩阵的逆也是正定的，并且所有的对角元均为正（$a_{ii} > 0$）
     - 元素的绝对值满足 $\max |a_{ij}| \leqslant \max |a_{ii}|$，且 $|a_{ij}| < \sqrt{a_{ii} a_{jj}}$
     - 正定矩阵的各阶顺序主子式均为正（前 $k$ 行前 $k$ 列组成的 $k$ 阶子矩阵 $A_k$ 的行列式均为正）
