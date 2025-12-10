@@ -83,9 +83,9 @@ $$ \vec{x} = T\vec{x} + \vec{c} $$
 
 
 
-<figure markdown="span">
+<!-- <figure markdown="span">
     ![](./assets/lec-4-1.png){width=75%}
-</figure>
+</figure> -->
 
 
 
