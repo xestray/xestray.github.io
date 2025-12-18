@@ -97,8 +97,10 @@ nav:
       - ComputerScience/NA/index.md
       - Chap 1 数学基础: ComputerScience/NA/chap-1.md
       - Chap 2 单变量方程的解: ComputerScience/NA/chap-2.md
+      - Chap 3 插值与多项式逼近: ComputerScience/NA/chap-3.md
       - Chap 6 解线性系统的直接方法: ComputerScience/NA/chap-6.md
       - Chap 7 矩阵代数中的迭代方法: ComputerScience/NA/chap-7.md
+      - Chap 8 逼近理论: ComputerScience/NA/chap-8.md
       - Chap 9 逼近特征值: ComputerScience/NA/chap-9.md
 
     - 操作系统:
