@@ -105,6 +105,17 @@ nav:
       - Chap 8 逼近理论: ComputerScience/NA/chap-8.md
       - Chap 9 逼近特征值: ComputerScience/NA/chap-9.md
 
+    - 汇编与接口:
+      - ComputerScience/ASM/index.md
+      - Chap 1: ComputerScience/ASM/chap-1.md
+      - Chap 2: ComputerScience/ASM/chap-2.md
+      - Chap 3: ComputerScience/ASM/chap-3.md
+      - Chap 4: ComputerScience/ASM/chap-4.md
+      - Chap 5: ComputerScience/ASM/chap-5.md
+      - Chap 6: ComputerScience/ASM/chap-6.md
+      - Chap 9: ComputerScience/ASM/chap-9.md
+      - Chap 11: ComputerScience/ASM/chap-11.md
+
     - 操作系统:
       - ComputerScience/OS/index.md
       - 引言: ComputerScience/OS/chap01.md
