@@ -34,7 +34,7 @@
 
 如果一个变量满足 $x = g(x)$，则称 $x$ 为 $g(x)$ 的不动点。寻找方程 $f(x) = 0$ 的根可以转化为寻找 $x = g(x)$ 的不动点。
 
-~  我们可以通过 $p_n = g(p_{n-1})$ 来构造一个数列 $\{p_n\}$，如果这个数列收敛于 $p$($\lim\limits_{n \to \infty} p_n = p$)，并且这个函数是连续的，那么
+我们可以通过 $p_n = g(p_{n-1})$ 来构造一个数列 $\{p_n\}$，如果这个数列收敛于 $p$（即 $\lim\limits_{n \to \infty} p_n = p$），并且这个函数是连续的，那么
 $$ p = \lim_{n \to \infty} p_n = \lim_{n \to \infty} g(p_{n-1}) = g\left(\lim_{n \to \infty} p_{n-1}\right) = g(p) $$
 我们称这种方法为不动点迭代法。
 
@@ -53,23 +53,27 @@ $$ p = \lim_{n \to \infty} p_n = \lim_{n \to \infty} g(p_{n-1}) = g\left(\lim_{n
         - 证明不动点唯一：
 
             反证法，假设 $g$ 在 $[a, b]$ 上有两个不动点 $p$ 和 $q$，且 $p \neq q$。根据拉格朗日中值定理，存在 $\xi$ 在 $p$ 和 $q$ 之间，使得
-
             $$ g(p) - g(q) = g'(\xi)(p - q) $$
 
             即
-
             $$ (1 - g'(\xi))(p - q) = 0 $$
 
             由于 $p \neq q$，所以 $1 - g'(\xi) = 0$，即 $g'(\xi) = 1$。这与 $|g'(x)| \leqslant k < 1$ 矛盾，因此 $g$ 在 $[a, b]$ 上只有一个不动点。
 
         - 证明收敛性：
-
             $$ \begin{aligned}
-            |p_n - p| &= |g(p_{n-1}) - g(p)| = |g'(\xi)||p_{n-1} - p| \leqslant k|p_{n-1} - p| \\
+            |p_n - p| &= |g(p_{n-1}) - g(p)| = |g'(\xi)||p_{n-1} - p| \leqslant k|p_{n-1} - p| \\\\
             &\leqslant k^2|p_{n-2} - p| \leqslant \cdots \leqslant k^n|p_0 - p|, \quad n \geqslant 1
             \end{aligned} $$
 
             由于 $0 < k < 1$，所以 $\lim\limits_{n \to \infty} k^n = 0$，因此 $\lim\limits_{n \to \infty} |p_n - p| = 0$，即 $\lim\limits_{n \to \infty} p_n = p$。
+
+!!! tip "推论"
+    若 $g$ 满足不动点定理的假设，则使用 $p_n$ 逼近 $p$ 时的误差界可由以下推导给出（$n \geqslant 1$）
+    $$ |p_n - p| \leqslant \dfrac{1}{1-k} |p_{n+1}- p_n| $$
+    
+    并且
+    $$ |p_n - p| \leqslant \dfrac{k^n}{1-k} |p_1- p_0| $$
 
 <figure markdown="span">
     ![](./assets/lec-2-2.png){width=75%}
@@ -146,6 +150,10 @@ $$ \lim_{n \to \infty} \frac{|p_{n+1} - p|}{|p_n - p|} =  \lim_{n \to \infty} \f
 
     推导为：
     $$ p_{n+1} = g(p_n) = g(p) + g'(p)(p_n - p) + \cdots + \frac{g^{(\alpha)}(\xi_n)}{\alpha!}(p_n - p)^\alpha $$
+
+    而 $p = g(p)$，于是可以整理得到
+    $$ \frac{|p_{n+1} - p|}{|p_n - p|^\alpha} = \left|\dfrac{g^{(\alpha)}(p)}{\alpha!}\right| $$
+
     其中误差常数为 $\lambda = \left|\dfrac{g^{(\alpha)}(p)}{\alpha!}\right|$。
 
 如果是重根，那么牛顿迭代法的收敛速度将会大大降低：
@@ -165,7 +173,6 @@ $$ g'(p) = |1 - \frac{f'(p)^2 - f(p) f''(p)}{f'(p)^2}| = 1 - \frac{1}{m} < 1 $$
 
 !!! note "modified Newton's Method"
     令 $\mu(x) = \dfrac{f(x)}{f'(x)}$，则此时 $f$ 的重根 $p$ 变为 $\mu$ 的单根，因此可以使用牛顿迭代法来求解 $\mu(x) = 0$，即
-
     $$ g(x) = x - \frac{\mu(x)}{\mu'(x)} = x - \frac{f(x)f'(x)}{(f'(x))^2 - f(x)f''(x)} $$
 
     - 上面这个式子是二次收敛的
@@ -181,11 +188,10 @@ $$ g'(p) = |1 - \frac{f'(p)^2 - f(p) f''(p)}{f'(p)^2}| = 1 - \frac{1}{m} < 1 $$
     - 更高阶的差分递归定义：$\Delta^k p_n = \Delta(\Delta^{k-1} p_n)$
 
 !!! definition "Aitken's $\Delta^2$ Method"
-    设数列 $\{p_n\}$ 以线性收敛于 $p$，且对于足够大的 $n$ 有 $(p_n - p)(p_{n+1} - p) > 0$（即差分保持同号，也称数列 $\{p_n\}$ 单调收敛于 $p$。
+    设数列 $\{p_n\}$ 以线性收敛于 $p$，且对于足够大的 $n$ 有 $(p_n - p)(p_{n+1} - p) > 0$（即差分保持同号），也称数列 $\{p_n\}$ 单调收敛于 $p$。
 
     那么我们定义一个新的数列 $\{\hat{p}_n\}$，其中
-
-    $$ \hat{p}_n = p_n - \frac{(\Delta p_n)^2}{\Delta^2 p_n} = p_n - \frac{(p_{n+1} - p_n)^2}{p_{n+2} - 2p_{n+1} + p_n} $$
+    $$ \hat{p} _ n = p _ n - \frac{(\Delta p _ n) ^ 2}{\Delta ^ 2 p _ n} = p _ n - \frac{(p _ {n+1} - p _ n) ^ 2}{p _ {n+2} - 2p _ {n+1} + p _ n} $$
 
     这个数列也收敛于 $p$，且收敛速度更快。
     $$ \lim_{n \to \infty} \frac{\hat{p}_{n} - p}{p_n - p} = 0 $$

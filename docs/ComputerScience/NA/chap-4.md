@@ -30,7 +30,7 @@ $$ f'(x_0) = \dfrac{f(x_0 + h) - f(x_0)}{h} - \dfrac{h}{2} f''(\xi) $$
 类似地，我们可以推广到使用 $n+1$ 个插值点 $\{x_0, x_1, \cdots, x_n\}$ 构造 $n$ 次拉格朗日插值多项式来近似 $f(x)$ 的方法：
 $$ \begin{aligned}
 f(x) & = \sum\limits_{k=0}^n f(x_k) L_k(x) + \dfrac{(x - x_0) \cdots (x - x_n)}{(n+1)!} f^{(n+1)}(\xi_x) \\\\
-f'(x_j) & = \sum\limits_{k=0}^n f(x_k)L_k'(x_j) + \dfrac{f^{(n+1)}(\xi_j)}{(n+1)!} \prod\limits_{\substack{k = 0 \\ k \ne j}}^n (x_j - x_k)
+f'(x_j) & = \sum\limits_{k=0}^n f(x_k)L_k'(x_j) + \dfrac{f^{(n+1)}(\xi_j)}{(n+1)!} \prod\limits_{\substack{k = 0 \\\\ k \ne j}}^n (x_j - x_k)
 \end{aligned} $$
 
 上述导数公式被称为近似 $f'(x_j)$ 的 $n+1$ 点公式。
@@ -42,12 +42,12 @@ f'(x_j) & = \sum\limits_{k=0}^n f(x_k)L_k'(x_j) + \dfrac{f^{(n+1)}(\xi_j)}{(n+1)
 !!! example
     === "例一"
         <figure markdown="span">
-            ![](./assets/chap-4-2.png){width=80%}
+            ![](./assets/chap-4-2.png){width=85%}
         </figure>
 
     === "例二"
         <figure markdown="span">
-            ![](./assets/chap-4-3.png){width=80%}
+            ![](./assets/chap-4-3.png){width=85%}
         </figure>
 
 ## Elements of Numerical Integration
@@ -91,6 +91,7 @@ $$ C_i^{(n)} = \dfrac{(-1)^{n-i}}{ni!(n - i)!} \int_0^n \prod\limits_{i \ne j} (
     - $\int_a^b f(x) dx \approx \dfrac{b - a}{2}[f(a) + f(b)]$（称为**梯形法则**，也就是我们看到的上一个 example）
     - 误差为 $R[f] = \int_a^b \dfrac{f''(\xi_x)}{2!}(x-a)(x-b) dx = -\dfrac{1}{12}h^3f''(\xi)$
     - 其中 $\xi \in [a, b], h = \dfrac{b - a}{1}$
+    - 精度 = 1
 - $n = 2$
     - $C_0^{(2)} = \dfrac{1}{6}, C_1^{(2)} = \dfrac{2}{3}, C_2^{(2)} = \dfrac{1}{6}$
     - $\int_a^b f(x) dx \approx \dfrac{b - a}{6}[f(a) + 4f(\dfrac{a+b}{2}) + f(b)]$（称为**辛普森法则**(Simpson's rule)）
@@ -106,11 +107,12 @@ $$ C_i^{(n)} = \dfrac{(-1)^{n-i}}{ni!(n - i)!} \int_0^n \prod\limits_{i \ne j} (
 
 !!! theorem
     对于使用 $n+1$ 个点的牛顿-科茨公式，$\exists \xi \in (a, b)$，使得：
-    $$ \int_a ^ b f(x) dx = \sum\limits_{k=0} ^ n A_k f(x_k) + \dfrac{h ^ {n+3}f ^ {(n+2)}(\xi)}{(n+2)!} \int_0 ^ n t ^ 2(t - 1) \cdots (t - n) dt $$
 
     - 如果 $n$ 为**偶数**，那么 $f \in C^{n+2}[a, b]$ 且
-        $$ \int_a^b f(x) dx = \sum\limits_{k=0}^n A_k f(x_k) + \dfrac{h ^ {n+2} f ^ {(n+1)}(\xi)}{(n+1)!} \int_0^n t(t - 1) \cdots (t - n) dt $$
+        $$ \int_a ^ b f(x) dx = \sum\limits_{k=0} ^ n A_k f(x_k) + \dfrac{h ^ {n+3}f ^ {(n+2)}(\xi)}{(n+2)!} \int_0 ^ n t ^ 2(t - 1) \cdots (t - n) dt $$
+
     - 如果 $n$ 为**奇数**，那么  $f \in C^{n+1}[a, b]$
+        $$ \int_a^b f(x) dx = \sum\limits_{k=0}^n A_k f(x_k) + \dfrac{h ^ {n+2} f ^ {(n+1)}(\xi)}{(n+1)!} \int_0^n t(t - 1) \cdots (t - n) dt $$
 
     > 注意：当 $n$ 是偶数时，精度的次数为 $n+1$，精度要高于插值多项式的次数。当 $n$ 是奇数的情况，精度的次数仅为 $n$。
 
@@ -146,10 +148,7 @@ $$
 
 !!! note
     为了简化记号，我们令 $n' = 2n$，那么 $h' = \dfrac{b-a}{n'} = \dfrac{h}{2}, x_k = a+kh'$，所以上面的式子可以写成：
-
-    $$
-    S_n = \dfrac{h'}{3}[f(a) + 4 \sum\limits_{odd\ k} f(x_k) + 2 \sum\limits_{even\ k} f(x_k) + f(b)]
-    $$
+    $$ S_n = \dfrac{h'}{3}[f(a) + 4 \sum\limits_{odd\ k} f(x_k) + 2 \sum\limits_{even\ k} f(x_k) + f(b)] $$
 
 上述的符合方法都是**稳定的**，我们可以看下面这个例子：
 
@@ -158,10 +157,7 @@ $$
     $$ e(h) = \Big|\dfrac{h}{3}[\varepsilon_0 + 4 \sum\limits_{odd\ k} \varepsilon_k + 2 \sum\limits_{even\ k} \varepsilon_k + \varepsilon_n]\Big| $$
 
     若 $|\varepsilon_i| < \varepsilon\ (i = 0, \cdots, n)$，那么：
-
-    $$
-    e(h) < \dfrac{h}{3} [\varepsilon + 4(n/2)\varepsilon + 2(n/2-1)\varepsilon + \varepsilon] = nh\varepsilon = (b-a)\varepsilon
-    $$
+    $$ e(h) < \dfrac{h}{3} [\varepsilon + 4(n/2)\varepsilon + 2(n/2-1)\varepsilon + \varepsilon] = nh\varepsilon = (b-a)\varepsilon $$
 
     可以看到，当我们为了提高精确程度而使分区更加精细时，虽然计算量增加了，但是舍入误差与区间数量 $n$ 无关，因此该方法是稳定的。
 
@@ -185,7 +181,7 @@ $$ R_{2n}[f] = -\Big(\dfrac{h}{2}\Big)^2 \dfrac{1}{12}(b-a)f''(\xi') \approx \df
 - $\dfrac{4^2S_{2n} - S_n}{4^2 - 1} = C_n$
 - $\dfrac{4^3C_{2n} - C_n}{4^3 - 1} = R_n$ 
 
-    这称为 **Romberg 序列**(Romberg sequence)
+    这称为 **Romberg 序列**（Romberg sequence）
 
 于是我们可以构造 Romberg 积分表格如下：
 
@@ -315,7 +311,7 @@ $$ \langle f, g \rangle = \int_a^b f(x) g(x) w(x) dx $$
     根据 $P_0 = 1, P_1 = x$，我们可以得到递推关系
     $$ (k + 1)P_{k+1} = (2k + 1)xP_k - kP_{k-1} $$
 
-    使用 $P_{n+1}(x)$ 的根作为高斯点，可以得到**高斯-勒让德求积公式**(Gauss-Legendre Quadrature Formula)：
+    使用 $P_{n+1}(x)$ 的根作为高斯点，可以得到**高斯-勒让德求积公式**（Gauss-Legendre Quadrature Formula）：
 
 - **切比雪夫多项式**(Chebyshev polynomials)：定义在 $[-1, 1]$ 上且 $w(x) = \dfrac{1}{\sqrt{1 - x^2}}$
     - 多项式定义为
@@ -323,7 +319,7 @@ $$ \langle f, g \rangle = \int_a^b f(x) g(x) w(x) dx $$
 
     - $T_{n+1}(x)$ 的根为 $x_k = \cos\left(\dfrac{2k + 1}{2n + 2} \pi\right), k = 0, 1, \cdots, n$
     
-    使用这些点作为高斯点，可以得到**高斯-切比雪夫求积公式**(Gauss-Chebyshev Quadrature Formula)：
+    使用这些点作为高斯点，可以得到**高斯-切比雪夫求积公式**（Gauss-Chebyshev Quadrature Formula）：
         $$ \int_{-1}^1 \dfrac{f(x)}{\sqrt{1 - x^2}} dx \approx \dfrac{\pi}{n + 1} \sum\limits_{k=0}^n f\left[\cos\left(\dfrac{2k + 1}{2n + 2} \pi\right)\right] = \sum\limits_{k=0}^n A_k f(x_k) $$
 
     我们可以注意到积分端点 $x = \pm 1$ 是积分上的奇点，此时在等间距的点上使用牛顿-科茨公式会出现问题，而使用高斯积分公式可以避免这个问题。

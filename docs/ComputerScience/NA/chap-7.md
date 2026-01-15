@@ -7,7 +7,7 @@
 
 假设我们要求解线性方程组 $A\vec{x} = \vec{b}$，其中 $A$ 是一个大型稀疏矩阵。直接方法（如高斯消去法）在这种情况下可能效率低下且耗费大量内存。
 
-此时我们可以通过迭代方法来近似求解该方程，思路类似于用定点迭代法求解方程，我们可以把方程 $A\vec{x} = \vec{b}$ 重写为 
+思路：我们可以通过迭代方法来近似求解该方程，思路类似于用定点迭代法求解方程，我们可以把方程 $A\vec{x} = \vec{b}$ 重写为以下的形式：
 $$ \vec{x} = T\vec{x} + \vec{c} $$ 
 因此我们就可以通过式子 $\vec{x}^{(k+1)} = T\vec{x}^{(k)} + \vec{c}$ 来迭代求解 $\vec{x}$ 的近似值。
 
@@ -18,15 +18,16 @@ $$ \vec{x} = T\vec{x} + \vec{c} $$
 !!! definition "向量范数"
     $\mathbf{R}^n$ 上的向量范数是一个函数 $||\cdot||: \mathbf{R}^n \rightarrow \mathbf{R}$，满足以下性质：
 
-    1. 非负性：$||\vec{x}|| \geq 0;\ ||\vec{x}|| = 0 \iff \vec{x} = \vec{0} \quad (\vec{x} \in \mathbf{R}^n)$
+    1. 非负性（正定性）：$||\vec{x}|| \geq 0;\ ||\vec{x}|| = 0 \iff \vec{x} = \vec{0} \quad (\vec{x} \in \mathbf{R}^n)$
     2. 齐次性：$||\alpha \vec{x}|| = |\alpha| \cdot ||\vec{x}|| \quad (\alpha \in \mathbf{R},\ \vec{x} \in \mathbf{R}^n)$
     3. 三角不等式：$||\vec{x} + \vec{y}|| \leq ||\vec{x}|| + ||\vec{y}|| \quad (\vec{x}, \vec{y} \in \mathbf{R}^n)$
 
 !!! note "常见的向量范数"
     - **1-范数**：$||\vec{x}||_1 = \sum_{i=1}^{n} |x_i|$
     - **2-范数**（欧几里得范数）：$||\vec{x}||_2 = \sqrt{\left( \sum\limits_{i=1}^{n} |x_i|^2 \right)}$
-    - **p-范数**：$||\vec{x}||_p = \left( \sum\limits_{i=1}^{n} |x_i|^p \right)^{\frac{1}{p}} \quad (p \geq 1)$
+    - **$p$-范数**：$||\vec{x}||_p = \left( \sum\limits_{i=1}^{n} |x_i|^p \right)^{\frac{1}{p}} \quad (p \geq 1)$
     - **无穷范数**：$||\vec{x}||_\infty = \max\limits_{1 \leq i \leq n} |x_i|$
+        - 可以视为 $p \to \infty$ 条件下的 $p$-范数
 
 !!! definition "向量的收敛性"
     我们称 $\mathbf{R}^n$ 上的向量序列 $\{\vec{x}^{(k)}\}_{k=1}^{+\infty}$ 依照范数 $||\cdot||$ 收敛于 $\vec{x} \in \mathbf{R}^n$，当且仅当对于任意的 $\varepsilon > 0$，存在正整数 $N$，使得当 $k > N$ 时，有
@@ -47,15 +48,12 @@ $$ \vec{x} = T\vec{x} + \vec{c} $$
 
 ??? example "$||\cdot||_2$ 和 $||\cdot||_\infty$ 是等价的"
     假设 $\vec{x}$ 中最大的一个分量为 $|x_m| = \max_{1 \leq i \leq n} |x_i|$，那么
-
     $$ ||\vec{x}||_\infty = |x_m| $$
         
     我们知道
-
     $$ ||\vec{x}||_2 = \sqrt{\sum_{i=1}^{n} |x_i|^2} \geq ||\sqrt{|x_m|^2}|| = |x_m| = ||\vec{x}||_\infty $$
 
     并且我们还有
-
     $$ ||\vec{x}||_2 = \sqrt{\sum_{i=1}^{n} |x_i|^2} \leq \sqrt{\sum_{i=1}^{n} |x_m|^2} = \sqrt{n|x_m|^2} = \sqrt{n} ||\vec{x}||_\infty $$
 
     所以 $||\vec{x}|| _ \infty \leq ||\vec{x}||_2 \leq \sqrt{n} ||\vec{x}|| _ \infty$，即 $c_1 = 1,\ c_2 = \sqrt{n}$，从而 $||\cdot||_2$ 和 $||\cdot|| _ \infty$ 是等价的。
@@ -63,10 +61,9 @@ $$ \vec{x} = T\vec{x} + \vec{c} $$
 ### Matrix Norms
 
 !!! definition "矩阵范数"
-
     在 $\mathbf{R}^{n \times n}$ 上的矩阵范数是一个实值函数 $||\cdot||: \mathbf{R}^{n \times n} \rightarrow \mathbf{R}$，满足以下性质：
 
-    1. **非负性**：$||A|| \geq 0;\ ||A|| = 0 \iff A = 0$
+    1. **非负性（正定性）**：$||A|| \geq 0;\ ||A|| = 0 \iff A = 0$
     2. **齐次性**：$||\alpha A|| = |\alpha| \cdot ||A|| \quad (\alpha \in \mathbf{R})$
     3. **三角不等式**：$||A + B|| \leq ||A|| + ||B||$
     4. **一致性**：$||AB|| \leq ||A|| \cdot ||B||$
@@ -138,16 +135,15 @@ a_{11}x_1 + a_{12}x_2 + \dots + a_{1n}x_n = b_1 \\\\
 a_{21}x_1 + a_{22}x_2 + \dots + a_{2n}x_n = b_2 \\\\ 
 \dots \\\\ 
 a_{n1}x_1 + a_{n2}x_2 + \dots + a_{nn}x_n = b_n
-\end{cases}$$，
+\end{cases}$$
 
 当 $a_{ii} \ne 0$ 时，不难得到：
-
 $$ \begin{cases}
-x_1 = \dfrac{1}{a_{11}}(-a_{12}x_2 - \dots - a_{1n}x_n + b_1) \\\\\\ 
+x_1 = \dfrac{1}{a_{11}}(-a_{12}x_2 - \dots - a_{1n}x_n + b_1) \\\\\\\\ 
 x_2 = \dfrac{1}{a_{22}}(-a_{21}x_1 - \dots - a_{2n}x_n + b_1) \\\\
 \cdots \\\\
 x_n = \dfrac{1}{a_{nn}}(-a_{n1}x_1 - \dots - a_{1n, n-1}x_{n-1} + b_n) 
-\end{cases} $$，
+\end{cases} $$
 
 <figure markdown="span">
     ![](./assets/chap-7-1.png){width=45%}
@@ -167,6 +163,9 @@ $$ T_j = D^{-1}(L + U), \quad \vec{c}_j = D^{-1}\vec{b} $$
 
 于是，线性方程组 $A\vec{x} = \vec{b}$ 可以写成迭代形式：
 $$ \vec{x} = T_j \vec{x} + \vec{c}_j $$
+
+!!! tip
+    所有的对角元取倒数就可以得到对角矩阵的逆矩阵
 
 !!! note "Jacobi 迭代法的伪代码"
     <figure markdown="span">
@@ -212,7 +211,7 @@ $$ \vec{x}^{(k)} = T_g \vec{x}^{(k-1)} + \vec{c}_g $$
     </figure>
 
 !!! tip
-    上述两个迭代方法并不总是能保证收敛。并且存在其中一种迭代法成功，另一种迭代法失败的情况。
+    上述两个迭代方法并不总是能保证收敛，并且存在其中一种迭代法成功，另一种迭代法失败的情况。
 
 ### Convergence of Iterative Method
 
@@ -340,7 +339,7 @@ $$ \vec{x}^{(k)} = T_\omega \vec{x}^{(k-1)} + \vec{c}_\omega $$
 ## Error Bounds and Iterative Refinement
 
 !!! note "目标"
-    这一小结研究 $A$ 和 $\vec{b}$ 的误差会如何影响 $A\vec{x} = \vec{b}$ 的解 $\vec{x}$。
+    这一小节研究 $A$ 和 $\vec{b}$ 的误差会如何影响 $A\vec{x} = \vec{b}$ 的解 $\vec{x}$。
 
 
 - 假设 $A$ 是准确的，但 $\vec{b}$ 有误差 $\delta \vec{b}$，那么带有误差的解可以写作 $\vec{x} + \delta \vec{x}$，可以得到
@@ -402,7 +401,6 @@ $$ (A + \delta A)(\vec{x} + \delta \vec{x}) = \vec{b} $$
 
 !!! theorem
     假设 $\vec{x}^*$ 是 $A \vec{x} = \vec{b}$ 的近似解，$A$ 是一个非奇异矩阵，$\vec{r} = \vec{b} - A\vec{x}$ 是 $\vec{x}^*$ 的残差向量。那么对于任意自然范数，$\| \vec{x} - \vec{x}^* \| \le \| \vec{r} \| \cdot \| A^{-1} \|$。且如果 $\vec{x} \ne \vec{0}, \vec{b} \ne \vec{0}$，那么：
-
     $$
     \dfrac{\| \vec{x} - \vec{x}^* \|}{\| \vec{x} \|} \le K(A) \dfrac{\| \vec{r} \|}{\| \vec{b} \|}
     $$

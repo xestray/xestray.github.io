@@ -51,13 +51,13 @@ y(a) = \alpha
     假设 $D = \{(t, y)\ |\ a \leqslant t \leqslant b,\ -\infty < y < \infty\}$，且 $f(t, y)$ 在 $D$ 上连续。若 $f$ 满足在变量 $y \in D$ 上的 Lipschitz 条件，那么初值问题
     $$ y'(t) = f(t, y),\ a \leqslant t \leqslant b,\ y(a) = \alpha $$
 
-    是**适定的**(well-posed)。
+    是**适定的（well-posed）**。
 
 ## Euler's Method
 
 > 欧拉法的目标与上一节相同
 
-考虑函数 $y(t)$ 在点 $t_0$ 处定义：
+考虑导数函数 $y'(t)$ 在点 $t_0$ 处的定义：
 $$ \begin{aligned}
 & y'(t_0) \approx \dfrac{y(t_0 + h) - y(t_0)}{h} \\\\
 \Longrightarrow \, &y(t_1) \approx y(t_0) + hy'(t_0) = \alpha + hf(t_0, \alpha)
@@ -92,7 +92,8 @@ w_{i+1} = w_i + hf(t_i, w_i)
 
 代入舍入误差后，差分方程变为：
 $$\begin{cases}
-w_0 = \alpha \textcolor{red}{+ \delta_0} \\ w_{i+1} = w_i + hf(t_i, w_i) \textcolor{red}{+ \delta_{i+1}}
+w_0 = \alpha \textcolor{red}{+ \delta_0} \\\\ 
+w_{i+1} = w_i + hf(t_i, w_i) \textcolor{red}{+ \delta_{i+1}}
 \end{cases}
 \quad (i = 0, \cdots, n - 1)
 $$
@@ -110,7 +111,7 @@ $$
 !!! definition
     我们定义差分法 
     $$ \begin{cases}
-    w_0 = \alpha \\ 
+    w_0 = \alpha \\\\
     w_{i+1} = w_i + h\varphi(t_i, w_i)
     \end{cases} \quad (i = 0, \cdots, n - 1) $$ 
 
@@ -156,14 +157,15 @@ w_{i+1} = w_i + hT^{(n)}(t_i, w_i)
     > 注意，这个题目中的 $n$ 表示的是区间划分的份数，而不是泰勒方法的阶数
 
     <figure markdown="span">
-        ![](./assets/chap-5-2.png){width=80%}
+        ![](./assets/chap-5-2.png){width=85%}
     </figure>
 
 ### Other Euler’s Methods
 
 - **隐式欧拉法**(implicit Euler's method)
     $$ \begin{aligned}
-    &y'(t_0) \approx \dfrac{y(t_0) - y(t_0 - h)}{h} \\\\ \Longrightarrow \ &\textcolor{red}{y(t_1)} \approx y(t_0) + hy'(t_1) + \alpha + hf(t_1, \textcolor{red}{y(t_1)}) 
+    &y'(t_0) \approx \dfrac{y(t_0) - y(t_0 - h)}{h} \\\\\\\\ 
+    \Longrightarrow \\ &\textcolor{red}{y(t_1)} \approx y(t_0) + hy'(t_1) + \alpha + hf(t_1, \textcolor{red}{y(t_1)}) 
     \end{aligned} $$
 
     <figure markdown="span">
@@ -183,8 +185,8 @@ w_{i+1} = w_i + hT^{(n)}(t_i, w_i)
 
 - **双步法**(double-step method)
     $$ \begin{aligned}
-    & y'(t_0) = \dfrac{1}{2h}[y(t_0 + h) - y(t_0 - h)] - \dfrac{h ^ 2}{6}y ^ {(3)}(\xi_1) \\\\ 
-    \Longrightarrow \ & y(t_2) \approx y(t_0) + 2hf(t_1, y(t_1))
+    & y'(t_0) = \dfrac{1}{2h}[y(t_0 + h) - y(t_0 - h)] - \dfrac{h ^ 2}{6}y ^ {(3)}(\xi_1) \\\\\\\\ 
+    \Longrightarrow \\ & y(t_2) \approx y(t_0) + 2hf(t_1, y(t_1))
     \end{aligned} $$
     - 差分方程为 $\begin{cases}w_0 = \alpha \\ w_{i+1} = w_{i-1} + 2hf(t_i, w_i)\end{cases} (i = 1, \cdots, n - 1)$
     - 这个方法要求知道两个初始点，故得其名；而先前讨论的方法都是**单步法**(single-step methods)
@@ -202,7 +204,7 @@ w_{i+1} = w_i + hT^{(n)}(t_i, w_i)
 
 ## Runge-Kutta Methods
 
-基于泰勒的方法需要计算 $f(t,y)$ 的导数并求其值，在实际应用中这是一个复杂且耗时的过程。而**Runge-Kutta 法**是一种具有高阶局部截断误差的单步方法，无需计算 $f$ 的导数。
+基于泰勒的方法需要计算 $f(t,y)$ 的导数并求其值，在实际应用中这是一个复杂且耗时的过程。而 **Runge-Kutta 法**是一种具有高阶局部截断误差的单步方法，无需计算 $f$ 的导数。
 
 思路：在单步法中，某个线段从点 $(t_i, w_i)$ 出发，以某个斜率延伸至下一个点 $(t_{i+1}, w_{i+1})$。我们可以通过**找到更好的斜率**来改善结果。
 
@@ -255,10 +257,10 @@ K_2 & = f(t_i + \textcolor{red}{p}h, w_i + \textcolor{red}{p}hK_1)
     
 比对上面两个方程，可以得到：$\lambda_1 + \lambda_2 = 1, \lambda_2 p = \dfrac{1}{2}$
 
-这是一个有 3 个未知数，2 个方程的方程组，有无穷多个解。而由这两个方程得到的一系列方法被称为 **2 阶Runge-Kutta 方法**（Runge-Kutta method of order 2）
+这是一个有 3 个未知数，2 个方程的方程组，有无穷多个解。而由这两个方程得到的一系列方法被称为 **2 阶 Runge-Kutta 方法**（Runge-Kutta method of order 2）
 
 !!! note "二阶 Runge-Kutta 方法的三个特殊形式"
-    - **中点法**(midpoint method)：将从二阶泰勒法中的 $T^{(2)}(t, y)$ 用 $f(t + h / 2, y + (h / 2)f(t, y))$ 替换得到的差分方程法。
+    - **中点法（midpoint method）**：用 $f(t + h/2, y + (h/2) f(t, y))$ 替换二阶泰勒法中的 $T^{(2)}(t, y)$ ，从而得到的差分方程法。
         $$ \begin{cases}
         w_0 = \alpha \\\\
         w_{i+1} = w_i + hf(t_i + \dfrac{h}{2}, w_i + \dfrac{h}{2}f(t_i, w_i))
@@ -266,7 +268,7 @@ K_2 & = f(t_i + \textcolor{red}{p}h, w_i + \textcolor{red}{p}hK_1)
         \quad (i = 0, \cdots, N - 1)
         $$
 
-    - **改进欧拉法**(modified Euler method)：
+    - **改进欧拉法（modified Euler method）**：
         $$ \begin{cases}
         w_0 = \alpha \\\\
         w_{i+1} = w_i + h(\dfrac{1}{2}K_1 + \dfrac{1}{2} K_2) \\\\
@@ -320,7 +322,7 @@ K_4 = f(t_i + h, w_i + hK_3)
 
 思路：多个网格点(mesh points)上使用 $y, y'$ 在的线性组合来得到更好的近似值 $y(t_{i+1})$。
 
-**多步法**（multistep method）的一般形式如下：
+**多步法（multistep method）**的一般形式如下：
 $$ \begin{aligned}
 w_{i+1} &= \textcolor{red}{a_{m-1}} w_i + \textcolor{red}{a_{m-2}} w_{i-1} + \cdots + \textcolor{red}{a_0} w_{i+1-m} \\\\
 &+ h[\textcolor{red}{b_m} f_{i+1} + \textcolor{red}{b_{m-1}} f_i + \cdots + \textcolor{red}{b_0} f_{i+1-m}]
@@ -414,19 +416,19 @@ w_{i+1} &= \textcolor{red}{a_{m-1}} w_i + \textcolor{red}{a_{m-2}} w_{i-1} + \cd
 
 !!! example
     <figure markdown="span">
-        ![](./assets/chap-5-7.png){width=80%}
+        ![](./assets/chap-5-7.png){width=85%}
     </figure>
 
 上面这个方程组里方程的数量小于未知数的数量，因此有无穷多个解。通过选择不同的解，我们可以得到不同的多步法。
 
-- 令 $a_0 = a_1 = 0$ -> **Adams-Bashforth 显式法**
-- 把 $f_{i-1}$ 替换为 $f_{i+1}$，并且令 $a_0 = a_1 = 0$ -> **Adams-Moulton 隐式法**
+- 令 $a_0 = a_1 = 0 \to$ **Adams-Bashforth 显式法**
+- 把 $f_{i-1}$ 替换为 $f_{i+1}$，并且令 $a_0 = a_1 = 0 \to$ **Adams-Moulton 隐式法**
 - 把 $f_{i-3}$ 替换为 $w_{i-3}$，我们可以得到另一族阶数为 4 的方法，包括了显式 **Milne 法**：
     $$ w_{i+1} = w_{i-3} + \dfrac{4h}{3}(2f_i - f_{i-1} + 2f_{i-2}) $$
 
     其中局部截断误差为 $\tau_{i+1} = \dfrac{14}{45}h^4y^{(5)}(\xi_i),\ \xi_i \in (t_{i-3}, t_{i+1})$
 
-- 令 $a_0 = 0, a_1 = 1$ -> **Simpson 隐式法**
+- 令 $a_0 = 0, a_1 = 1 \to$ **Simpson 隐式法**
     $$ w_{i+1} = w_{i-1} + \dfrac{h}{3}(f_{i+1} + 4f_i + f_{i-1}) $$
 
     其中局部截断误差为 $\tau_{i+1} = -\dfrac{h^4}{90} y^{(5)}(\xi_i),\ \xi_i \in (t_{i-1}, t_{i+1})$
@@ -448,6 +450,8 @@ $$ \begin{cases}
 \vec{y}'(t) = \vec{f}(t, \vec{y}(t)) \\\\
 \vec{y}(a) = \vec{\alpha}
 \end{cases} $$
+
+这样就得到了我们熟悉的初值问题的形式
 
 ### Higher-Order Differential Equation
 
@@ -471,7 +475,7 @@ u_m' = y^{(m)} = f(x, u_1, \cdots, u_m)
 
 !!! example
     <figure markdown="span">
-        ![](./assets/chap-5-8.png){width=80%}
+        ![](./assets/chap-5-8.png){width=85%}
     </figure>
 
     !!! tip
@@ -569,7 +573,7 @@ u_m' = y^{(m)} = f(x, u_1, \cdots, u_m)
 
             递推方程为：
             $$ \begin{cases}
-            w_{i+1} & = w_i + \dfrac{h}{6} (K_1 + 2K_2 + 2K_3 + 2K_4) \\\\
+            w_{i+1} & = w_i + \dfrac{h}{6} (K_1 + 2K_2 + 2K_3 + K_4) \\\\
             K_1 & = f(t_i, w_i) \\\\
             K_2 & = f(t_i + \dfrac{h}{2}, w_i + \dfrac{h}{2} K_1) \\\\
             K_3 & = f(t_i + \dfrac{h}{2}, w_i + \dfrac{h}{2} K_2) \\\\

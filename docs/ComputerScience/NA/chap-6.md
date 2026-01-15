@@ -13,7 +13,7 @@
     ![](./assets/lec-3-1.png){width=75%}
 </figure>   
 
-$$ x_n = \frac{b_n^{(n)}}{a_{nn}^{(n)}} $$
+$$ x_n = \frac{b_n^{(n)}}{a_{nn}^{(n)}} $$ 
 
 $$ x_i = \frac{b_i^{(i)} - \sum\limits_{j=i+1}^{n} a_{ij}^{(i)} x_j}{a_{ii}^{(i)}} \quad i=n-1,n-2,\ldots,1 $$
 
@@ -27,21 +27,18 @@ $$ x_i = \frac{b_i^{(i)} - \sum\limits_{j=i+1}^{n} a_{ij}^{(i)} x_j}{a_{ii}^{(i)
 !!! note "计算量"
     在计算机上做乘除法的时间远大于加减法，因此我们主要关注乘除法的数量。
 
-    - 高斯消元：对于每个 $i$*
+    - 高斯消元：对于每个 $i$
         - 在 step 5 中需要完成 $n - i$ 次除法
         - 在 step 6 中，对于每个 $j$ 需要完成 $n - i + 1$ 次乘法和 $n - i + 1$ 次减法，共计 $2(n - i + 1)$ 次乘法，因此共需完成 $(n - i)(n - i + 1)$ 次乘除法
         - 因此，消元过程中需要做的乘除法数量为
-    
-        $$ \sum_{i=1}^{n-1} [(n-i) + (n-i)(n-i+1)] = \frac{n^3}{3} + \frac{n^2}{2} -\frac{5}{6}n $$
+            $$ \sum_{i=1}^{n-1} [(n-i) + (n-i)(n-i+1)] = \frac{n^3}{3} + \frac{n^2}{2} -\frac{5}{6}n $$
 
     - 回代：
         - 在 step 8 中，需要完成 1 次除法
         - 在 step 9 中，对于每个 $i$ 需要完成 $n - i$ 次乘法和 1 次除法
-    
-        $$ 1 + \sum_{i=1}^{n-1} (n-i+1) = \frac{n^2}{2} + \frac{n}{2} $$
+            $$ 1 + \sum_{i=1}^{n-1} (n-i+1) = \frac{n^2}{2} + \frac{n}{2} $$
 
     综上，总的乘除法数量为
-
     $$ \frac{n^3}{3} + n^2 - \frac{n}{3} $$
 
     因此当 $n$ 很大时，高斯消元法的算法复杂度为 $O(n^3)$
@@ -221,7 +218,6 @@ a_{11}^{(1)} & a_{12}^{(1)} & \cdots & a_{1n}^{(1)} & \\
 $$ 
 
 我们就成功把方阵 $A$ 分解了，这称为方阵的 LU 分解
-
 $$ A = LU $$
 
 > L 表示下三角矩阵（Lower Triangular Matrix），U 表示上三角矩阵（Upper Triangular Matrix）
@@ -259,7 +255,7 @@ $$ A = LU $$
     则称 $A$ 为严格对角占优矩阵（Strictly Diagonally Dominant Matrix）
 
 !!! theorem
-    严格对角占优矩阵 A是​​非奇异​​的（即行列式 $\text{det}(A) \neq 0$，矩阵可逆）。
+    严格对角占优矩阵 $A$ 是​​非奇异​​的（即行列式 $\text{det}(A) \neq 0$，矩阵可逆）。
 
     此外，对 $A$ 做高斯消元时​​无需行或列交换​​，且计算过程中舍入误差的增长是​​稳定​​的
 
@@ -314,7 +310,7 @@ $$ A = LU $$
 !!! definition "正定矩阵"
     > 这里定义的的正定矩阵实际上是对称正定矩阵，和其他书中的定义不同
 
-    若 $n$ 阶矩阵 $A$ 是对称的且对于任意的非零 $n$ 维向量 $\vec{x}$ 都满足
+    若 $n$ 阶矩阵 $A$ 是对称的，且对于任意的非零 $n$ 维向量 $\vec{x}$ 都满足
     $$ \vec{x}^T A \vec{x} > 0 $$
     则称 $A$ 为正定矩阵（Positive Definite Matrix）
 
@@ -325,22 +321,21 @@ $$ A = LU $$
     - 正定矩阵的各阶顺序主子式均为正（前 $k$ 行前 $k$ 列组成的 $k$ 阶子矩阵 $A_k$ 的行列式均为正）
 
 考虑对正定矩阵的 LU 分解，上三角因子 $U$ 的对角线元素均不为零，因此可以将 $U$ 分解为一个单位上三角矩阵和一个对角矩阵的乘积
-
-$$ U = D \tilde{U} $$
+$$ U = D \widetilde{U} $$
 
 <figure markdown="span">
-    ![](./assets/lec-3-2.png){width=75%}
+    ![](./assets/lec-3-2.png){width=85%}
 </figure>
 
-由于 $A$ 是对称矩阵，因此下三角因子 $L = \tilde{U}^T D$，于是
-$$ A = L D \tilde{U} = L D L^T $$
+由于 $A$ 是对称矩阵，因此下三角因子 $L = \widetilde{U}^T$，于是
+$$ A = L D \widetilde{U} = L D L^T $$
 这称为 $LDL^T$ 分解，其中 $L$ 是单位下三角矩阵，$D$ 是对角元全为正的对角矩阵。
 
 我们还可以定义 $D$ 的平方根为 
 $$ D^{1/2} = \text{diag}(\sqrt{d_{11}}, \sqrt{d_{22}}, \ldots, \sqrt{d_{nn}}) $$
-那么我们可以构造一个新的下三角矩阵 $\tilde{L} = L D^{1/2}$，于是就有
-$$ A = \tilde{L} \tilde{L}^T $$
-这就是 $LL^T$ 分解，也称为 Choleski 分解，其中 $\tilde{L}$ 是下三角矩阵且对角元均非零。
+那么我们可以构造一个新的下三角矩阵 $\widetilde{L} = L D^{1/2}$，于是就有
+$$ A = \widetilde{L} \widetilde{L}^T $$
+这就是 $\widetilde{L} \widetilde{L}^T$ 分解，也称为 Choleski 分解，其中 $\widetilde{L}$ 是下三角矩阵且对角元均非零。
 
 !!! info "Choleski’s Method"
     <figure markdown="span">
@@ -367,10 +362,10 @@ $$ A = \tilde{L} \tilde{L}^T $$
 
 !!! theorem
     如果 $A$ 是三对角矩阵，并且是对角占优的，如果还满足 
-    $$ |b_1| > |c_1| > 0, \ |b_n| > |a_n| > 0, \ a_i \neq 0, \ c_i \neq 0 $$
+    $$ |b_1| > |c_1| > 0,\\ |b_n| > |a_n| > 0,\\ a_i \neq 0,\\ c_i \neq 0 $$
     那么 $A$ 是非奇异的（可逆），并且上面这个线性系统 $A \vec{x} = \vec{f}$ 有唯一解。
 
 !!! note
     - 如果矩阵 $A$ 是严格对角占优的，则不需要所有下对角线元素 $a_i$、主对角元 $b_i$、上对角线元素 $c_i$ 均非零。
-    - 这种方法具有一定程度上的稳定性，在这个过程中得到的所有数值都会被原始数值所界定
+    - 这种方法具有一定程度上的稳定性，在这个过程中得到的所有数值都会被原始数值所限制住。
     - 这种方法的计算量为 $O(n)$，远小于一般的 $O(n^3)$

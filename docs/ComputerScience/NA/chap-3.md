@@ -42,13 +42,13 @@ $$ L_{n,i}(x_j) = \delta_{ij} = \begin{cases}
 显然，构造出满足条件的 $P_n(x)$ 等价于找到满足条件的 $L_{n,i}(x)$，使得 $P_n(x) = \sum_{i=0}^{n} L_{n,i}(x) y_i$，且 $L_{n,i}(x_j) = \delta_{ij}$。
 
 分析可知，每个 $L_{n,i}(x)$ 都是一个 $n$ 阶多项式，它的根分别为 $x_0, x_1, \cdots, x_{i-1}, x_{i+1}, \cdots, x_n$，因此我们可以将 $L_{n,i}(x)$ 写成如下形式：
-$$ L_{n,i}(x) = C_i (x - x_0)(x - x_1) \cdots (x - x_{i-1})(x - x_{i+1}) \cdots (x - x_n) = C_i \prod_{\substack{j = 0 \\ j \neq i}}^n (x - x_j) $$
+$$ L_{n,i}(x) = C_i (x - x_0)(x - x_1) \cdots (x - x_{i-1})(x - x_{i+1}) \cdots (x - x_n) = C_i \prod_{\substack{j = 0 \\\\ j \neq i}}^n (x - x_j) $$
 
 带入 $L_{n,i}(x_i) = 1$，我们可以解出 $C_i = \prod\limits_{\substack{j = 0 \\ j \neq i}}^n\dfrac{1}{ (x_i - x_j)}$，因此我们得到了 $L_{n,i}(x)$ 的解析表达式：
-$$ L_{n,i}(x) = \prod_{\substack{j = 0 \\ j \neq i}}^n \frac{x - x_j}{x_i - x_j} $$
+$$ L_{n,i}(x) = \prod_{\substack{j = 0 \\\\ j \neq i}}^n \frac{x - x_j}{x_i - x_j} $$
 
 于是我们根据拉格朗日基函数构造出了 $n$ 次的拉格朗日插值多项式：
-$$ P_n(x) = \sum_{i=0}^{n} L_{n,i}(x) y_i = \sum_{i=0}^{n} \left( \prod_{\substack{j = 0 \\ j \neq i}}^n \frac{x - x_j}{x_i - x_j} \right) y_i $$
+$$ P_n(x) = \sum_{i=0}^{n} L_{n,i}(x) y_i = \sum_{i=0}^{n} \left( \prod_{\substack{j = 0 \\\\ j \neq i}}^n \frac{x - x_j}{x_i - x_j} \right) y_i $$
 
 !!! theorem "插值多项式的唯一性"
     设 $x_0, x_1, \cdots, x_n$ 是区间 $[a, b]$ 上的 $n + 1$ 个两两不同的点，则对于任意给定的函数值 $y_0, y_1, \cdots, y_n$，存在且仅存在一个**唯一的** $n$ 次拉格朗日插值多项式 $P_n(x)$，使得对于所有 $i = 0, 1, \cdots, n$，都有 $P_n(x_i) = y_i$。
@@ -73,7 +73,7 @@ $$ P_n(x) = \sum_{i=0}^{n} L_{n,i}(x) y_i = \sum_{i=0}^{n} \left( \prod_{\substa
 下面我们来分析拉格朗日插值法的余项（即分析误差）。
 
 假设 $a \leqslant x_0 < x_1 < \cdots < x_n \leqslant b$，且函数 $f \in C^{n+1}[a, b]$，$P(x)$ 是 $f(x)$ 在 $x_0, \cdots, x_n$ 上的拉格朗日插值多项式，那么对于任意 $x \in [a, b]$，都存在 $\xi \in (a, b)$，使得
-$$ R_n(x) = f(x) - P_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} (x - x_0)(x - x_1) \cdots (x - x_n) $$
+$$ R_n(x) = f(x) - P_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \prod_{i = 0}^n (x - x_i) $$ 
 
 !!! proof "上式的证明"
     考虑截断误差 $R_n(x) = f(x) - P_n(x)$，显然它在 $x_0, x_1, \cdots, x_n$ 处均为零。因此 $R(x)$ 有至少 $n + 1$ 个不同的根，同时它的次数不超过 $n + 1$，因此 $R_n(x)$ 可以表示为
@@ -96,13 +96,13 @@ $$ R_n(x) = f(x) - P_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} (x - x_0)(x - x_1) \cd
     于是我们就可以得到
     $$ K(x) = \frac{f^{(n+1)}(\xi_x)}{(n + 1)!} $$
 
-    截断误差为
+    从而知道截断误差为
     $$ R_n(x) = \frac{f^{(n+1)}(\xi_x)}{(n + 1)!} \prod_{i=0}^{n} (x - x_i) $$
 
 !!! note
     - 因为通常而言 $\xi_x$ 是多少无法确定，因此我们会使用 $f^{(n+1)}(x)$ 的上界来估计余项
 
-        也就是说，寻找一个估计值 $M_{n+1}$，使得对于所有 $x \in [a, b]$，都有 $|f^{(n+1)}(x)| \leqslant M_{n+1}$，因此可以取 $|\ R_n(x)| \leqslant \dfrac{M_{n+1}}{(n + 1)!} \prod_{i=0}^{n} |x - x_i|$ 为总误差的上界
+        也就是说，寻找一个估计值 $M_{n+1}$，使得对于所有 $x \in [a, b]$，都有 $|f^{(n+1)}(x)| \leqslant M_{n+1}$，因此可以取 $|\ R_n(x)| \leqslant \dfrac{M_{n+1}}{(n + 1)!} \prod\limits_{i=0}^{n} |x - x_i|$ 为总误差的上界
 
     - 对于任意阶数 $ \leqslant n$ 的多项式函数 $f$ 而言，插值多项式是精确的，因为 $f^{(n+1)}(x) = 0$，因此余项 $R_n(x) = 0$。
 
@@ -113,7 +113,7 @@ $$ R_n(x) = f(x) - P_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} (x - x_0)(x - x_1) \cd
 
         **答：** 
         
-        假设把 [0, 1] 分成 $n$ 个等间距的子区间 $[x_0, x_1], \cdot, [x_{n-1}, x_n]$，其中 $x_0 = 0, x_n = 1$。对于 $x \in [x_k, x_{k+1}]$，那么估计误差为：
+        假设把 $[0, 1]$ 分成 $n$ 个等间距的子区间 $[x_0, x_1], \cdots, [x_{n-1}, x_n]$，其中 $x_0 = 0, x_n = 1$。对于 $x \in [x_k, x_{k+1}]$，那么这个区间内的误差估计为：
         $$ \begin{aligned}
         |f(x) - P_1(x)| &= \left| \frac{f^{(2)}(\xi)}{2!} (x - x_k)(x - x_{k+1}) \right| \\\\
         &= \left| \frac{e^{\xi}}{2} (x - kh)(x - (k+1)h) \right| \\\\
@@ -125,7 +125,7 @@ $$ R_n(x) = f(x) - P_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} (x - x_0)(x - x_1) \cd
 
     === "例 2"
 
-        给定 $\sin \dfrac{\pi}{6} = \dfrac{1}{2},\ \sin \dfrac{\pi}{4} = \dfrac{1}{\sqrt{2}},\ \sin \dfrac{\pi}{4} = \dfrac{\sqrt{3}}{2} $ 使用关于 $\sin x$ 的线性以及二次拉格朗日多项式，计算 $\sin 50^\circ$ 并估计误差。（已知 $\sin 50^\circ \approx 0.7660444$）
+        给定 $\sin \dfrac{\pi}{6} = \dfrac{1}{2},\ \sin \dfrac{\pi}{4} = \dfrac{1}{\sqrt{2}},\ \sin \dfrac{\pi}{4} = \dfrac{\sqrt{3}}{2}$ 使用关于 $\sin x$ 的线性以及二次拉格朗日多项式，计算 $\sin 50^\circ$ 并估计误差。（已知 $\sin 50^\circ \approx 0.7660444$）
 
         **答：** 
 
@@ -138,7 +138,7 @@ $$ R_n(x) = f(x) - P_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} (x - x_0)(x - x_1) \cd
                 \end{aligned} $$
 
                 代入 $x = 50^\circ = \dfrac{5\pi}{18}$ 可得
-                $$ \sin 50^\circ \approx P_1(\frac{5\pi}{18}) = \frac{5}{6} + \left( \frac{1}{\sqrt{2}} - \frac{1}{2} \right) \approx 0.75985 $$
+                $$ \sin 50^\circ \approx P_1(\frac{5\pi}{18}) = \frac{5}{6} + \left( \frac{1}{\sqrt{2}} - \frac{1}{2} \right) \approx 0.77614 $$
 
                 因为 $f(x) = \sin x$，所以 $f^{(2)}(x) = -\sin x$，对 $ \xi_x \in (\dfrac{\pi}{6}, \dfrac{\pi}{4})$ 上，$|f^{(2)}(\xi_x)| \in (\dfrac{1}{2}, \dfrac{\sqrt{2}}{2})$
                 $$ R_1(x) = \frac{f^{(2)}(\xi_x)}{2!} (x - x_0)(x - x_1) $$
@@ -149,7 +149,7 @@ $$ R_n(x) = f(x) - P_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} (x - x_0)(x - x_1) \cd
 
             2. 使用 $x_1 = \dfrac{\pi}{4},\ x_2 = \dfrac{\pi}{3}$
 
-                同理可以得到 $\sin 50^\circ \approx 0.76008$，误差范围为 $0.00538 < R_1(\dfrac{5\pi}{18}) < 0.00660$，外推误差 $\approx 0.00596$。
+                同理可以得到 $\sin 50^\circ \approx 0.76008$，误差范围为 $0.00538 < R_1(\dfrac{5\pi}{18}) < 0.00660$，插值误差（Interpolation Error）$\approx 0.00596$。
 
             !!! note
                 - 外推（extrapolation）是指在已知数据点的范围之外进行估计
@@ -182,34 +182,40 @@ $$ R_n(x) = f(x) - P_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} (x - x_0)(x - x_1) \cd
     描述了在 $x_0, x_1, \cdots, x_k$ 这 $k+1$ 个点上与 $f(x)$ 具有相同值的 $k$ 次拉格朗日多项式。
 
     !!! proof
-        - 对于任意 $0 \leqslant r \leqslant k$ 且 $r \neq i, r \neq j$，两个在分子上的插值多项式在 $x_r$ 处都分别等于 $f(x_r)$，因此 $P(x_r) = f(x_r)$。
+        - 对于任意 $0 \leqslant r \leqslant k$ 且 $r \neq i, r \neq j$，分子上的两个插值多项式在 $x_r$ 处都分别等于 $f(x_r)$，因此 $P(x_r) = f(x_r)$。
         - 分子上的第一个插值多项式在 $x_i$ 处等于 $f(x_i)$，此时第二个插值多项式等于 $0$，因此 $P(x_i) = f(x_i)$。同理，$P(x_j) = f(x_j)$。
         - 因此我们得到了在 $x_0, x_1, \cdots, x_k$ 这 $k+1$ 个点上对 $f(x)$ 进行插值的 $k$ 阶拉格朗日多项式，根据前面所述，这个多项式是唯一的
 
 基于上述定理，我们知道拉格朗日插值多项式是可以**递归生成的**，例如它们可以按照如下表所示的方法一行一行地生成插值多项式：
-
 $$ \begin{array}{llllll}
-x_0 & P_{0} & & & & \\
-x_1 & P_{1} & P_{0,1} & & & \\
-x_2 & P_{2} & P_{1,2} & P_{0,1,2} & & \\
-x_3 & P_{3} & P_{2,3} & P_{1,2,3} & P_{0,1,2,3} & \\
-x_4 & P_{4} & P_{3,4} & P_{2,3,4} & P_{1,2,3,4} & P_{0,1,2,3,4} \\
+x_0 & P_{0} & & & & \\\\
+x_1 & P_{1} & P_{0,1} & & & \\\\
+x_2 & P_{2} & P_{1,2} & P_{0,1,2} & & \\\\
+x_3 & P_{3} & P_{2,3} & P_{1,2,3} & P_{0,1,2,3} & \\\\
+x_4 & P_{4} & P_{3,4} & P_{2,3,4} & P_{1,2,3,4} & P_{0,1,2,3,4} \\\\
 \end{array} $$
 
-这个过程被称作**Neville 方法（Neville's Method）**。
+这个过程被称作 **Neville 方法（Neville's Method）**。
+
+!!! note "递归生成的方法"
+    - 当只有一个插值点 $x_i$ 时，插值多项式为常值函数（函数值本身）
+        $$ P_i(x) = f(x_i) $$
+    
+    - 对于有多个插值点 $x_i, \cdots, x_j$ 的情况，根据前一步构造出来的多项式 $P_{i \cdots j-1}$ 和 $P_{i-1 \cdots j}$，依照上面的公式生成新的插值多项式 $P_{i \cdots j}$
+        $$ P_{i \cdots j}(x) = \frac{(x - x_j) P_{i \cdots j-1}(x) - (x - x_i) P_{i-1 \cdots j}(x)}{x_i - x_j} $$
+
+    > 也就是说，这些插值多项式是逐列生成的，先得到第一列的插值多项式，然后计算得到第二列的多项式，依此类推...
 
 但是 $P$ 的记号显然有些过于笨重和繁琐了，我们可以改用新的记号：
-
 $$ Q_{i, j} = P_{i-j, i-j+1, \cdots, i} $$
 
 其中 $j$ 表示插值多项式的阶数，$i$ 表示插值多项式所使用的最后一个点的下标。因此上面的表格可以改写为：
-
 $$ \begin{array}{llllll}
-x_0 & Q_{0, 0} & & & & \\
-x_1 & Q_{1, 0} & Q_{1, 1} & & & \\
-x_2 & Q_{2, 0} & Q_{2, 1} & Q_{2, 2} & & \\
-x_3 & Q_{3, 0} & Q_{3, 1} & Q_{3, 2} & Q_{3, 3} & \\
-x_4 & Q_{4, 0} & Q_{4, 1} & Q_{4, 2} & Q_{4, 3} & Q_{4, 4} \\
+x_0 & Q_{0, 0} & & & & \\\\
+x_1 & Q_{1, 0} & Q_{1, 1} & & & \\\\
+x_2 & Q_{2, 0} & Q_{2, 1} & Q_{2, 2} & & \\\\
+x_3 & Q_{3, 0} & Q_{3, 1} & Q_{3, 2} & Q_{3, 3} & \\\\
+x_4 & Q_{4, 0} & Q_{4, 1} & Q_{4, 2} & Q_{4, 3} & Q_{4, 4} \\\\
 \end{array} $$
 
 同时上面定理给出的递推公式可以改写为
@@ -240,14 +246,14 @@ $$ Q_{i, j} = \frac{(x - x_{i-j}) Q_{i, j-1} - (x - x_i) Q_{i-1, j-1}}{x_i - x_{
 事实上，
 $$ f[x_0, x_1, \cdots, x_k] = \sum_{i=0}^{k} \frac{f(x_i)}{\omega'_{k+1}(x_i)} $$
 
-其中 $\omega_{k+1}(x) = \prod\limits_{i=0}^{k} (x - x_i)$, 且 $\omega'_{k+1}(x_i) = \prod\limits_{\substack{j=0 \\ j \neq i}}^{k} (x_i - x_j)$ 是 $\omega_{k+1}(x)$ 在 $x_i$ 处的导数。
+其中 $\omega_{k+1}(x) = \prod\limits_{i=0}^{k} (x - x_i)$，$\omega'_{k+1}(x_i) = \prod\limits_{\substack{j=0 \\ j \neq i}}^{k} (x_i - x_j)$ 是 $\omega_{k+1}(x)$ 在 $x_i$ 处的导数。
 
-!!! note
-    上面这个公式的核心在于 $f[x_0, x_1, \cdots, x_k]$ 的值与 $x_0, x_1, \cdots, x_k$ 的顺序无关。
+!!! tip
+    $f[x_0, x_1, \cdots, x_k]$ 的值与 $x_0, x_1, \cdots, x_k$ 的顺序无关。
 
 ### Newton’s Interpolation
 
-我们的目标是得到一个 $n$ 阶多项式
+我们的目标是得到一个 $n$ 阶多项式，它形如
 $$ N_n(x) = a_0 + a_1 (x - x_0) + a_2 (x - x_0)(x - x_1) + \cdots + a_n (x - x_0) \cdots (x - x_{n-1}) $$
 
 我们将各阶差商依次展开，得到
@@ -265,11 +271,11 @@ f(x) &= \textcolor{red}{f(x_0) + f[x_0, x_1] (x-x_0) + f[x_0, x_1, x_2] (x-x_0)(
 &\quad + f[x, x_0, x_1, \cdots, x_n] (x - x_0) \cdots (x-x_{n-1})(x - x_n)
 \end{aligned} $$
 
-上式中的红色部分就是所想要求出的 $N_n(x)$，而最后一项则是截断误差 $R_n(x)$。不难得到
+上式中的红色部分就是所想要求出的 $N_n(x)$，而最后一项则是截断误差 $R_n(x)$，并且不难注意到
 $$ a_i = f[x_0, x_1, \cdots, x_i],\quad i = 0, 1, \cdots, n $$
 
 !!! note
-    - 由于 $n$ 阶的插值多项式是唯一的，因此 $N_n(x)$ 与 $P_n(x)$ 是相同的多项式，只是它们的表达形式不同而已。
+    - 由于 $n$ 阶的插值多项式是唯一的，因此 $N_n(x)$ 与 $P_n(x)$ 是相同的多项式（$N_n(x) \equiv P_n(x)$），只是它们的表达形式不同而已。
     - 他们都有相同的截断误差，即
         $$ \begin{aligned}
         & f[x, x_0, x_1, \cdots, x_n] \omega_{n+1}(x) = \frac{f^{(n+1)}(\xi_x)}{(n+1)!} \omega_{n+1}(x) \\\\
@@ -285,6 +291,8 @@ $$ a_i = f[x_0, x_1, \cdots, x_i],\quad i = 0, 1, \cdots, n $$
         f(x_n) & f[x_{n-1}, x_n] & f[x_{n-2}, x_{n-1}, x_n] & \cdots & f[x_0, \cdots, x_n] \\\\
         f(x_{n+1}) & f[x_n, x_{n+1}] & f[x_{n-1}, x_n, x_{n+1}] & \cdots & f[x_1, \cdots, x_{n+1}] & f[x_0, \cdots, x_{n+1}] \\\\
         \end{array} $$
+
+    > 具体的计算方法是用前一列的两个差分来计算新的差分，例如用 $f(x_0)$ 和 $f(x_1)$ 计算 $f[x_0,x_1]$，用 $f[x_0,x_1]$ 和 $f[x_1,x_2]$ 计算 $f[x_0,x_1,x_2]$
 
 !!! note "Newton 插值差商公式的伪代码"
     <figure markdown="span">
@@ -305,12 +313,11 @@ $$ a_i = f[x_0, x_1, \cdots, x_i],\quad i = 0, 1, \cdots, n $$
 
 - **中心差分（central differences）**：
     $$ \delta f(x_i) = f(x_{i+\frac{1}{2}}) - f(x_{i-\frac{1}{2}}) $$
-
     $$ \delta^k f(x_i) = \delta^{k-1} f(x_{i+\frac{1}{2}}) - \delta^{k-1} f(x_{i-\frac{1}{2}}) $$
 
     其中 $f(x_{i \pm \frac{1}{2}}) = f(x_i \pm \frac{h}{2})$。
 
-!!! property "Some Important Properties"
+!!! property "差分的一些重要性质"
 
     - 线性：$\Delta (a \cdot f(x) + b \cdot g(x)) = a \Delta f(x) + b \Delta g(x)$
     - 如果 $f(x)$ 是 $m$ 阶多项式，那么 $\Delta^k f(x)\ (0 \leqslant k \leqslant m)$ 是 $m-k$ 阶多项式，且 $\Delta^k f(x) = 0\ (k > m)$。
@@ -320,15 +327,15 @@ $$ a_i = f[x_0, x_1, \cdots, x_i],\quad i = 0, 1, \cdots, n $$
     - 反之，我们也可以从差分中恢复出函数值：
         - $f_{n+k} = \sum\limits_{i=0}^{n} \binom{n}{i} \Delta^i f_k$
     - 我们也可以从差分中得到差商的值
-        - $f[x_0, \cdots, x_k] = \frac{\Delta^k f_0}{k! h^k}$
-        - $f[x_n, x_{n-1}, \cdots, x_{n-k}] = \frac{\nabla^k f_n}{k! h^k}$
-        - 因此结合余项的公式 $R_n(x) = f[x_0, \cdots, x_k] \omega_{n}(x) = \frac{f^{(n)}(\xi_x)}{n!} \omega_{n}(x)$，我们可以得到
+        - $f[x_0, \cdots, x_k] = \dfrac{\Delta^k f_0}{k! h^k}$
+        - $f[x_n, x_{n-1}, \cdots, x_{n-k}] = \dfrac{\nabla^k f_n}{k! h^k}$
+        - 因此结合余项的公式 $R_n(x) = f[x_0, \cdots, x_k] \omega_{n}(x) = \dfrac{f^{(n)}(\xi_x)}{n!} \omega_{n}(x)$，我们可以得到
             $$ f^{(n)}(\xi_x) = \frac{\Delta^n f_0}{h^n} $$
 
 !!! summary
 
-    牛顿插值的形式为
-    $$ N_n(x) = f(x_0) + f[x_0, x_1] (x - x_0) + \cdots + f[x_0, \cdots, x_n] (x - x_0) \cdots (x - x_{n-1}) $$
+    > 牛顿插值的形式为
+    >   $$ N_n(x) = f(x_0) + f[x_0, x_1] (x - x_0) + \cdots + f[x_0, \cdots, x_n] (x - x_0) \cdots (x - x_{n-1}) $$
 
     - **牛顿前向差分公式（Newton forward-difference formula）**
 
@@ -351,11 +358,11 @@ $$ a_i = f[x_0, x_1, \cdots, x_i],\quad i = 0, 1, \cdots, n $$
 
 !!! info "密切多项式"
     令 $x_0, x_1, \cdots, x_n$ 是区间 $[a, b]$ 上的 $n + 1$ 个两两不同的点，$m_i$ 是与 $x_i$ 相关联的非负整数，且设 $f \in C^m[a, b]$，其中 $m = \max\limits_{0 \leqslant i \leqslant n} m_i$。那么在 $[a, b]$ 上逼近 $f(x)$ 的密切多项式是为满足以下条件的阶数最小的多项式 $P(x)$：
-    $$ \frac{d^k P(x_i)}{dx^k} = \frac{d^k f(x_i)}{dx^k},\quad i = 0, 1, \cdots, n;\ k = 0, 1, \cdots, m_i $$
+    $$ \frac{d^k P(x_i)}{dx^k} = \frac{d^k f(x_i)}{dx^k},\quad i = 0, 1, \cdots, n;\\ k = 0, 1, \cdots, m_i $$
 
     具体来说，$P(x)$ 在每个插值点 $x_i$ 处不仅与 $f(x)$ 的函数值相等，而且它们的前 $m_i$ 阶导数值也相等。
 
-    - 相比于之前提到的插值多项式，密切多项还要求导数值也相等，因此会得到更准确、更光滑的插值曲线
+    - 相比于之前提到的插值多项式，密切多项式还要求导数值也相等，因此会得到更准确、更光滑的插值曲线
     - 密切多项式是一个次数至多为 $\sum\limits_{i=0}^{n} m_i + n$ 的多项式，因为它需要满足 $\sum\limits_{i=0}^{n} (m_i + 1) = \sum\limits_{i=0}^{n} m_i + (n + 1)$ 个条件
 
 我们的目标是找到一个密切多项式，使得对于所有的 $i = 0, 1, \cdots, n$ 和 $k = 0, 1, \cdots, m_i$，都有
@@ -363,7 +370,7 @@ $$ P^{(k)}(x_i) = f^{(k)}(x_i) $$
 
 !!! note
     - 给定 $N$ 个条件（即 $N$ 个方程），我们可以唯一确定一个次数不超过 $N - 1$ 的多项式
-    - 在一个点 $x_0$ 上与 $f$ 及其前 $m_0$ 阶导数相等的密切多项式就是一个泰勒多项式
+    - 在一个点 $x_0$ 上，与 $f$ 及其前 $m_0$ 阶导数相等的密切多项式就是一个泰勒多项式
         $$ P(x) = f(x_0) + f'(x_0)(x - x_0) + \cdots + \frac{f^{(m_0)}(x_0)}{m_0!} (x - x_0)^{m_0} $$
 
         且它的余项为
@@ -372,7 +379,7 @@ $$ P^{(k)}(x_i) = f^{(k)}(x_i) $$
     - 当对任意的 $i = 0, 1, \cdots, n$，都有 $m_i = 0$ 时，密切多项式就退化为**拉格朗日插值多项式**
     - 当对任意的 $i = 0, 1, \cdots, n$，都有 $m_i = 1$ 时，密切多项式就退化为 **Hermite 插值多项式**
 
-由上可知，Hermite 多项式与其一阶导数与目标函数 $f$ 及其导数 $f'$ 在插值点处分别相等。
+由上可知，Hermite 多项式及其一阶导数与目标函数 $f$ 及其导数 $f'$ 在插值点处分别相等。
 
 ??? example "一个特殊的例子"
     假设 $x_0 \neq x_1 \neq x_2$，给定 $f(x_0), f(x_1), f(x_2)$ 以及 $f'(x_1)$，我们希望找到一个多项式 $P(x)$，使得 $P(x_i) = f(x_i),\ i = 0, 1, 2$ 且 $P'(x_1) = f'(x_1)$。
@@ -409,7 +416,7 @@ $$ P^{(k)}(x_i) = f^{(k)}(x_i) $$
     其中 $K(x) = \dfrac{f^{(4)}(\xi_x)}{4!},\ \xi_x \in (a, b)$。
 
 
-一般来说，给定 $n + 1$ 个插值点 $x_0, x_1, \cdots, x_n$，和目标函数值 $y_i = f(x_i)$ 以及导数值 $y_i' = f'(x_i)$，Hermite 插值多项式 $H_{2n+1}(x)$ 的阶数不超过 $2n + 1$，并且满足 $H_{2n+1}(x_i) = y_i$ 且 $H'_{2n+1}(x_i) = y_i'$。
+一般来说，给定 $n + 1$ 个插值点 $x_0, x_1, \cdots, x_n$，和目标函数值 $y_i = f(x_i)$ 以及导数值 $y_i' = f'(x_i)$，Hermite 插值多项式 $H_{2n+1}(x)$ 的阶数不超过 $2n + 1$（因为这里有 $2n + 2$ 个条件），并且满足 $H_{2n+1}(x_i) = y_i$ 且 $H'_{2n+1}(x_i) = y_i'$。
 
 !!! note "使用待定系数法求解 Hermite 多项式"
     根据上述条件，并且参考我们刚刚给出的例子，我们可以假设 Hermite 多项式的形式为
@@ -422,15 +429,16 @@ $$ P^{(k)}(x_i) = f^{(k)}(x_i) $$
     \end{cases} $$
 
     - $h_i(x)$：对应于函数值 $y_i$
+
         - 它在 $x_j\ (j \neq i)$ 处有根，同时因为 $h_i'(x_j) = 0,\ (j \neq i)$，所以所有的 $x_j$ 都是一个重根，因此它的形式为
             $$ \begin{aligned}
-            h_i(x) &= (A_i' x + B_i') \prod_{\substack{j=0 \\ j \neq i}}^{n} (x - x_j)^2 \\\\
+            h_i(x) &= (A_i' x + B_i') \prod_{\substack{j=0 \\\\ j \neq i}}^{n} (x - x_j)^2 \\\\
             &= (A_i x + B_i) L_{n,i}^2(x)
             \end{aligned} $$
 
-            !!! tip
-                注意这里的常系数有所改变，因为 $L_{n,i}^2(x)$ 自身会带有一个额外的系数
-                $$ L_{n,i}(x) = \prod\limits_{\substack{j=0 \\ j \neq i}}^{n} \frac{x - x_j}{x_i - x_j} $$
+        !!! tip
+            注意这里的常系数有所改变，因为 $L_{n,i}^2(x)$ 自身会带有一个额外的系数
+            $$ L_{n,i}(x) = \prod\limits_{\substack{j=0 \\\\ j \neq i}}^{n} \frac{x - x_j}{x_i - x_j} $$
 
         - $A_i$ 和 $B_i$ 可以通过 $h_i(x_i) = 1$ 和 $h_i'(x_i) = 0$ 求解得到。
         - 最终得到的结果是
@@ -438,13 +446,13 @@ $$ P^{(k)}(x_i) = f^{(k)}(x_i) $$
 
     - $\hat{h}_i(x)$：对应于导数值 $y_i'$
         - 它在所有的 $x_j$ 处都有根，并且因为 $\hat{h}_i'(x_j) = 0,\ (j \neq i)$，$\hat{h}_i'(x_j) = 1$，所以所有的 $x_j\ (j \neq i)$ 都是一个重根，而 $x_i$ 则是一个单根，因此它的形式为
-            $$ \hat{h}_i(x) = C_i (x - x_i) L_{n,i}^2(x) $$
+            $$ \hat{h} _ i(x) = C _ i (x - x _ i) L _ {n,i}^2(x) $$
 
         - 结合 $\hat{h}_i'(x_i) = 1$ 可以求解出 $C_i = 1$
         - 因此最终得到的结果是
             $$ \hat{h} _ i(x) = (x - x_i) L _ {n,i}^2(x) $$
 
-    如果 $a = x_0 < x_1 < \cdots < x_n = b,\quad f \in C^{2n}[a, b]$，那么 Hermite 多项式的误差为
+    如果 $a = x_0 < x_1 < \cdots < x_n = b,\, f \in C^{2n}[a, b]$，那么 Hermite 多项式的误差为
     $$ R_n(x) = f(x) - H_{2n+1}(x) = \frac{f^{(2n+2)}(\xi_x)}{(2n+2)!} \left[ \prod_{i=0}^{n} (x - x_i) \right]^2,\quad \xi_x \in (a, b) $$
 
 ## Cubic Spline Interpolation
@@ -455,7 +463,7 @@ $$ P^{(k)}(x_i) = f^{(k)}(x_i) $$
 $$ f(x) \approx P_1(x) = \frac{x - x_{i+1}}{x_i - x_{i+1}} f(x_i) + \frac{x - x_i}{x_{i+1} - x_i} f(x_{i+1}),\quad x \in [x_i, x_{i+1}] $$
 但很显然分段线性逼近得到的函数并不光滑，我们希望使用更高次的多项式来逼近 $f(x)$。
 
-一种可选择的方法是改用 Hermite 插值多项式：如果 $f$ 和 $f'$ 的值在每一个点 $x_i$ 处都是已知的，那么我们可以在每一个子区间 $[x_i, x_{i+1}]$ 上使用 Hermite 三次多项式来逼近 $f(x)$。这样的逼近比较光滑，但是我们需要直到所有的导数值 $f'(x_i)$，这在实际应用中并不总是可行的。
+一种可选择的方法是改用 Hermite 插值多项式：如果 $f$ 和 $f'$ 的值在每一个点 $x_i$ 处都是已知的，那么我们可以在每一个子区间 $[x_i, x_{i+1}]$ 上使用 Hermite 三次多项式来逼近 $f(x)$。这样的逼近比较光滑，但是我们需要知道所有的导数值 $f'(x_i)$，这在实际应用中并不总是可行的。
 
 为此，我们可以使用**三次样条插值（cubic spline interpolation）**来逼近 $f(x)$。
 
@@ -464,21 +472,21 @@ $$ f(x) \approx P_1(x) = \frac{x - x_{i+1}}{x_i - x_{i+1}} f(x_i) + \frac{x - x_
 !!! definition "三次条样插值"
     给定一个定义在 $[a, b]$ 上的函数 $f$ 以及一组节点 $a = x_0 < x_1 < \cdots < x_n = b$。三次样条插值器（cubic spline interpolant）是一个分段三次多项式 $S(x)$，它满足以下条件：
 
-    - $S(x)$ 是一个分段函数，在每一个子区间 $[x_i, x_{i+1}]$ 上都是一个三次多项式，即
+    1. $S(x)$ 是一个分段函数，在每一个子区间 $[x_i, x_{i+1}]$ 上都是一个三次多项式，即
         $$ S(x) = S_i(x),\quad x \in [x_i, x_{i+1}],\quad i = 0, 1, \cdots, n-1 $$
-    - $S(x_i) = f(x_i),\quad i = 0, 1, \cdots, n$，
+    2. $S(x_i) = f(x_i),\quad i = 0, 1, \cdots, n$，
 
         - 即 $S(x)$ 在每一个节点处都与 $f(x)$ 的值相等
 
-    - $S_{i+1}(x_{i+1}) = S_i(x_{i+1}),\quad i = 0, 1, \cdots, n-2$，
+    3. $S_{i+1}(x_{i+1}) = S_i(x_{i+1}),\quad i = 0, 1, \cdots, n-2$，
     
         - 即 $S(x)$ 在每一个内部节点处都是连续的
 
-    - $S'_{i+1}(x_{i+1}) = S'_i(x_{i+1}),\quad i = 0, 1, \cdots, n-2$，
+    4. $S'_{i+1}(x_{i+1}) = S'_i(x_{i+1}),\quad i = 0, 1, \cdots, n-2$，
 
         - 即 $S(x)$ 在每一个内部节点处的一阶导数都是连续的
 
-    - $S''_{i+1}(x_{i+1}) = S''_i(x_{i+1}),\quad i = 0, 1, \cdots, n-2$，
+    5. $S''_{i+1}(x_{i+1}) = S''_i(x_{i+1}),\quad i = 0, 1, \cdots, n-2$，
 
         - 即 $S(x)$ 在每一个内部节点处的二阶导数都是连续的
 
@@ -488,18 +496,17 @@ $$ f(x) \approx P_1(x) = \frac{x - x_{i+1}}{x_i - x_{i+1}} f(x_i) + \frac{x - x_
 
 下面我们介绍一种构造三次样条插值的方法：
 
-令 $h_j = x_j - x_{j-1},\ S(x) = S_j(x), \text{for} x \in [x_{j-1}, x_j]$
+令步长 $h_j = x_j - x_{j-1}$，并且对 $x \in [x_{j-1}, x_j]$ 都有 $S(x) = S_j(x)$
 
-因为 $S(x)$ 在每一个子区间上都是一个三次多项式，因此 $S_j''(x)$ 是一个一次多项式，由这个区间的两个端点的值决定。假设 $S_j''(x_{j-1}) = M_{j-1},\ S_j''(x_j) = M_j$（$M_j$ 称为节点 $x_j$ 处的弯矩（bending moment）），那么对于 $x \in [x_{j-1}, x_j]$，有
+因为 $S(x)$ 在每一个子区间上都是一个三次多项式，因此 $S_j''(x)$ 是一个一次多项式，它由这个区间的两个端点的值决定。假设 $S_j''(x_{j-1}) = M_{j-1},\ S_j''(x_j) = M_j$（$M_j$ 称为节点 $x_j$ 处的弯矩（bending moment）），那么对于 $x \in [x_{j-1}, x_j]$，有
 $$ S_j''(x) = M_{j-1} \frac{x_j - x}{h_j} + M_j \frac{x - x_{j-1}}{h_j} $$
 积分两次，可以分别得到
 $$ S_j'(x) = M_{j-1} \cdot \frac{(x_j - x)^2}{2} + M_j \cdot \frac{(x - x_{j-1})^2}{2h_j} + A_j $$
 $$ S_j(x) = M_{j-1} \cdot \frac{(x_j - x)^3}{6h_j} + M_j \cdot \frac{(x - x_{j-1})^3}{6h_j} + A_j x + B_j $$
 其中 $A_j$ 和 $B_j$ 是积分常数，可以通过 $S_j(x_{j-1}) = y_{j-1}$ 和 $S_j(x_j) = y_j$ 求解得到：
-
 $$ \begin{aligned}
-A_j &= \dfrac{y_j - y_{j-1}}{h_j} - \dfrac{M_j - M_{j-1}}{6} h_j \\
-A_j x + B_j &= \left( y_{j-1} - \dfrac{M_{j-1}}{6} h_j^2 \right) \dfrac{x_j - x}{h_j} + \left( y_j - \dfrac{M_j}{6} h_j^2 \right) \dfrac{x - x_{j-1}}{h_j} \\
+A_j &= \dfrac{y_j - y_{j-1}}{h_j} - \dfrac{M_j - M_{j-1}}{6} h_j \\\\
+A_j x + B_j &= \left( y_{j-1} - \dfrac{M_{j-1}}{6} h_j^2 \right) \dfrac{x_j - x}{h_j} + \left( y_j - \dfrac{M_j}{6} h_j^2 \right) \dfrac{x - x_{j-1}}{h_j}
 \end{aligned} $$
 
 现在我们来求解 $M_j$：因为 $S'$ 在 $x_j$ 处连续，因此有
@@ -528,6 +535,7 @@ $$ \mu_j M_{j-1} + 2M_j + \lambda_j M_{j+1} = g_j $$
 
 #### 固定边界（clamped boundary）
 
+固定边界的边界条件为
 $$ S'(a) = y_0',\ S'(b) = y_n' $$
 
 - $[a, x_1]$：
@@ -543,15 +551,16 @@ M_{n-1} + 2M_n = \dfrac{6}{h_n} (y_n' - f[x_{n-1}, x_n]) \triangleq g_n
 
 ??? note "固定三次条样的伪代码"
     <figure markdown="span">
-        ![](./assets/chap-3-6.png){width=70%}
+        ![](./assets/chap-3-6.png){width=80%}
     </figure>
 
     <figure markdown="span">
-        ![](./assets/chap-3-7.png){width=70%}
+        ![](./assets/chap-3-7.png){width=80%}
     </figure>
 
 #### 自然边界（natural boundary）
 
+条样插值在两个端点处的二阶导为
 $$ S''(a) = y_0'' = M_0,\ S''(b) = y_n'' = M_n $$
 
 则有
@@ -560,21 +569,24 @@ $$ \begin{aligned}
 \mu_n &= 0,\quad g_n = 2 y_n''
 \end{aligned} $$
 
-当 $M_0 = M_n = 0$ 时，称为**自然三次条样插值（natural cubic spline interpolation）**，此时 $g_0 = g_n = 0$。
+当 $M_0 = M_n = 0$ 时，这个条件称为**自由边界（free boundary）**，此时的条样插值称为**自然三次条样插值（natural cubic spline interpolation）**，此时 $g_0 = g_n = 0$。
 
 ??? note "自然三次条样的伪代码"
     <figure markdown="span">
-        ![](./assets/chap-3-8.png){width=70%}
+        ![](./assets/chap-3-8.png){width=80%}
     </figure>
 
     <figure markdown="span">
-        ![](./assets/chap-3-9.png){width=70%}
+        ![](./assets/chap-3-9.png){width=80%}
     </figure>
 
 #### 周期边界
 
-如果 $f$ 是周期函数，即 $y_n = y_0$ 且 $S'(a^+) = S'(b^-)$，那么我们就可以知道 $M_0 = M_n$
+如果 $f$ 是周期函数，即 $y_n = y_0$ 且 $S'(a^+) = S'(b^-)$，那么我们可以推导出 $M_0 = M_n$
 
+<figure markdown="span">
+    ![](./assets/chap-3-10.png){width=70%}
+</figure>
 
 !!! property "三次条样的性质"
     - 只要系数矩阵严格对角占优（实际上是确保可逆），那么三次样条就可以由其边界条件唯一确定。

@@ -12,15 +12,15 @@
 ## Discrete Least Squares Approximation
 
 !!! tip "目标"
-    寻找一个多项式 $P_n(x) = a_0 + a_1 x + \cdots + a_n x^n$，用于近似表示一组数据 $\{(x_i, y_i)\ |\ i = 1, 2, \cdots, m\}$，使得最小二乘误差 $E_2 = \sum\limits_{i=1}^m [P_N(x_i) - y_i]^2$ 最小化，其中 $n \ll m$
+    寻找一个多项式 $P_n(x) = a_0 + a_1 x + \cdots + a_n x^n$，用于近似表示一组数据 $\{(x_i, y_i)\ |\ i = 1, 2, \cdots, m\}$，使得最小二乘误差 $E_2 = \sum\limits_{i=1}^m [P_n(x_i) - y_i]^2$ 最小化，其中 $n \ll m$
 
 这里的 $E_2$ 实质上是一个关于 $a_0, a_1, \cdots, a_n$ 的函数
 $$ E_2(a_0, a_1, \cdots, a_n) = \sum\limits_{i=1}^m [a_0 + a_1 x_i + \cdots + a_n x_i^n - y_i]^2 $$
 
-$E_2$ 最小化的必要条件是 $\dfrac{\partial E_2}{\partial a_k} = 0,\ k = 0, \cdots, n$
+$E_2$ 最小化的必要条件是 $\dfrac{\partial E_2}{\partial a_k} = 0,\ k = 0, \cdots, n$，从而我们可以得到
 
 $$ \begin{aligned}
-0 &= \dfrac{\partial E_2}{\partial a_k} = 2\sum\limits_{i=1}^m [P_n(x_i) - y_i]^2 \dfrac{\partial P_n(x_i)}{\partial a_k} = 2 \sum\limits_{i=1}^m \Big[\sum\limits_{j=0}^n a_j x_i^j - y_i \Big]x_i^k  \\
+0 &= \dfrac{\partial E_2}{\partial a_k} = 2\sum\limits_{i=1}^m [P_n(x_i) - y_i] \dfrac{\partial P_n(x_i)}{\partial a_k} = 2 \sum\limits_{i=1}^m \Big[\sum\limits_{j=0}^n a_j x_i^j - y_i \Big]x_i^k  \\\\
 &= 2\Big\{\sum\limits_{j=0}^n a_j \Big(\sum\limits_{i=1}^m x_i^{j+k}\Big) - \sum\limits_{j=1}^m y_i x_i^k\Big\} 
 \end{aligned} $$
 
@@ -95,16 +95,15 @@ $$
 
 !!! example "另一个例子"
     <figure markdown="span">
-        ![](./assets/chap-8-2.png){width=70%}
+        ![](./assets/chap-8-2.png){width=80%}
     </figure>
 
     这道题要求我们在逼近时还要考虑各个数据点的权重，带入带权重的 LSA 公式，可以得到一个关于 $a, b$ 的函数。
 
     - 显然在所有偏导数都为 0 时函数值最小，直接代入具体数值的计算比较繁琐，我们可以先对偏导数进行化简：
-
         $$ \begin{aligned}
-        \dfrac{\partial E_2}{\partial a} = 0 &\implies \sum w_i x_i y_i = 0 \\
-        \dfrac{\partial E_2}{\partial b} = 0 &\implies \sum w_i x_i^3 y_i = 0 \\
+        \dfrac{\partial E_2}{\partial a} = 0 &\implies \sum w_i x_i y_i = 0 \\\\
+        \dfrac{\partial E_2}{\partial b} = 0 &\implies \sum w_i x_i^3 y_i = 0 \\\\
         \end{aligned} $$
 
         带入上表中的具体值就可以得到关于 $a, b$ 的二元一次方程组，最终解得 $a = \dfrac{8}{7}, b = \dfrac{23}{49}$
@@ -123,7 +122,7 @@ $$
     对于一组函数 $\{\varphi_0(x),\ \varphi_1(x),\ \cdots,\ \varphi_n(x)\}$，如果对于任意的 $x \in [a, b]$，当 
     $$ a_0 \varphi_0(x) + a_1 \varphi_1(x) + \cdots + a_n \varphi_n(x) = 0 $$ 
     
-    时，都有 $a_0 = a_1 \cdots = a_n = 0$，那么称这组函数是**线性独立/线性无关（linearly independent）** 的，否则称它们是 **线性相关（linearly dependent）** 的。
+    时，都有 $a_0 = a_1 \cdots = a_n = 0$，那么称这组函数是**线性独立/线性无关（linearly independent）** 的，否则称它们是**线性相关（linearly dependent）**的。
 
 !!! theorem
     如果 $\varphi_j(x)$ 是一个 $j$ 次多项式（$j = 0, \cdots, n$），那么 $\{\varphi_0(x),\ \varphi_1(x), \cdots,\ \varphi_n(x)\}$ 在任意区间 $[a, b]$ 上都是**线性独立的**(linear independent)。
@@ -143,13 +142,13 @@ $$
 我们还可以定义一些比较特殊的多项式：
 
 - **三角多项式（trigonometric polynomial）**：
-    $$ \{\cos jx,\ \sin jx\},\quad j = 0, 1, 2, \cdots, n $$
+    $$ \\{\cos jx\ \sin jx\\},\quad j = 0, 1, 2, \cdots, n $$
 
     上面这组函数在区间 $[-\pi, \pi]$ 上是线性独立的，它们的线性组合被称为三角多项式（即傅里叶多项式）：
     $$ P_n(x) = \frac{a_0}{2} + \sum\limits_{j=1}^n [a_j \cos jx + b_j \sin jx] $$
 
 - **指数多项式（exponential polynomial）**：
-    $$ \{ \varphi_j(x) = e^{\lambda_j x} \},\quad j = 0, 1, 2, \cdots, n $$ 
+    $$ \\{ \varphi_j(x) = e^{\lambda_j x} \\},\quad j = 0, 1, 2, \cdots, n $$ 
 
     其中 $\lambda_j$ 互不相同，上面这组函数在区间 $[a, b]$ 上是线性独立的，它们的线性组合被称为指数多项式：
     $$ P_n(x) = \sum\limits_{j=0}^n a e^{\lambda_j x} $$
@@ -185,10 +184,9 @@ $$
 ### Inner Product and Norm
 
 我们可以为函数空间定义一个**内积**（inner product），使用它来衡量两个函数之间的“相似度”。
-
 $$ \langle f, g \rangle = 
 \begin{cases}
-\sum\limits_{i=1}^m w_i f(x_i) g(x_i) & \text{discrete version} \\ 
+\sum\limits_{i=1}^m w_i f(x_i) g(x_i) & \text{discrete version} \\\\ 
 \int_a^b w(x) f(x) g(x) dx & \text{continuous version} 
 \end{cases} $$
 
@@ -200,7 +198,7 @@ $$ \langle f, g \rangle =
 
 当两个函数 $f, g$ 满足 $\langle f, g \rangle = 0$ 时，我们称它们是**正交的**（orthogonal）。
 
-上面的内积也定义了一个**范数**（norm）： $\| f \| = \sqrt{\langle f, f \rangle}$，它也满足范数的几个性质
+上面的内积也定义了一个**范数**（norm）：$\| f \| = \sqrt{\langle f, f \rangle}$，它也满足范数的几个性质
 
 - 正定性：$\| f \| \geqslant 0$，且当且仅当 $f = 0$ 时取等号
 - 齐次性：$\| af \| = |a| \| f \|$
@@ -237,7 +235,7 @@ $$
 
 !!! example "使用普通多项式作为基函数的例子"
     <figure markdown="span">
-        ![](./assets/chap-8-3.png){width=75%}
+        ![](./assets/chap-8-3.png){width=85%}
     </figure>
 
 接下来我们再考虑另一个例子：
@@ -274,9 +272,8 @@ $$
 
 !!! theorem
     按照如下方式构造出的一组在 $[a, b]$ 的多项式函数 $\{\varphi_0(x), \varphi_1(x), \dots, \varphi_n(x)\}$ 关于权重函数 $w$ 是正交的：
-
     $$ \begin{aligned}
-    & \varphi_0 (x) \equiv 1,\quad \varphi_1(x) = x - B_1 \\
+    & \varphi_0 (x) \equiv 1,\quad \varphi_1(x) = x - B_1 \\\\
     & \varphi_k(x) = (x - B_k)\varphi_{k-1}(x) - C_k \varphi_{k-2}(x)
     \end{aligned} $$
 
@@ -284,22 +281,22 @@ $$
 
 !!! tip
     - 这样构造出来的正交多项式都是**首一多项式**(monic polynomial)（即最高次数项系数为1的多项式）。
-    - 上述定理的构造过程实际上是在多项式空间中应用**Gram-Schmidt 正交化过程**(Gram-Schmidt orthogonalization process) 的结果，因此这些多项式自然是正交的。
+    - 上述定理的构造过程实际上是在多项式空间中应用 **Gram-Schmidt 正交化过程**(Gram-Schmidt orthogonalization process) 的结果，因此这些多项式自然是正交的。
 
 !!! example "构造正交多项式作为基的例子"
     <figure markdown="span">
-        ![](./assets/chap-8-4.png){width=75%}
+        ![](./assets/chap-8-4.png){width=85%}
     </figure>
 
 !!! note "正交多项式逼近的伪代码"
     <figure markdown="span">
-        ![](./assets/chap-8-5.png){width=75%}
+        ![](./assets/chap-8-5.png){width=85%}
     </figure>
 
     其中误差的计算推导如下：
 
     <figure markdown="span">
-        ![](./assets/chap-8-6.png){width=75%}
+        ![](./assets/chap-8-6.png){width=85%}
     </figure>
 
 ## Chebyshev Polynomials and Economization of Power Series
@@ -363,8 +360,9 @@ $$ \cos(n\theta) = \sum_{k=0}^n a_k \cos^k \theta $$
 令 $x = \cos (\theta)$，那么 $x \in [-1, 1]$。我们称 $T_n(x) = \cos (n\theta) = \cos (n \cdot \text{arc} \cos x)$ 为**切比雪夫多项式**（Chebyshev polonomial）。
 
 !!! property "切比雪夫多项式的性质"
-    - $T_n(x)$ 在 $t_k = \cos \Big(\dfrac{k}{n} \pi\Big) (k = 0, 1, \dots, n)$ 处，极值 $(-1)^k$，也就是说 $T_n(t_k) = (-1)^k \|T_n(x)\|_{\infty} = (-1)^k$
-        因为 $\|T_n(x)\|_{\infty} = 1$
+    - $T_n(x)$ 在 $t_k = \cos \Big(\dfrac{k}{n} \pi\Big) (k = 0, 1, \dots, n)$ 处，极值为 $(-1)^k$，也就是说 $T_n(t_k) = (-1)^k \|T_n(x)\|_{\infty} = (-1)^k$
+
+        > 因为 $\|T_n(x)\|_{\infty} = 1$
 
     - $T_n(x)$ 有 $n$ 个根 $x_k = \cos \Big(\dfrac{2k - 1}{2n} \pi \Big)(k = 1, \dots, n)$
     - $T_n(x)$ 有如下的递推关系式：  
@@ -388,7 +386,7 @@ $$ w_n(x) = \dfrac{1}{2^{n-1}} T_n(x) $$
         - 此时 $w_n(x) = x^n - P_{n-1}(x) = \dfrac{T_n(x)}{2^{n-1}}$
     - **target 2.1**：找到 $\{x_1,\ \cdots,\ x_n\}$ 使得 $\|w_n\|_{\infty}$ 在 $[-1, 1]$ 上最小化，其中 $w_n(x) = \prod\limits_{i=1}^n (x - x_i)$
         - 此时有
-            $$ \min\limits_{w_n \in \widetilde{\Pi}_n} \|w_n\|_{\infty} = \left\|\dfrac{1}{2^{n-1}} T_n(x)\right\|_{\infty} = \dfrac{1}{2^{n-1}} $$
+            $$ \min\limits_{w_n \in \widetilde{\Pi} _ n} \|w _ n\| _ {\infty} = \left\|\dfrac{1}{2^{n-1}} T _ n(x)\right\| _ {\infty} = \dfrac{1}{2^{n-1}} $$
             
             其中 $\widetilde{\Pi}_n$ 是 $n$ 阶的**首一多项式**，$\{x_1, \dots, x_n\}$ 是 $T_n(x)$ 的 $n$ 个根
 
@@ -402,7 +400,7 @@ $$ w_n(x) = \dfrac{1}{2^{n-1}} T_n(x) $$
 
 !!! example
     <figure markdown="span">
-        ![](./assets/chap-8-8.png){width=75%}
+        ![](./assets/chap-8-8.png){width=85%}
     </figure>
 
 ### Economization of Power Series
@@ -412,7 +410,7 @@ $$ w_n(x) = \dfrac{1}{2^{n-1}} T_n(x) $$
 考虑使用一个 $n-1$ 阶多项式 $P_{n-1}(x)$ 来逼近一个 $n$ 阶多项式 
 $$ P_n(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0 $$
 
-我们可以通过去掉一个 $n$ 阶多项式 $Q_n(x)$（它的 $x^n$ 项的系数为 $a_n$）来逼近 $P_n(x)$，即 $P_{n-1}(x) = P_n(x) - Q_n(x)$。那么就有 
+我们可以通过减去一个 $n$ 阶多项式 $Q_n(x)$（其中 $Q_n(x)$ 的 $x^n$ 项的系数为 $a_n$）来逼近 $P_n(x)$，即 $P_{n-1}(x) = P_n(x) - Q_n(x)$。那么就有 
 $$ \max\limits_{[-1, 1]} |f(x) - P_{n-1}(x)| \le \max\limits_{[-1, 1]} |f(x) - P_n(x)| + \max\limits_{[-1, 1]} |Q_n(x)| $$
 
 在这里，$Q_n(x)$ 能够反映精度的损失。
@@ -424,7 +422,7 @@ $$ \max\limits_{[-1, 1]} |f(x) - P_{n-1}(x)| \le \max\limits_{[-1, 1]} |f(x) - P
     - 对于一般的区间 $[a, b]$，变量 $x \in [a,b]$ 需要通过线性变换得到。也就是说，令 
         $$ x = \dfrac{b-a}{2} t + \dfrac{a+b}{2} $$
         
-        然后寻找在 [-1, 1] 上寻找函数 $f(t)$ 的逼近多项式 $P_n(t)$，最终得到原始区间 $[a,b]$ 上的逼近多项式 $P_n(x)$。
+        然后寻找在 $[-1, 1]$ 上寻找函数 $f(t)$ 的逼近多项式 $P_n(t)$，最终得到原始区间 $[a,b]$ 上的逼近多项式 $P_n(x)$。
 
     - 另一种方法是把每一项 $x^k$ 改写为 $T_0(x), \dots, T_k(x)$ 的线性组合的形式。
     
@@ -432,5 +430,5 @@ $$ \max\limits_{[-1, 1]} |f(x) - P_{n-1}(x)| \le \max\limits_{[-1, 1]} |f(x) - P
 
 !!! example
     <figure markdown="span">
-        ![](./assets/chap-8-9.png){width=75%}
+        ![](./assets/chap-8-9.png){width=85%}
     </figure>
