@@ -1,0 +1,7999 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="个人网站...">
+      
+      
+        <meta name="author" content="xestray">
+      
+      
+        <link rel="canonical" href="https://xestray.cc/MathematicsAndPhysics/Phy2/wave_optics/">
+      
+      
+        <link rel="prev" href="../geometrical_optics/">
+      
+      
+        <link rel="next" href="../quantum/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>波动光学 - xestray's website</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20576%20512%22%3E%3C%21--%21%20Font%20Awesome%20Free%207.1.0%20by%20%40fontawesome%20-%20https%3A//fontawesome.com%20License%20-%20https%3A//fontawesome.com/license/free%20%28Icons%3A%20CC%20BY%204.0%2C%20Fonts%3A%20SIL%20OFL%201.1%2C%20Code%3A%20MIT%20License%29%20Copyright%202025%20Fonticons%2C%20Inc.--%3E%3Cpath%20d%3D%22M288%2064a32%2032%200%201%200%200%2064%2032%2032%200%201%200%200-64m-96%2032c0-53%2043-96%2096-96s96%2043%2096%2096c0%2041.8-26.7%2077.4-64%2090.5v257.9c62.9-14.3%20110.2-69.7%20111.9-136.5L415.8%20322c-10%208.7-25.1%207.7-33.9-2.3s-7.7-25.1%202.3-33.9l64-56c9-7.9%2022.6-7.9%2031.6%200l64%2056c10%208.7%2011%2023.9%202.3%2033.9s-23.9%2011-33.9%202.3L496%20307.9C493.9%20421%20401.6%20512%20288%20512S82.1%20421%2080%20307.9l-16.2%2014.2c-10%208.7-25.1%207.7-33.9-2.3s-7.7-25.1%202.3-33.9l64-56c9-7.9%2022.6-7.9%2031.6%200l64%2056c10%208.7%2011%2023.9%202.3%2033.9s-23.9%2011-33.9%202.3L144.1%20308c1.8%2066.8%2049.1%20122.2%20111.9%20136.5V186.6c-37.3-13.2-64-48.7-64-90.5z%22/%3E%3C/svg%3E');--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%3C%21--%21%20Font%20Awesome%20Free%207.1.0%20by%20%40fontawesome%20-%20https%3A//fontawesome.com%20License%20-%20https%3A//fontawesome.com/license/free%20%28Icons%3A%20CC%20BY%204.0%2C%20Fonts%3A%20SIL%20OFL%201.1%2C%20Code%3A%20MIT%20License%29%20Copyright%202025%20Fonticons%2C%20Inc.--%3E%3Cpath%20d%3D%22m368.5%2018.3-50.1%2050.1%20125.3%20125.3%2050.1-50.1c21.9-21.9%2021.9-57.3%200-79.2l-46.1-46.1c-21.9-21.9-57.3-21.9-79.2%200m-89.2%2078.9-.5.1-144.1%2043.2c-19.9%206-35.7%2021.2-42.3%2041L3.8%20445.8c-2.9%208.7-1.9%2018.2%202.5%2026l155.4-155.4c-1.1-4-1.6-8.1-1.6-12.4%200-26.5%2021.5-48%2048-48s48%2021.5%2048%2048-21.5%2048-48%2048c-4.3%200-8.5-.6-12.4-1.6L40.3%20505.7c7.8%204.4%2017.2%205.4%2026%202.5l264.3-88.6c19.7-6.6%2035-22.4%2041-42.3l43.2-144.1.1-.5L279.4%2097.2z%22/%3E%3C/svg%3E');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%3C%21--%21%20Font%20Awesome%20Free%207.1.0%20by%20%40fontawesome%20-%20https%3A//fontawesome.com%20License%20-%20https%3A//fontawesome.com/license/free%20%28Icons%3A%20CC%20BY%204.0%2C%20Fonts%3A%20SIL%20OFL%201.1%2C%20Code%3A%20MIT%20License%29%20Copyright%202025%20Fonticons%2C%20Inc.--%3E%3Cpath%20d%3D%22M40%2048c-13.3%200-24%2010.7-24%2024v48c0%2013.3%2010.7%2024%2024%2024h48c13.3%200%2024-10.7%2024-24V72c0-13.3-10.7-24-24-24zm152%2016c-17.7%200-32%2014.3-32%2032s14.3%2032%2032%2032h288c17.7%200%2032-14.3%2032-32s-14.3-32-32-32zm0%20160c-17.7%200-32%2014.3-32%2032s14.3%2032%2032%2032h288c17.7%200%2032-14.3%2032-32s-14.3-32-32-32zm0%20160c-17.7%200-32%2014.3-32%2032s14.3%2032%2032%2032h288c17.7%200%2032-14.3%2032-32s-14.3-32-32-32zM16%20232v48c0%2013.3%2010.7%2024%2024%2024h48c13.3%200%2024-10.7%2024-24v-48c0-13.3-10.7-24-24-24H40c-13.3%200-24%2010.7-24%2024m24%20136c-13.3%200-24%2010.7-24%2024v48c0%2013.3%2010.7%2024%2024%2024h48c13.3%200%2024-10.7%2024-24v-48c0-13.3-10.7-24-24-24z%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20384%20512%22%3E%3C%21--%21%20Font%20Awesome%20Free%207.1.0%20by%20%40fontawesome%20-%20https%3A//fontawesome.com%20License%20-%20https%3A//fontawesome.com/license/free%20%28Icons%3A%20CC%20BY%204.0%2C%20Fonts%3A%20SIL%20OFL%201.1%2C%20Code%3A%20MIT%20License%29%20Copyright%202025%20Fonticons%2C%20Inc.--%3E%3Cpath%20d%3D%22M292.9%20384c7.3-22.3%2021.9-42.5%2038.4-59.9C364%20289.7%20384%20243.2%20384%20192%20384%2086%20298%200%20192%200S0%2086%200%20192c0%2051.2%2020%2097.7%2052.7%20132.1%2016.5%2017.4%2031.2%2037.6%2038.4%2059.9h201.7zm-4.9%2048H96v16c0%2044.2%2035.8%2080%2080%2080h32c44.2%200%2080-35.8%2080-80zM184%20112c-39.8%200-72%2032.2-72%2072%200%2013.3-10.7%2024-24%2024s-24-10.7-24-24c0-66.3%2053.7-120%20120-120%2013.3%200%2024%2010.7%2024%2024s-10.7%2024-24%2024%22/%3E%3C/svg%3E');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20448%20512%22%3E%3C%21--%21%20Font%20Awesome%20Free%207.1.0%20by%20%40fontawesome%20-%20https%3A//fontawesome.com%20License%20-%20https%3A//fontawesome.com/license/free%20%28Icons%3A%20CC%20BY%204.0%2C%20Fonts%3A%20SIL%20OFL%201.1%2C%20Code%3A%20MIT%20License%29%20Copyright%202025%20Fonticons%2C%20Inc.--%3E%3Cpath%20d%3D%22M434.8%2070.1c14.3%2010.4%2017.5%2030.4%207.1%2044.7l-256%20352c-5.5%207.6-14%2012.3-23.4%2013.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8%200-45.3s32.8-12.5%2045.3%200l101.5%20101.5%20234-321.7c10.4-14.3%2030.4-17.5%2044.7-7.1z%22/%3E%3C/svg%3E');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%3C%21--%21%20Font%20Awesome%20Free%207.1.0%20by%20%40fontawesome%20-%20https%3A//fontawesome.com%20License%20-%20https%3A//fontawesome.com/license/free%20%28Icons%3A%20CC%20BY%204.0%2C%20Fonts%3A%20SIL%20OFL%201.1%2C%20Code%3A%20MIT%20License%29%20Copyright%202025%20Fonticons%2C%20Inc.--%3E%3Cpath%20d%3D%22M256%20512a256%20256%200%201%200%200-512%20256%20256%200%201%200%200%20512m0-336c-17.7%200-32%2014.3-32%2032%200%2013.3-10.7%2024-24%2024s-24-10.7-24-24c0-44.2%2035.8-80%2080-80s80%2035.8%2080%2080c0%2047.2-36%2067.2-56%2074.5v3.8c0%2013.3-10.7%2024-24%2024s-24-10.7-24-24v-8.1c0-20.5%2014.8-35.2%2030.1-40.2%206.4-2.1%2013.2-5.5%2018.2-10.3%204.3-4.2%207.7-10%207.7-19.6%200-17.7-14.3-32-32-32zm-32%20192a32%2032%200%201%201%2064%200%2032%2032%200%201%201-64%200%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%3C%21--%21%20Font%20Awesome%20Free%207.1.0%20by%20%40fontawesome%20-%20https%3A//fontawesome.com%20License%20-%20https%3A//fontawesome.com/license/free%20%28Icons%3A%20CC%20BY%204.0%2C%20Fonts%3A%20SIL%20OFL%201.1%2C%20Code%3A%20MIT%20License%29%20Copyright%202025%20Fonticons%2C%20Inc.--%3E%3Cpath%20d%3D%22M256%200c14.7%200%2028.2%208.1%2035.2%2021l216%20400c6.7%2012.4%206.4%2027.4-.8%2039.5S486.1%20480%20472%20480H40c-14.1%200-27.2-7.4-34.4-19.5s-7.5-27.1-.8-39.5l216-400c7-12.9%2020.5-21%2035.2-21m0%20352a32%2032%200%201%200%200%2064%2032%2032%200%201%200%200-64m0-192c-18.2%200-32.7%2015.5-31.4%2033.7l7.4%20104c.9%2012.5%2011.4%2022.3%2023.9%2022.3%2012.6%200%2023-9.7%2023.9-22.3l7.4-104c1.3-18.2-13.1-33.7-31.4-33.7z%22/%3E%3C/svg%3E');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%203c4.97%200%209%203.58%209%208s-6%2010-9%2010-9-5.58-9-10%204.03-8%209-8m-1.69%207.93C9.29%209.29%207.47%208.58%206.25%209.34s-1.38%202.71-.36%204.35c1.03%201.64%202.85%202.35%204.07%201.59%201.22-.78%201.37-2.71.35-4.35m3.38%200c-1.02%201.64-.87%203.57.35%204.35%201.22.76%203.04.05%204.07-1.59%201.02-1.64.86-3.59-.36-4.35s-3.04-.05-4.06%201.59M12%2017.75c-2%200-2.5-.75-2.5-.75%200%20.03.5%202%202.5%202s2.5-2%202.5-2-.5.75-2.5.75%22/%3E%3C/svg%3E');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%3C%21--%21%20Font%20Awesome%20Free%207.1.0%20by%20%40fontawesome%20-%20https%3A//fontawesome.com%20License%20-%20https%3A//fontawesome.com/license/free%20%28Icons%3A%20CC%20BY%204.0%2C%20Fonts%3A%20SIL%20OFL%201.1%2C%20Code%3A%20MIT%20License%29%20Copyright%202025%20Fonticons%2C%20Inc.--%3E%3Cpath%20d%3D%22M296%2040c0-22.1-17.9-40-40-40s-40%2017.9-40%2040c0%2044.1-53.3%2066.1-84.5%2035-15.6-15.6-40.9-15.6-56.6%200s-15.6%2040.9%200%2056.6c31.2%2031.2%209.1%2084.5-35%2084.5-22.1%200-40%2017.9-40%2040s17.9%2040%2040%2040c44.1%200%2066.1%2053.3%2035%2084.5-15.6%2015.6-15.6%2040.9%200%2056.6s40.9%2015.6%2056.6%200c31.2-31.2%2084.5-9.1%2084.5%2035%200%2022.1%2017.9%2040%2040%2040s40-17.9%2040-40c0-44.1%2053.3-66.1%2084.5-35%2015.6%2015.6%2040.9%2015.6%2056.6%200s15.6-40.9%200-56.6c-31.2-31.2-9.1-84.5%2035-84.5%2022.1%200%2040-17.9%2040-40s-17.9-40-40-40c-44.1%200-66.1-53.3-35-84.5%2015.6-15.6%2015.6-40.9%200-56.6s-40.9-15.6-56.6%200c-31.2%2031.1-84.5%209.1-84.5-35M160%20224a32%2032%200%201%201%2064%200%2032%2032%200%201%201-64%200m160%2032a32%2032%200%201%201%200%2064%2032%2032%200%201%201%200-64%22/%3E%3C/svg%3E');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20640%20512%22%3E%3C%21--%21%20Font%20Awesome%20Free%207.1.0%20by%20%40fontawesome%20-%20https%3A//fontawesome.com%20License%20-%20https%3A//fontawesome.com/license/free%20%28Icons%3A%20CC%20BY%204.0%2C%20Fonts%3A%20SIL%20OFL%201.1%2C%20Code%3A%20MIT%20License%29%20Copyright%202025%20Fonticons%2C%20Inc.--%3E%3Cpath%20d%3D%22M352%200c0-17.7-14.3-32-32-32s-32%2014.3-32%2032v64h-96c-53%200-96%2043-96%2096v224c0%2053%2043%2096%2096%2096h256c53%200%2096-43%2096-96V160c0-53-43-96-96-96h-96zM160%20368c0-13.3%2010.7-24%2024-24h32c13.3%200%2024%2010.7%2024%2024s-10.7%2024-24%2024h-32c-13.3%200-24-10.7-24-24m120%200c0-13.3%2010.7-24%2024-24h32c13.3%200%2024%2010.7%2024%2024s-10.7%2024-24%2024h-32c-13.3%200-24-10.7-24-24m120%200c0-13.3%2010.7-24%2024-24h32c13.3%200%2024%2010.7%2024%2024s-10.7%2024-24%2024h-32c-13.3%200-24-10.7-24-24M224%20176a48%2048%200%201%201%200%2096%2048%2048%200%201%201%200-96m144%2048a48%2048%200%201%201%2096%200%2048%2048%200%201%201-96%200m-304%200c0-17.7-14.3-32-32-32S0%20206.3%200%20224v96c0%2017.7%2014.3%2032%2032%2032s32-14.3%2032-32zm544-32c-17.7%200-32%2014.3-32%2032v96c0%2017.7%2014.3%2032%2032%2032s32-14.3%2032-32v-96c0-17.7-14.3-32-32-32%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20448%20512%22%3E%3C%21--%21%20Font%20Awesome%20Free%207.1.0%20by%20%40fontawesome%20-%20https%3A//fontawesome.com%20License%20-%20https%3A//fontawesome.com/license/free%20%28Icons%3A%20CC%20BY%204.0%2C%20Fonts%3A%20SIL%20OFL%201.1%2C%20Code%3A%20MIT%20License%29%20Copyright%202025%20Fonticons%2C%20Inc.--%3E%3Cpath%20d%3D%22M288%200H128c-17.7%200-32%2014.3-32%2032s14.3%2032%2032%2032v151.5L7.5%20426.3C2.6%20435%200%20444.7%200%20454.7%200%20486.4%2025.6%20512%2057.3%20512h333.4c31.6%200%2057.3-25.6%2057.3-57.3%200-10-2.6-19.8-7.5-28.4L320%20215.5V64c17.7%200%2032-14.3%2032-32S337.7%200%20320%200zm-96%20215.5V64h64v151.5c0%2011.1%202.9%2022.1%208.4%2031.8L306%20320H142l41.6-72.7c5.5-9.7%208.4-20.6%208.4-31.8%22/%3E%3C/svg%3E');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20576%20512%22%3E%3C%21--%21%20Font%20Awesome%20Free%207.1.0%20by%20%40fontawesome%20-%20https%3A//fontawesome.com%20License%20-%20https%3A//fontawesome.com/license/free%20%28Icons%3A%20CC%20BY%204.0%2C%20Fonts%3A%20SIL%20OFL%201.1%2C%20Code%3A%20MIT%20License%29%20Copyright%202025%20Fonticons%2C%20Inc.--%3E%3Cpath%20d%3D%22M419.5%2096c-16.6%200-32.7%204.5-46.8%2012.7-15.8-16-34.2-29.4-54.5-39.5%2028.2-24%2064.1-37.2%20101.3-37.2C505.9%2032%20576%20102%20576%20188.5c0%2041.5-16.5%2081.3-45.8%20110.6l-71.1%2071.1C429.8%20399.5%20390%20416%20348.5%20416%20262.1%20416%20192%20346%20192%20259.5c0-1.5%200-3%20.1-4.5.5-17.7%2015.2-31.6%2032.9-31.1s31.6%2015.2%2031.1%2032.9v2.6c0%2051.1%2041.4%2092.5%2092.5%2092.5%2024.5%200%2048-9.7%2065.4-27.1l71.1-71.1c17.3-17.3%2027.1-40.9%2027.1-65.4%200-51.1-41.4-92.5-92.5-92.5zm-144.3%2077.3c-1.9-.8-3.8-1.9-5.5-3.1-12.6-6.5-27-10.2-42.1-10.2-24.5%200-48%209.7-65.4%2027.1l-71.1%2071.1C73.8%20275.5%2064%20299.1%2064%20323.6c0%2051.1%2041.4%2092.5%2092.5%2092.5%2016.5%200%2032.6-4.4%2046.7-12.6%2015.8%2016%2034.2%2029.4%2054.6%2039.5-28.2%2023.9-64%2037.2-101.3%2037.2C70.1%20480.2%200%20410.2%200%20323.7c0-41.5%2016.5-81.3%2045.8-110.6l71.1-71.1c29.3-29.3%2069.1-45.8%20110.6-45.8%2086.6%200%20156.5%2070.6%20156.5%20156.9v3.9c-.4%2017.7-15.1%2031.6-32.8%2031.2s-31.6-15.1-31.2-32.8v-2.3c0-33.7-18-63.3-44.8-79.6z%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=LXGW+WenKai+Screen:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"LXGW WenKai Screen";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/print-site.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-material.css">
+    
+      <link rel="stylesheet" href="../../../css/toc_extra.css">
+    
+      <link rel="stylesheet" href="../../../css/timeline.css">
+    
+      <link rel="stylesheet" href="https://fonts.font.im/css2?family=Noto+Serif+SC">
+    
+      <link rel="stylesheet" href="https://fonts.font.im/css?family=Gloria+Hallelujah">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="../../../css/changelogs.css">
+    
+      <link rel="stylesheet" href="../../../css/newadmonitions.css">
+    
+      <link rel="stylesheet" href="../../../css/cards.css">
+    
+      <link rel="stylesheet" href="../../../css/card.css">
+    
+      <link rel="stylesheet" href="../../../css/custom.css">
+    
+      <link rel="stylesheet" href="../../../css/changelog_extra.css">
+    
+      <link rel="stylesheet" href="../../../css/counter.css">
+    
+      <link rel="stylesheet" href="../../../css/fold_toc.css">
+    
+      <link rel="stylesheet" href="../../../css/flink.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config",""),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="xestray&#39;s website" class="md-header__button md-logo" aria-label="xestray's website" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 7V5h2V4a2 2 0 0 1 2-2h6v7l2.5-1.5L18 9V2h1c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7zm4 4H5v2h2zm0-4V5H5v2zm0 12v-2H5v2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            xestray's website
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              波动光学
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="indigo"  aria-label="太耀眼了"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="太耀眼了" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="1bdbe9b0" data-md-color-accent="indigo"  aria-label="要有光"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="要有光" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/xestray/xestray.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    xestray
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+    
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../ComputerScience/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Computer Science
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../MA/MA/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  数理
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../others/WhatToDo/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Others
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="xestray&#39;s website" class="md-nav__button md-logo" aria-label="xestray's website" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 7V5h2V4a2 2 0 0 1 2-2h6v7l2.5-1.5L18 9V2h1c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7zm4 4H5v2h2zm0-4V5H5v2zm0 12v-2H5v2z"/></svg>
+
+    </a>
+    xestray's website
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/xestray/xestray.github.io/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    xestray
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../.." class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Home
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    更新记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Computer Science
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Computer Science
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/PL/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    编程语言
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    编程语言
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/PL/cpp/cpplearning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/ADS/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    高级数据结构与算法分析
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    高级数据结构与算法分析
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AVL树与Splay树与摊还分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    红黑树与B+树
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    倒排文件索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    左倾堆与斜堆
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二项堆
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    回溯法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分治法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    动态规划
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    贪心算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NP完全性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    近似算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    局部搜索
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    随机算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    并行算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ADS/lec-15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    外部排序
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/COD/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机组成与设计
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    计算机组成与设计
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/COD/chap-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机概要与技术
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/COD/chap-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    指令：计算机的语言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/COD/chap-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机的算数运算
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/COD/chap-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    处理器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/COD/chap-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    内存层次架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/COD/chap-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    储存和 IO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/CA/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机体系结构
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    计算机体系结构
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/CA/chap-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机设计基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/CA/chap-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    流水线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/CA/chap-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    内存层次
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/CA/chap-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    指令级并行
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/CA/chap-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DLP 和 TLP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/DB/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据库系统
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    数据库系统
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/DB/lec-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据库介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/DB/lec-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关系模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/DB/lec-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/DB/lec-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL 进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/DB/lec-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    E-R 模型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/DB/lec-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关系数据库设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/DB/lec-7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    存储与文件结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/DB/lec-8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    索引与哈希
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/DB/lec-9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    查询处理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/DB/lec-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    查询优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/DB/lec-11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    事务管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/DB/lec-12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    并发控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/DB/lec-13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据库恢复
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/OOP/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    面向对象程序设计
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    面向对象程序设计
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/CV/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    计算机视觉
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_8" id="__nav_2_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    计算机视觉
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/CV/lec1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二值图像
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/CV/lec2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    边缘检测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/CV/lec3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    轮廓拟合
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/CV/lec4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图像特征
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/CV/lec5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    特征人脸
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/CV/lec6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    单目视觉
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/CV/lec7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    运动估计 & 图像分割
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/CV/lec8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图像分类 & CNN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/IDV/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据可视化导论
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    数据可视化导论
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/NA/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数值分析
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_10" id="__nav_2_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    数值分析
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/NA/chap-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 1 数学基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/NA/chap-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 2 单变量方程的解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/NA/chap-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 3 插值与多项式逼近
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/NA/chap-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 4 数值微分与积分
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/NA/chap-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 5 常微分方程的初值问题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/NA/chap-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 6 解线性系统的直接方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/NA/chap-7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 7 矩阵代数中的迭代方法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/NA/chap-8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 8 逼近理论
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/NA/chap-9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 9 逼近特征值
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/ASM/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    汇编与接口
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_11" id="__nav_2_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    汇编与接口
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ASM/chap-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ASM/chap-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ASM/chap-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ASM/chap-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 4
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ASM/chap-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ASM/chap-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ASM/chap-9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 9
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/ASM/chap-11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chap 11
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/OS/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    操作系统
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_12" id="__nav_2_12_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    操作系统
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/OS/chap01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引言
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/OS/chap02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OS 结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/OS/chap03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    进程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/OS/chap04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    线程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/selfstudy/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    自学课程
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_13" id="__nav_2_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    自学课程
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/CS106L/cs106l/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CS106L
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_13_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/selfstudy/EECS498/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EECS498
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_13_3" id="__nav_2_13_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_13_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_13_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    EECS498
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regularization + Optimization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Neural Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backpropagation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Convolutional Neural Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CNN Architectures Ⅰ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Training Neural Networks Ⅰ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Training Neural Networks Ⅱ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CNN Architectures Ⅱ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Detection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Segmentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recurrent Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec16/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generative Models Ⅰ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec17/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generative Models Ⅱ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec18/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualizing Models and Generating Images
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec19/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3D vision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/selfstudy/EECS498/lec20/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Videos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/Misc/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    杂项
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_14" id="__nav_2_14_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    杂项
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/Misc/makefile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Makefile
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/Misc/cmake/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CMake
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/Misc/TMS/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Missing Semester
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_14_4" id="__nav_2_14_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_14_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    The Missing Semester
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/Misc/TMS/shell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/Misc/TMS/vim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vim
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/Misc/TMS/data-wrangling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据整理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../CTF/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CTF
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_14_5" id="__nav_2_14_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_14_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CTF
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_14_5_2" id="__nav_2_14_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    基础周
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_14_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    基础周
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CTF/fundament/lec1-Intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lec1-Intro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CTF/fundament/lec2-Web/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lec2-Web
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CTF/fundament/lec3-Misc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lec3-Misc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CTF/fundament/lec4-Rev/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lec4-Reverse
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CTF/fundament/lec5-Pwn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lec5-Pwn
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CTF/fundament/lec6-Crypto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lec6-Crypto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_14_5_3" id="__nav_2_14_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    专题周
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_14_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    专题周
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14_5_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_14_5_3_1" id="__nav_2_14_5_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_14_5_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14_5_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Web
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CTF/Web/Web-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web-1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14_5_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_14_5_3_2" id="__nav_2_14_5_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Misc
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_14_5_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14_5_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Misc
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CTF/Misc/Misc-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Misc-1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CTF/Misc/Misc-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Misc-2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_14_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../ComputerScience/datamarket/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据要素交易基础
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_14_6" id="__nav_2_14_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_14_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    数据要素交易基础
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/datamarket/game-theory1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博弈论基础1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/datamarket/game-theory2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博弈论基础2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/datamarket/Shapley/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    沙普利值
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/datamarket/mab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多臂老虎机算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/datamarket/auction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    拍卖与机制设计基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ComputerScience/datamarket/opt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    最优机制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数理
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    数理
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../MA/MA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数学分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LA/LA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    线性代数
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    普通物理学Ⅱ
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    普通物理学Ⅱ
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../electrostatics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    电学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../magnetostatics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    磁学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../electrodynamics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    电动力学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maxwell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    麦克斯韦方程组与电磁波
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../geometrical_optics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    几何光学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    波动光学
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    波动光学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#interference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        干涉（Interference）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="干涉（Interference）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        定态光波
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        波的负数描述
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        波的干涉与相干条件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        介质中的光程差
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        杨氏双缝干涉实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        洛埃德镜实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        等厚干涉
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="等厚干涉">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        劈尖膜
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        牛顿环
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diffraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        衍射（Diffraction）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="衍射（Diffraction）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        弗朗和夫单缝衍射
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="弗朗和夫单缝衍射">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        菲涅耳半波带法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        振幅矢量叠加法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        弗朗和夫园孔衍射
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        瑞利判据与分辨本领
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        光栅
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="光栅">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        光栅的缺级
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        光栅的色散和分辨本领
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        X 光衍射
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#polarization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        偏振（Polarization）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="偏振（Polarization）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        偏振光的分解
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        布儒斯特角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#birefringence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        双折射（Birefringence）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主平面与光轴
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        波片
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quantum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    量子力学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../Probability/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概率论
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    概率论
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Probability/chap-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    事件及其概率
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Probability/chap-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    随机变量与分布函数
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Probability/chap-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数字特征与特征函数
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Probability/chap-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    极限定理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Others
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Others
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../others/WhatToDo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    干点啥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#interference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        干涉（Interference）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="干涉（Interference）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        定态光波
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        波的负数描述
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        波的干涉与相干条件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        介质中的光程差
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        杨氏双缝干涉实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        洛埃德镜实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        等厚干涉
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="等厚干涉">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        劈尖膜
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        牛顿环
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diffraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        衍射（Diffraction）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="衍射（Diffraction）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        弗朗和夫单缝衍射
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="弗朗和夫单缝衍射">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        菲涅耳半波带法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        振幅矢量叠加法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        弗朗和夫园孔衍射
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        瑞利判据与分辨本领
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        光栅
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="光栅">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        光栅的缺级
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        光栅的色散和分辨本领
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        X 光衍射
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#polarization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        偏振（Polarization）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="偏振（Polarization）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        偏振光的分解
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        布儒斯特角
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#birefringence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        双折射（Birefringence）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主平面与光轴
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        波片
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../MA/MA/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    数理
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    普通物理学Ⅱ
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="_1">波动光学<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8zm6.78 1a.7.7 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38z"/></svg></span> 约 6664 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 17H7V3h14m0-2H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2M3 5H1v16a2 2 0 0 0 2 2h16v-2H3m12.96-10.71-2.75 3.54-1.96-2.36L8.5 15h11z"/></svg></span> 53 张图片 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3z"/></svg></span> 预计阅读时间 27 分钟</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Abstract</p>
+<p>在几何光学中，<span class="arithmatex">\(\lambda &lt;&lt; d\)</span>，即光波的波长远小于光程差，可以忽略波动性。而在波动光学中，<span class="arithmatex">\(\lambda \approx d\)</span>，即光波的波长与光程差比较接近，波动性不能忽略。</p>
+<p>主要包括三个部分</p>
+<ul>
+<li><strong>Interference 干涉</strong></li>
+<li><strong>Diffraction 衍射</strong></li>
+<li><strong>Polarization 偏振</strong></li>
+</ul>
+</div>
+<h2 id="interference">干涉（Interference）<a class="headerlink" href="#interference" title="Permanent link">&para;</a></h2>
+<h3 id="_2">定态光波<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>所谓定态波就是指波的振幅和相位都<strong>与时间无关</strong>的波，例如
+$$ U(P,t) = A(P) \cos(\omega t - \varphi(P)) $$
+中的 <span class="arithmatex">\(A(P)\)</span> 和 <span class="arithmatex">\(\varphi(P)\)</span> 都是仅仅与空间有关，而与时间无关的函数。</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<ul>
+<li>
+<p>定态平面波</p>
+<div class="arithmatex">\[  \begin{aligned}
+&amp; \begin{cases} A(P) = A_0 ,\text{constant, independent of (x,y,z)} \\ 
+\varphi(P) = \overrightarrow{k} \cdot \overrightarrow{r} + \varphi_0 = k_x x + k_y y + k_z z + \varphi_0 
+\end{cases} \\\\
+&amp; k = \dfrac{2\pi}{\lambda}, \quad \overrightarrow{r} = x \overrightarrow{i} + y \overrightarrow{j} + z \overrightarrow{k}
+\end{aligned} \]</div>
+</li>
+<li>
+<p>定态球面波</p>
+<div class="arithmatex">\[ \begin{cases} 
+A(P) = \dfrac{a}{r} \\ 
+\varphi(P) = kr \varphi_0 
+\end{cases} \]</div>
+</li>
+</ul>
+</div>
+<p>光也是一种波，因此定态光波可以描述为
+$$ \overrightarrow{E}(P,t) = \overrightarrow{E}_0 (P) \cos(\omega t - \varphi(P)) $$
+$$ \overrightarrow{H}(P,t) = \overrightarrow{H}_0 (P) \cos(\omega t - \varphi(P)) $$</p>
+<h3 id="_3">波的负数描述<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>\[ \begin{aligned}
+&amp; U(P,t) = A(P) \cos[\omega t - \varphi(P)] \\
+\Longleftrightarrow \quad &amp; \widetilde{U}(P,t) = A(P) e^{\pm i[\omega t - \varphi(P)]}
+\end{aligned} \]
+上面的正负符号的不同是来自于欧拉公式的不同形式，但是在实际应用中，我们通常使用负号。</p>
+<p>对于一个定态波，我们可以把它的空间和时间分离，即
+$$ \widetilde{U}(P,t) = A(P) e^{i[\varphi(P) - \omega t]} = A(P) e^{i\varphi(P)} e^{-i\omega t} $$
+其中，<span class="arithmatex">\(\widetilde{U}(P) = A(P) e^{i\varphi(P)}\)</span> 是波的复振幅，<span class="arithmatex">\(e^{-i\omega t}\)</span> 是波的时间因子。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>平面波 $$ \widetilde{U}(P) =  e^{i(\overrightarrow{k} \cdot \overrightarrow{r} + \varphi_0)} = A e^{i(k_x x + k_y y + k_z z + \varphi_0)} $$</li>
+<li>球面波 $$ \widetilde{U}(P) = \dfrac{a}{r} e^{i(kr + \varphi_0)} $$</li>
+</ul>
+<p>波的强度与振幅的平方成正比，即 <span class="arithmatex">\(I \propto |A|^2\)</span>，但是一般而言我们会直接使用等号
+$$ I(P) = [A(P)]^2 = \widetilde{U}^*(P) \cdot \widetilde{U}(P) $$</p>
+</div>
+<h3 id="_4">波的干涉与相干条件<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>两列波叠加的结果为
+$$ \widetilde{U}(P,t) = \widetilde{U}_1(P,t) + \widetilde{U}_2(P,t) = [A_1(P) e^{i\varphi_1(P)} + A_2(P) e^{i\varphi_2(P)}] e^{-i\omega t} $$ </p>
+<p>因此叠加得到的波的强度为</p>
+<div class="arithmatex">\[ \begin{aligned}
+I(P) &amp;= \widetilde{U}^*(P) \cdot \widetilde{U}(P) \\\\
+&amp;= [A_1 e^{-i\varphi_1(P)} + A_2 e^{-i\varphi_2(P)}] [A_1 e^{i\varphi_1(P)} + A_2 e^{i\varphi_2(P)}] \\\\
+&amp;= A_1^2 + A_2^2 + A_1 A_2 [e^{i(\varphi_1 - \varphi_2)} + e^{-i(\varphi_1 - \varphi_2)}] \\\\
+&amp;= A_1^2 + A_2^2 + 2 A_1 A_2 \cos(\varphi_1 - \varphi_2)
+\end{aligned} \]</div>
+<p>由于 <span class="arithmatex">\(I_1(P) = A_1^2,\, I_2(P) = A_2^2\)</span>，因此两列波的强度之和为
+$$ I(P) = I_1(P) + I_2(P) + 2 \sqrt{I_1(P) I_2(P)} \cos(\varphi_1 - \varphi_2) $$</p>
+<div class="admonition note">
+<p class="admonition-title">干涉现象的光强分布</p>
+<p><figure>
+    <img src="../assets/干涉现象的光强分布.png" width="60%">
+</figure></p>
+<p>因此一般来说 <span class="arithmatex">\(I(P) \neq I_1(P) + I_2(P)\)</span>，只有当 <span class="arithmatex">\(\varphi_1 - \varphi_2 = 2n\pi\)</span> 时，两列波才是完全相干的。</p>
+<div class="arithmatex">\[ \begin{cases}
+\cos(\varphi_1 - \varphi_2) &gt; 0, \quad I(P) &gt; I_1(P) + I_2(P) \\\\
+\cos(\varphi_1 - \varphi_2) &lt; 0, \quad I(P) &lt; I_1(P) + I_2(P)
+\end{cases} \]</div>
+<p>两个光波之间的相位差 <span class="arithmatex">\(\Delta \varphi = \varphi_1 - \varphi_2\)</span> 是干涉现象的关键，当相位差不固定时，那么它在在统计意义上的平均值为零，即
+$$ \overline{\cos \Delta \varphi} = \overline{\cos(\varphi_1 - \varphi_2)} = 0 $$
+当两列波的相位差会随时间变化时，我们称两列波不相干（incoherent）。</p>
+</div>
+<p>产生干涉的条件：</p>
+<ul>
+<li><span class="arithmatex">\(\omega_1 = \omega_2 = \omega\)</span></li>
+<li><span class="arithmatex">\(\varphi_1 - \varphi_2 = \text{constant}\)</span></li>
+<li><span class="arithmatex">\(\overrightarrow{U}_1 \parallel \overrightarrow{U}_2\)</span></li>
+</ul>
+<h3 id="_5">介质中的光程差<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>相位差在分析光的干涉时十分重要，为便于计算光通过不同媒质时的相位差，我们引入“光程差”的概念。</p>
+<p>根据已经学习到的知识，我们知道光程就是 <span class="arithmatex">\(L = \int n ds\)</span>，因此光程差就是两束光运动的距离之差乘上介质的折射率。由于光波的相位与它传播的距离（光程）相关，那么我们可以知道相位差与光程差的关系为
+$$ \Delta \varphi = \dfrac{2\pi}{\lambda} \Delta L $$
+其中 <span class="arithmatex">\(\Delta L\)</span> 是光程差，<span class="arithmatex">\(\lambda\)</span> 是光的波长</p>
+<div class="admonition abstract">
+<p class="admonition-title">光的干涉</p>
+<p>光相干的条件为</p>
+<ul>
+<li>频率相同</li>
+<li>振动方向相同</li>
+<li>相位差恒定</li>
+</ul>
+<p>判断光是否干涉：
+$$ \begin{aligned}
+&amp; \Delta \varphi = 
+\begin{cases} 
+\pm 2k\pi, &amp;k=0,1,2,\cdots \text{干涉增强} \\\\
+\pm (2k+1)\pi, &amp;k=0,1,2,\cdots \text{干涉减弱}
+\end{cases} \\\\
+&amp; \Delta L =
+\begin{cases}
+\pm k\lambda, &amp;k=0,1,2,\cdots \text{干涉增强}\\\\
+\pm (2k+1)\dfrac{\lambda}{2}, &amp;k=0,1,2,\cdots \text{干涉减弱}
+\end{cases}
+\end{aligned} $$</p>
+</div>
+<h3 id="_6">杨氏双缝干涉实验<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<figure>
+    <img src="../assets/杨氏双缝干涉实验.png" width="55%">
+</figure>
+
+<p>杨氏双缝实验需要满足的条件是</p>
+<ul>
+<li>两缝之间的间距 <span class="arithmatex">\(d\)</span> 要远大于光的波长 <span class="arithmatex">\(\lambda\)</span>，即 <span class="arithmatex">\(d &gt;&gt; \lambda\)</span></li>
+<li>缝到屏幕的距离 <span class="arithmatex">\(D\)</span> 要远大于缝之间的距离 <span class="arithmatex">\(d\)</span>，即 <span class="arithmatex">\(D &gt;&gt; d\)</span>。</li>
+</ul>
+<figure>
+    <img src="../assets/杨氏双缝干涉实验1.png" width="55%">
+</figure>
+
+<p>光程差 <span class="arithmatex">\(\Delta L = r_2 - r_1 \approx d \sin \theta \approx d \tan\theta = d \cdot \dfrac{x}{D}\)</span></p>
+<ul>
+<li>干涉相长：<span class="arithmatex">\(d \sin\theta = m\lambda\)</span></li>
+<li>亮纹中心：<span class="arithmatex">\(x = \dfrac{m\lambda D}{d}\)</span></li>
+<li>干涉相消：<span class="arithmatex">\(d \sin\theta = (m + \dfrac{1}{2})\lambda\)</span></li>
+<li>暗纹中心：<span class="arithmatex">\(x = \dfrac{(m + \dfrac{1}{2})\lambda D}{d}\)</span></li>
+<li>两相邻亮纹（暗纹）的间距：<span class="arithmatex">\(\Delta x = \dfrac{D}{d}\lambda\)</span></li>
+</ul>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<ul>
+<li>
+<p>将双缝干涉装置由空气中放入水中时，屏上的干涉条纹有何变化？</p>
+<p>由于水的折射率大于空气折射率，因此光在水中的波长减小，根据 <span class="arithmatex">\(\Delta x = \dfrac{D}{d}\lambda\)</span>，条纹间距会减小</p>
+</li>
+<li>
+<p>若使用白光为光源进行双缝干涉实验，可以观察到几级清晰可辨的彩色光谱？</p>
+<p>用白光照射时，在中央白色明纹两侧，只有第一级彩色光谱是清晰可辨的。</p>
+</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>当两缝的间距小于光的波长时，将无法看到干涉亮条纹。</p>
+<ul>
+<li>
+<p>因为亮条纹要求 <span class="arithmatex">\(d \sin\theta = m \lambda\)</span>，即 <span class="arithmatex">\(\sin\theta = \dfrac{m \lambda}{d}\)</span>。</p>
+</li>
+<li>
+<p>当 <span class="arithmatex">\(d &lt; \lambda\)</span> 时，就有 <span class="arithmatex">\(\sin\theta &gt; 1\)</span>，这是不可能的，因此无法看到亮条纹。</p>
+</li>
+</ul>
+</div>
+<h3 id="_7">洛埃德镜实验<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<figure>
+    <img src="../assets/洛埃德镜实验.png" width="65%">
+</figure>
+
+<ul>
+<li>当屏移到 <span class="arithmatex">\(A'B'\)</span> 位置时，在屏上的 <span class="arithmatex">\(P\)</span> 点会出现暗条纹。这一实验结果表明当光在镜子表面发生反射时，反射光的相位会变化一个 <span class="arithmatex">\(\pi\)</span>。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">半波损失（Reflection Phase Shifts）</p>
+<ul>
+<li>光从光疏介质反射到光密介质，反射光的相位会变化一个 <span class="arithmatex">\(\pi\)</span>。</li>
+<li>光从光密介质反射到光疏介质，反射光的相位不变。</li>
+</ul>
+<p><figure>
+    <img src="../assets/半波损失.png" width="70%">
+</figure></p>
+<p>可以类比于上面的更一般的波的反射，当波传播到更“难”传播，或者说更“稠密”的介质中时，反射回来的波会有一个 <span class="arithmatex">\(\pi\)</span> 的相位差，这就是半波损失。</p>
+<ul>
+<li><strong>折射波不会出现半波损失</strong></li>
+</ul>
+</div>
+<h3 id="_8">等厚干涉<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p><img align="right" alt="" src="../assets/%E7%AD%89%E5%8E%9A%E5%B9%B2%E6%B6%89.png" width="24%" /></p>
+<p>可以通过计算证明，在分别在上表面和下表面反射的两束光的光程差为
+$$ \Delta L = 2nh \cos i $$</p>
+<ul>
+<li>亮条纹（maxmum）：<span class="arithmatex">\(\Delta L = 2nh \cos i = m\lambda\)</span></li>
+<li>暗条纹（minmum）：<span class="arithmatex">\(\Delta L = 2nh \cos i = (m + \dfrac{1}{2})\lambda\)</span></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>这里要注意，如果 <span class="arithmatex">\(n_1 &lt; n\)</span>，那么在反射时会产生半波损失，那么光程差就相当于 <span class="arithmatex">\(2nh \cos i + \dfrac{\lambda}{2}\)</span>。</p>
+</div>
+<p>通常而言我们考虑垂直入射的情况，即 <span class="arithmatex">\(i = 0\)</span>，那么光程差就化简为
+$$ \Delta L = 2nh $$</p>
+<h4 id="_9">劈尖膜<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
+<figure>
+    <img src="../assets/劈尖膜.png" width="55%">
+</figure>
+
+<p>由于光线在空气劈尖的下表面发生反射时会有半波损失，因此实际的光程差为
+$$ \Delta L = 2nh + \dfrac{\lambda}{2} $$
+其中 <span class="arithmatex">\(h\)</span> 为入射位置对应的空气劈尖厚度。</p>
+<p>于是发生干涉时，亮条纹和暗条纹的条件为</p>
+<div class="arithmatex">\[ \Delta L = 2nh + \dfrac{\lambda}{2} = \begin{cases}
+m\lambda, &amp; m = 0,1,2,\cdots \text{亮条纹} \\
+(m + \dfrac{1}{2})\lambda, &amp; m = 0,1,2,\cdots \text{暗条纹}
+\end{cases} \]</div>
+<p>亮、暗条纹对应的厚度为
+\[ h = \begin{cases}
+\dfrac{(m-\dfrac{1}{2})}{2n} \lambda, &amp; m = 1,2,3,\cdots \quad \text{亮条纹} \\\\
+\dfrac{m}{2n} \lambda, &amp; m = 0,1,2,\cdots \quad \text{暗条纹}
+\end{cases} \]
+于是相邻的两个条纹对应的厚度差为 <span class="arithmatex">\(\Delta h = \dfrac{\lambda}{2n}\)</span></p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p><figure>
+    <img src="../assets/劈尖例题.png" width="70%">
+</figure></p>
+<p>如果工件的表面是完全平滑没有凹凸的，那么等厚干涉条纹将会是等间距交错的明暗条纹，并且所有连续条纹对应位置的空气劈尖厚度一定是相同的。</p>
+<p>如果出现下凹，那么下凹处的披肩厚度将会比周围的厚度大，因此会观测到干涉条纹向着厚度更低的地方弯曲。</p>
+<p>例如上图中干涉条纹弯向空气膜的左端，红线上的劈尖厚度处处相等，因此可以知道左侧的表面出现了下凹。利用相似三角形的知识我们可以知道
+$$ \dfrac{a}{b} = \dfrac{\Delta h}{e_k - e_{k+1}} = \dfrac{\Delta h}{\lambda / 2} $$
+这里 <span class="arithmatex">\(e_k\)</span> 表示第 <span class="arithmatex">\(k\)</span> 级条纹对应的劈尖厚度，并且在空气中 <span class="arithmatex">\(n=1\)</span>，所以
+$$ \Delta h = \dfrac{a}{b} \dfrac{\lambda}{2} $$</p>
+</div>
+<h4 id="_10">牛顿环<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
+<p><img align="right" alt="" src="../assets/%E7%89%9B%E9%A1%BF%E7%8E%AF.png" width="30%" /></p>
+<div class="arithmatex">\[ \Delta L = 2e + \dfrac{\lambda}{2} = \begin{cases}
+m\lambda, &amp; m = 0,1,2,\cdots \text{亮纹} \\
+(m + \dfrac{1}{2})\lambda, &amp; m = 0,1,2,\cdots \text{暗纹}
+\end{cases} \]</div>
+<p>根据几何关系，
+$$ r^2 + (R - e)^2 = R^2 $$
+由于 <span class="arithmatex">\(e\)</span> 很小，所以它的二次项可以忽略，因此
+$$ e = \dfrac{r^2}{2R} $$</p>
+<p>导入到上面光程差的式子中，计算得到</p>
+<div class="arithmatex">\[ r = \begin{cases}
+\sqrt{(m - \dfrac{1}{2})\lambda R}, &amp; m = 1,2,3,\cdots \quad \text{亮条纹} \\\\
+\sqrt{m \lambda R}, &amp; m = 0,1,2,\cdots \quad \text{暗条纹}
+\end{cases} \]</div>
+<p>于是我们知道牛顿环干涉条纹是一系列明暗相间的同心圆环，并且中心是一个暗斑。</p>
+<p><img align="right" alt="" src="../assets/%E7%89%9B%E9%A1%BF%E7%8E%AF1.png" width="20%" /></p>
+<p>由于
+$$ \Delta r = r_{m+1} - r_m = \dfrac{\sqrt{R\lambda}}{\sqrt{R} + \sqrt{R+1}} $$
+因此牛顿环的条纹间距是不等的，且<strong>内疏外密</strong>。</p>
+<hr />
+<h2 id="diffraction">衍射（Diffraction）<a class="headerlink" href="#diffraction" title="Permanent link">&para;</a></h2>
+<p>光在传播过程中，会出现绕过障碍物的边缘而偏离直线传播的现象，这称为光的衍射现象。</p>
+<div class="admonition note">
+<p class="admonition-title">菲涅耳衍射和弗朗和夫衍射</p>
+<p><img align="right" alt="" src="../assets/%E5%A4%AB%E7%90%85%E7%A6%BE%E8%B4%B9%E8%A1%8D%E5%B0%84.png" width="45%" />
+<img alt="" src="../assets/%E8%8F%B2%E6%B6%85%E8%80%B3%E8%A1%8D%E5%B0%84.png" width="40%" /></p>
+<ul>
+<li>菲涅耳衍射：当光源和观察屏，或两者之一离障碍物（衍射屏）的距离为<strong>有限远</strong>时，所发生的衍射现象。（左图）</li>
+<li>弗朗和夫衍射：光源和观察屏离障碍物的距离均为<strong>无限远</strong>时，所发生的衍射现象。（右图）</li>
+</ul>
+</div>
+<div class="admonition info">
+<p class="admonition-title">惠更斯—菲涅耳原理</p>
+<ul>
+<li>惠更斯原理：媒质中波动所到达的各点都可以看作一个新的子波源，这些子波源向空间发射球面子波。在以后的任一时刻，这些子波的包络面就是波在该时刻的新的波阵面。</li>
+<li>惠更斯—菲涅耳原理：波传到的任何一点都是子波的波源，各子波在空间某点的相干叠加，就决定了该点波的强度。</li>
+</ul>
+<p><img align="right" alt="" src="../assets/%E6%83%A0%E6%9B%B4%E6%96%AF%E2%80%94%E8%8F%B2%E6%B6%85%E8%80%B3%E5%8E%9F%E7%90%86.png" width="35%" /></p>
+<p>$$ \mathrm{d}E_P = C \dfrac{\mathrm{d}S}{r} K(\theta) \cos(\dfrac{2\pi}{\lambda} r \omega t + \varphi_0) $$
+$$ E_P = \int_S C \dfrac{K(\theta)}{r} \cos(\dfrac{2\pi}{\lambda} r \omega t + \varphi_0) \mathrm{d}S $$
+其中 <span class="arithmatex">\(K(\theta)\)</span> 为倾斜因子</p>
+<ul>
+<li><span class="arithmatex">\(\theta = 0\)</span> 时，<span class="arithmatex">\(K=K_{max}=1\)</span>，沿原波传播方向的子波振幅最大</li>
+<li><span class="arithmatex">\(\theta\)</span> 增大时 <span class="arithmatex">\(K\)</span> 减小</li>
+<li><span class="arithmatex">\(\theta \geqslant \dfrac{\pi}{2}\)</span> 时 <span class="arithmatex">\(K=0\)</span>，因为子波不能向后传播</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">弗朗和夫衍射中的惠更斯—菲涅耳原理</p>
+<p>由于在弗朗和夫衍射中光源和观察屏到障碍物的距离均为无限远，因此这时候 <span class="arithmatex">\(K(\theta)\)</span> 和 <span class="arithmatex">\(r\)</span> 都可以视作一个常数，因此
+$$ E_P \propto \int_S \cos(\dfrac{2\pi}{\lambda} r \omega t + \varphi_0) \mathrm{d}S $$</p>
+</div>
+<h3 id="_11">弗朗和夫单缝衍射<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<p>实验装置图以及光路图如下</p>
+<figure>
+    <img src="../assets/弗朗和夫单缝衍射实验装置图.png" width="45%"/>
+</figure>
+
+<figure>
+    <img src="../assets/弗朗和夫单缝衍射光路图.png" width="45%"/>
+</figure>
+
+<p>由于缝中各点的光都可以看作一个新的波源，我们考虑这些波源朝着角度为 <span class="arithmatex">\(\theta\)</span> 的方向发射新的子波的情况，显然光程差为 <span class="arithmatex">\(\Delta L = \delta = a \sin\theta\)</span></p>
+<p>当 <span class="arithmatex">\(\theta=0\)</span> 时，子波的相干点 <span class="arithmatex">\(P\)</span> 在中心轴上，没有光程差，相位相同，因此相干加强，形成中心明纹</p>
+<h4 id="_12">菲涅耳半波带法<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
+<p>在波阵面上截取一个条状带，使它上下两边缘发的光在屏上 <span class="arithmatex">\(P\)</span> 处的光程差为 <span class="arithmatex">\(\dfrac{\lambda}{2}\)</span>，此带称为半波带。</p>
+<ul>
+<li>例如当 <span class="arithmatex">\(a \sin\theta = \lambda\)</span> 时，可将缝分为两个半波带</li>
+<li>两相邻半波带上对应点在相同的 <span class="arithmatex">\(P\)</span> 点处干涉相消，形成暗条纹</li>
+</ul>
+<figure>
+    <img src="../assets/菲涅耳半波带法.png" width="60%"/>
+</figure>
+
+<p>由半波带法可得条件：</p>
+<ul>
+<li>暗纹：<span class="arithmatex">\(a \sin\theta = \pm k \lambda, \quad k = 1,2,3,\cdots\)</span></li>
+<li>明纹（近似）：<span class="arithmatex">\(a \sin\theta = \pm (2k+1) \dfrac{\lambda}{2}, \quad k = 1,2,3,\cdots\)</span></li>
+<li>中央明纹（中心）：<span class="arithmatex">\(a \sin\theta = 0\)</span></li>
+</ul>
+<h4 id="_13">振幅矢量叠加法<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h4>
+<p><img align="right" alt="" src="../assets/%E6%8C%AF%E5%B9%85%E7%9F%A2%E9%87%8F%E5%8F%A0%E5%8A%A0%E6%B3%951.png" width="30%" /></p>
+<p>我们知道可以把一个波用复数的形式表示，如右图就是一个波在复平面上的表示，波的实际振幅是它在实轴上的投影大小。</p>
+<p>假如我们把一个单缝分割为多份，每一份的宽度都是 <span class="arithmatex">\(\Delta x\)</span>，那么相邻两份之间的相位差就是
+$$ \Delta \varphi = \dfrac{2\pi}{\lambda} \Delta x \sin\theta $$
+在复平面上的表现就是相邻两个波都相差一个 <span class="arithmatex">\(\Delta \varphi\)</span> 的角度。</p>
+<figure>
+    <img src="../assets/振幅矢量叠加法2.png" width="60%"/>
+</figure>
+
+<p><img align="right" alt="" src="../assets/%E6%8C%AF%E5%B9%85%E7%9F%A2%E9%87%8F%E5%8F%A0%E5%8A%A0%E6%B3%953.png" width="25%" /></p>
+<p>如上图所示，假如我们把一个缝分割成 <span class="arithmatex">\(N\)</span> 份，那么</p>
+<div class="arithmatex">\[ \begin{aligned}
+E_1 &amp;= E_0 e^{i \cdot 0} \\
+E_2 &amp;= E_0 e^{i \cdot \Delta \varphi} \\
+&amp;\cdots \\
+E_N &amp;= E_0 e^{i \cdot (N-1)\Delta \varphi} \\
+\end{aligned} \]</div>
+<p>其中 <span class="arithmatex">\(\Delta \varphi = \dfrac{2\pi}{\lambda} \cdot \dfrac{a}{N} \sin\theta\)</span> 是相邻矢量之间的夹角。</p>
+<p>我们再把总的角度偏转记为 <span class="arithmatex">\(\delta = N \Delta \varphi = \dfrac{2\pi}{\lambda} a \sin\theta\)</span>，我们令
+$$ \alpha = \dfrac{\delta}{2} = \dfrac{\pi}{\lambda} a \sin\theta$$
+于是就得到</p>
+<div class="arithmatex">\[ \begin{aligned}
+E_{\theta} &amp;= \overline{MN} = 2R\sin\alpha \\
+&amp;= 2 \cdot \dfrac{\mathop{MN}\limits^\frown}{2\alpha} \cdot \sin\alpha \\
+&amp;= \mathop{MN}\limits^\frown \dfrac{\sin\alpha}{\alpha}
+\end{aligned} \]</div>
+<p>显然当 <span class="arithmatex">\(\theta=0\)</span> 时光波的电场的强度最大，这时候 <span class="arithmatex">\(\mathop{MN}\limits^\frown = E_m\)</span>，所以
+$$ E_{\theta} = E_m \dfrac{\sin\alpha}{\alpha} $$
+在 <span class="arithmatex">\(P\)</span> 点成像时光的强度为
+$$ I_{\theta} = E_{\theta}^2 = E_m^2 \left( \dfrac{\sin\alpha}{\alpha} \right)^2 = I_m \left( \dfrac{\sin\alpha}{\alpha} \right)^2 $$</p>
+<div class="admonition tip">
+<p class="admonition-title">振幅矢量叠加法</p>
+<div class="arithmatex">\[ I_{\theta} = I_m \left( \dfrac{\sin\alpha}{\alpha} \right)^2 \]</div>
+<ul>
+<li>
+<p>当 <span class="arithmatex">\(\alpha = \dfrac{\pi a \sin\theta}{\lambda} = m\pi \quad m= \pm 1, \pm 2, \cdots\)</span> 时</p>
+<ul>
+<li><span class="arithmatex">\(I_{\theta} = I_m \left( \dfrac{\sin\alpha}{\alpha} \right)^2 = 0\)</span>，出现暗纹（极小）</li>
+</ul>
+<p>此时 <span class="arithmatex">\(a\sin\theta = m\lambda\)</span></p>
+</li>
+<li>
+<p>当 <span class="arithmatex">\(\theta=0\)</span> 时，<span class="arithmatex">\(\alpha = \dfrac{\pi a \sin\theta}{\lambda} \to 0, \, \lim\limits_{\alpha \to 0} (\dfrac{\sin\alpha}{\alpha}) = 1\)</span></p>
+<ul>
+<li>于是 <span class="arithmatex">\(I_{\theta=0} = I_m\)</span></li>
+</ul>
+</li>
+<li>
+<p>当 <span class="arithmatex">\(\alpha = \dfrac{\pi a \sin\theta}{\lambda} = (m+\dfrac{1}{2})\pi, \, a\sin\theta = (m+\dfrac{1}{2})\lambda\)</span>，极大，出现亮纹</p>
+</li>
+</ul>
+<p><figure>
+    <img src="../assets/衍射相对光强示意图.png" width="70%"/>
+</figure></p>
+<p>可以计算 <span class="arithmatex">\(m=1,2,\cdots\)</span> 时与中心亮纹的光强之比为
+$$ \dfrac{I_1}{I_m}=0.045,\, \dfrac{I_2}{I_m}=0.016,\, \dfrac{I_3}{I_m}=0.0083 $$
+对应的 <span class="arithmatex">\(\alpha\)</span> 为 <span class="arithmatex">\(\pm 1.43\pi,\, \pm 2.46\pi,\, \pm 3.47\pi\)</span>
+这些较弱的亮纹称为次极大</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">半角宽度</p>
+<p>我们把条纹宽度对应的衍射角宽度的一半称为半角宽度</p>
+<p><figure>
+    <img src="../assets/半角宽度.png" width="50%"/>
+</figure></p>
+<p>例如在上图中，主极大的角宽度为 <span class="arithmatex">\(\Delta \theta_0\)</span>，半角宽度为 <span class="arithmatex">\(\theta_1\)</span>
+$$ \Delta \theta_0 = 2\theta_1 \approx 2 \dfrac{\lambda}{a} $$
+线宽度为 <span class="arithmatex">\(\Delta x_0 = 2 f \cdot \tan\theta_1 \approx 2f \theta_1 = 2f \dfrac{\lambda}{a}\)</span></p>
+<ul>
+<li><span class="arithmatex">\(a\)</span> 越大，半角宽度越小</li>
+<li><span class="arithmatex">\(a\)</span> 越小，半角宽度越大</li>
+</ul>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Abstract</p>
+<div class="arithmatex">\[ \delta = a\sin\theta = \begin{cases}
+0 &amp; \text{中心亮条纹} \\\\
+2m \cdot \dfrac{\lambda}{2} = m\lambda &amp; m = \pm 1, \pm 2 \cdots \, \text{极小（暗条纹）} \\\\
+(2m+1) \cdot \dfrac{\lambda}{2} &amp; m = \pm 1, \pm 2 \cdots \, \text{极大（亮条纹）}
+\end{cases} \]</div>
+</div>
+<h3 id="_14">弗朗和夫园孔衍射<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<figure>
+    <img src="../assets/弗朗和夫园孔衍射.png" width="60%"/>
+</figure>
+
+<p>试验结果表明 
+$$\Delta \theta = 0.61 \dfrac{\lambda}{a} = 1.22 \dfrac{\lambda}{D} $$
+这里的 <span class="arithmatex">\(D\)</span> 是小孔的直径，<span class="arithmatex">\(a\)</span> 是小孔的半径</p>
+<p>我们将中心的大亮斑称为爱里斑</p>
+<figure>
+    <img src="../assets/艾里斑.png" width="55%"/>
+</figure>
+
+<h3 id="_15">瑞利判据与分辨本领<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<p>一个理想点光源的成的像就是点光源，但由于衍射现象的存在（衍射受限，diffraction limit），一个点光源的像是一个光斑（爱里斑，Airy disk）。当两个物点很靠近时，它们的象斑有可能相互重叠，导致分辨不清。</p>
+<figure>
+    <img src="../assets/分辨本领.png" width="55%"/>
+</figure>
+
+<div class="admonition info">
+<p class="admonition-title">瑞利判据</p>
+<p>对于两个等光强的非相干物点，若其中一点的象斑中心恰好落在另一点的象斑的边缘(第一暗纹处),则此两物点被认为是刚刚可以分辨。</p>
+<p>此时两个爱里斑重叠部分的光强为爱里斑中心光强的 80%。</p>
+<p><figure>
+    <img src="../assets/瑞利判据1.png" width="70%"/>
+</figure></p>
+<ul>
+<li>不能分辨（not resolved）：一个爱里斑的中心在另一个爱里斑内部</li>
+<li>恰能分辨（just resolved）：一个爱里斑的中心在另一个爱里斑的第一暗环上，即在里一个爱里斑的边缘</li>
+<li>可分辨（resolved）：两个爱里斑完全分开</li>
+</ul>
+<p><figure>
+    <img src="../assets/瑞利判据2.png" width="75%"/>
+</figure></p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">分辨本领</p>
+<p>我们将 <span class="arithmatex">\(\theta_{min}\)</span> 定义为两个物点的最小分辨角，即在能够分辨两个物点的情况下，它们象斑中心之间的角度。
+$$ \sin\theta_{min} \approx \theta_{min} = 1.22 \dfrac{\lambda}{D} $$</p>
+<p>分辨本领(reolving power) <span class="arithmatex">\(R\)</span> 定义为 <span class="arithmatex">\(R = \dfrac{1}{\theta_{min}}\)</span></p>
+</div>
+<h3 id="_16">光栅<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">光栅</p>
+<p>光栅是由大量等宽等间距的平行狭缝(或反射面) 构成的光学元件</p>
+<p>光栅常数：周期长度 <span class="arithmatex">\(d\)</span>，即光栅上相邻两个狭缝之间的距离</p>
+<ul>
+<li><span class="arithmatex">\(d = a + b\)</span>，<span class="arithmatex">\(a\)</span> 是狭缝的宽度，<span class="arithmatex">\(b\)</span> 是狭缝之间的间隔</li>
+</ul>
+</div>
+<p>光栅实际上就是多个单缝衍射结果的叠加。</p>
+<details class="info">
+<summary>单缝衍射</summary>
+<p>\[ E_{\theta} = E_m \dfrac{\sin\alpha}{\alpha}, \quad \alpha = \dfrac{\pi a \sin\theta}{\lambda} \]
+\[ I = I_{\theta} = I_m \left( \dfrac{\sin\alpha}{\alpha} \right)^2 \]</p>
+</details>
+<p><img align="right" alt="" src="../assets/%E5%85%89%E6%A0%85%E6%8C%AF%E5%B9%85%E5%8F%A0%E5%8A%A01.png" width="30%" /></p>
+<p>我们同样可以考虑使用振幅矢量叠加法来分析光栅的衍射现象，如右图所示，我们把光栅有 <span class="arithmatex">\(N\)</span> 个狭缝，相邻两个狭缝产生的光的相位差（振幅矢量夹角）为 <span class="arithmatex">\(\delta\)</span>，于是</p>
+<div class="arithmatex">\[ \begin{aligned}
+E_1 &amp;= E_m \left( \dfrac{\sin\alpha}{\alpha} \right)^2 e^{i 0} \\
+E_2 &amp;= E_m \left( \dfrac{\sin\alpha}{\alpha} \right)^2 e^{i \delta} \\
+E_3 &amp;= E_m \left( \dfrac{\sin\alpha}{\alpha} \right)^2 e^{i 2\delta} \\
+&amp;\cdots \\
+E_N &amp;= E_m \left( \dfrac{\sin\alpha}{\alpha} \right)^2 e^{i (N-1)\delta} \\
+\end{aligned} \]</div>
+<p>令 
+$$ \delta = \dfrac{2\pi}{\lambda} \cdot d \sin\theta = 2\beta$$
+那么就有
+$$ \beta = \dfrac{\pi d \sin\theta}{\lambda} $$</p>
+<hr />
+<p><img align="right" alt="" src="../assets/%E5%85%89%E6%A0%85%E6%8C%AF%E5%B9%85%E5%8F%A0%E5%8A%A02.png" width="35%" /></p>
+<p>从右图中可以知道 $ \angle OCB_N = N\delta = 2N\beta$，以及 
+$$ \overline{OC} \sin\beta \approx \dfrac{\overline{OB}_1}{2} = \dfrac{E_1}{2} $$
+$$ \Longrightarrow \overline{OC} = \dfrac{E_1}{2\sin\beta} $$
+于是</p>
+<div class="arithmatex">\[ \begin{aligned}
+E_{\theta} &amp;= \overline{OB_N} = 2 \overline{OC} \sin N\beta \\\\
+&amp;= 2 \cdot \dfrac{E_1}{2\sin \beta} \cdot \sin N\beta \\\\
+&amp;= E_1 \dfrac{\sin N\beta}{\sin \beta}
+\end{aligned} \]</div>
+<p>按照矢量叠加的方法最终得到的光强为
+$$ I_{\theta} = I_m \left( \dfrac{\sin\alpha}{\alpha} \right)^2 \left( \dfrac{\sin N\beta}{\sin \beta} \right)^2 $$</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>\[ \alpha = \dfrac{\pi a \sin\theta}{\lambda} \]
+\[ \beta = \dfrac{\pi d \sin\theta}{\lambda} \]
+其中 <span class="arithmatex">\(a\)</span> 为每一个狭缝的宽度，<span class="arithmatex">\(d\)</span> 为相邻狭缝之间的距离（一个狭缝中心到另一个狭缝中心）</p>
+<p>$$ I_{\theta} = I_m \left( \dfrac{\sin\alpha}{\alpha} \right)^2 \left( \dfrac{\sin N\beta}{\sin \beta} \right)^2 $$
+中的 <span class="arithmatex">\(\left( \dfrac{\sin\alpha}{\alpha} \right)^2\)</span> 来自于单个狭缝的衍射，<span class="arithmatex">\(\left( \dfrac{\sin N\beta}{\sin \beta} \right)^2\)</span> 来自于狭缝之间的干涉</p>
+</div>
+<ul>
+<li>
+<p>当 <span class="arithmatex">\(d \sin\theta = m\lambda\)</span> 时，<span class="arithmatex">\(\delta = 2m\pi\)</span> 每一个振幅矢量的方向相同，相互叠加后的振幅最大，为亮纹，称为主极大（principal maximum）其中 <span class="arithmatex">\(m = 0, \pm 1, \pm 2 \cdots\)</span>。</p>
+<ul>
+<li>由于 $ |m\lambda| = d \sin\theta &lt; d$，所以 <span class="arithmatex">\(|m_{max}| &lt; \dfrac{d}{\lambda}\)</span> </li>
+<li><span class="arithmatex">\(m\)</span> 为主极大级数，<span class="arithmatex">\(m=0\)</span> 称中央明纹。光栅极大的位置由相邻狭缝间的干涉极大决定！</li>
+</ul>
+</li>
+</ul>
+<p>由于此时 <span class="arithmatex">\(\beta = m\pi\)</span>，所以 <span class="arithmatex">\(\sin N\beta = \sin\beta = 0\)</span>，于是
+$$ \lim\limits_{\sin\beta \to 0} \dfrac{\sin N\beta}{\sin \beta} = N \quad \Longrightarrow I_{\theta} = N^2 I_m $$</p>
+<ul>
+<li>
+<p>当 <span class="arithmatex">\(\sin N\beta = 0\)</span>，但 <span class="arithmatex">\(sin \beta \neq 0\)</span> 时，<span class="arithmatex">\(I_{\theta} = 0\)</span></p>
+<ul>
+<li>此时 $\beta = (m + \dfrac{n}{N}) \pi,\quad \sin\theta = \dfrac{\lambda}{d} (m+\dfrac{n}{N}) $</li>
+</ul>
+<p>其中 <span class="arithmatex">\(m = 0, \pm 1, \pm 2 \cdots\)</span>，<span class="arithmatex">\(n = 1, 2, 3, \cdots, N-1\)</span>，这时候光强为 0，有 <span class="arithmatex">\(N-1\)</span> 条暗纹（极小）</p>
+</li>
+</ul>
+<div class="admonition abstract">
+<p class="admonition-title">光栅衍射的谱线特点</p>
+<ol>
+<li>主级大明纹的位置与缝数 <span class="arithmatex">\(N\)</span> 无关，它们对称地分布在中央明纹的两侧，中央明纹光强最大</li>
+<li>在相邻的两个主级大之间，有 <span class="arithmatex">\(N−1\)</span> 个极小（暗纹）和 <span class="arithmatex">\(N−2\)</span> 个光强很小的次极大。当 <span class="arithmatex">\(N\)</span> 很大时，实际上在相邻的主极大之间形成一片暗区，即能获得又细又亮暗区很宽的光栅衍射条纹。</li>
+</ol>
+<p>我们可以观察主极大之间极小和次级大的数目来推断光栅的狭缝数目：两个较大的波峰之间有 <span class="arithmatex">\(x\)</span> 个小波峰时，则光栅的狭缝数目为 <span class="arithmatex">\(x+2\)</span></p>
+<p><figure>
+    <img src="../assets/主极大之间的极小和次级大.png" width="60%"/>
+</figure></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">主极大的半角宽度</p>
+<p><img align="right" alt="" src="../assets/%E4%B8%BB%E6%9E%81%E5%A4%A7%E7%9A%84%E5%8D%8A%E8%A7%92%E5%AE%BD%E5%BA%A6.png" width="35%" />
+$$ d\sin\theta = m\lambda $$</p>
+<ul>
+<li>
+<p>当 <span class="arithmatex">\(\theta\)</span> 很小时，<span class="arithmatex">\(\theta \approx \sin\theta = \dfrac{m\lambda}{d}\)</span>，于是
+    $$ \theta_m + \Delta \theta \approx  (m+\dfrac{1}{N})\dfrac{\lambda}{d} $$
+    于是半角宽度为 <span class="arithmatex">\(\Delta \theta = \dfrac{\lambda}{Nd}\)</span></p>
+</li>
+<li>
+<p>当 <span class="arithmatex">\(\theta\)</span> 不那么小时，<span class="arithmatex">\(\theta \neq \sin\theta\)</span>，对 <span class="arithmatex">\(\sin\theta = m\lambda\)</span> 两边求导（或者认为是泰拉展开），得到
+    $$ d\cos\theta \Delta \theta = \dfrac{1}{N} \lambda $$
+    于是
+    $$ \Delta \theta = \dfrac{\lambda}{Nd \cos\theta} $$</p>
+</li>
+</ul>
+<p>因此可以知道，光栅的狭缝数目越多。主极大的半角宽度越小，分辨本领越高。</p>
+</div>
+<h4 id="_17">光栅的缺级<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h4>
+<p>光栅的缺级是指在光栅的衍射光谱中，不同多个狭缝之间干涉产生的主极大的位置恰好与单缝自己衍射得到的极小（暗纹）位置重合，而导致光栅的衍射光谱中的亮纹消失不见的现象</p>
+<details class="example">
+<summary>Example</summary>
+<p><figure>
+    <img src="../assets/光栅的缺级.png" width="60%"/>
+</figure></p>
+<p>如上图所示，当 <span class="arithmatex">\(d\sin\theta = m\lambda\)</span> 时，光栅的衍射光谱中的亮纹消失不见，这就是光栅的缺级。</p>
+<p>$$ a\sin\theta = k\lambda ,\quad d\sin\theta = m\lambda $$
+当 $\dfrac{k}{m} = \dfrac{a}{d} $ 时，光栅衍射的明纹将会消失，出现缺级现象</p>
+</details>
+<h4 id="_18">光栅的色散和分辨本领<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h4>
+<div class="admonition info">
+<p class="admonition-title">光栅的光谱</p>
+<p>复色光照射光栅时，谱线按波长<strong>从小到大</strong>向外侧依次分开排列，形成光栅光谱。</p>
+<p><figure>
+    <img src="../assets/光栅光谱.png" width="70%"/>
+</figure></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">光栅的色散本领和分辨本领</p>
+<ul>
+<li>
+<p>色散本领：定义为光栅中变化的角度 <span class="arithmatex">\(\Delta \theta\)</span> 与变化的波长 <span class="arithmatex">\(\Delta \lambda\)</span> 的比值</p>
+<p>$$ D = \dfrac{\Delta \theta}{\Delta \lambda} $$
+根据之前得到的 $ d\cos\theta \Delta \theta = \dfrac{1}{N} \lambda $，可以知道
+$$ D = \dfrac{\Delta \theta}{\Delta \lambda} = \dfrac{m}{d\cos\theta} $$
+因此光栅的色散本领仅与光栅常数 <span class="arithmatex">\(d\)</span> 和级数 <span class="arithmatex">\(m\)</span> 有关，而与狭缝数目 <span class="arithmatex">\(N\)</span> 无关</p>
+</li>
+</ul>
+<p><img align="right" alt="" src="../assets/%E5%85%89%E6%A0%85%E7%9A%84%E5%88%86%E8%BE%A8%E6%9C%AC%E9%A2%86.png" width="35%" /></p>
+<ul>
+<li>
+<p>分辨本领：把波长相近的两条谱线分辨的清楚的本领 <span class="arithmatex">\(R = \dfrac{\lambda}{\Delta \lambda}\)</span></p>
+<ul>
+<li>我们可以注意到当波长为 <span class="arithmatex">\(\lambda + \Delta \lambda\)</span> 的主极大恰好在波长为 <span class="arithmatex">\(\lambda\)</span> 的光的极小位置上时它们恰好可以被分辨</li>
+</ul>
+</li>
+</ul>
+<p>波长为 <span class="arithmatex">\(\lambda + \Delta \lambda\)</span> 的第 <span class="arithmatex">\(k\)</span> 级主极大的角位置为
+$$ d\sin\theta = k(\lambda + \Delta \lambda) $$
+波长为 <span class="arithmatex">\(\lambda\)</span> 的第 <span class="arithmatex">\(kN+1\)</span> 级极小的角位置为
+$$ Nd\sin\theta = (kN + 1)\lambda $$
+于是 
+$$ R = \dfrac{\lambda}{\Delta \lambda} = kN $$</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">分辨本领的另一种求法</p>
+<p>根据瑞利判据，当两个不同波长的光恰好可以被分辨时，一个光的主极大正好在另一波长光的主极大旁边的极小位置，即它们的角度差恰好为半角宽度
+$$ \Delta \theta = \dfrac{\lambda}{Nd \cos\theta} $$
+此时可以恰好被分辨出来的波长差为
+$$ \Delta \lambda = \dfrac{\Delta \theta}{D} = \dfrac{\lambda}{Nd \cos\theta} \cdot \dfrac{d\cos\theta}{m} = \dfrac{\lambda}{Nm} $$
+因此分辨本领为
+$$ R = \dfrac{\lambda}{\Delta \lambda} = mN $$</p>
+<ul>
+<li>光栅的分辨本领与光栅的狭缝数目 <span class="arithmatex">\(N\)</span> 和相应的级数 <span class="arithmatex">\(m\)</span> 有关，而与光栅常数 <span class="arithmatex">\(d\)</span> 无关</li>
+</ul>
+</div>
+<h3 id="x">X 光衍射<a class="headerlink" href="#x" title="Permanent link">&para;</a></h3>
+<p>当光照射到晶体上时，会被原子散射，从而产生光程差</p>
+<figure>
+    <img src="../assets/X光衍射.png" width="70%"/>
+</figure>
+
+<p>发生干涉加强时（<strong>Bragg 公式</strong>）
+$$ 2d\sin\theta = m\lambda $$
+其中 <span class="arithmatex">\(d\)</span> 是晶面间距（晶格常数），<span class="arithmatex">\(\theta\)</span> 是掠射角</p>
+<h2 id="polarization">偏振（Polarization）<a class="headerlink" href="#polarization" title="Permanent link">&para;</a></h2>
+<figure>
+    <img src="../assets/线偏振光.png" width="60%"/>
+</figure>
+
+<p>线偏振光指的是光波中的电矢量在一个平面内振动的光波，从光的传播方向来看，电场矢量只在一条线内运动</p>
+<figure>
+    <img src="../assets/线偏振光1.png" width="60%"/>
+</figure>
+
+<p>一束非偏振光（自然光）通过偏振片后，只有与偏振片的透光轴（transmission axis，TA）平行的电矢量才能通过，这时候光就变成了线偏振光</p>
+<ul>
+<li>当自然光通过偏振片后，光的强度会变为原来的一半 <span class="arithmatex">\(I_1 = \dfrac{1}{2} I_0\)</span></li>
+</ul>
+<p>假如线偏振光再通过一个偏振片，两个偏振片的透光轴夹角为 <span class="arithmatex">\(\theta\)</span>，那么透过第二个偏振片的光强为 <span class="arithmatex">\(I_2 = I_1 \cos^2\theta\)</span>，这就是<strong>马吕斯定律</strong>（Malus's Law） </p>
+<h3 id="_19">偏振光的分解<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h3>
+<p><img align="right" alt="线偏振光的分解" src="../assets/%E7%BA%BF%E5%81%8F%E6%8C%AF%E5%85%89%E7%9A%84%E5%88%86%E8%A7%A3.png" width="25%" /></p>
+<p>线偏振光的电场始终在一条直线上，可以被分解到两个正交的方向上
+$$ E_x = E_{x0} \sin(kz - \omega t + \varphi_x) $$
+$$ E_y = E_{y0} \sin(kz - \omega t + \varphi_y) $$</p>
+<ul>
+<li>对于线偏振光而言，相位差 $ \varphi_x - \varphi_y = 2k\pi $，并且 $ \dfrac{E_{y0}}{E_{x0}} = \tan\theta $</li>
+<li>对于圆偏振光而言，相位差 $ \varphi_x - \varphi_y = k\pi + \dfrac{\pi}{2} $，并且 $ E_{y0} = E_{x0} $</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">圆偏振光</p>
+<p><center>
+    <img src="../assets/右旋圆偏振光.png" width="25%"/>
+    <img src="../assets/左旋圆偏振光.png" width="25%"/>
+</center></p>
+<p>圆偏振光的电场振幅在一个平面内旋转，且振幅大小不变</p>
+<ul>
+<li>
+<p>右旋圆偏振光 (RCP)：沿光传播方向看，电场矢量顺时针旋转</p>
+<p>$ E_x = E_{0} \sin(kz - \omega t + \dfrac{\pi}{2}) \quad E_y = E_{0} \sin(kz - \omega t) $</p>
+</li>
+<li>
+<p>左旋圆偏振光 (LCP)：沿光传播方向看，电场矢量逆时针旋转</p>
+<p>$ E_x = E_{0} \sin(kz - \omega t - \dfrac{\pi}{2}) \quad E_y = E_{0} \sin(kz - \omega t) $</p>
+</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>关于旋转方向的判断，我们可以简记为相位靠前的朝着相位靠后的方向旋转。</p>
+<p>因为相位靠后的电场矢量会不断追上来，到达当前我们作为观测基准的平面上。</p>
+</div>
+</div>
+<div class="admonition info">
+<p class="admonition-title">五类偏振光</p>
+<p>共有五类偏振光</p>
+<ol>
+<li>无偏振光（自然光）：光波的电场在任意方向上振动，且振动方向随机变化，没有固定的振动方向。自然光可以看作是<strong>由两个振动方向垂直、相互间没有固定相位差、等振幅的线偏振光（非相干光）组合而成的</strong>。</li>
+<li>线偏振光：见上面的描述</li>
+<li>部分偏振光：部分偏振光相当于偏振光和无偏振光的叠加。部分偏振光可分解为两束振动方向相互垂直的、<strong>不等幅</strong>的、<strong>不相干</strong>的线偏振光。</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">偏振度</p>
+<p>我们记 <span class="arithmatex">\(I_{max}\)</span> 为光在所有方向中的最大光强，<span class="arithmatex">\(I_{min}\)</span> 为光在所有方向中的最小光强，那么偏振度 <span class="arithmatex">\(P\)</span> 定义为
+$$ P = \dfrac{I_{max} - I_{min}}{I_{max} + I_{min}} $$</p>
+<ul>
+<li>对于线偏振光而言，<span class="arithmatex">\(I_{min} = 0\)</span> ，<span class="arithmatex">\(P = 1\)</span></li>
+<li>对于无偏振光而言，<span class="arithmatex">\(I_{max} = I_{min}\)</span>，<span class="arithmatex">\(P = 0\)</span></li>
+</ul>
+</div>
+<ol start="4">
+<li>圆偏振光：可认为是在两个相互垂直的方向上的电场振幅相等，且相位差为 <span class="arithmatex">\(\pm \dfrac{\pi}{2}\)</span> 的两束线偏振光的叠加。</li>
+<li>
+<p>椭圆偏振光：
+    $$ E_x = E_{x0} \sin(kz - \omega t + \delta) $$
+    $$ E_y = E_{y0} \sin(kz - \omega t) $$</p>
+<p>其中 <span class="arithmatex">\(E_{x0} \neq E_{y0}\)</span> 或 <span class="arithmatex">\(\delta \neq \pm \dfrac{\pi}{2}\)</span></p>
+</li>
+</ol>
+</div>
+<h3 id="_20">布儒斯特角<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h3>
+<div class="admonition info">
+<p class="admonition-title">布儒斯特定律</p>
+<p><img align="right" alt="布儒斯特定律" src="../assets/%E5%B8%83%E5%84%92%E6%96%AF%E7%89%B9%E5%AE%9A%E5%BE%8B.png" width="30%" /></p>
+<p>布儒斯特定律指的是当自然光从介质 <span class="arithmatex">\(n_1\)</span> 射入介质 <span class="arithmatex">\(n_2\)</span> 时，存在一个特定的入射角 <span class="arithmatex">\(\theta_p\)</span>，使得折射角和反射角之和为 <span class="arithmatex">\(90^\circ\)</span>，此时反射光就为线偏振光。</p>
+<p>根据 <span class="arithmatex">\(\theta_p + \theta_r = 90^\circ\)</span> 以及 <span class="arithmatex">\(n_1 \sin\theta_p = n_2 \sin\theta_r\)</span> 可得
+$$ n_1 \sin\theta_p = n_2 \sin(90^\circ - \theta_p) = n_2 \cos\theta_p $$
+$$ \therefore \tan\theta_p = \dfrac{n_2}{n_1} $$</p>
+</div>
+<h3 id="birefringence">双折射（Birefringence）<a class="headerlink" href="#birefringence" title="Permanent link">&para;</a></h3>
+<div class="admonition info">
+<p class="admonition-title">双折射现象</p>
+<p><figure>
+    <img src="../assets/双折射现象.png" width="70%"/>
+</figure></p>
+<p>双折射现象是指一束入射光经某些晶体折射后可分成两束光线的现象，这两束光线的传播方向不同，光线的振动方向也不同。</p>
+<p>其中一束光线遵循通常的折射定律（Snell's Law），称为寻常光（ordinary ray）或 o 光，另一束光线则不遵循折射定律，称为非寻常光（extra-ordinary ray）或 e 光。</p>
+<ul>
+<li>o 光从各个角度射入晶体的折射率都相同</li>
+<li>由于晶体的各向异性，e 光从不同角度射入晶体时的折射率会有所不同，这就是我们认为 e 光不遵循一般的折射定律的原因</li>
+</ul>
+<p>考虑到折射率对于光速的影响，我们可以知道：</p>
+<ul>
+<li>o 光沿晶体的各个方向传播速度相同</li>
+<li>e 光沿晶体的不同方向传播速度不同，速度在 <span class="arithmatex">\(v_o\)</span> 和 <span class="arithmatex">\(v_e\)</span> 之间变化（<span class="arithmatex">\(v_e\)</span> 可能大于 <span class="arithmatex">\(v_o\)</span>，也可能小于 <span class="arithmatex">\(v_o\)</span>）</li>
+<li>我们把 <span class="arithmatex">\(v_o\)</span> 和 <span class="arithmatex">\(v_e\)</span> 对应的折射率 <span class="arithmatex">\(n_o\)</span> 和 <span class="arithmatex">\(n_e\)</span> 称为主折射率</li>
+</ul>
+</div>
+<h3 id="_21">主平面与光轴<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h3>
+<p><img align="right" alt="" src="../assets/%E5%85%89%E8%BD%B4.png" width="30%" /></p>
+<ul>
+<li>当光在晶体内沿某个特殊方向传播时，将不会发生双折射，该方向称为晶体的<strong>光轴</strong>。</li>
+<li>
+<p>光轴是一特殊的方向，凡平行于此方向的直线均为光轴。</p>
+<ul>
+<li>在光轴方向上 o 光和 e 光的折射率相同</li>
+<li>单轴晶体：只有一个光轴的晶体</li>
+<li>双轴晶体：有两个光轴的晶体</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">主平面</p>
+<p>主平面是指<strong>晶体中光的传播方向</strong>与<strong>晶体光轴</strong>构成的平面。</p>
+<p><figure>
+    <img src="../assets/主平面.png" width="70%"/>
+</figure></p>
+<ul>
+<li>o 光的电场振动方向与主平面垂直</li>
+<li>e 光的电场振动方向在主平面内</li>
+</ul>
+</div>
+<center>
+    <img src="../assets/负晶体.png" width="40%"/>
+    <img src="../assets/正晶体.png" width="35%"/>
+</center>
+
+<ul>
+<li>
+<p>对于负晶体而言，<span class="arithmatex">\(v_e &gt; v_o\)</span>，<span class="arithmatex">\(n_e &lt; n_o\)</span></p>
+<p>常见的负晶体有 <span class="arithmatex">\(CaCO_3\)</span>（方解石）等</p>
+</li>
+<li>
+<p>对于正晶体而言，<span class="arithmatex">\(v_e &lt; v_o\)</span>，<span class="arithmatex">\(n_e &gt; n_o\)</span></p>
+<p>常见的正晶体有 <span class="arithmatex">\(SiO_2\)</span>（石英）等</p>
+</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">光轴与快慢轴的关系</p>
+<ul>
+<li>负晶体：e 光在光轴方向传播最慢，光轴为慢轴；垂直于光轴方向的传播速度最快，为快轴</li>
+<li>正晶体：e 光在光轴方向传播最快，光轴为快轴；垂直于光轴方向的传播速度最慢，为慢轴</li>
+</ul>
+</div>
+<h3 id="_22">波片<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h3>
+<center>
+    <img src="../assets/波片.png" width="40%"/>
+    <img src="../assets/波片中光的传播.png" width="35%"/>
+</center>
+
+<p>上图中虚线表示晶体的光轴，当光垂直于光轴传入时，我们可以按照光在晶体内的振动方向把这束光分解为 o 光和 e 光。它们在晶体内部的传播速度不同，因此会产生相位差。
+$$ \Delta \varphi = \dfrac{2\pi}{\lambda} (n_e - n_o)d $$</p>
+<div class="admonition note">
+<p class="admonition-title">不同厚度的波片</p>
+<p>根据波片厚度的不同，o 光和 e 光之间的相位差也会不同。</p>
+<ul>
+<li>
+<p>四分之一波片（quarter-wave plate, QWP，<span class="arithmatex">\(\dfrac{1}{4} \lambda\)</span> 片）：
+$$ (n_e - n_o)d = \pm \dfrac{\lambda}{4}, \quad \Delta \varphi = \pm \dfrac{\pi}{2} $$</p>
+</li>
+<li>
+<p>半波片（half-wave plate, HWP，<span class="arithmatex">\(\dfrac{1}{2} \lambda\)</span> 片）：
+$$ (n_e - n_o)d = \pm \dfrac{\lambda}{2}, \quad \Delta \varphi = \pm \pi $$</p>
+</li>
+<li>
+<p>全波片（full-wave plate, FWP，<span class="arithmatex">\(\lambda\)</span> 片）：
+$$ (n_e - n_o)d = \pm \lambda, \quad \Delta \varphi = \pm 2\pi $$</p>
+</li>
+</ul>
+</div>
+<p><img align="right" alt="" src="../assets/o%E5%85%89e%E5%85%89%E6%8C%AF%E5%8A%A8%E5%88%86%E8%A7%A3.png" width="23%" /></p>
+<p>由于 o 光和 e 光的振动方向相互垂直，因此我们可以把光的振幅分解到快轴和慢轴两个方向上，如右图所示。</p>
+<p>值得特别一提的是，当一束线偏振光以与光轴成 <span class="arithmatex">\(45^\circ\)</span> 的角度经过一个四分之一波片后，o 光和 e 光之间的相位差为 <span class="arithmatex">\(\pm \dfrac{\pi}{2}\)</span>，并且光在快轴和慢轴上的分量相等，因此这束光就变成了圆偏振光。回顾之前的内容，我们知道这就是圆偏振光的特点，因此四分之一波片可以将线偏振光转化为圆偏振光。</p>
+<center>
+    <img src="../assets/线偏振光经过四分之一波片.png" width="65%"/>
+</center>
+
+<p>从另一个方向来理解，就是因为沿快轴方向的光走的更快，因此要达到和沿慢轴的光相同的相位，就需要少走一些时间，这样才能抵消掉它们之间的光程差，于是快轴上的相位就要减去 <span class="arithmatex">\(\dfrac{\pi}{2}\)</span>。</p>
+<div class="admonition example">
+<p class="admonition-title">线偏振光经过四分之一波片</p>
+<p><center>
+    <img src="../assets/线偏振光经过四分之一波片1.png" width="55%"/>
+    <img src="../assets/线偏振光经过四分之一波片2.png" width="35%"/>
+</center></p>
+<p>在上图中，一束自然光经过线偏振片后得到了一束和快、慢轴成 <span class="arithmatex">\(45^\circ\)</span> 的线偏振光。这束光经过四分之一波片后，快轴方向上的光由于折射率小于慢轴方向上的光，因此光程要比慢轴方向上的光少走了 <span class="arithmatex">\(\dfrac{\lambda}{4}\)</span>，因此这束光就变成了圆偏振光。</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">两道简单的例题</p>
+<p><figure>
+    <img src="../assets/波片例题.png" width="80%"/>
+</figure></p>
+<p>第一问中，线偏振光与波片的慢轴方向平行，不会被分解，因此经过波片后不会发生任何改变。它经过下一个偏振片时所有的光都会被挡住，因此光强为 0。</p>
+<p>第二问中，线偏振光与波片的快、慢轴成 <span class="arithmatex">\(45^\circ\)</span>，因此会被分解为两束垂直的光
+$$ E_f = E_s = \dfrac{E_0}{\sqrt{2}} $$
+快轴和慢轴两个分量上的光经过下一个偏振片后，可以通过马吕斯定律求出两个分量偏振后的光强，把它们相加就是最终的光强。
+$$ I_2 = \dfrac{E_f^2}{2} \cos^2 45^\circ + \dfrac{E_s^2}{2} \cos^2 45^\circ = \dfrac{E_0^2}{2} = \dfrac{1}{2} I_0 $$</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">散射产生的偏振</p>
+<p><figure>
+    <img src="../assets/散射产生的偏振.png" width="70%"/>
+</figure></p>
+<p>当光子撞击到某些粒子表面时，会产生散射现象。如果散射后的方向和振动的方向平行，并且由于光是横波，那么光波在这个方向上的振动就会消失，变成线偏振波。</p>
+</div>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年1月15日 17:20:26 CST">2026年1月15日</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2026年1月15日 17:20:26 CST">2026年1月15日</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+  <form class="md-feedback" name="feedback" hidden>
+    <fieldset>
+      <legend class="md-feedback__title">
+        Was this page helpful?
+      </legend>
+      <div class="md-feedback__inner">
+        <div class="md-feedback__list">
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="This page was helpful" data-md-value="1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 9v12H1V9zm4 12a2 2 0 0 1-2-2V9c0-.55.22-1.05.59-1.41L14.17 1l1.06 1.06c.27.27.44.64.44 1.05l-.03.32L14.69 8H21a2 2 0 0 1 2 2v2c0 .26-.05.5-.14.73l-3.02 7.05C19.54 20.5 18.83 21 18 21zm0-2h9.03L21 12v-2h-8.79l1.13-5.32L9 9.03z"/></svg>
+            </button>
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="This page could be improved" data-md-value="0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 15V3h4v12zM15 3a2 2 0 0 1 2 2v10c0 .55-.22 1.05-.59 1.41L9.83 23l-1.06-1.06c-.27-.27-.44-.64-.44-1.06l.03-.31.95-4.57H3a2 2 0 0 1-2-2v-2c0-.26.05-.5.14-.73l3.02-7.05C4.46 3.5 5.17 3 6 3zm0 2H5.97L3 12v2h8.78l-1.13 5.32L15 14.97z"/></svg>
+            </button>
+          
+        </div>
+        <div class="md-feedback__note">
+          
+            <div data-md-value="1" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              Thanks for your feedback!
+            </div>
+          
+            <div data-md-value="0" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              Thanks for your feedback! Help me improve this page by using our <a href="https://github.com/xestray/xestray.github.io/issues" target="_blank" rel="noopener">feedback form</a>.
+            </div>
+          
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+
+  <h2 id="__comments">Comments</h2>
+  <script src="https://giscus.app/client.js"
+        data-repo="xestray/xestray.github.io"
+        data-repo-id="R_kgDOMQYCsg"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOMQYCss4Cghqg"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../geometrical_optics/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 几何光学">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                几何光学
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../quantum/" class="md-footer__link md-footer__link--next" aria-label="Next: 量子力学">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                量子力学
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M247.1 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L179.2 256 41.9 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 <a href="https://github.com/xestray" target="_blank">xestray</a>
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.code.annotate", "content.code.copy", "content.code.select", "content.tabs.link", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.path", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": {"Default": "default-tag", "Hardware": "hardware-tag", "Software": "software-tag"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../js/print-site.js"></script>
+      
+        <script src="../../../javascripts/katex.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../javascripts/toc.js"></script>
+      
+    
+  </body>
+</html>
