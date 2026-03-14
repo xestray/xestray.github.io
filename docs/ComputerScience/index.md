@@ -23,6 +23,7 @@
     - 操作系统[note]: OS/
     - 数值分析[note]: NA/
     - 计算机网络[note]: CN/
+    - 编译原理[note]: CP/
 - 编程语言:
     - C++: PL/cpp/cpplearning/
 - 自学课程:
