@@ -127,6 +127,7 @@ nav:
       - ComputerScience/CP/index.md
       - Introduction: ComputerScience/CP/chap1.md
       - Lexical Analysis: ComputerScience/CP/chap2.md
+      - Syntax Analysis: ComputerScience/CP/chap3.md
 
       
     - 自学课程:

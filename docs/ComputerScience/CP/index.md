@@ -14,8 +14,8 @@
         - 作业 10%
         - quiz 10%
         - 期末考试：50%
-    - 实验部分 305
+    - 实验部分 30%
 
 - [x] [chap1](chap1.md)
-- [ ] [chap2](chap2.md)
-- [ ] [chap3](chap3.md)
+- [x] [chap2](chap2.md)
+- [x] [chap3](chap3.md)
