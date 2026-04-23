@@ -128,7 +128,8 @@ nav:
       - Introduction: ComputerScience/CP/chap1.md
       - Lexical Analysis: ComputerScience/CP/chap2.md
       - Syntax Analysis: ComputerScience/CP/chap3.md
-
+      - Abstract Syntax: ComputerScience/CP/chap4.md
+      - Semantic Analysis: ComputerScience/CP/chap5.md
       
     - 自学课程:
       - ComputerScience/selfstudy/index.md

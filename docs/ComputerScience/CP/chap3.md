@@ -3,7 +3,7 @@
     statistics: true
 ---
 
-# Parsing
+# Syntax Analysis
 
 <figure markdown="span">
     ![](./assets/chap-3-1.png){width=75%}
@@ -613,7 +613,190 @@ LALR(1) 解析器的核心思想是将 LR(1) 中除了 lookahead 以外完全相
 
         - 需要注意的是，绝大部分的 shift-reduce conflict 和几乎所有的 reduce-reduce conflict 都表明文法的定义还不够清晰，需要回到文法的定义层面进行修改来消除这些冲突，而不是在解析器中通过一些 hack 的方式来解决这些冲突。
 
-### Error Recovery
+## Yacc: Parser Implementation
+
+了解了自底向上的 LR 解析器的原理之后，我们就可以来看看实际的 parser generator 是如何实现的了。Yacc（Yet Another Compiler-Compiler）是一个典型的 parser generator，它能够根据用户提供的文法定义来自动生成一个 LALR(1) 解析器。
+
+- 输入：用户提供一个文法定义文件，包含了文法的产生式、终结符和非终结符的定义，以及一些辅助信息（例如优先级和结合性规则），通常后缀为 `.y`。
+- 输出：Yacc 会根据用户提供的文法定义来生成一个 C 语言的源代码文件，通常后缀为 `tab.c`，这个源代码文件中包含了一个 LALR(1) 解析器的实现，可以直接编译成一个可执行文件。
+- Yacc 的基本结构主要可以分为三个部分：
+
+    1. **定义部分**：定义一些宏、数据结构以及一些辅助函数，这些内容会被直接包含在生成的 C 代码中。
+    2. **规则部分**：定义文法的产生式规则，每条规则都对应于一个产生式，并且可以在规则的右侧添加一些动作代码，这些动作代码会在解析器执行到对应的产生式时被执行。
+    3. **辅助例程部分**：定义一些辅助函数，这些函数可以在规则部分的动作代码中调用。
+
+```yacc
+{definitions}
+%%
+{rules}
+%%
+{auxiliary routines}
+```
+
+!!! example 
+    例如考虑下面这个简单的文法：
+
+    ```
+    exp -> exp addop term | term
+    addop -> + | -
+    term -> term mulop factor | factor
+    mulop -> *
+    factor -> (exp) | number
+    ```
+
+    写成一个 Yacc 文件的形式如下：
+
+    <figure markdown="span">
+        ![](./assets/chap-3-40.png){width=70%}
+    </figure>
+
+### Auxiliary Routines
+
+辅助例程中通常会包含一些辅助函数，例如 `yyparse()` 函数是解析器的入口函数，`yylex()` 函数是词法分析器的入口函数，`yyerror()` 函数是错误处理函数等等。
+
+- 当解析成功时，`yyparse()` 函数会返回 0，否则返回 1
+- `yyparse()` 函数会调用 `yylex()` 函数来获取下一个输入 token，并且根据解析表来执行相应的移进或规约操作。
+- `yylex()` 函数通常由用户自己实现，负责从输入流中读取字符并将其转换为 token，token 的语义值需要保存在一个全局变量 `yylval` 中（后续会被 push 到 value stack 中）。
+    - yylex 的返回值是 token 的类型或是 0。
+    - yacc 认为输入的终止应当由 yylex 返回一个空值（null value）0 来表示，因此在 yylex 中当输入流结束时应该返回 0。
+- 当解析过程出现错误时，`yyerror()` 函数会被调用来处理错误，通常会输出一个错误消息，并且可以选择是否继续解析后续的输入。
+
+### Definitions
+
+definitions 部分主要用于定义一些宏、数据结构以及一些辅助函数，其中有两种识别 token 的方式：
+
+- 任何被单引号 `'` 包围的字符都被视为它自身，例如 `'+'`、`'-'`、`'*'` 等等。
+- 使用 `%token` 关键字来定义一些 token 的名称，例如 `%token NUMBER` 定义了一个名为 `NUMBER` 的 token，这个 token 的值会保存在全局变量 `yylval` 中。
+    - 使用 `%start` 关键字来指定文法的起始符号，例如 `%start symbol` 表示 `symbol` 是文法的起始符号。
+
+### Rules
+
+规则的定义格式为：`production_rule { action_code }`，其中 `production_rule` 是一个产生式规则，`action_code` 是一段 C 语言代码，当解析器执行到这个产生式时会执行这段代码。
+
+例如：
+
+```yacc
+command: exp {printf("%d\n", $1);};
+exp: exp '+' term {$$ = $1 + $3;}
+   | exp '-' term {$$ = $1 - $3;}
+   | term {$$ = $1}
+;
+term: term '*' factor {$$ = $1 * $3;}
+    | factor {$$ = $1;}
+;
+factor: NUMBER {$$ = $1;}
+      | '(' exp ')' {$$ = $2;}
+;
+```
+
+- 在 action code 中，`$$` 表示当前产生式的左侧非终结符的语义值，`$1`、`$2`、`$3` 等等表示当前产生式右侧符号的语义值。具体来说，`$n` 表示当前产生式右侧第 n 个符号的语义值。
+
+!!! note "YYSTYPE"
+    - 默认情况下，`yylval` 的类型是 `int`，所有语义值的类型 `YYSTYPE` 也被定义为 `int`。
+    - 不同的文法符号可能需要不同类型的语义值（例如浮点数、字符串等等），因此我们可以用 `%union` 定义一个联合体（union）来表示不同类型的语义值.
+    - 使用 `%type <type> symbol` 来指定某个非终结符的语义值类型
+        - 例如 `%type <val> exp` 表示 `exp` 这个非终结符的语义值类型是 `val`，而 `val` 是我们在 `%union` 中定义的一个成员。
+    - 而对于 token，则使用 `%token <type> TOKEN_NAME` 来指定 token 的语义值类型
+        - 例如 `%token <val> NUMBER` 表示 `NUMBER` 这个 token 的语义值类型是 `val`。
+
+    ```c
+    %union { double val; char op;}
+    %token <val> NUMBER
+    %type <val> exp term factor
+    %type <op> addop mulop
+    ```
+
+### Embedded Actions
+
+有时我们需就要在某个产生式还未完全规约时就执行特定的代码，例如下面的文法：
+
+```
+decl     → type var-list
+type     → int | float
+var-list → var-list , id | id
+```
+
+我们希望记录每一个 `id` 的类型，就可以在 yacc 的产生式右部插入一个嵌入动作来实现：
+
+```
+decl: type { current_type = $1; } var_list
+    ;
+
+type: INT   { $$ = INT_TYPE; }
+    | FLOAT { $$ = FLOAT_TYPE; }
+    ;
+
+var_list: var_list ',' ID { setType(tokenString, current_type); }
+        | ID              { setType(tokenString, current_type); }
+        ;
+```
+
+在这里，`{ current_type = $1; }` 就是一个嵌入动作，它会在 `type` 这个非终结符被规约之后立即执行，从而将当前的类型信息保存到一个全局变量 `current_type` 中，以便后续在处理 `var_list` 的时候能够使用这个类型信息来设置每个 `id` 的类型。
+
+有时我们需要在产生是的不同位置上执行相应的动作，这时候就可以通过引入辅助规则来实现：
+
+```
+list: item1 { do_item1($1); } item2 { do_item2($3); } item3
+```
+
+它等价于引入了辅助的非终结符以及相应的动作：
+
+```
+list: item1 _rule01 item2 _rule02 item3
+_rule01: { do_item1($0); }
+_rule02: { do_item2($0); }
+```
+
+### Conflict Resolution
+
+当遇到 shift-reduce 和 reduce-reduce 冲突时，Yacc 会报告错误的出现，并且根据一些默认的规则来解决这些冲突：
+
+- shift-reduce conflicts：默认选择移进（shift），即 prefer shift
+- reduce-reduce conflicts：默认选择在文法中先出现的规则进行规约，即 prefer the first rule
+
+> 大多数 shift-reduce 和 reduce-reduce 冲突都是严重的问题，需要通过重写文法来消除这些冲突
+
+### Precedence Directives
+
+为了在保持语法的自然性（即人类可读性）的同时消除一些 shift-reduce 冲突，我们可以使用 precedence directives 来指定某些 token 的优先级和结合性，从而指导解析器在遇到冲突时应该选择哪一个操作。
+
+- `%left`：表示左结合（left-associative），即当遇到多个相同优先级的操作符时，默认选择最左边的那个进行规约。
+- `%right`：表示右结合（right-associative），即当遇到多个相同优先级的操作符时，默认选择最右边的那个进行规约。
+- `%nonassoc`：表示非结合（non-associative），即当遇到多个相同优先级的操作符时，不允许进行规约，必须通过移进来解决冲突。
+    - 例如在 c 语言中 `a != b != c` 是不合法的，因为 `!=` 是非结合的。
+
+当我们声明多个操作符时，越靠后声明的操作符优先级越高。例如：
+
+```yacc
+%nonassoc EQ NEQ
+%left PLUS MINUS
+%left TIMES DIV
+%right EXP
+```
+
+- 在上面的例子中，`EXP` 的优先级最高，`TIMES` 和 `DIV` 的优先级次之，`PLUS` 和 `MINUS` 的优先级最低，而 `EQ` 和 `NEQ` 的优先级最低，并且它们是非结合的。
+- `PLUS` 和 `MINUS` 的优先级相同并且是左结合的，因此在表达式 `a - b - c` 中，默认会将其解析为 `(a - b) - c`，而不是 `a - (b - c)`。
+
+!!! note 
+    有时会遇到形如 `-6 * 8` 的表达式，我们希望它应当被解析为 `(-6) * 8`，而不是 `-(6 * 8)`，这时候我们可以通过新创建一个 `UMINUS`（表示一元负号）并给它设置一个比 `TIMES` 更高的优先级来实现： 
+
+    ```yacc hl_lines="7 13"
+    %{ // declarations of yylex and yyerror
+    %}
+    %token INT PLUS MINUS TIMES UMINUS
+    %start exp
+    %left PLUS MINUS
+    %left TIMES
+    %left UMINUS
+    %%
+    exp : INT
+    | exp PLUS exp
+    | exp MINUS exp
+    | exp TIMES exp
+    | MINUS exp %prec UMINUS
+    ```
+
+## Error Recovery
 
 在实际的编译器实现中，我们希望能够在输入遇到语法错误时，尽可能地继续解析后续的输入，而不是直接停止解析过程，这样一来编译器就可以一次性报告更多的错误，而不是每次只报告第一个错误。这就需要我们在解析器中实现一些错误恢复的机制。
 
@@ -638,7 +821,7 @@ LALR(1) 解析器的核心思想是将 LR(1) 中除了 lookahead 以外完全相
 1. （如果有必要的话）不断地弹出栈顶状态，直到 error 符号对应的动作是 shift
 2. 移进（shift）error 符号
 3. 读取输入 token 直到找到一个能够与 error 符号进行规约的产生式为止
-    - 即直接不断读取并丢弃输入 token，知道到达非 error 的 token 为止
+    - 即直接不断读取并丢弃输入 token，直到到达非 error 的 token 为止
 4. 此后恢复到正常的解析流程中
 
 ### Global Error Repair

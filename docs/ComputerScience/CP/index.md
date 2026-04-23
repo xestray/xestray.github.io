@@ -16,6 +16,8 @@
         - 期末考试：50%
     - 实验部分 30%
 
-- [x] [chap1](chap1.md)
-- [x] [chap2](chap2.md)
-- [x] [chap3](chap3.md)
+- [x] [Introduction](chap1.md)
+- [x] [Lexical Analysis](chap2.md)
+- [x] [Syntax Analysis](chap3.md)
+- [x] [Abstract Syntax](chap4.md)
+- [ ] [Semantic Analysis](chap5.md)
