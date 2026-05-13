@@ -24,10 +24,6 @@ h2:before, h3:before, h4:before, h5:before, h6:before {
 
 ## TODO
 
-- [ ] 整理一下常用的 Git 和 Shell 命令
-- [x] 接着学 EECS 498/598 的内容
-- [x] 计算机视觉笔记
-- [x] 数据库笔记
-- [ ] 体系结构笔记
+- [ ] 能保持更新编译原理笔记就算胜利（ 
 
 ---  

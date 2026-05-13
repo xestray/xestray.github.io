@@ -130,6 +130,10 @@ nav:
       - Syntax Analysis: ComputerScience/CP/chap3.md
       - Abstract Syntax: ComputerScience/CP/chap4.md
       - Semantic Analysis: ComputerScience/CP/chap5.md
+      - Activation Records: ComputerScience/CP/chap6.md
+      - Intermediate Code Generation: ComputerScience/CP/chap7.md
+      - Basic Blocks and Traces: ComputerScience/CP/chap8.md
+      - Instruction Selection: ComputerScience/CP/chap9.md
       
     - 自学课程:
       - ComputerScience/selfstudy/index.md
