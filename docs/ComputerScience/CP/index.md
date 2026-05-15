@@ -22,6 +22,6 @@
 - [x] [Abstract Syntax](chap4.md)
 - [x] [Semantic Analysis](chap5.md)
 - [x] [Activation Records](chap6.md)
-- [ ] [Intermediate Code Generation](chap7.md)
+- [x] [Intermediate Code Generation](chap7.md)
 - [ ] [Basic Blocks and Traces](chap8.md)
 - [ ] [Instruction Selection](chap9.md)
