@@ -23,5 +23,5 @@
 - [x] [Semantic Analysis](chap5.md)
 - [x] [Activation Records](chap6.md)
 - [x] [Intermediate Code Generation](chap7.md)
-- [ ] [Basic Blocks and Traces](chap8.md)
-- [ ] [Instruction Selection](chap9.md)
+- [x] [Basic Blocks and Traces](chap8.md)
+- [x] [Instruction Selection](chap9.md)
