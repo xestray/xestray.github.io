@@ -25,3 +25,6 @@
 - [x] [Intermediate Code Generation](chap7.md)
 - [x] [Basic Blocks and Traces](chap8.md)
 - [x] [Instruction Selection](chap9.md)
+- [x] [Liveness Analysis](chap10.md)
+
+
