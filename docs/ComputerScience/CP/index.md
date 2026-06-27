@@ -26,5 +26,7 @@
 - [x] [Basic Blocks and Traces](chap8.md)
 - [x] [Instruction Selection](chap9.md)
 - [x] [Liveness Analysis](chap10.md)
-
-
+- [x] [Register Allocation](chap11.md)
+- [x] [Garbage Collection](chap13.md)
+- [x] [Object-Oriented Language](chap14.md)
+- [x] [Loop Optimization](chap18.md)

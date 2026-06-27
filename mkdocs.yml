@@ -135,6 +135,10 @@ nav:
       - Basic Blocks and Traces: ComputerScience/CP/chap8.md
       - Instruction Selection: ComputerScience/CP/chap9.md
       - Liveness Analysis: ComputerScience/CP/chap10.md
+      - Register Allocation: ComputerScience/CP/chap11.md
+      - Garbage Collection: ComputerScience/CP/chap13.md
+      - Object-Oriented Language: ComputerScience/CP/chap14.md
+      - Loop Optimization: ComputerScience/CP/chap18.md
       
     - 自学课程:
       - ComputerScience/selfstudy/index.md
