@@ -67,9 +67,9 @@ D[n] &= \{n\} \cup \bigcap_{p \in pred[n]} D[p] \quad (n \ne s_0)
 
 ### Natural Loops
 
-若在 CFG 中 $h$ 支配 $n$，并且存在一条边 `h -> n`，我们称这条边为**回边（back edge）**
+若在 CFG 中 $h$ 支配 $n$，并且存在一条边 `n -> h`，我们称这条边为**回边（back edge）**
 
-一条回边 `h -> n` 的**自然循环（natural loop）**是指满足以下条件的节点 $x$ 构成的集合：
+一条回边 `n -> h` 的**自然循环（natural loop）**是指满足以下条件的节点 $x$ 构成的集合：
 
 - $h$ 支配 $x$
 - 存在一条从 $x$ 到 $n$ 的路径，并且该路径不经过 $h$
@@ -85,7 +85,7 @@ D[n] &= \{n\} \cup \bigcap_{p \in pred[n]} D[p] \quad (n \ne s_0)
 ### Loop-Nest Tree
 
 !!! note 
-    如果循环 $A$ 和 $B$ 有不同的 header，并且 $B$ 的所有节点都在 $A$ 中（即 $B \subseteq A$），我们称 $B$ 嵌套与（nested within）$A$，或称 $B$ 是 $A$ 的**内循环（inner loop）**。
+    如果循环 $A$ 和 $B$ 有不同的 header，并且 $B$ 的所有节点都在 $A$ 中（即 $B \subseteq A$），我们称 $B$ 嵌套于（nested within）$A$，或称 $B$ 是 $A$ 的**内循环（inner loop）**。
 
 我们可以构造一个程序的 loop-nest tree，流程如下：
 
@@ -98,6 +98,9 @@ D[n] &= \{n\} \cup \bigcap_{p \in pred[n]} D[p] \quad (n \ne s_0)
 <figure markdown="span">
     ![](./assets/chap-18-4.png){width=75%}
 </figure>
+
+!!! tip
+    虽然节点 6、7、11、12 不属于任何 natural loop，但我们应该把它们和根节点 1 合并起来
 
 ### Loop Preheader
 
@@ -116,24 +119,24 @@ D[n] &= \{n\} \cup \bigcap_{p \in pred[n]} D[p] \quad (n \ne s_0)
 
 如果一个循环中存在语句 `t <- a op b`，其中 $a$ 和 $b$ 都不依赖于循环中的任何变量，那么在每一次迭代中 `t` 的值都不会改变，我们称这样的语句为**循环不变量（loop-invariant）**。
 
-一个定义语句 $d$ `t <- a1 op a2` 是一个循环不变量，当且仅当满足以下任一条件：
+一个定义语句 $d$：`t <- a1 op a2` 是一个循环不变量，当且仅当满足以下任一条件：
 
 - $a_i$ 是常量
-- 所有会对 $d$ 产生影响的对 $a_i$ 的定义语句都在循环之外（在循环期间 $a_i$ 的值不会改变）
+- 所有会对 $d$ 产生影响的、对 $a_i$ 的定义语句都在循环之外（在循环期间 $a_i$ 的值不会改变）
 - 只有一个对 $a_i$ 的定义语句会影响 $d$，并且这个定义语句是循环不变量
 
 **简而言之，循环不变量是指在循环中计算结果不会改变的式子/变量。**
 
 ### Hoisting
 
-我们可以将一个式子从循环中移到循环外部的过程称为**hoisting**。
+我们将一个式子从循环中移到循环外部的过程称为 **hoisting**。
 
-假设 `t <- a op b`` 是一个循环不变量，我们需要判断何时能够进行 hoisting。
+假设 `t <- a op b` 是一个循环不变量，我们需要判断何时能够进行 hoisting。
 
-把式子 $d$ `t <- a op b` 移到循环的 preheader 的标准是：
+把式子 $d$：`t <- a op b` 移到循环的 preheader 的标准是：
 
 - $d$ dominates all loop exits at which $t$ is live-out
-- 并且 loop 只有一个对 $t$ 的定义语句
+- 并且 loop 中只有一个对 $t$ 的定义语句
 - 并且 $t$ 不属于 loop preheader 的 live-out 集合
 
 <figure markdown="span">
@@ -144,7 +147,7 @@ D[n] &= \{n\} \cup \bigcap_{p \in pred[n]} D[p] \quad (n \ne s_0)
     `t <- a op b` 可能产生一些隐式的副作用（溢出等算术异常），这时候即使它是循环不变量，也不能随便 hoist。
 
 !!! note "Turning while loops into repeat-until loops"
-    while 循环的出口通常是 header，这会导致 loop exit 不被循环体中的语句支配（因为 header 可能有多个前驱节点），很难满足 hoisting 的条件。
+    while 循环的出口通常是 header，这会导致 loop exit 不被循环体中的语句支配（header 有多个前驱节点），很难满足 hoisting 的条件。
 
     通常的处理方法是把 while 循环转换成 if + repeat-until 循环的形式，这样一来，循环体中的语句就可以支配 loop exit，从而更可能满足 hoisting 的条件。
 

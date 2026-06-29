@@ -40,9 +40,9 @@
 | Lex | 将源文件分为各个独立的单词（word）或 token |
 | Parse | 分析程序的短语结构 |
 | Parsing Actions | 为每个短语构建对应的抽象语法树 |
-| Semantic Analysis | 确定每个短语的含义，讲变量的使用与其定义联系起来，检查表达式类型，请求翻译每个短语 |
+| Semantic Analysis | 确定每个短语的含义，将变量的使用与其定义联系起来，检查表达式类型，请求翻译每个短语 |
 | Frame Layout | 将变量、函数参数等以机器依赖的方式放入激活记录（栈帧 stack frames）中 |
-| Translate | 生成中间表示树（IR树），不依赖于任何特定的源语言或目标机器架构 |
+| Translate | 生成中间表示树（IR 树），不依赖于任何特定的源语言或目标机器架构 |
 | Canonicalize | 将副作用移出表达式，清理条件分支以便后续阶段处理 |
 | Instruction Selection | 将IR树节点分组为簇，使其与目标机器指令的动作相对应 |
 | Control Flow Analysis | 将指令序列分析为控制流图，该图展示程序执行时可能遵循的所有控制流程 |

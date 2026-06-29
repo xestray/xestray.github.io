@@ -21,12 +21,12 @@
 
 ## Symbol Tables
 
-语义分析阶段的特点在于需要维护一个**符号表**（也被称之为**环境**），这个表会将标识符（identifier）映射到它们的相关信息，例如类型、作用域等。
+语义分析阶段的特点在于需要维护一个**符号表**（也被称之为**环境**，**environment**），这个表会将标识符（identifier）映射到它们的相关信息，例如类型、作用域等。
 
 - **Binding**：从一个符号（symbol）到它的相关信息的映射关系，例如
     $$ x \mapsto \text{int} $$
 - **Environment**：bindings 构成的集合，例如
-    $$\sigma_0 = \{ x \mapsto \text{int}, y \mapsto \text{string} \} $$
+    $$\sigma_0 = \\{ x \mapsto \text{int}, y \mapsto \text{string} \\} $$
 - **Symbol Table**：用于具体实现 environment 的数据结构，
 
 !!! example "Motivating Example of Symbol Tables"
@@ -75,7 +75,7 @@ class D {
 }
 ```
 
-在这个例子中，我们有三个类 `E`、`N` 和 `D`，每个类都有自己的符号表，它们最终形成的环境层级如下：
+在上面这个例子中，我们有三个类 `E`、`N` 和 `D`，每个类都有自己的符号表，它们最终形成的环境层级如下：
 
 $$ \begin{aligned}
 & \sigma_1 = \{ a \mapsto \text{int} \} \\
@@ -87,12 +87,12 @@ $$ \begin{aligned}
 & \sigma_7 = \sigma_2 + \sigma_4 + \sigma_6
 \end{aligned} $$
 
-- 在 Java 中，前向引用时允许的，因此在 `N` 类中访问 `E.a` 是合法的。`E`、`N` 和 `D` 这三个类的符号表最终会被连接到一起，形成一个层次化的符号表结构 $\sigma_7$，即 package `M` 的符号表。
+- 在 Java 中，前向引用是允许的，因此在 `N` 类中访问 `E.a` 是合法的。`E`、`N` 和 `D` 这三个类的符号表最终会被连接到一起，形成一个层次化的符号表结构 $\sigma_7$，即 package `M` 的符号表。
 - 需要获取 `E.a` 的值时，我们首先在 package 环境里查询 `E` 这个类的符号表 $\sigma_1$，然后再在 $\sigma_1$ 中查询 `a` 的绑定关系，从而获取到它的值。
 
 ### Implementing Symbol Tables
 
-符号表的实现风格主要分为两种：命令式（imperative）和函数式（functional）。
+符号表的实现风格主要分为两种：**命令式（imperative）**和**函数式（functional）**。
 
 #### Imperative Style
 
@@ -101,7 +101,7 @@ $$ \begin{aligned}
 - 例如当我们要在环境 $\sigma_1$ 中加入一个新的绑定关时，我们会直接修改 $\sigma_1$ 来得到新的环境 $\sigma_2$。
 - 当环境 $\sigma_2$ 存在时，我们就无法再访问到之前的环境 $\sigma_1$，直到我们从 $\sigma_2$ 中退出之后才能重新访问 $\sigma_1$。
 - 因此我们需要在进入新的作用域之前把当前的环境保存起来，以便在离开作用域时能够恢复到之前的环境。
-    - 我们可以通过使用单个全局的环境 $\sigma$ 以及一个 undo stack。当离开一个环境时，就可以借助辅助信息来撤销之前的修改。
+    - 我们可以通过使用单个全局的环境 $\sigma$ 以及一个 undo stack 来实现：当离开一个环境时，就可以借助辅助信息来撤销之前的修改。
 
 在大型程序中标识符可能非常多，因此符号表的 lookup 操作必须非常高效，常见的实现方式是 hash table + linked list。
 
@@ -119,7 +119,7 @@ void insert(string key, void *binding) {
 ```
 
 <figure markdown="span">
-    ![](./assets/chap-5-4.png){width=65%}
+    ![](./assets/chap-5-4.png){width=80%}
 </figure>
 
 - lookup 操作的具体实现就是访问对应哈希桶的链表 `table[index]`，从链表的头部开始寻找第一个 key 匹配的结点，如果找到了就返回它的绑定关系，否则继续往下找，直到链表的末尾。
@@ -145,7 +145,7 @@ void pop(string key) {
 ```
 
 <figure markdown="span">
-    ![](./assets/chap-5-5.png){width=65%}
+    ![](./assets/chap-5-5.png){width=80%}
 </figure>
 
 #### Functional Style
@@ -154,10 +154,10 @@ void pop(string key) {
 
 在这种情况下，如果我们依然用哈希表来做更新，往往需要复制一整个哈希数组，成本很高，因此应该使用具有共享结构的搜索树来实现。
 
-例如我们在环境 $m_1$ 中加入一个新的绑定关系 `mouse`，得到新的环境 $m_2$，在 $m_2$ 中我们仍然可以访问到 $m_1$ 中的绑定关系。
+例如我们在环境 $m_1$ 中加入一个新的绑定关系 `mouse`，得到新的环境 $m_2$，在 $m_2$ 中我们仍然可以访问到 $m_1$ 中原有的绑定关系。
 $$ \begin{aligned}
-& m_1 = \{ \text{bat} \mapsto 1,\ \text{camel} \mapsto 2,\ \text{dog} \mapsto 3 \} \\
-& m_2 = m_1 + \{ \text{mouse} \mapsto 4 \}
+& m_1 = \\{ \text{bat} \mapsto 1,\ \text{camel} \mapsto 2,\ \text{dog} \mapsto 3 \\} \\\\
+& m_2 = m_1 + \\{ \text{mouse} \mapsto 4 \\}
 \end{aligned} $$
 
 <figure markdown="span">
@@ -166,9 +166,9 @@ $$ \begin{aligned}
 
 可以看到，$m_2$ 在包含了新的绑定关系 `mouse` 的同时，也保留了对 $m_1$ 中原有绑定关系的访问权限，从而不需要对原先的环境进行修改。
 
-!!! note 
+!!! note "命令式风格 vs 函数式风格"
     - **Imperative Style**
-        - 进入新作用域后直接在原有符号表上进行修改（相当于销毁了旧表）
+        - 进入新作用域后直接在原有符号表上进行修改（相当于覆盖了旧表）
         - 退出作用域时需要借助辅助信息来恢复之前的环境
     - **Functional Style**
         - 进入新作用域时创建一个新的符号表，原有的符号表依然存在
@@ -176,12 +176,12 @@ $$ \begin{aligned}
 
 ## Symbols in the Tiger Compiler
 
-在 Tiger 编译器中使用的是破坏性更新（destructive update）的命令式风格的符号表实现。但是这样的实现还是存在一些问题：如果每一次 lookup 时都要做一次字符串比较，就会导致较大的开销。一种更为高效的做法是：
+在 Tiger 编译器中使用的是破坏性更新（destructive update）的命令式风格的符号表实现。但是这样的实现存在一些问题：如果每一次 lookup 时都要做一次字符串比较，就会导致较大的开销。一种更为高效的做法是：
 
-- 把字符串转换为一个 symbol，每一个 symbol 对象都对应于一个整数值（例如内存地址等）
+- 把字符串转换为一个 symbol，每一个 symbol 对象都对应于一个整数值（例如一个内存地址等）
 - 所有的相同的字符串总是会映射到同一个 symbol 对象上，因此我们只需要比较 symbol 对象的对应的整数值就可以了，而不需要进行字符串比较。
 
-这么做的好处是相当明显的：对一个整数值做哈希处理显然要比字符串快得多，并且整数键的比较（是否相等？是否大于？）也要比字符串高效得多。
+这么做的好处是相当明显的：对一个整数值做哈希处理显然要比字符串快得多，并且整数键的比较（相等？大于？）也要比字符串高效得多。
 
 ### Tiger 的符号与符号表接口
 
@@ -208,8 +208,8 @@ void S_endScope(S_table t);
 !!! note "类型环境（tenv）和变量环境（venv）"
     在 Tiger 编译器中，我们通常会维护两个符号表：一个是类型环境（tenv），用于存储类型相关的绑定关系；另一个是变量环境（venv），用于存储变量相关的绑定关系。
 
-    - 类型环境（tenv）中存储的是从类型名称到类型信息的映射关系，例如 `int`、`string` 等基本类型，以及用户定义的类型。
-    - 变量环境（venv）中存储的是从变量名称到变量信息，以及函数名称到函数信息的映射关系，例如变量的类型、函数的参数类型和返回类型等。
+    - **类型环境（tenv）**中存储的是从类型名称到类型信息的映射关系，例如 `int`、`string` 等基本类型，以及用户定义的类型。
+    - **变量环境（venv）**中存储的是从变量名称到变量信息，以及函数名称到函数信息的映射关系，例如变量的类型、函数的参数类型和返回类型等。
 
     !!! tip
         类型环境和变量环境中的绑定关系互不干扰，因此可能出现类型名称和变量名称（或函数名称）相同的情况，例如我们可以同时存在一个名为 `string1` 的类型和一个名为 `string1` 的变量：
@@ -219,7 +219,7 @@ void S_endScope(S_table t);
         var string1: string = "hello"
         ```
 
-        但是因为变量名和函数名共用一个符号表，所以在变量环境中我们不能同时存在一个变量 `string1` 和一个函数 `string1`，否则就会发生命名冲突。
+        但是因为变量名和函数名共用一个符号表，所以在变量环境中我们不能同时存在一个名为 `string1` 的变量和一个名为 `string1` 的函数，否则就会发生命名冲突。
 
 Tiger 编译器使用一个全局哈希表和一个辅助栈来实现符号表的功能：
 
@@ -278,12 +278,12 @@ struct Ty_ty_ {
     - **Structural equivalence (SE)**：我们称 T1 和 T2 两个类型是等价的当且仅当它们由相同的构造函数以及相同的构造顺序构造出来的（即结构上是相同的）
         - 例如对于 `type a = int` 和 `type b = int`，在 structural equivalence 的规则下，`a` 和 `b` 是等价的。
         
-Tiger 语言采用的是 name equivalence 的类型系统，因此在 Tiger 中两个类型是否等价取决于它们的定义方式，而不是它们的结构。
+Tiger 语言采用的是 name equivalence 的类型系统，因此在 Tiger 中两个类型是否等价取决于它们的定义方式，而不是它们的具体结构。
 
 在 Tiger 语言中，每一个 record 类型都会被分配一个唯一的类型标识符（type tag），因此即使两个 record 类型的字段完全相同，它们也不会被认为是等价的。
 
 <figure markdown="span">
-    ![](./assets/chap-5-8.png){width=70%}
+    ![](./assets/chap-5-8.png){width=75%}
 </figure>
 
 #### Namespace
@@ -545,7 +545,7 @@ function id (tyfields) ： type-id = exp
         type b = {i: a}
         ```
 
-- 对于递归的函数也需要两遍来处理。
+- 对于递归的函数也需要 two-pass 的处理方式：
 
     例如 `f` 和 `g` 这两个函数是相互递归调用的，我们需要
 

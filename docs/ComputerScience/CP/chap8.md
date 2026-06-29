@@ -16,28 +16,28 @@
 - **表达式中的 CALL 节点会导致问题**
     - CALL 节点中使用的参数可能也依赖于其他子表达式产生的副作用，会导致和上一条相同的问题
 - **CALL 节点出现在另一个 CALL 节点的参数中**
-    - 对于 `CALL(f, [e1, CALL(g, [e2, …])])` 这种情况，内层 CALL 在修改形参寄存器时可能会破坏外层 CALL 的参数值。
+    - 对于 `CALL(f, [e1, CALL(g, [e2, …])])` 这种情况，两层的 CALL 都会使用同一批参数寄存器，内层 CALL 在修改形参寄存器时可能会破坏外层 CALL 的参数值。
 
 为了解决上述的这些问题，我们需要对 IR 树进行三个阶段的转换：
 
 1. 将 IR tree 重写为一系列规范树（canonical tree），
-2. 将这些规范树划分为一组基本块（basic block），每个基本块是一个内部不包含跳转指令或 label 的指令序列，满足以下条件：
+2. 将这些规范树划分为一组基本块（basic block），每个基本块都是一个内部不包含跳转指令或 label 的指令序列，并且满足以下条件：
     - 只有第一个指令可以是 LABEL 指令
     - 只有最后一个指令可以是 JUMP 或 CJUMP 指令
     - 其他指令都不能是 LABEL、JUMP 或 CJUMP 指令
-3. 将上述的基本块按一定次序排列（基本块之间的顺序不影响程序的语义），形成一个或多个 trace
-    - 每个 trace 是一个基本块序列，其中每个基本块末尾的 CJUMP 的 false label 都是下一个基本块的 LABEL。
-    - 从而实现消除 CJUMP 指令中的 false label，使得每个 CJUMP 指令都只需要一个跳转 label，与实际机器指令的结构相匹配。
+3. 将上述的基本块按一定次序排列（任意基本块之间的顺序不影响程序的语义），形成一个或多个 trace
+    - 每个 trace 都是一个基本块序列，其中每个基本块末尾的 CJUMP 的 false label 指向的都是下一个基本块的 LABEL。
+    - 这样一来就可以直接消除 CJUMP 指令中的 false label（因为只要条件不为真就直接顺序执行下一个基本块），使得每个 CJUMP 指令都只需要一个跳转 label，与实际机器指令的结构相匹配。
 
 ## Canonical Trees
 
 !!! definition "规范树（Canonical Tree）"
     规范树是指满足以下性质的 IR 树中结构
 
-    - 不包含 SEQ 和 ESEQ 节点
-    - 每一个 CALL 节点的父节点只能是 `EXP(...)` 或 `MOVE(TEMP t, ...)` 形式的语句
+    - 子节点中不包含 SEQ 和 ESEQ 节点
+    - 每一个 CALL 节点的父节点只能是 `EXP(...)` 或 `MOVE(TEMP t, ...)`
 
-- 性质 1 确保每棵规范树最多包含一个语句节点（即根节点）其余节点都是非 ESEQ 的表达式节点。
+- 性质 1 确保每棵规范树最多包含一个语句节点（即根节点），其余节点都是非 ESEQ 的表达式节点。
 - 性质 2 让 CALL 节点的子节点不可能是另一个 CALL 节点
 - 性质 1 和 2 共同保证了 CALL 的父节点必须是规范树的根节点，同时也最多存在一个 CALL 节点（因为 `EXP(...)` 和 `MOVE(TEMP t, ...)` 都最多只能接受一个 CALL 节点作为子节点）。
 
@@ -58,7 +58,7 @@
         ![](./assets/chap-8-1.png){width=75%}
     </figure>
 
-    在这个例子里，我们把右侧的 ESEQ 节点提升上来之后，左侧的这个 ESEQ 节点就变成了 SEQ 节点（因为两个子树都是 statement），同时也保证了执行顺序仍是是 s1 -> s2 -> e，没有改变程序的语义。
+    在这个例子里，我们把右侧的 ESEQ 节点提升上来之后，左侧的这个 ESEQ 节点就变成了 SEQ 节点（因为两个子树都是 statement），同时也保证了各语句执行顺序仍是是 `s1 -> s2 -> e`，没有改变程序的语义。
 
 !!! example 
     <figure markdown="span">
@@ -77,7 +77,7 @@ JUMP(ESEQ(s, e1))                  ->  SEQ(s, JUMP(e1))
 CJUMP(op, ESEQ(s, e1), e2, l1, l2) ->  SEQ(s, CJUMP(op, e1, e2, l1, l2))
 ```
 
-上面的情况都有一个隐含的条件：当 ESEQ 出现在左子树时，我们对树结构的修改不会影响程序的实际语义。
+上面的情况都有一个隐含的条件：当 ESEQ 出现在 BINOP 或 CJUMP 的左子树时，我们对树结构的修改不会影响程序的实际语义。
 
 #### ESEQ 出现在右子树
 
@@ -102,7 +102,7 @@ BINOP(op, e1, ESEQ(s, e2))         ->  ESEQ(s, BINOP(op, e1, e2))
 CJUMP(op, e1, ESEQ(s, e2), l1, l2) ->  SEQ(s, CJUMP(op, e1, e2, l1, l2))
 ```
 
-但是两段代码是否可交换一般而言是不可判定的：编译器在看到 `s = MOVE(MEM(x), y)`、`e1 = MEM(x)` 时并不能确定它们是否会访问同一个内存地址。Tiger 编译器会使用一个非常简单的 commute 函数来判断两段代码是否可交换：
+但是一般而言，两段代码是否可交换是不可判定的：编译器在看到 `s = MOVE(MEM(x), y)`、`e1 = MEM(x)` 时并不能确定它们是否会访问同一个内存地址。Tiger 编译器会使用一个非常简单的 commute 函数来判断两段代码是否可交换：
 
 - 常数可以和任何语句交换
 - 空语句可以和任何语句交换
@@ -124,7 +124,7 @@ static bool commute(T_stm x, T_exp y){
 - **subexpression-extraction**：从所有的子表达式中把 "statement" 提取出来，然后把这些子表达式变成 ESEQ-clean 的版本
 - **subexpression-insertion**：用 clean 版本的子表达式构建原节点，然后用 SEQ 或 ESEQ 把之前提取出来的 statement 插入到新节点的前面
 
-例如对子表达式列表 `[e1, e2, ESERQ(s, e2)]` 我们有三种处理方式：
+例如对子表达式列表 `[e1, e2, ESERQ(s, e3)]` 我们有三种处理方式：
 
 |情形|重写方式|
 |---|---|
@@ -134,9 +134,9 @@ static bool commute(T_stm x, T_exp y){
 
 ### Move CALLs to Top Level
 
-我们构造 IR 树的 Tree 语言允许将 CALL 作为子表达式，但是由于每个函数都会将其结果保存在同一个返回值寄存器 `TEMP(RV)` 中，这会导致当一个表达式里出现两个 CALL 时，第二个 CALL 就会把第一个 CALL 的返回值覆盖掉。
+我们在构造 IR 树的 Tree 语言时允许将 CALL 作为子表达式，但是由于每个函数都会将其结果保存在同一个返回值寄存器 `TEMP(RV)` 中，这会导致当一个表达式里出现两个 CALL 时，第二个 CALL 就会把第一个 CALL 的返回值覆盖掉。
 
-解决的思路是每一个 CALL 结束后就将返回值保存到一个临时寄存器里去：
+解决的思路是每一次 CALL 结束后就将返回值保存到一个临时寄存器里去：
 
 ```
 CALL(f, args)  ->  ESEQ(MOVE(TEMP t, CALL(f, args)), TEMP t)
@@ -193,11 +193,11 @@ SEQ(s1, SEQ(s2, ..., SEQ(s_{n-1}, s_n)...))
     基本块是指满足以下条件的语句序列：
 
     - 只有第一个语句可以是 LABEL 指令
-    - 只有最后一个语句可以是 JUMP 或 CJUMP 指令
+    - 只有最后一个语句是 JUMP 或 CJUMP 指令
     - 其他语句都不能是 LABEL、JUMP 或 CJUMP 指令
 
     <figure markdown="span">
-        ![](./assets/chap-8-6.png){width=55%}
+        ![](./assets/chap-8-6.png){width=75%}
     </figure>
 
 把长长的程序语句列表转换为若干基本块的算法如下：
@@ -205,7 +205,7 @@ SEQ(s1, SEQ(s2, ..., SEQ(s_{n-1}, s_n)...))
 !!! Algorithm
     1. 把整个语句序列从头到尾扫描
     2. 遇到一个 LABEL 时，开始一个新的基本块（前一个基本块结束）
-    3. 遇到 JUMP / CJUMP 时，结束当前基本块（下一条语句开始新一个基本块）
+    3. 遇到 JUMP / CJUMP 时，结束当前基本块（在下一条语句开始新一个基本块）
     4. 划分结束后，如果有基本块的末尾不是 JUMP 或 CJUMP，则在末尾添加一个跳转到下一个基本块的 JUMP 指令
     5. 如果一个基本块的第一个语句不是 LABEL，则在前面添加一个新的 LABEL
 
@@ -252,13 +252,13 @@ SEQ(s1, SEQ(s2, ..., SEQ(s_{n-1}, s_n)...))
 
 从这个角度出发，我们可以做到下面两件事情：
 
-- 让基本块的末尾的 CJUMP 指令的 false label 都指向下一个基本块的 LABEL
-- 让基本块末尾的 JUMP 指令的目标基本块紧跟在当前基本块的后面，这样一来就可以直接把这个 JUMP 指令优化掉
+- 让基本块的末尾的 CJUMP 条件跳跃指令的 false label 都指向下一个基本块的 LABEL
+- 让基本块末尾的 JUMP 无条件跳跃指令的目标基本块紧跟在当前基本块的后面，这样一来就可以直接把这个 JUMP 指令优化掉
 
 !!! definition "Trace"
     Trace 是指在程序执行过程中可连续执行的一系列语句，其中可以包含条件分支语句。
 
-    - 一个程序中可以包含许多个相互重叠的 trace
+    - 一个程序中可以包含许多个不同的、相互重叠的 trace
 
 我们在排列 CJUMP 指令和 false label 时的目标是：
 
@@ -270,7 +270,7 @@ SEQ(s1, SEQ(s2, ..., SEQ(s_{n-1}, s_n)...))
 
 ### Algorithm
 
-我们需要寻找一组能覆盖整个程序的 trace，思路是一个 DFS 算法：从一条 trace 的起始块出发，沿着一条可能的执行路线探索，这样走出来的一条路线就是一条 trace，直到走到一个已经被访问过的块或者一个循环结构为止，然后再从另一个未访问过的块出发继续探索，直到所有块都被访问过为止。
+我们需要寻找一组能覆盖整个程序的 trace，思路是一个 DFS 算法：从一条 trace 的起始块出发，沿着一条可能的执行路线探索，这样走出来的一条路线就是一条 trace，直到走到一个已经被访问过的块或者一个循环结构为止，然后再从另一个未访问过的块出发继续探索（此时就是一个新的 trace），直到所有块都被访问过为止。
 
 <figure markdown="span">
     ![](./assets/chap-8-9.png){width=75%}
@@ -304,8 +304,8 @@ SEQ(s1, SEQ(s2, ..., SEQ(s_{n-1}, s_n)...))
 
 上图中的 while 循环有三种排布方式：
 
-- **(a)** trace 的结构为 `test -> body -> done`，每一个 while 循环都包含一条 CJUMP 和一条 JUMP
-- **(b)** 将 body 和 test 交换位置，trace 的结构为 `body -> test -> done`，每一个 while 循环仍包含一条 CJUMP 和一条 JUMP
-- **(c)** trace 的结构为 `body -> test -> done`，消去了一条 JUMP，每一个 while 循环只包含一条 CJUMP
+- **a)** trace 的结构为 `test -> body -> done`，每一个 while 循环都包含一条 CJUMP 和一条 JUMP
+- **b)** 将 body 和 done 交换位置，trace 的结构为 `test -> done -> body`，每一个 while 循环仍包含一条 CJUMP 和一条 JUMP
+- **c)** trace 的结构为 `body -> test -> done`，消去了一条 JUMP，每一个 while 循环只包含一条 CJUMP
 
-我们可以知道，如 (c) 所示的 trace 划分结果能让程序更加“顺序地”执行，这也利于后续的进一步优化
+我们可以知道，如 c) 所示的 trace 划分结果能让程序更加“顺序地”执行，这也利于后续的进一步优化

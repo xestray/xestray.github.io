@@ -5,13 +5,13 @@
 
 # Instruction Selection
 
-在上一个 chapter 中，我们对 IR 树进行了规范化和重排，方便我们进行后续的优化和代码生成。本章介绍的 Instruction Selection 的主要任务时把 IR 树翻译成**伪汇编代码**（pseudo-assembly code），后续进行寄存器分配等操作时再把其中的伪寄存器替换成真实物理寄存器。
+在上一个 chapter 中，我们对 IR 树进行了规范化和重排，方便我们进行后续的优化和代码生成。本章介绍的 Instruction Selection 的主要任务是把 IR 树翻译成**伪汇编代码**（pseudo-assembly code），后续进行寄存器分配等操作时再把其中的伪寄存器替换成真实物理寄存器。
 
 ## Tree Patterns and Tile
 
 IR 树中的每一个节点都只表达一种操作（fetch、store、add、mul 等），但真实的汇编指令往往包含多个操作（例如 x86 中的 `add` 指令可以同时进行 fetch 和 store）。每一条机器指令都可以被表示为一个 IR 树的片段，被称之为**树模式（tree pattern）**。
 
-**Instruction Selection** 的任务就是用尽可能少的树模式去不重叠地覆盖（tiling）整棵 IR 树。
+Instruction Selection 的任务就是用尽可能少的树模式去不重叠地覆盖（tiling）整棵 IR 树。
 
 为了便于说明指令选择的算法，教材提出了一个简化的 RISC 指令集——**Jouette**，它的主要指令如下图所示：
 
@@ -20,7 +20,7 @@ IR 树中的每一个节点都只表达一种操作（fetch、store、add、mul 
 </figure>
 
 - 图中左侧是指令名称以及作用效果，右侧是该指令对应的 tree pattern
-    - 某些指令可能对应多个 tree pattern，这来自于交换操作数或使用 r0 寄存器的特殊情况（例如 `LOAD ri <- M[r0 + c]` 只需要 CONST 节点而不需要做加法
+    - 某些指令可能对应多个 tree pattern，这来自于交换左右操作数的等价情况，或是使用 r0 寄存器的特殊情况（例如 `LOAD ri <- M[r0 + c]` 只需要 CONST 节点而不需要做加法）
 - 寄存器 r0 的值恒为 0，许多涉及到使用常数 0 的操作都会使用到它
 
 !!! example
@@ -55,7 +55,8 @@ IR 树中的每一个节点都只表达一种操作（fetch、store、add、mul 
     - 局部最优的覆盖
     - 如果一个 tree pattern 的 cost 大于等于它的子树模式的 cost 之和，那么它就不可能出现在 optimal tiling 中，应当被拆分
 
-**每一个 optimum tiling 都是一个 optimal tiling，但反过来不一定成立**
+!!! note
+    **每一个 optimum tiling 都是一个 optimal tiling，但反过来不一定成立**
 
 <figure markdown="span">
     ![](./assets/chap-9-5.png){width=75%}
@@ -80,12 +81,13 @@ IR 树中的每一个节点都只表达一种操作（fetch、store、add、mul 
     ![](./assets/chap-9-6.png){width=75%}
 </figure>
 
-我们使用节点数量来评估 tile 的“大小”：每次选择能够覆盖最多节点的 tile 来覆盖当前节点。
+!!! note
+    我们使用节点数量来评估 tile 的“大小”：每次选择能够覆盖最多节点的 tile 来覆盖当前节点。
 
 maximal munch 具有以下特点：
 
-- 生成指令的顺序与指令的执行顺序相反：根节点会先被匹配到某条指令上，但它依赖于子树对应指令的结果，因此必须最后执行
-- 如果在根结点处有两个相同大小的 tile 都能匹配，那么选择两者中的哪一个都没有区别
+- 生成指令的顺序与指令的执行顺序相反：根节点会先被匹配到某条指令上，但由于它依赖于子树对应指令的结果，因此必须最后执行
+- 如果有两个相同大小的 tile 都能匹配当前子树，那么选择两者中的哪一个都没有区别
 
 !!! example
     对指令 `a[i] := x` 的 IR 树进行 maximal munch，首先会匹配到 `STORE` 的 tree pattern，然后再对剩余的没被覆盖的节点递归地使用 maximal munch，最终得到的覆盖方案如下所示：
@@ -96,15 +98,15 @@ maximal munch 具有以下特点：
 
 ### Dynamic Programming
 
-Maximal munch 算法的不足之处在于它只能求出 optimal tiling，而不能保证求出 optimum tiling。如果我们改为使用动态规划（dynamic programming）的方法，就可以求出 optimum tiling。
+Maximal munch 算法的不足之处在于它只能求出 optimal tiling，而不能保证求出 optimum tiling。如果我们改为使用**动态规划（dynamic programming）**的方法，就可以求出 optimum tiling。
 
-DP 算法的思路是自底向上的：
+DP 算法的思路是**自底向上**的：
 
 1. 首先递归计算所有子节点的最小代价，将节点 x 的代价记为 $f(x)$
 2. 对当前节点 n，找到所有能匹配 n 的 tile
-3. 对于所有匹配 n 的 tile $t$，它的 leaves 所连接的子树 $l$ 的代价 $f(l)$ 已经在前面计算好了，因此 tile $t$ 的总代价为 $c_t + \sum_{l \in leaves(t)} f(l)$，其中 $c_t$ 是 tile t 本身的 cost
+3. 对于所有匹配 n 的 tile $t$，它的 leaves 所连接的子树 $l$ 的代价 $f(l)$ 已经在前面计算好了，因此 tile $t$ 的总代价为 $c_t + \sum_{l \in leaves(t)} f(l)$，其中 $c_t$ 是 tile $t$ 本身的 cost
 4. 每一步都选择总代价最小的 tile 来覆盖当前节点 n，即
-    $$ f(n) = \min_{t \in T_n} \{ c_t + \sum_{l \in leaves(t)} f(l) \} $$
+    $$ f(n) = \min_{t \in T_n} \\{ c_t + \sum_{l \in leaves(t)} f(l) \\} $$
     
     其中 $T_n$ 是所有能够匹配节点 n 的 tile 的集合
 
@@ -168,11 +170,11 @@ DP 算法的思路是自底向上的：
 
     **Maximal Munch**：贪心的、自顶向下的算法，每次选择一个 tile 覆盖当前节点后，跳转到该 tile 的 leaves 上继续递归。由于平均一个 tile 覆盖 $K$ 个节点，因此需要选择大约 $\dfrac{N}{K}$ 个 tile，
 
-    每次选择一个 tile 需要检查 $K'$ 个节点来判断哪些 tile 能匹配，并且需要从 $T'$ 个 tile 中选择一个，因此每次选择的成本约为 $K' + T'$，总的复杂度正比与 
-    $$ \dfrac{N}{K} \cdot (K' + T') $$。
+    每次选择一个 tile 需要检查 $K'$ 个节点来判断哪些 tile 能匹配，并且需要从 $T'$ 个 tile 中选择一个，因此每次选择的成本约为 $K' + T'$，总的复杂度正比于 
+    $$ \dfrac{N}{K} \cdot (K' + T') $$
 
     **Dynamic Programming**：自底向上的算法，需要对每个节点进行一次 DP 计算，每次 DP 计算需要检查 $K'$ 个节点来判断哪些 tile 能匹配，并且需要从 $T'$ 个 tile 中选择一个，因此总的复杂度正比于
-    $$ N \cdot (K' + T') $$。
+    $$ N \cdot (K' + T') $$
 
 ### Tree Grammar
 

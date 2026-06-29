@@ -23,7 +23,7 @@
 
 ![](./assets/chap-6-2.png){width=25% align=right}
 
-**stack pointer**：指向当前活动记录的顶部。由于栈是从高地址向低地址增长的，因此地址高于栈指针的内存空间我们都认为是已经使用了的。
+**stack pointer**：指向当前活动记录的顶部。由于栈是从高地址向低地址增长的，因此我们认为地址高于栈指针的内存空间都是已经被使用了的。
 
 一个函数的 stack frame 指的是该函数在栈上占用的那一块内存区域，通常包含以下内容：
 
@@ -82,7 +82,7 @@ void f(int a) {
 
 课件给出了几种解决这个问题的方法：
 
-1. 如果在调用 `h(z)` 时，参数 `a` 已经是 dead 的（不再需要使用），那么就可以直接覆盖掉 `r1` 的值
+1. 如果在调用 `h(z)` 时，参数 `a` 已经是 dead 的（后续不会再被使用），那么就可以直接覆盖掉 `r1` 的值
 2. 如果函数是一个 leaf procedure（不调用其他函数），那么就可以直接使用寄存器来传递参数，而不需要使用栈
 3. 某些优化编译器可以采用 inter-procedural register allocation 的机制，在编译时一次性分析整个程序中的所有函数，并且协调每一个函数的寄存器使用，以避免寄存器的冲突
 4. 某些架构拥有 register windows 的机制，在每次函数调用时都能分配一组全新的寄存器
@@ -123,11 +123,11 @@ int* f(int x) { return &x; }
 - 储存该变量的寄存器有其他用途，变量必须保存到其他地方
 - 局部变量和临时变量过多，无法全部存入寄存器
 
-我们称满足上面条件之一的变量 **escape**，即它的生命周期超出了当前函数的范围，因此必须保存在内存中。
+我们称满足上面条件之一的变量 **escape** 了，即它的生命周期超出了当前函数的范围，因此必须保存在内存中。
 
 ### Static Links
 
-对于 Tiger、Pascal、ML 这种允许嵌套函数声明的语言，内层函数可以直接访问外层函数的变量和参数。我们把这种函数结构称为 **Block Structure**，也就是说函数的定义可以嵌套在另一个函数的定义内部。
+对于 Tiger、Pascal、ML 这种允许嵌套函数声明的语言，内层函数可以直接访问外层函数的变量和参数。我们把这种函数结构称为 **Block Structure**，也就是说函数的定义可以嵌套在另一个函数的函数体内部。
 
 例如下面这个 Tiger 的例子:
 
@@ -160,20 +160,22 @@ int* f(int x) { return &x; }
     end
     ```
 
-    - 我们需要在 `write` 里访问 `prettyprint` 的局部变量 `output`
-    - 在 `indent` 中访问 `show` 的参数 `n` 和 `prettyprint` 的 `output`
+    我们在函数 `prettyprint` 中定义了两个嵌套函数 `write` 和 `show`，并且又在 `show` 中又定义了一个嵌套函数 `indent`
 
-在这种情况下，仅仅靠 FP+offset 的方式是不够的，因为外部函数的变量并不保存在自己的 frame 中。因此我们需要在每个函数的 frame 中增加一个指向外部函数的 frame 的指针，这个指针被称为 **static link**。
+    - 我们在 `write` 里需要访问 `prettyprint` 的局部变量 `output`
+    - 在 `indent` 中需要访问 `show` 的参数 `n` 和 `prettyprint` 的局部变量 `output`
 
-> 调用函数 f 时，会额外传递一个指针，这个指针指向**源码中直接包围 f 的外层函数的最近一个活动记录**，也就是说这个指针指向了 f 的静态父函数的 frame，这就是 static link。
+在这种情况下，仅仅靠 FP + offset 的方式是不够的，因为位于函数外部的变量并不会保存在函数自己的 frame 中。因此我们需要在每个函数的 frame 中增加一个指向外部函数的 frame 的指针，这个指针被称为 **static link**。
+
+> 调用函数 f 时，会额外传递一个指针，这个指针指向**源码中直接包围 f 的外层函数的最近一个活动记录**，也就是说这个指针指向了 f 的静态父函数的最新的一个 frame，这个指针就是 static link。
 
 <figure markdown="span">
     ![](./assets/chap-6-4.png){width=75%}
 </figure>
 
-具体到上面的例子
+具体到上面的例子：
 
-- 编译器在处理时会向 `write` 和 `show` 传递一个指向 `prettyprint` 的 frame 的指针，当它们需要访问变量 `output` 时，就可以通过这个指针来找到 `prettyprint` 的 frame，从而访问 `output`。
+- 编译器会向 `write` 和 `show` 传递一个指向 `prettyprint` 的 frame 的指针，当它们需要访问变量 `output` 时，就可以通过这个指针来找到 `prettyprint` 的 frame，从而访问 `output`。
 - 当更内一层的函数 `indent` 需要访问 `output` 时，会先沿着自己的 static link 找到 `show` 的 frame，发现 `show` 的 frame 中也没有 `output`，然后继续沿着 `show` 的 static link 找到 `prettyprint` 的 frame，最终访问到 `output`。
 
 !!! example 
@@ -185,11 +187,11 @@ int* f(int x) { return &x; }
 
 当前函数的嵌套深度为 n 时，如果要访问一个深度为 m 的变量（m < n），我们需要沿着 static link 向上跳转 n-m 次，才能找到这个变量所在的 frame，然后再根据 offset 来访问这个变量。
 
-优点：
+**优点**：
 
 - 参数传递带来的额外开销较小
 
-缺点：
+**缺点**：
 
 - 每次访问一个非局部变量都要进行多次跳转（多次内存寻址）效率较低
 - 函数的嵌套深度越深，访问非局部变量的开销就越大
@@ -198,7 +200,7 @@ int* f(int x) { return &x; }
 
 #### Display
 
-实现 Block Structure 的另一种方法是使用 **display**：构建一个全局的指针数组 `display`，`display[i]` 指向最近一次进入的、静态嵌套深度为 i 的函数的 frame。
+实现 Block Structure 的另一种方法是使用 **display**：构建一个全局的指针数组 `display`，`display[i]` 指向最近一次进入的、静态嵌套深度为 `i` 的函数的 frame。
 
 <figure markdown="span">
     ![](./assets/chap-6-6.png){width=75%}
@@ -206,7 +208,7 @@ int* f(int x) { return &x; }
 
 #### Lambda Lifting
 
-当我们在函数 f 内部调用另一个函数 g 时，所有被 g 实际调用的外部变量都会作为额外参数传递给 g，这个过程被称为 **lambda lifting**。
+另一种方法是，当我们在函数 f 内部调用另一个函数 g 时，所有被 g 实际访问的外部变量都会作为额外参数传递给 g，这个过程被称为 **lambda lifting**。
 
 <figure markdown="span">
     ![](./assets/chap-6-7.png){width=75%}
@@ -221,16 +223,18 @@ int* f(int x) { return &x; }
 - 嵌套函数
 - 函数作为返回值
 
-那么就可能需要在函数返回后仍保留局部变量，例如下面这个 ML 的例子：
+那么就可能需要在函数返回后仍保留局部变量，例如下面这个用 ML 语言编写的例子：
 
-```sml
-fun f(x) =
-    let fun g(y) = x + y 
-    in g 
-end
-```
+!!! example
+    ```sml
+    fun f(x) =
+        let fun g(y) = x + y 
+        in g 
+    end
+    ```
 
-当函数 `f` 返回之后，局部变量 `x` 仍然被函数 `g` 使用。如果我们只把 `x` 保存在 `f` 的栈帧里，当 `f` 返回时 `x` 就会被销毁掉，此时 `g` 就无法访问 `x` 了，这显然是不正确的。
+    - `f` 是一个高阶函数，它的返回值是一个函数 `g`，而 `g` 的函数体需要使用到 `f` 的局部变量 `x`。
+    - 当函数 `f` 返回之后，局部变量 `x` 仍然被函数 `g` 使用。如果我们只把 `x` 保存在 `f` 的栈帧里，当 `f` 返回时 `x` 就会被销毁掉，此时 `g` 就无法访问 `x` 了，这显然是不正确的。
 
 因此当出现这类情况时，就不能只是用 stack 来保存变量了，需要使用更加复杂的内存管理机制，例如 heap 来保存这些变量，并且在函数返回时不销毁它们。
 

@@ -41,7 +41,7 @@ Object-Tiger 还支持类的继承声明：`class B extends A { ... }` 表示类
 
 类的每一个方法事实上都有一个隐式的参数 `self`，它指向调用该方法的对象本身。`self` 不是保留字，仅是每个方法中被自动绑定的标识符。
 
-可以通过以下语法来创建类对象，访问类属性和调用类方法：
+可以通过以下语法来创建类对象、访问类属性和调用类方法：
 
 - `b = new B`
 - `b.x`
@@ -63,11 +63,9 @@ var v : Vehicle := c
 v.drive() // 调用的是 Vehicle 的 drive 方法
 ```
 
-这就出现了**多态（polymorphism）**：变量 `v` 的声明类型是 `Vehicle`，但是它实际引用的对象是 `Car`。因此，调用 `v.drive()` 时，`drive()` 函数隐参数 `self` 指向的是一个 `Car` 对象，因此它调用的实际上是 `Car` 类的 `drive()` 方法，而不是 `Vehicle` 类的 `drive()` 方法。
-
 ## Single Inheritance of Data Fields
 
-在单继承的情况下，子类继承父类的所有数据字段和方法。
+在单继承的情况下，子类继承父类的所有数据字段和方法，需要考虑如何在子类对象中排放父类的字段和子类自己的字段。
 
 ### Fields
 
@@ -77,13 +75,13 @@ v.drive() // 调用的是 Vehicle 的 drive 方法
     ![](./assets/chap-14-1.png){width=70%}
 </figure>
 
-例如上面这个例子，当我们想要访问属性 `a` 时，无论 `v` 是哪一个类的对象，我们都可以直接用 M(v + offset(0)) 来访问它。
+例如上面这个例子，当我们想要访问属性 `a` 时，无论 `v` 是哪一个类的对象，我们都可以直接用 `M(v + offset(0))` 来访问它。
 
 ### Methods
 
 类的方法实例的编译方式和函数非常类似（因为其实 methods 就是一个函数）：它会被转换为一串机器码，存储在指令空间的特定位置，并用一个 label 来标识它的入口地址。
 
-- 例如 `Truck.move()` 方法的机器码保存在指令空间的一段空间中，它的 label 为 `Truck_move`
+- 例如 `Truck.move()` 方法的机器码保存在指令空间的一段空间中，它的 label 可能为 `Truck_move`
 
 ### Static Methods
 
@@ -121,7 +119,7 @@ vtable 的构建方式同样采用 prefixing：
 要执行一个动态方法 `c.f()`，编译后的代码需要执行以下步骤：
 
 1. 从对象 `c` 的偏移量为 0 的位置获得指向类描述符 `d` 的指针
-2. 访问类描述符 `d`，根据 `f` 的偏移量，在 `d` 的 vtable 中取得方法 `f` 的入口地址 `addr`
+2. 访问类描述符 `d`，根据 `f` 在 vtable 中的偏移量，从 vtable 中取得方法 `f` 的入口地址 `addr`
 3. 调用 `addr`，并把 `c` 作为隐式参数传入
 
 ## Multiple Inheritance
@@ -136,7 +134,7 @@ vtable 的构建方式同样采用 prefixing：
     ![](./assets/chap-14-4.png){width=70%}
 </figure>
 
-但是这样的字段布局会导致对象中间存在一些空洞（holes），在对象数量多时会大量浪费空间。一种解决方法是：
+但是这样的字段布局会导致对象中间存在一些空洞（holes），在创建的对象数量很多时会大量浪费空间。一种解决方法是：
 
 - 使用类描述符将每个对象的字段封装起来，
 - 由 class descriptor 来负责维护维护该字段在本类对象中的偏移量
@@ -148,16 +146,20 @@ vtable 的构建方式同样采用 prefixing：
 2. 在类描述符 `d` 中查找属性字段 `a` 的偏移量 `offset`
 3. 回到对象 `c` 中，使用 `offset` 来访问属性字段 `a`
 
+<figure markdown="span">
+    ![](./assets/chap-14-5.png){width=70%}
+</figure>
+
 !!! warning "Problem"
     全局的图着色要求同时看到所有的类，因此通常只能存在 link-time 完成；并且如果语言支持在程序执行时动态加载新类，原有的颜色分配可能会被破坏，因此全局图着色方法不适合于动态增量链接的系统。
 
 ### Hashing
 
-还有另一种适合于分离编译（separate compilation）和动态增量链接（dynamic linking）的方法：在每一个类描述符中都维护一个 hash table，负责将字段名称映射到偏移量上，或者这将方法名称映射到方法实例上。
+还有另一种适合于分离编译（separate compilation）和动态增量链接（dynamic linking）的方法：在每一个类描述符中都维护一个 hash table，负责将字段名称映射到偏移量上，或者将方法名称映射到方法实例上。
 
 - `Ftab`：field-offset table，存储字段偏移量以及指向方法实例的指针
 - `Ktab`：key table，存储字段名称指针，用于冲突检测
-- 如果类中存在字段 `x`，则 `Ftab` 中的第 `hash(x)` 个元素存储字段 `x` 的偏移量，`Ktab` 中的第 `hash(x)` 个元素存储字段名称 `x` 的指针
+- 如果类中存在字段 `x`，则 `Ftab` 中的第 `hash(x)` 个元素存储字段 `x` 的偏移量，`Ktab` 中的第 `hash(x)` 个元素存储字段名称 `x` 的指针 `ptr(x)`
 
 使用 hash table 之后，访问字段可以看作一次类访问和两次表访问：
 
@@ -183,7 +185,7 @@ L1: if t1 = C goto true
 
 ### Display
 
-上面那种沿着祖先链查找的方法虽然很简单，但是在类层次结构很深时查找性能会比较低，因此我们可以使用**display**来优化它：
+上面那种沿着祖先链查找的方法虽然很简单，但是在类层次结构很深时查找性能会比较低，因此我们可以使用 **display** 来优化它：
 
 !!! info "display"
     display 是一个指针数组，存储了当前对象的所有祖先类的 class descriptor 的指针。display 的第 `i` 个元素存储深度为 `i` 的祖先类的 class descriptor 的指针。
@@ -202,14 +204,14 @@ L1: if t1 = C goto true
 
 1. 从类对象 `c` 的偏移量为 0 的位置获得指向类描述符 `d` 的指针
 2. 访问类描述符，获取 `display[j]` 中的类指针
-3. 比较这个类指针是否对应于类 D
+3. 判断这个类指针是否对应于类 D
 
 ### Type Coercions
 
 若 `C extends B`，那么我们将 `C` 的对象视为 `B` 类是没有问题的（将子类对象视为父类，upcast）
 
 ```
-// safe
+// safe to use b as a C object
 var c : C := new C
 var b : B := c       
 ```
@@ -217,6 +219,7 @@ var b : B := c
 但是将父类视为子类（downcast）是不行的，因为子类中可能包含父类中不存在的字段和方法，访问这些字段或者方法会导致未定义行为
 
 ```
+// dangerous to use c as a B object
 var b : B := new B
 var c : C := b
 c.some_field_of_C_but_not_B // undefined behavior
